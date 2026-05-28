@@ -9,7 +9,7 @@
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     .login-bg {
-      background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/hero1.jpg');
+      background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://your-vercel-domain/images/hero1.jpg');
       background-size: cover;
       background-position: center;
     }
@@ -20,7 +20,7 @@
   <div class="min-h-screen login-bg flex items-center justify-center p-6">
     <div class="max-w-md w-full bg-white rounded-3xl shadow-2xl overflow-hidden">
       <div class="p-8 text-center border-b">
-        <img src="images/logo.png" alt="WILTravel" class="h-12 mx-auto mb-4">
+        <img src="https://your-vercel-domain/images/logo.png" alt="WILTravel" class="h-12 mx-auto mb-4">
         <h1 class="text-2xl font-bold text-gray-800">Chào mừng trở lại</h1>
         <p class="text-gray-500 mt-1">Đăng nhập để tiếp tục hành trình</p>
       </div>
@@ -55,24 +55,24 @@
   </div>
 
   <script>
-    const GOOGLE_CLIENT_ID = "DÁN_CLIENT_ID_VÀO_ĐÂY.apps.googleusercontent.com";   // ← Thay ở đây
+    const GOOGLE_CLIENT_ID = "1038953243276-ef3mtk9jmsbhkjsip1v1ibgluvbsqb.apps.googleusercontent.com"; // Dán Client ID của bạn vào đây
 
     function handleCredentialResponse(response) {
-      console.log("Google ID Token:", response.credential);
-      showSuccess();
+      console.log("Google Token:", response.credential);
+      showSuccessMessage();
     }
 
-    function showSuccess() {
+    function showSuccessMessage() {
       const html = `
         <div class="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
-          <div class="bg-white rounded-3xl p-10 text-center">
+          <div class="bg-white rounded-3xl p-10 text-center max-w-sm">
             <i class="fa-solid fa-circle-check text-green-500 text-6xl mb-4"></i>
-            <h2 class="text-2xl font-bold">Đăng nhập thành công!</h2>
+            <h2 class="text-2xl font-bold text-gray-800">Đăng nhập thành công!</h2>
             <p class="text-gray-600 mt-2">Đang chuyển về trang chủ...</p>
           </div>
         </div>`;
       document.body.insertAdjacentHTML('beforeend', html);
-      setTimeout(() => window.location.href = "index.html", 1800);
+      setTimeout(() => window.location.href = "/", 1500);
     }
 
     function initializeGoogle() {
@@ -83,7 +83,13 @@
 
       google.accounts.id.renderButton(
         document.getElementById("googleButton"),
-        { theme: "outline", size: "large", width: "100%", text: "continue_with" }
+        { 
+          theme: "outline", 
+          size: "large", 
+          width: "100%", 
+          text: "continue_with",
+          shape: "pill"
+        }
       );
     }
 
@@ -91,7 +97,7 @@
 
     function handleLogin(e) {
       e.preventDefault();
-      showSuccess();
+      showSuccessMessage();
     }
   </script>
 </body>
