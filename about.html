@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WILTravel - Về Chúng Tôi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body class="font-sans">
+
+  <nav class="bg-white shadow-md fixed w-full z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <img src="images/logo.png" alt="WILTravel" class="h-11 w-auto">
+      </div>
+      <div class="hidden md:flex items-center gap-8 text-gray-700 font-medium">
+        <a href="index.html" class="hover:text-green-600">Trang chủ</a>
+        <a href="#" class="hover:text-green-600">Điểm đến</a>
+        <a href="#" class="hover:text-green-600">Tour</a>
+        <a href="about.html" class="text-green-600 font-semibold">Về chúng tôi</a>
+      </div>
+      <div class="flex gap-4">
+        <a href="login.html" class="px-5 py-2 text-gray-700 hover:bg-gray-100 rounded-full">Đăng nhập</a>
+        <a href="register.html" class="bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-700">Đăng ký</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="pt-24 pb-16 bg-gray-50">
+    <div class="max-w-5xl mx-auto px-6">
+      <h1 class="text-4xl font-bold text-center mb-4">Về WILTravel</h1>
+      <p class="text-center text-gray-600 text-lg">Chỉ cần & đi chuyến nghỉ ngơi</p>
+
+      <!-- Thông tin công ty -->
+      <div class="mt-12 bg-white rounded-3xl shadow-lg p-10">
+        <h2 class="text-2xl font-semibold mb-6">Thông tin công ty</h2>
+        <div class="space-y-4 text-gray-700">
+          <p><strong>CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ DU LỊCH WILTRAVEL</strong></p>
+          <p><strong>Trụ sở chính:</strong> 72/10/6 Văn Chung, Quận Tân Bình, Tp.HCM</p>
+          <p><strong>Điện thoại:</strong> (84) 8 38122159 | <strong>Fax:</strong> (84) 8 38106577</p>
+          <p><strong>Email:</strong> info@wil-travel.com</p>
+          <p><strong>Hotline:</strong> 0905 025737 (Ms Phượng)</p>
+        </div>
+      </div>
+
+      <!-- Form Liên hệ -->
+      <div class="mt-12 bg-white rounded-3xl shadow-lg p-10">
+        <h2 class="text-2xl font-semibold mb-8 text-center">Gửi tin nhắn liên hệ</h2>
+        <form onsubmit="sendContact(event)" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Họ và Tên</label>
+            <input type="text" class="w-full px-5 py-4 border border-gray-300 rounded-2xl" required>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Số điện thoại</label>
+            <input type="tel" class="w-full px-5 py-4 border border-gray-300 rounded-2xl" required>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+            <input type="email" class="w-full px-5 py-4 border border-gray-300 rounded-2xl" required>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Địa chỉ</label>
+            <input type="text" class="w-full px-5 py-4 border border-gray-300 rounded-2xl">
+          </div>
+          <div class="md:col-span-2">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Tiêu đề</label>
+            <input type="text" class="w-full px-5 py-4 border border-gray-300 rounded-2xl" required>
+          </div>
+          <div class="md:col-span-2">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Nội dung tin nhắn</label>
+            <textarea class="w-full px-5 py-4 border border-gray-300 rounded-3xl h-40 resize-y" required></textarea>
+          </div>
+          <div class="md:col-span-2">
+            <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-4 rounded-2xl text-lg">
+              Gửi tin nhắn
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function sendContact(e) {
+      e.preventDefault();
+      alert("✅ Tin nhắn của bạn đã được gửi thành công!\n\nWILTravel sẽ liên hệ với bạn sớm nhất.");
+      e.target.reset();
+    }
+  </script>
+</body>
+</html>
