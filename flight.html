@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="images/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="images/favicon.png">
+
+  <title>WILTravel - Mua Vé Máy Bay</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <style>
+    .flight-bg {
+      background-image: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('images/hero1.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+    .flight-card {
+      transition: all 0.3s ease;
+    }
+    .flight-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+    }
+  </style>
+</head>
+<body class="font-sans">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md fixed w-full z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <img src="images/logo.png" alt="WILTravel" class="h-9 sm:h-11 w-auto">
+      </div>
+      
+      <div class="hidden md:flex items-center gap-8 text-gray-700 font-medium">
+        <a href="index.html" class="hover:text-green-600 transition">Trang chủ</a>
+        <a href="#" class="hover:text-green-600 transition">Điểm đến</a>
+        <a href="#" class="hover:text-green-600 transition">Tour</a>
+        <a href="flight.html" class="text-green-600 font-semibold">Mua vé máy bay</a>
+        <a href="about.html" class="hover:text-green-600 transition">Về chúng tôi</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="login.html" class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-full transition text-sm sm:text-base">Đăng nhập</a>
+        <a href="register.html" class="bg-green-600 text-white px-5 py-2 rounded-full hover:bg-green-700 transition text-sm sm:text-base font-medium">Đăng ký</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="flight-bg h-screen flex items-center text-white pt-20 relative">
+    <div class="max-w-7xl mx-auto px-6 relative z-10 text-center">
+      <h1 class="text-5xl md:text-6xl font-bold mb-6">Mua Vé Máy Bay</h1>
+      <p class="text-xl md:text-2xl max-w-2xl mx-auto">Tìm chuyến bay giá tốt - Khởi hành ngay hôm nay</p>
+    </div>
+  </section>
+
+  <!-- Search Form -->
+  <section class="py-12 bg-white shadow-md">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="bg-white rounded-3xl shadow-xl p-8 -mt-16 relative z-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+          <div>
+            <label class="block text-sm text-gray-500 mb-2">Từ</label>
+            <select class="w-full px-5 py-4 border border-gray-300 rounded-2xl focus:outline-none focus:border-green-500">
+              <option>TP. Hồ Chí Minh (SGN)</option>
+              <option>Hà Nội (HAN)</option>
+              <option>Đà Nẵng (DAD)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm text-gray-500 mb-2">Đến</label>
+            <select class="w-full px-5 py-4 border border-gray-300 rounded-2xl focus:outline-none focus:border-green-500">
+              <option>Hà Nội (HAN)</option>
+              <option>Đà Nẵng (DAD)</option>
+              <option>TP. Hồ Chí Minh (SGN)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm text-gray-500 mb-2">Ngày đi</label>
+            <input type="date" class="w-full px-5 py-4 border border-gray-300 rounded-2xl focus:outline-none focus:border-green-500">
+          </div>
+          <div>
+            <label class="block text-sm text-gray-500 mb-2">Ngày về</label>
+            <input type="date" class="w-full px-5 py-4 border border-gray-300 rounded-2xl focus:outline-none focus:border-green-500">
+          </div>
+          <div class="flex items-end">
+            <button onclick="searchFlights()" 
+                    class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-4 rounded-2xl transition text-lg">
+              Tìm chuyến bay
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Danh sách chuyến bay -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-6">
+      <h2 class="text-3xl font-bold mb-8">Chuyến bay gợi ý</h2>
+      
+      <div class="space-y-6" id="flights-list">
+        <!-- Dữ liệu sẽ được JS render -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="footer" class="bg-gray-900 text-gray-400 py-16">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div>
+          <img src="images/logo.png" alt="WILTravel" class="h-12 mb-4">
+          <p class="text-sm">Chỉ cần & đi chuyến nghỉ ngơi</p>
+        </div>
+        <div>
+          <h3 class="text-white font-semibold mb-4">Liên hệ</h3>
+          <p class="text-sm leading-relaxed">
+            CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ DU LỊCH WILTRAVEL<br>
+            72/10/6 Văn Chung, Quận Tân Bình, Tp.HCM<br><br>
+            Hotline: 0905 025737
+          </p>
+        </div>
+        <div>
+          <h3 class="text-white font-semibold mb-4">Kết nối</h3>
+          <div class="flex gap-6 text-3xl">
+            <i class="fa-brands fa-facebook hover:text-white cursor-pointer"></i>
+            <i class="fa-brands fa-instagram hover:text-white cursor-pointer"></i>
+            <i class="fa-brands fa-youtube hover:text-white cursor-pointer"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const flights = [
+      {
+        id: 1,
+        from: "SGN",
+        to: "HAN",
+        departure: "07:30",
+        arrival: "09:45",
+        duration: "2h 15p",
+        price: "1.290.000",
+        airline: "Vietnam Airlines",
+        logo: "images/vietnam-airlines.png"
+      },
+      {
+        id: 2,
+        from: "SGN",
+        to: "DAD",
+        departure: "08:45",
+        arrival: "10:20",
+        duration: "1h 35p",
+        price: "890.000",
+        airline: "VietJet Air",
+        logo: "images/vietjet-air.png"
+      },
+      {
+        id: 3,
+        from: "SGN",
+        to: "HAN",
+        departure: "14:00",
+        arrival: "16:20",
+        duration: "2h 20p",
+        price: "1.450.000",
+        airline: "Bamboo Airways",
+        logo: "images/bamboo-airways.png"
+      },
+      {
+        id: 4,
+        from: "SGN",
+        to: "DAD",
+        departure: "19:15",
+        arrival: "20:50",
+        duration: "1h 35p",
+        price: "750.000",
+        airline: "VietJet Air",
+        logo: "images/vietjet-air.png"
+      },
+      {
+        id: 5,
+        from: "HAN",
+        to: "SGN",
+        departure: "06:50",
+        arrival: "09:10",
+        duration: "2h 20p",
+        price: "1.350.000",
+        airline: "Vietnam Airlines",
+        logo: "images/vietnam-airlines.png"
+      },
+      {
+        id: 6,
+        from: "DAD",
+        to: "SGN",
+        departure: "10:30",
+        arrival: "12:05",
+        duration: "1h 35p",
+        price: "820.000",
+        airline: "Pacific Airlines",
+        logo: "images/pacific-airlines.png"
+      },
+      {
+        id: 7,
+        from: "SGN",
+        to: "HAN",
+        departure: "21:45",
+        arrival: "00:05",
+        duration: "2h 20p",
+        price: "1.680.000",
+        airline: "Vietnam Airlines",
+        logo: "images/vietnam-airlines.png"
+      },
+      {
+        id: 8,
+        from: "SGN",
+        to: "BKK",
+        departure: "08:00",
+        arrival: "09:50",
+        duration: "1h 50p",
+        price: "2.450.000",
+        airline: "Thai Airways",
+        logo: "images/thai-airways.png"
+      },
+      {
+        id: 9,
+        from: "HAN",
+        to: "SIN",
+        departure: "13:20",
+        arrival: "17:10",
+        duration: "3h 50p",
+        price: "3.890.000",
+        airline: "Singapore Airlines",
+        logo: "images/singapore-airlines.png"
+      },
+      {
+        id: 10,
+        from: "SGN",
+        to: "DAD",
+        departure: "16:40",
+        arrival: "18:15",
+        duration: "1h 35p",
+        price: "680.000",
+        airline: "VietJet Air",
+        logo: "images/vietjet-air.png"
+      }
+    ];
+
+    function renderFlights() {
+      const container = document.getElementById('flights-list');
+      container.innerHTML = '';
+
+      flights.forEach(flight => {
+        const card = document.createElement('div');
+        card.className = "flight-card bg-white rounded-3xl p-6 shadow-sm border border-gray-100";
+        card.innerHTML = `
+          <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-6">
+              <img src="${flight.logo}" alt="${flight.airline}" class="w-12 h-12 object-contain">
+              <div>
+                <p class="font-semibold text-lg">${flight.airline}</p>
+                <p class="text-gray-500">${flight.from} → ${flight.to}</p>
+              </div>
+            </div>
+            
+            <div class="text-center">
+              <p class="text-2xl font-bold">${flight.departure}</p>
+              <p class="text-sm text-gray-500">${flight.duration}</p>
+            </div>
+            
+            <div class="text-center">
+              <p class="text-2xl font-bold">${flight.arrival}</p>
+            </div>
+            
+            <div class="text-right">
+              <p class="text-3xl font-bold text-green-600">${flight.price}<span class="text-base font-normal">đ</span></p>
+              <button onclick="bookFlight(${flight.id})" 
+                      class="mt-3 bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-2xl transition">
+                Chọn chuyến
+              </button>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function bookFlight(id) {
+      alert(`✅ Đã chọn chuyến bay #${id}\n\nBạn sẽ được chuyển đến trang thanh toán.`);
+    }
+
+    function searchFlights() {
+      alert("🔍 Đang tìm kiếm chuyến bay phù hợp nhất cho bạn...");
+      renderFlights();
+    }
+
+    window.onload = renderFlights;
+  </script>
+</body>
+</html>
