@@ -2,7 +2,12 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  
+  <!-- Favicon - Icon trên tab trình duyệt -->
+  <link rel="icon" href="images/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="images/favicon.png">
+
   <title>WILTravel - Chỉ cần & đi chuyến nghỉ ngơi</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
@@ -22,15 +27,33 @@
     html {
       scroll-behavior: smooth;
     }
+
+    /* Mobile Optimization */
+    @media (max-width: 768px) {
+      .hero-bg {
+        height: 100vh;
+        min-height: 640px;
+      }
+      h2 {
+        font-size: 2.25rem !important;
+        line-height: 1.1 !important;
+      }
+      .search-container {
+        padding: 12px !important;
+      }
+      .card-hover:hover {
+        transform: translateY(-4px);
+      }
+    }
   </style>
 </head>
 <body class="font-sans">
 
   <!-- Navbar -->
   <nav class="bg-white shadow-md fixed w-full z-50">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
       <div class="flex items-center gap-3">
-        <img src="images/logo.png" alt="WILTravel" class="h-11 w-auto">
+        <img src="images/logo.png" alt="WILTravel" class="h-9 sm:h-11 w-auto">
       </div>
       
       <div class="hidden md:flex items-center gap-8 text-gray-700 font-medium">
@@ -40,40 +63,40 @@
         <a href="#footer" onclick="scrollToFooter(event)" class="hover:text-green-600 transition">Về chúng tôi</a>
       </div>
 
-      <div class="flex items-center gap-4">
-        <a href="login.html" class="px-5 py-2 text-gray-700 hover:bg-gray-100 rounded-full transition">Đăng nhập</a>
-        <a href="register.html" class="bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-700 transition font-medium">Đăng ký</a>
+      <div class="flex items-center gap-3">
+        <a href="login.html" class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-full transition text-sm sm:text-base">Đăng nhập</a>
+        <a href="register.html" class="bg-green-600 text-white px-5 py-2 rounded-full hover:bg-green-700 transition text-sm sm:text-base font-medium">Đăng ký</a>
       </div>
     </div>
   </nav>
 
   <!-- Hero Carousel -->
-  <section id="hero" class="hero-bg h-screen flex items-center text-white pt-20 relative">
-    <div class="absolute inset-0 bg-gradient-to-r from-black/50 via-black/30 to-transparent"></div>
+  <section id="hero" class="hero-bg h-screen flex items-center text-white pt-16 md:pt-20 relative">
+    <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent"></div>
     
-    <div class="max-w-7xl mx-auto px-6 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
       <div class="max-w-2xl">
-        <h2 class="text-5xl md:text-6xl font-bold leading-tight mb-6">
+        <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight mb-6">
           Chỉ cần &amp; <span class="text-green-400">đi chuyến nghỉ ngơi</span>
         </h2>
-        <p class="text-xl mb-8 text-gray-200">
+        <p class="text-lg md:text-xl mb-8 text-gray-200">
           WILTravel mang đến những hành trình tuyệt vời nhất. Khám phá thế giới theo cách riêng của bạn.
         </p>
 
-        <div class="bg-white rounded-3xl p-2 shadow-2xl">
+        <div class="bg-white rounded-3xl p-2 shadow-2xl search-container">
           <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
             <div class="md:col-span-2">
               <label class="block text-xs text-gray-500 ml-4 mt-2">Bạn muốn đi đâu?</label>
               <input type="text" id="search-input" placeholder="Phú Quốc, Đà Lạt, Bali, Nhật Bản..." 
-                     class="w-full px-6 py-4 bg-transparent focus:outline-none text-gray-800 text-lg">
+                     class="w-full px-6 py-4 bg-transparent focus:outline-none text-gray-800 text-base md:text-lg">
             </div>
-            <div>
+            <div class="hidden md:block">
               <label class="block text-xs text-gray-500 ml-4 mt-2">Ngày đi</label>
               <input type="date" class="w-full px-6 py-4 bg-transparent focus:outline-none text-gray-800">
             </div>
             <div class="flex items-end">
               <button onclick="searchTour()" 
-                      class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-4 rounded-2xl transition text-lg">
+                      class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-4 rounded-2xl transition text-base md:text-lg">
                 Tìm chuyến đi
               </button>
             </div>
@@ -82,56 +105,56 @@
       </div>
     </div>
 
-    <button onclick="prevSlide()" class="absolute left-6 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white p-4 rounded-full transition z-20">
-      <i class="fa-solid fa-chevron-left text-2xl"></i>
+    <button onclick="prevSlide()" class="absolute left-4 md:left-6 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white p-3 md:p-4 rounded-full transition z-20">
+      <i class="fa-solid fa-chevron-left text-xl md:text-2xl"></i>
     </button>
-    <button onclick="nextSlide()" class="absolute right-6 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white p-4 rounded-full transition z-20">
-      <i class="fa-solid fa-chevron-right text-2xl"></i>
+    <button onclick="nextSlide()" class="absolute right-4 md:right-6 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white p-3 md:p-4 rounded-full transition z-20">
+      <i class="fa-solid fa-chevron-right text-xl md:text-2xl"></i>
     </button>
 
-    <div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex gap-3 z-20" id="indicators"></div>
+    <div class="absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 flex gap-3 z-20" id="indicators"></div>
   </section>
 
   <!-- Popular Destinations -->
-  <section class="py-20 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="flex justify-between items-end mb-12">
+  <section class="py-16 md:py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 md:mb-12 gap-4">
         <div>
-          <h2 class="text-4xl font-bold text-gray-800">Điểm đến nổi bật</h2>
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Điểm đến nổi bật</h2>
           <p class="text-gray-600 mt-2">Những chuyến đi được yêu thích nhất</p>
         </div>
-        <a href="#" class="text-green-600 hover:underline font-medium flex items-center gap-2">
+        <a href="#" class="text-green-600 hover:underline font-medium flex items-center gap-2 whitespace-nowrap">
           Xem tất cả <i class="fa-solid fa-arrow-right"></i>
         </a>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" id="destinations-grid"></div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8" id="destinations-grid"></div>
     </div>
   </section>
 
   <!-- Tour Tiêu Biểu -->
-  <section class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="flex justify-between items-end mb-12">
+  <section class="py-16 md:py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 md:mb-12 gap-4">
         <div>
-          <h2 class="text-4xl font-bold text-gray-800">Tour Tiêu Biểu</h2>
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Tour Tiêu Biểu</h2>
           <p class="text-gray-600 mt-2">Những tour chất lượng cao - Giá hợp lý nhất</p>
         </div>
-        <a href="#" class="text-green-600 hover:underline font-medium flex items-center gap-2">
+        <a href="#" class="text-green-600 hover:underline font-medium flex items-center gap-2 whitespace-nowrap">
           Xem tất cả tour <i class="fa-solid fa-arrow-right"></i>
         </a>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="featured-tours"></div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8" id="featured-tours"></div>
     </div>
   </section>
 
   <!-- Call to Action -->
-  <section class="bg-gradient-to-r from-green-600 to-emerald-700 py-20 text-white">
+  <section class="bg-gradient-to-r from-green-600 to-emerald-700 py-16 md:py-20 text-white">
     <div class="max-w-4xl mx-auto text-center px-6">
-      <h2 class="text-4xl font-bold mb-6">Sẵn sàng cho chuyến đi tiếp theo?</h2>
-      <p class="text-xl mb-10">Hàng ngàn du khách đã tin tưởng WILTravel để có những kỳ nghỉ tuyệt vời</p>
-      <button class="bg-white text-green-600 px-10 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">Sẵn sàng cho chuyến đi tiếp theo?</h2>
+      <p class="text-lg md:text-xl mb-10">Hàng ngàn du khách đã tin tưởng WILTravel để có những kỳ nghỉ tuyệt vời</p>
+      <button class="bg-white text-green-600 px-8 md:px-10 py-4 rounded-full text-base md:text-lg font-semibold hover:bg-gray-100 transition">
         Bắt đầu hành trình ngay
       </button>
     </div>
@@ -139,10 +162,10 @@
 
   <!-- Footer -->
   <footer id="footer" class="bg-gray-900 text-gray-400 py-16">
-    <div class="max-w-7xl mx-auto px-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
         <div>
-          <img src="images/logo.png" alt="WILTravel" class="h-10 mb-4">
+          <img src="images/logo.png" alt="WILTravel" class="h-12 mb-4">
           <p class="text-sm">Chỉ cần & đi chuyến nghỉ ngơi</p>
         </div>
         
@@ -175,7 +198,7 @@
   </footer>
 
   <script>
-    // ==================== DỮ LIỆU ====================
+    // Script giữ nguyên hoàn toàn như code cũ
     const heroSlides = [
       { image: "images/hero1.jpg" },
       { image: "images/hero2.jpg" },
@@ -198,7 +221,6 @@
       { name: "Nhật Bản Mùa Hoa Anh Đào", location: "Tokyo - Osaka", price: "32.900.000", image: "images/tour-japan.jpg" }
     ];
 
-    // ==================== HERO CAROUSEL ====================
     let currentSlide = 0;
     const heroSection = document.getElementById('hero');
     const indicatorsContainer = document.getElementById('indicators');
@@ -211,12 +233,8 @@
       indicatorsContainer.innerHTML = '';
       heroSlides.forEach((_, index) => {
         const dot = document.createElement('div');
-        dot.className = `w-4 h-4 rounded-full cursor-pointer transition-all ${index === currentSlide ? 'bg-white scale-125' : 'bg-white/50'}`;
-        dot.onclick = () => {
-          currentSlide = index;
-          updateHero();
-          createIndicators();
-        };
+        dot.className = `w-3 h-3 md:w-4 md:h-4 rounded-full cursor-pointer transition-all ${index === currentSlide ? 'bg-white scale-125' : 'bg-white/50'}`;
+        dot.onclick = () => { currentSlide = index; updateHero(); createIndicators(); };
         indicatorsContainer.appendChild(dot);
       });
     }
@@ -233,7 +251,6 @@
       createIndicators();
     }
 
-    // Render Destinations
     function renderDestinations() {
       const grid = document.getElementById('destinations-grid');
       grid.innerHTML = '';
@@ -241,15 +258,15 @@
         const card = document.createElement('div');
         card.className = "bg-white rounded-3xl overflow-hidden card-hover cursor-pointer";
         card.innerHTML = `
-          <img src="${dest.image}" class="w-full h-64 object-cover" alt="${dest.name}">
-          <div class="p-6">
+          <img src="${dest.image}" class="w-full h-52 sm:h-64 object-cover" alt="${dest.name}">
+          <div class="p-5 sm:p-6">
             <div class="flex justify-between items-start">
               <div>
-                <h3 class="text-xl font-semibold">${dest.name}</h3>
+                <h3 class="text-lg sm:text-xl font-semibold">${dest.name}</h3>
                 <p class="text-gray-500">${dest.location}</p>
               </div>
               <div class="text-right">
-                <span class="text-2xl font-bold text-green-600">${dest.price}</span>
+                <span class="text-xl sm:text-2xl font-bold text-green-600">${dest.price}</span>
                 <p class="text-xs text-gray-400">/người</p>
               </div>
             </div>
@@ -259,7 +276,6 @@
       });
     }
 
-    // Render Tour Tiêu Biểu
     function renderFeaturedTours() {
       const grid = document.getElementById('featured-tours');
       grid.innerHTML = '';
@@ -267,13 +283,13 @@
         const card = document.createElement('div');
         card.className = "bg-white rounded-3xl overflow-hidden card-hover cursor-pointer border border-gray-100";
         card.innerHTML = `
-          <img src="${tour.image}" class="w-full h-56 object-cover" alt="${tour.name}">
-          <div class="p-6">
-            <h3 class="font-semibold text-lg mb-1">${tour.name}</h3>
+          <img src="${tour.image}" class="w-full h-48 sm:h-56 object-cover" alt="${tour.name}">
+          <div class="p-5 sm:p-6">
+            <h3 class="font-semibold text-base sm:text-lg mb-1">${tour.name}</h3>
             <p class="text-gray-500 text-sm">${tour.location}</p>
             <div class="mt-4 flex justify-between items-end">
               <div>
-                <span class="text-2xl font-bold text-green-600">${tour.price}</span>
+                <span class="text-xl sm:text-2xl font-bold text-green-600">${tour.price}</span>
                 <span class="text-xs text-gray-400"> VNĐ</span>
               </div>
               <button class="bg-green-600 text-white px-5 py-2 rounded-full text-sm hover:bg-green-700">Đặt tour</button>
@@ -293,18 +309,11 @@
       }
     }
 
-    // Cuộn mượt xuống Footer
     function scrollToFooter(e) {
       e.preventDefault();
-      const footer = document.getElementById('footer');
-      if (footer) {
-        footer.scrollIntoView({
-          behavior: "smooth"
-        });
-      }
+      document.getElementById('footer').scrollIntoView({ behavior: "smooth" });
     }
 
-    // ==================== KHỞI TẠO ====================
     window.onload = () => {
       updateHero();
       createIndicators();
