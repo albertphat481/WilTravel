@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   
-  <!-- Favicon - Icon trên tab trình duyệt -->
+  <!-- Favicon -->
   <link rel="icon" href="images/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="images/favicon.png">
 
@@ -56,16 +56,34 @@
         <img src="images/logo.png" alt="WILTravel" class="h-9 sm:h-11 w-auto">
       </div>
       
+      <!-- Desktop Menu -->
       <div class="hidden md:flex items-center gap-8 text-gray-700 font-medium">
         <a href="index.html" class="hover:text-green-600 transition">Trang chủ</a>
         <a href="#" class="hover:text-green-600 transition">Điểm đến</a>
         <a href="#" class="hover:text-green-600 transition">Tour</a>
+        <a href="flight.html" class="hover:text-green-600 transition">Mua vé máy bay</a>
         <a href="#footer" onclick="scrollToFooter(event)" class="hover:text-green-600 transition">Về chúng tôi</a>
       </div>
 
       <div class="flex items-center gap-3">
         <a href="login.html" class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-full transition text-sm sm:text-base">Đăng nhập</a>
         <a href="register.html" class="bg-green-600 text-white px-5 py-2 rounded-full hover:bg-green-700 transition text-sm sm:text-base font-medium">Đăng ký</a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button id="mobile-menu-button" class="md:hidden text-3xl text-gray-700">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+      <div class="px-6 py-6 flex flex-col gap-5 text-gray-700 font-medium">
+        <a href="index.html" class="hover:text-green-600 transition">Trang chủ</a>
+        <a href="#" class="hover:text-green-600 transition">Điểm đến</a>
+        <a href="#" class="hover:text-green-600 transition">Tour</a>
+        <a href="flight.html" class="hover:text-green-600 transition">Mua vé máy bay</a>
+        <a href="#footer" onclick="scrollToFooter(event)" class="hover:text-green-600 transition">Về chúng tôi</a>
       </div>
     </div>
   </nav>
@@ -198,7 +216,17 @@
   </footer>
 
   <script>
-    // Script giữ nguyên hoàn toàn như code cũ
+    // Script menu mobile (mới thêm)
+    const mobileButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (mobileButton && mobileMenu) {
+      mobileButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+
+    // Script cũ của bạn (giữ nguyên hoàn toàn)
     const heroSlides = [
       { image: "images/hero1.jpg" },
       { image: "images/hero2.jpg" },
