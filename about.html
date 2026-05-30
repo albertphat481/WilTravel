@@ -2,72 +2,66 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  
-  <!-- Favicon -->
-  <link rel="icon" href="images/favicon.png" type="image/png">
-  <link rel="apple-touch-icon" href="images/favicon.png">
-
-  <title>WILTravel - Về chúng tôi</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WILTravel - Về Chúng Tôi</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <style>
-    .about-bg {
-      background-image: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('images/hero3.jpg');
+    .about-hero {
       background-size: cover;
       background-position: center;
+      transition: background-image 1.8s ease-in-out;
       min-height: 100vh;
+    }
+    html {
+      scroll-behavior: smooth;
     }
   </style>
 </head>
-<body class="font-sans">
+<body class="font-sans" style="scroll-behavior: auto;">
 
-  <!-- Navbar (giống các trang khác) -->
+  <!-- Navbar -->
   <nav class="bg-white shadow-md fixed w-full z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
       <div class="flex items-center gap-3">
-        <img src="images/logo.png" alt="WILTravel" class="h-9 sm:h-11 w-auto">
+        <img src="images/logo.png" alt="WILTravel" class="h-11 w-auto">
       </div>
-      
       <div class="hidden md:flex items-center gap-8 text-gray-700 font-medium">
         <a href="index.html" class="hover:text-green-600 transition">Trang chủ</a>
         <a href="#" class="hover:text-green-600 transition">Điểm đến</a>
         <a href="#" class="hover:text-green-600 transition">Tour</a>
-        <a href="flight.html" class="hover:text-green-600 transition">Mua vé máy bay</a>
         <a href="about.html" class="text-green-600 font-semibold">Về chúng tôi</a>
       </div>
-
-      <div class="flex items-center gap-3">
-        <a href="login.html" class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-full transition text-sm sm:text-base">Đăng nhập</a>
-        <a href="register.html" class="bg-green-600 text-white px-5 py-2 rounded-full hover:bg-green-700 transition text-sm sm:text-base font-medium">Đăng ký</a>
+      <div class="flex items-center gap-4">
+        <a href="login.html" class="px-5 py-2 text-gray-700 hover:bg-gray-100 rounded-full transition">Đăng nhập</a>
+        <a href="register.html" class="bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-700 transition font-medium">Đăng ký</a>
       </div>
     </div>
   </nav>
 
-  <!-- Hero About -->
-  <section class="about-bg h-screen flex items-center text-white pt-20 relative">
-    <div class="max-w-7xl mx-auto px-6 text-center relative z-10">
+  <!-- Hero Slideshow -->
+  <section id="about-hero" class="about-hero flex items-center text-white pt-20 relative">
+    <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
       <h1 class="text-5xl md:text-6xl font-bold mb-6">Về WILTravel</h1>
-      <p class="text-xl md:text-2xl max-w-2xl mx-auto">Chúng tôi mang đến những hành trình đáng nhớ, những trải nghiệm chân thực và dịch vụ tận tâm nhất.</p>
+      <p class="text-xl md:text-2xl max-w-3xl mx-auto">Chúng tôi biến mọi hành trình thành kỷ niệm đẹp.</p>
     </div>
   </section>
 
-  <!-- Nội dung chính -->
+  <!-- Câu chuyện -->
   <section class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-6">
+    <div class="max-w-6xl mx-auto px-6">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         <div>
-          <h2 class="text-4xl font-bold text-gray-800 mb-6">Câu chuyện của chúng tôi</h2>
-          <p class="text-gray-600 leading-relaxed text-lg mb-6">
-            WILTravel được thành lập với sứ mệnh mang đến cho mọi người những chuyến đi chất lượng, an toàn và đầy cảm hứng. 
-            Chúng tôi tin rằng du lịch không chỉ là di chuyển, mà là những kỷ niệm đẹp và những trải nghiệm ý nghĩa.
+          <h2 class="text-4xl font-bold text-gray-800 mb-6">Câu chuyện WILTravel</h2>
+          <p class="text-gray-600 text-lg leading-relaxed mb-6">
+            Thành lập năm 2016 tại TP. Hồ Chí Minh, WILTravel được xây dựng từ niềm đam mê du lịch và mong muốn mang đến những chuyến đi chất lượng cao, an toàn cho người Việt.
           </p>
-          <p class="text-gray-600 leading-relaxed text-lg">
-            Với hơn 10 năm kinh nghiệm trong ngành du lịch, đội ngũ WILTravel luôn nỗ lực mang đến dịch vụ tốt nhất cho khách hàng.
+          <p class="text-gray-600 text-lg leading-relaxed">
+            Sau gần 10 năm, chúng tôi đã đồng hành cùng hàng chục ngàn du khách khám phá Việt Nam và nhiều điểm đến quốc tế.
           </p>
         </div>
-        <div class="rounded-3xl overflow-hidden shadow-xl">
-          <img src="images/hero2.jpg" alt="WILTravel Team" class="w-full h-full object-cover">
+        <div class="rounded-3xl overflow-hidden shadow-2xl">
+          <img src="images/hero2.jpg" alt="WILTravel" class="w-full">
         </div>
       </div>
     </div>
@@ -75,51 +69,62 @@
 
   <!-- Giá trị cốt lõi -->
   <section class="py-20 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-6 text-center">
-      <h2 class="text-4xl font-bold text-gray-800 mb-12">Giá trị cốt lõi</h2>
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <h2 class="text-4xl font-bold mb-12">Giá trị cốt lõi</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-        <div class="bg-white p-8 rounded-3xl shadow-sm">
-          <i class="fa-solid fa-heart text-5xl text-green-600 mb-6"></i>
-          <h3 class="text-2xl font-semibold mb-3">Tận Tâm</h3>
-          <p class="text-gray-600">Luôn đặt khách hàng làm trung tâm trong mọi dịch vụ</p>
+        <div class="bg-white p-10 rounded-3xl shadow-sm">
+          <i class="fa-solid fa-heart text-6xl text-green-600 mb-6"></i>
+          <h3 class="text-2xl font-semibold mb-4">Tận Tâm</h3>
+          <p class="text-gray-600">Luôn đặt khách hàng làm trung tâm.</p>
         </div>
-        <div class="bg-white p-8 rounded-3xl shadow-sm">
-          <i class="fa-solid fa-shield-halved text-5xl text-green-600 mb-6"></i>
-          <h3 class="text-2xl font-semibold mb-3">An Toàn</h3>
-          <p class="text-gray-600">Cam kết chất lượng và an toàn cho mọi hành trình</p>
+        <div class="bg-white p-10 rounded-3xl shadow-sm">
+          <i class="fa-solid fa-shield-halved text-6xl text-green-600 mb-6"></i>
+          <h3 class="text-2xl font-semibold mb-4">An Toàn</h3>
+          <p class="text-gray-600">Cam kết an toàn tuyệt đối cho mọi hành trình.</p>
         </div>
-        <div class="bg-white p-8 rounded-3xl shadow-sm">
-          <i class="fa-solid fa-leaf text-5xl text-green-600 mb-6"></i>
-          <h3 class="text-2xl font-semibold mb-3">Bền Vững</h3>
-          <p class="text-gray-600">Hỗ trợ du lịch có trách nhiệm với môi trường</p>
+        <div class="bg-white p-10 rounded-3xl shadow-sm">
+          <i class="fa-solid fa-leaf text-6xl text-green-600 mb-6"></i>
+          <h3 class="text-2xl font-semibold mb-4">Bền Vững</h3>
+          <p class="text-gray-600">Du lịch trách nhiệm với môi trường và cộng đồng.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Thông tin công ty -->
+  <section class="py-20 bg-white">
+    <div class="max-w-4xl mx-auto px-6">
+      <h2 class="text-4xl font-bold text-center mb-12">Thông tin công ty</h2>
+      <div class="bg-gray-50 rounded-3xl p-10">
+        <div class="space-y-4 text-gray-700">
+          <p><strong>CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ DU LỊCH WILTRAVEL</strong></p>
+          <p><strong>Trụ sở:</strong> 72/10/6 Văn Chung, Quận Tân Bình, Tp.HCM</p>
+          <p><strong>Hotline:</strong> 0905 025737 (Ms Phượng)</p>
+          <p><strong>Email:</strong> info@wil-travel.com</p>
+          <p><strong>Điện thoại:</strong> (84) 8 38122159</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer id="footer" class="bg-gray-900 text-gray-400 py-16">
+  <footer class="bg-gray-900 text-gray-400 py-16">
     <div class="max-w-7xl mx-auto px-6">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
         <div>
-          <img src="images/logo.png" alt="WILTravel" class="h-12 mb-4">
+          <img src="images/logo.png" alt="WILTravel" class="h-12 mb-4 brightness-0 invert">
           <p class="text-sm">Chỉ cần & đi chuyến nghỉ ngơi</p>
         </div>
-        
         <div>
           <h3 class="text-white font-semibold mb-4">Liên hệ</h3>
           <p class="text-sm leading-relaxed">
-            CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ DU LỊCH WILTRAVEL<br>
-            72/10/6 Văn Chung, Quận Tân Bình, Tp.HCM<br><br>
-            Điện thoại: (84) 8 38122159<br>
-            Fax: (84) 8 38106577<br>
-            Email: info@wil-travel.com<br>
-            Hotline: 0905 025737 (Ms Phượng)
+            72/10/6 Văn Chung, Quận Tân Bình, Tp.HCM<br>
+            Hotline: 0905 025737<br>
+            Email: info@wil-travel.com
           </p>
         </div>
-
         <div>
-          <h3 class="text-white font-semibold mb-4">Kết nối với chúng tôi</h3>
+          <h3 class="text-white font-semibold mb-4">Kết nối</h3>
           <div class="flex gap-6 text-3xl">
             <i class="fa-brands fa-facebook hover:text-white cursor-pointer"></i>
             <i class="fa-brands fa-instagram hover:text-white cursor-pointer"></i>
@@ -127,12 +132,30 @@
           </div>
         </div>
       </div>
-
-      <div class="text-center text-xs mt-12 pt-8 border-t border-gray-800">
-        © 2026 WILTravel - Công ty TNHH Thương mại Dịch vụ Du lịch WILTRAVEL
-      </div>
     </div>
   </footer>
 
+  <script>
+    // Background Slideshow
+    const heroImages = [
+      "images/hero1.jpg",
+      "images/hero2.jpg",
+      "images/hero3.jpg",
+      "images/about-bg1.jpg",
+      "images/about-bg2.jpg"
+    ];
+    let currentIndex = 0;
+    const heroSection = document.getElementById('about-hero');
+
+    function changeBackground() {
+      currentIndex = (currentIndex + 1) % heroImages.length;
+      heroSection.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('${heroImages[currentIndex]}')`;
+    }
+
+    window.onload = () => {
+      setInterval(changeBackground, 6500);
+      window.scrollTo(0, 0); // Đảm bảo luôn ở đầu trang
+    };
+  </script>
 </body>
 </html>
