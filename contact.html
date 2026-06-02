@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WILTravel - Liên Hệ</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <style>
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+<body class="font-sans bg-gray-50">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md fixed w-full z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <img src="images/logo.png" alt="WILTravel" class="h-9 sm:h-11 w-auto">
+      </div>
+      
+      <div class="hidden md:flex items-center gap-8 text-gray-700 font-medium">
+        <a href="index.html" class="hover:text-green-600 transition">Trang chủ</a>
+        <a href="tours.html" class="hover:text-green-600 transition">Tours</a>
+        <a href="flight.html" class="hover:text-green-600 transition">Máy Bay</a>
+        <a href="contact.html" class="text-green-600 font-semibold">Liên Hệ</a>
+        <a href="about.html" class="hover:text-green-600 transition">Về Chúng Tôi</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="login.html" class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-full transition text-sm">Đăng nhập</a>
+        <a href="register.html" class="bg-green-600 text-white px-5 py-2 rounded-full hover:bg-green-700 transition text-sm font-medium">Đăng ký</a>
+      </div>
+
+      <button id="mobile-menu-button" class="md:hidden text-3xl text-gray-700">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+      <div class="px-6 py-6 flex flex-col gap-5 text-gray-700 font-medium">
+        <a href="index.html" class="hover:text-green-600 transition">Trang chủ</a>
+        <a href="tours.html" class="hover:text-green-600 transition">Tours</a>
+        <a href="flight.html" class="hover:text-green-600 transition">Máy Bay</a>
+        <a href="contact.html" class="text-green-600 font-semibold transition">Liên Hệ</a>
+        <a href="about.html" class="hover:text-green-600 transition">Về Chúng Tôi</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-r from-green-600 to-emerald-700 text-white py-16 md:py-20 pt-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4">Liên Hệ Với Chúng Tôi</h1>
+      <p class="text-lg text-green-100">Chúng tôi luôn sẵn lòng hỗ trợ bạn</p>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 py-16">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+      <!-- Contact Info Cards -->
+      <div class="bg-white rounded-2xl shadow-md p-8 text-center hover:shadow-lg transition">
+        <div class="text-5xl text-green-600 mb-4">
+          <i class="fa-solid fa-map-pin"></i>
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 mb-2">Địa Chỉ</h3>
+        <p class="text-gray-600">72/10/6 Văn Chung, Quận Tân Bình<br>TP. Hồ Chí Minh, Việt Nam</p>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-md p-8 text-center hover:shadow-lg transition">
+        <div class="text-5xl text-green-600 mb-4">
+          <i class="fa-solid fa-phone"></i>
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 mb-2">Điện Thoại</h3>
+        <p class="text-gray-600">
+          <a href="tel:0938122159" class="hover:text-green-600 font-semibold">(84) 8 38122159</a><br>
+          <a href="tel:0905025737" class="hover:text-green-600 font-semibold">0905 025737 (Ms Phượng)</a>
+        </p>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-md p-8 text-center hover:shadow-lg transition">
+        <div class="text-5xl text-green-600 mb-4">
+          <i class="fa-solid fa-envelope"></i>
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 mb-2">Email</h3>
+        <p class="text-gray-600">
+          <a href="mailto:info@wil-travel.com" class="hover:text-green-600 font-semibold">info@wil-travel.com</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Contact Form & Map -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <!-- Contact Form -->
+      <div class="bg-white rounded-2xl shadow-md p-8">
+        <h2 class="text-3xl font-bold text-gray-800 mb-6">Gửi Thông Điệp</h2>
+        <form onsubmit="submitForm(event)" class="space-y-6">
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Họ Và Tên</label>
+            <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500" placeholder="Nhập họ tên của bạn">
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+            <input type="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500" placeholder="your@email.com">
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Điện Thoại</label>
+            <input type="tel" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500" placeholder="0901 234 567">
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Chủ Đề</label>
+            <select required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500">
+              <option value="">Chọn chủ đề</option>
+              <option value="booking">Đặt Tour</option>
+              <option value="flight">Mua Vé Máy Bay</option>
+              <option value="complaint">Khiếu Nại</option>
+              <option value="other">Khác</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Nội Dung</label>
+            <textarea rows="5" required placeholder="Viết nội dung tin nhắn..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500 resize-none"></textarea>
+          </div>
+
+          <button type="submit" class="w-full bg-green-600 text-white font-bold py-3 rounded-lg hover:bg-green-700 transition">
+            <i class="fa-solid fa-send mr-2"></i>Gửi Thông Điệp
+          </button>
+        </form>
+      </div>
+
+      <!-- Company Info -->
+      <div class="space-y-8">
+        <div class="bg-white rounded-2xl shadow-md p-8">
+          <h2 class="text-2xl font-bold text-gray-800 mb-6">Giờ Làm Việc</h2>
+          <div class="space-y-3 text-gray-700">
+            <div class="flex justify-between">
+              <span>Thứ Hai - Thứ Sáu:</span>
+              <span class="font-semibold">8:00 - 18:00</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Thứ Bảy:</span>
+              <span class="font-semibold">8:00 - 17:00</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Chủ Nhật:</span>
+              <span class="font-semibold">10:00 - 16:00</span>
+            </div>
+            <p class="text-sm italic text-gray-500 pt-4">* Hotline luôn sẵn sàng 24/7</p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-md p-8">
+          <h2 class="text-2xl font-bold text-gray-800 mb-6">Theo Dõi Chúng Tôi</h2>
+          <div class="flex gap-4">
+            <a href="#" class="flex-1 bg-blue-600 text-white py-3 rounded-lg text-center hover:bg-blue-700 transition">
+              <i class="fa-brands fa-facebook text-2xl"></i>
+            </a>
+            <a href="#" class="flex-1 bg-pink-600 text-white py-3 rounded-lg text-center hover:bg-pink-700 transition">
+              <i class="fa-brands fa-instagram text-2xl"></i>
+            </a>
+            <a href="#" class="flex-1 bg-red-600 text-white py-3 rounded-lg text-center hover:bg-red-700 transition">
+              <i class="fa-brands fa-youtube text-2xl"></i>
+            </a>
+            <a href="#" class="flex-1 bg-blue-400 text-white py-3 rounded-lg text-center hover:bg-blue-500 transition">
+              <i class="fa-brands fa-twitter text-2xl"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-r from-green-600 to-emerald-700 text-white rounded-2xl shadow-md p-8">
+          <h3 class="text-2xl font-bold mb-4">Câu Hỏi Thường Gặp?</h3>
+          <p class="mb-6">Truy cập trang FAQ để tìm câu trả lời nhanh chóng cho các câu hỏi của bạn.</p>
+          <a href="#" class="inline-block bg-white text-green-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition">
+            Xem FAQ <i class="fa-solid fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Map Section -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+    <h2 class="text-3xl font-bold text-gray-800 mb-8">Vị Trí Trụ Sở</h2>
+    <div class="bg-gray-300 rounded-2xl overflow-hidden shadow-md h-96">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.4898237024596!2d106.6553662!3d10.8029044!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752a0d0000bfb7%3A0xf8e8b8c0b0b0b0b0!2s72!5e0!3m2!1svi!2s!4v1234567890" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-400 py-16 mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div>
+          <img src="images/logo.png" alt="WILTravel" class="h-12 mb-4">
+          <p class="text-sm">Chỉ cần & đi chuyến nghỉ ngơi</p>
+        </div>
+        <div>
+          <h3 class="text-white font-semibold mb-4">Liên Hệ</h3>
+          <p class="text-sm">72/10/6 Văn Chung, Tp.HCM<br>Hotline: 0905 025737</p>
+        </div>
+        <div>
+          <h3 class="text-white font-semibold mb-4">Kết Nối</h3>
+          <div class="flex gap-4 text-2xl">
+            <i class="fa-brands fa-facebook hover:text-white cursor-pointer"></i>
+            <i class="fa-brands fa-instagram hover:text-white cursor-pointer"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function submitForm(e) {
+      e.preventDefault();
+      alert('✅ Thông điệp của bạn đã được gửi thành công!\n\nChúng tôi sẽ liên hệ lại sớm nhất có thể.');
+      e.target.reset();
+    }
+
+    const mobileButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    if (mobileButton) {
+      mobileButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    }
+  </script>
+</body>
+</html>

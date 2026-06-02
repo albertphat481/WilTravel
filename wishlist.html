@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WILTravel - Yêu Thích</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <style>
+    html { scroll-behavior: smooth; }
+    .tour-card { transition: all 0.3s ease; }
+    .tour-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.2); }
+    .heart-btn { transition: all 0.2s ease; }
+    .heart-btn.active i { color: #dc2626; }
+  </style>
+</head>
+<body class="font-sans bg-gray-50">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md fixed w-full z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <img src="images/logo.png" alt="WILTravel" class="h-9 sm:h-11 w-auto">
+      </div>
+      
+      <div class="hidden md:flex items-center gap-8 text-gray-700 font-medium">
+        <a href="index.html" class="hover:text-green-600 transition">Trang chủ</a>
+        <a href="tours.html" class="hover:text-green-600 transition">Tours</a>
+        <a href="flight.html" class="hover:text-green-600 transition">Máy Bay</a>
+        <a href="blog.html" class="hover:text-green-600 transition">Blog</a>
+        <a href="contact.html" class="hover:text-green-600 transition">Liên Hệ</a>
+        <a href="about.html" class="hover:text-green-600 transition">Về Chúng Tôi</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="cart.html" class="text-gray-700 hover:text-green-600 transition text-lg"><i class="fa-solid fa-shopping-cart"></i></a>
+        <a href="wishlist.html" class="text-red-600 hover:text-red-700 transition text-lg"><i class="fa-solid fa-heart"></i></a>
+        <a href="profile.html" class="text-gray-700 hover:text-green-600 transition text-lg"><i class="fa-solid fa-user"></i></a>
+        <a href="login.html" class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-full transition text-sm">Đăng nhập</a>
+        <a href="register.html" class="bg-green-600 text-white px-5 py-2 rounded-full hover:bg-green-700 transition text-sm font-medium">Đăng ký</a>
+      </div>
+
+      <button id="mobile-menu-button" class="md:hidden text-3xl text-gray-700">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+      <div class="px-6 py-6 flex flex-col gap-5 text-gray-700 font-medium">
+        <a href="index.html" class="hover:text-green-600 transition">Trang chủ</a>
+        <a href="tours.html" class="hover:text-green-600 transition">Tours</a>
+        <a href="flight.html" class="hover:text-green-600 transition">Máy Bay</a>
+        <a href="blog.html" class="hover:text-green-600 transition">Blog</a>
+        <a href="contact.html" class="hover:text-green-600 transition">Liên Hệ</a>
+        <a href="about.html" class="hover:text-green-600 transition">Về Chúng Tôi</a>
+        <hr>
+        <a href="wishlist.html" class="text-red-600 font-semibold transition"><i class="fa-solid fa-heart mr-2"></i>Yêu Thích</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-r from-red-500 to-pink-600 text-white py-16 md:py-20 pt-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4"><i class="fa-solid fa-heart mr-3"></i>Tours Yêu Thích</h1>
+      <p class="text-lg text-red-100">Lưu lại những tour mà bạn yêu thích</p>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+    <div class="flex justify-between items-center mb-8">
+      <h2 class="text-2xl font-bold text-gray-800">Danh Sách Yêu Thích</h2>
+      <span class="text-gray-600">Tổng cộng: <span class="font-bold text-green-600">8</span> tours</span>
+    </div>
+
+    <!-- Tours Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Tour 1 -->
+      <div class="tour-card bg-white rounded-2xl shadow-md overflow-hidden">
+        <div class="relative">
+          <img src="images/hero1.jpg" alt="Tour" class="w-full h-48 object-cover">
+          <button class="heart-btn active absolute top-4 right-4 bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:scale-110">
+            <i class="fa-solid fa-heart text-red-600 text-lg"></i>
+          </button>
+          <span class="absolute top-4 left-4 bg-red-600 text-white px-3 py-1 rounded-full text-sm font-semibold">Yêu Thích</span>
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold text-gray-800 mb-2">Phú Quốc 4N3Đ</h3>
+          <div class="flex items-center gap-1 mb-3">
+            <i class="fa-solid fa-star text-yellow-400"></i>
+            <span class="font-semibold text-gray-800">4.8</span>
+            <span class="text-gray-600">(320 đánh giá)</span>
+          </div>
+          <p class="text-gray-600 text-sm mb-4">Khám phá bãi biển đẹp, ẩm thực độc đáo tại Phú Quốc</p>
+          <div class="flex justify-between items-center">
+            <div>
+              <p class="text-gray-500 text-sm">Từ</p>
+              <p class="text-2xl font-bold text-green-600">3.29tr</p>
+            </div>
+            <a href="tour-detail.html?id=1" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
+              Xem Chi Tiết
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tour 2 -->
+      <div class="tour-card bg-white rounded-2xl shadow-md overflow-hidden">
+        <div class="relative">
+          <img src="images/hero2.jpg" alt="Tour" class="w-full h-48 object-cover">
+          <button class="heart-btn active absolute top-4 right-4 bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:scale-110">
+            <i class="fa-solid fa-heart text-red-600 text-lg"></i>
+          </button>
+          <span class="absolute top-4 left-4 bg-red-600 text-white px-3 py-1 rounded-full text-sm font-semibold">Yêu Thích</span>
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold text-gray-800 mb-2">Sapa - Hà Giang 5N4Đ</h3>
+          <div class="flex items-center gap-1 mb-3">
+            <i class="fa-solid fa-star text-yellow-400"></i>
+            <span class="font-semibold text-gray-800">4.9</span>
+            <span class="text-gray-600">(215 đánh giá)</span>
+          </div>
+          <p class="text-gray-600 text-sm mb-4">Thưởng ngoạn ruộng bậc thang, văn hóa dân tộc</p>
+          <div class="flex justify-between items-center">
+            <div>
+              <p class="text-gray-500 text-sm">Từ</p>
+              <p class="text-2xl font-bold text-green-600">4.19tr</p>
+            </div>
+            <a href="tour-detail.html?id=2" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
+              Xem Chi Tiết
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tour 3 -->
+      <div class="tour-card bg-white rounded-2xl shadow-md overflow-hidden">
+        <div class="relative">
+          <img src="images/hero3.jpg" alt="Tour" class="w-full h-48 object-cover">
+          <button class="heart-btn active absolute top-4 right-4 bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:scale-110">
+            <i class="fa-solid fa-heart text-red-600 text-lg"></i>
+          </button>
+          <span class="absolute top-4 left-4 bg-red-600 text-white px-3 py-1 rounded-full text-sm font-semibold">Yêu Thích</span>
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold text-gray-800 mb-2">Hạ Long 3N2Đ</h3>
+          <div class="flex items-center gap-1 mb-3">
+            <i class="fa-solid fa-star text-yellow-400"></i>
+            <span class="font-semibold text-gray-800">4.7</span>
+            <span class="text-gray-600">(445 đánh giá)</span>
+          </div>
+          <p class="text-gray-600 text-sm mb-4">Du thuyền 5 sao qua Vịnh Hạ Long kỳ vĩ</p>
+          <div class="flex justify-between items-center">
+            <div>
+              <p class="text-gray-500 text-sm">Từ</p>
+              <p class="text-2xl font-bold text-green-600">2.99tr</p>
+            </div>
+            <a href="tour-detail.html?id=3" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
+              Xem Chi Tiết
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tour 4 -->
+      <div class="tour-card bg-white rounded-2xl shadow-md overflow-hidden">
+        <div class="relative">
+          <img src="images/phuquoc.jpg" alt="Tour" class="w-full h-48 object-cover">
+          <button class="heart-btn active absolute top-4 right-4 bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:scale-110">
+            <i class="fa-solid fa-heart text-red-600 text-lg"></i>
+          </button>
+          <span class="absolute top-4 left-4 bg-red-600 text-white px-3 py-1 rounded-full text-sm font-semibold">Yêu Thích</span>
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold text-gray-800 mb-2">Bali - Thiên Đường Châu Á</h3>
+          <div class="flex items-center gap-1 mb-3">
+            <i class="fa-solid fa-star text-yellow-400"></i>
+            <span class="font-semibold text-gray-800">5.0</span>
+            <span class="text-gray-600">(189 đánh giá)</span>
+          </div>
+          <p class="text-gray-600 text-sm mb-4">Đền thờ cổ kính, bãi biển thiên đường, spa sang trọng</p>
+          <div class="flex justify-between items-center">
+            <div>
+              <p class="text-gray-500 text-sm">Từ</p>
+              <p class="text-2xl font-bold text-green-600">6.99tr</p>
+            </div>
+            <a href="tour-detail.html?id=4" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
+              Xem Chi Tiết
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tour 5 -->
+      <div class="tour-card bg-white rounded-2xl shadow-md overflow-hidden">
+        <div class="relative">
+          <img src="images/sapa.jpg" alt="Tour" class="w-full h-48 object-cover">
+          <button class="heart-btn active absolute top-4 right-4 bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:scale-110">
+            <i class="fa-solid fa-heart text-red-600 text-lg"></i>
+          </button>
+          <span class="absolute top-4 left-4 bg-red-600 text-white px-3 py-1 rounded-full text-sm font-semibold">Yêu Thích</span>
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold text-gray-800 mb-2">Cô Tô - Hòn Ngoại Biến Hoang Sơ</h3>
+          <div class="flex items-center gap-1 mb-3">
+            <i class="fa-solid fa-star text-yellow-400"></i>
+            <span class="font-semibold text-gray-800">4.6</span>
+            <span class="text-gray-600">(98 đánh giá)</span>
+          </div>
+          <p class="text-gray-600 text-sm mb-4">Khám phá hòn đảo hoang sơ với cảnh biển tuyệt đẹp</p>
+          <div class="flex justify-between items-center">
+            <div>
+              <p class="text-gray-500 text-sm">Từ</p>
+              <p class="text-2xl font-bold text-green-600">2.49tr</p>
+            </div>
+            <a href="tour-detail.html?id=5" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
+              Xem Chi Tiết
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tour 6 -->
+      <div class="tour-card bg-white rounded-2xl shadow-md overflow-hidden">
+        <div class="relative">
+          <img src="images/bali.jpg" alt="Tour" class="w-full h-48 object-cover">
+          <button class="heart-btn active absolute top-4 right-4 bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:scale-110">
+            <i class="fa-solid fa-heart text-red-600 text-lg"></i>
+          </button>
+          <span class="absolute top-4 left-4 bg-red-600 text-white px-3 py-1 rounded-full text-sm font-semibold">Yêu Thích</span>
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold text-gray-800 mb-2">Bangkok - Phuket 6N5Đ</h3>
+          <div class="flex items-center gap-1 mb-3">
+            <i class="fa-solid fa-star text-yellow-400"></i>
+            <span class="font-semibold text-gray-800">4.8</span>
+            <span class="text-gray-600">(256 đánh giá)</span>
+          </div>
+          <p class="text-gray-600 text-sm mb-4">Thủ đô sôi động kết hợp với bãi biển Phuket tuyệt vời</p>
+          <div class="flex justify-between items-center">
+            <div>
+              <p class="text-gray-500 text-sm">Từ</p>
+              <p class="text-2xl font-bold text-green-600">5.99tr</p>
+            </div>
+            <a href="tour-detail.html?id=6" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
+              Xem Chi Tiết
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tour 7 -->
+      <div class="tour-card bg-white rounded-2xl shadow-md overflow-hidden">
+        <div class="relative">
+          <img src="images/hero1.jpg" alt="Tour" class="w-full h-48 object-cover">
+          <button class="heart-btn active absolute top-4 right-4 bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:scale-110">
+            <i class="fa-solid fa-heart text-red-600 text-lg"></i>
+          </button>
+          <span class="absolute top-4 left-4 bg-red-600 text-white px-3 py-1 rounded-full text-sm font-semibold">Yêu Thích</span>
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold text-gray-800 mb-2">Đà Nẵng - Hội An 4N3Đ</h3>
+          <div class="flex items-center gap-1 mb-3">
+            <i class="fa-solid fa-star text-yellow-400"></i>
+            <span class="font-semibold text-gray-800">4.7</span>
+            <span class="text-gray-600">(167 đánh giá)</span>
+          </div>
+          <p class="text-gray-600 text-sm mb-4">Bãi biển Mỹ Khê, phố cổ Hội An lãng mạn</p>
+          <div class="flex justify-between items-center">
+            <div>
+              <p class="text-gray-500 text-sm">Từ</p>
+              <p class="text-2xl font-bold text-green-600">2.79tr</p>
+            </div>
+            <a href="tour-detail.html?id=7" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
+              Xem Chi Tiết
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tour 8 -->
+      <div class="tour-card bg-white rounded-2xl shadow-md overflow-hidden">
+        <div class="relative">
+          <img src="images/hero2.jpg" alt="Tour" class="w-full h-48 object-cover">
+          <button class="heart-btn active absolute top-4 right-4 bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:scale-110">
+            <i class="fa-solid fa-heart text-red-600 text-lg"></i>
+          </button>
+          <span class="absolute top-4 left-4 bg-red-600 text-white px-3 py-1 rounded-full text-sm font-semibold">Yêu Thích</span>
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold text-gray-800 mb-2">Singapore - Malaysia 5N4Đ</h3>
+          <div class="flex items-center gap-1 mb-3">
+            <i class="fa-solid fa-star text-yellow-400"></i>
+            <span class="font-semibold text-gray-800">4.9</span>
+            <span class="text-gray-600">(203 đánh giá)</span>
+          </div>
+          <p class="text-gray-600 text-sm mb-4">Thành phố sạch nhất, Petronas Twin Towers, Malacca cổ kính</p>
+          <div class="flex justify-between items-center">
+            <div>
+              <p class="text-gray-500 text-sm">Từ</p>
+              <p class="text-2xl font-bold text-green-600">7.49tr</p>
+            </div>
+            <a href="tour-detail.html?id=8" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
+              Xem Chi Tiết
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State (Hidden by default) -->
+    <div id="empty-state" class="hidden text-center py-12">
+      <i class="fa-solid fa-heart text-6xl text-gray-300 mb-4"></i>
+      <h3 class="text-2xl font-bold text-gray-600 mb-2">Chưa có tour yêu thích</h3>
+      <p class="text-gray-500 mb-6">Hãy thêm tour vào danh sách yêu thích của bạn</p>
+      <a href="tours.html" class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition font-medium">
+        Khám Phá Tours
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-400 py-16 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div>
+          <img src="images/logo.png" alt="WILTravel" class="h-12 mb-4">
+          <p class="text-sm">Chỉ cần & đi chuyến nghỉ ngơi</p>
+        </div>
+        <div>
+          <h3 class="text-white font-semibold mb-4">Liên Hệ</h3>
+          <p class="text-sm">72/10/6 Văn Chung, Tp.HCM<br>Hotline: 0905 025737</p>
+        </div>
+        <div>
+          <h3 class="text-white font-semibold mb-4">Kết Nối</h3>
+          <div class="flex gap-4 text-2xl">
+            <i class="fa-brands fa-facebook hover:text-white cursor-pointer"></i>
+            <i class="fa-brands fa-instagram hover:text-white cursor-pointer"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const mobileButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (mobileButton) {
+      mobileButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    }
+
+    document.querySelectorAll('.heart-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        btn.classList.toggle('active');
+      });
+    });
+  </script>
+</body>
+</html>

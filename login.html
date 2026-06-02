@@ -11,7 +11,7 @@
     .login-bg {
       background-size: cover;
       background-position: center;
-      transition: background-image 1.5s ease-in-out;
+      transition: background-image 0.8s cubic-bezier(0.4, 0, 0.2, 1);
       min-height: 100vh;
     }
 
@@ -91,8 +91,8 @@
   </div>
 
   <!-- Modal Quên Mật Khẩu -->
-  <div id="forgotModal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-50">
-    <div class="bg-white rounded-3xl p-8 max-w-md w-full mx-4">
+<div id="forgotModal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-50" onclick="closeForgotModal()">
+      <div onclick="event.stopPropagation()" class="bg-white rounded-3xl p-8 max-w-md w-full mx-4">
       <h2 class="text-2xl font-bold text-gray-800 mb-2">Quên mật khẩu?</h2>
       <p class="text-gray-600 mb-6">Nhập email của bạn để nhận link đặt lại mật khẩu.</p>
       
@@ -111,21 +111,48 @@
   <script>
     const GOOGLE_CLIENT_ID = "1038953243276-ef3mtk9jmsbhkjsip1v1ibgluvbsqb.apps.googleusercontent.com";
 
-    // Background Slideshow
+    // Enhanced Background Carousel
     const bgImages = [
       "images/hero1.jpg",
       "images/hero2.jpg",
-      "images/hero3.jpg",
-      "images/login-bg1.jpg",
-      "images/login-bg2.jpg"
+      "images/hero3.jpg"
     ];
+    const gradients = [
+      "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+      "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+      "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"
+    ];
+    
     let currentBg = 0;
+    let autoPlayInterval;
+    let isAutoPlaying = true;
     const loginBg = document.getElementById('login-bg');
 
     function changeBackground() {
       currentBg = (currentBg + 1) % bgImages.length;
-      loginBg.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('${bgImages[currentBg]}')`;
+      const bgImage = `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('${bgImages[currentBg]}'), ${gradients[currentBg]}`;
+      loginBg.style.backgroundImage = bgImage;
+      loginBg.style.backgroundSize = 'cover';
+      loginBg.style.backgroundPosition = 'center';
     }
+
+    function startAutoPlay() {
+      if (!isAutoPlaying) return;
+      autoPlayInterval = setInterval(changeBackground, 4000);
+    }
+
+    function stopAutoPlay() {
+      clearInterval(autoPlayInterval);
+    }
+
+    function resetAutoPlay() {
+      stopAutoPlay();
+      if (isAutoPlaying) startAutoPlay();
+    }
+
+    // Pause on hover
+    loginBg.addEventListener('mouseenter', stopAutoPlay);
+    loginBg.addEventListener('mouseleave', resetAutoPlay);
 
     // Google Login
     function handleCredentialResponse(response) {
@@ -180,25 +207,46 @@
       document.getElementById('forgotModal').classList.add('hidden');
     }
 
+    function validateEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
     function sendResetLink() {
       const email = document.getElementById('forgot-email').value.trim();
-      if (email) {
-        alert(`✅ Link đặt lại mật khẩu đã được gửi đến: ${email}`);
-        closeForgotModal();
-      } else {
+      if (!email) {
         alert("Vui lòng nhập email!");
+        return;
       }
+      if (!validateEmail(email)) {
+        alert("Vui lòng nhập định dạng email hợp lệ!");
+        return;
+      }
+      alert(`✅ Link đặt lại mật khẩu đã được gửi đến: ${email}`);
+      closeForgotModal();
     }
 
     function handleLogin(e) {
       e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      if (!validateEmail(email)) {
+        alert('Vui lòng nhập email hợp lệ!');
+        return;
+      }
       showSuccessMessage();
+    }
+
+    function handleEscapeKey(event) {
+      if (event.key === 'Escape') {
+        closeForgotModal();
+      }
     }
 
     // Khởi tạo
     window.onload = () => {
       initializeGoogle();
-      setInterval(changeBackground, 6000); // Đổi ảnh mỗi 6 giây
+      changeBackground(); // Initialize first background
+      startAutoPlay(); // Start enhanced carousel
+      document.addEventListener('keydown', handleEscapeKey);
     };
   </script>
 </body>
