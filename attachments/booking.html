@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WILTravel - Đặt Tour</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body class="font-sans bg-gray-50">
+
+  <nav class="bg-white shadow-md fixed w-full z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+      <a href="index.html"><img src="images/logo.png" alt="WILTravel" class="h-10 w-auto"></a>
+      <span class="text-gray-700 font-semibold">Quá Trình Đặt Tour</span>
+    </div>
+  </nav>
+
+  <section class="max-w-4xl mx-auto px-4 sm:px-6 py-16 pt-24">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+      <div class="text-center">
+        <div class="inline-block bg-green-600 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg mb-2">1</div>
+        <p class="font-semibold text-gray-800">Thông Tin Cá Nhân</p>
+      </div>
+      <div class="text-center">
+        <div class="inline-block bg-green-200 text-green-600 w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg mb-2">2</div>
+        <p class="font-semibold text-gray-800">Xác Nhận</p>
+      </div>
+      <div class="text-center">
+        <div class="inline-block bg-green-200 text-green-600 w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg mb-2">3</div>
+        <p class="font-semibold text-gray-800">Thanh Toán</p>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-md p-8">
+      <h1 class="text-3xl font-bold text-gray-800 mb-8">Thông Tin Cá Nhân</h1>
+      
+      <form onsubmit="submitBooking(event)" class="space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Họ</label>
+            <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Tên</label>
+            <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+          <input type="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500">
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Số Điện Thoại</label>
+          <input type="tel" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500">
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Địa Chỉ</label>
+          <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500">
+        </div>
+
+        <div class="bg-gray-50 p-6 rounded-lg">
+          <h3 class="font-bold text-gray-800 mb-4">Yêu Cầu Đặc Biệt</h3>
+          <textarea rows="4" placeholder="Thêm ghi chú..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500 resize-none"></textarea>
+        </div>
+
+        <div class="flex items-center gap-3 bg-yellow-50 p-4 rounded-lg">
+          <input type="checkbox" id="terms" required class="w-4 h-4">
+          <label for="terms" class="text-sm text-gray-700">
+            Tôi đã đọc và đồng ý với <a href="#" class="text-green-600 font-semibold hover:underline">Điều khoản & Điều kiện</a>
+          </label>
+        </div>
+
+        <button type="submit" class="w-full bg-green-600 text-white font-bold py-3 rounded-lg hover:bg-green-700 transition">
+          Tiếp Tục Xác Nhận
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <script>
+    function submitBooking(e) {
+      e.preventDefault();
+      alert('✅ Thông tin đã được lưu!\n\nChuyển sang bước xác nhận...');
+    }
+  </script>
+</body>
+</html>

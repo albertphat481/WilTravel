@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WILTravel - Blog Du Lịch</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <style>
+    html { scroll-behavior: smooth; }
+    .blog-card { transition: all 0.3s ease; }
+    .blog-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.2); }
+  </style>
+</head>
+<body class="font-sans bg-gray-50">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md fixed w-full z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <img src="images/logo.png" alt="WILTravel" class="h-9 sm:h-11 w-auto">
+      </div>
+      
+      <div class="hidden md:flex items-center gap-8 text-gray-700 font-medium">
+        <a href="index.html" class="hover:text-green-600 transition">Trang chủ</a>
+        <a href="tours.html" class="hover:text-green-600 transition">Tours</a>
+        <a href="blog.html" class="text-green-600 font-semibold">Blog</a>
+        <a href="contact.html" class="hover:text-green-600 transition">Liên Hệ</a>
+        <a href="about.html" class="hover:text-green-600 transition">Về Chúng Tôi</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="login.html" class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-full transition text-sm">Đăng nhập</a>
+        <a href="register.html" class="bg-green-600 text-white px-5 py-2 rounded-full hover:bg-green-700 transition text-sm font-medium">Đăng ký</a>
+      </div>
+
+      <button id="mobile-menu-button" class="md:hidden text-3xl text-gray-700">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+      <div class="px-6 py-6 flex flex-col gap-5 text-gray-700 font-medium">
+        <a href="index.html" class="hover:text-green-600 transition">Trang chủ</a>
+        <a href="tours.html" class="hover:text-green-600 transition">Tours</a>
+        <a href="blog.html" class="text-green-600 font-semibold transition">Blog</a>
+        <a href="contact.html" class="hover:text-green-600 transition">Liên Hệ</a>
+        <a href="about.html" class="hover:text-green-600 transition">Về Chúng Tôi</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-r from-green-600 to-emerald-700 text-white py-16 md:py-20 pt-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4">Blog Du Lịch</h1>
+      <p class="text-lg text-green-100">Khám phá những kinh nghiệm và mẹo du lịch tuyệt vời</p>
+    </div>
+  </section>
+
+  <!-- Search & Filter -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+    <div class="flex flex-col md:flex-row gap-4 items-center">
+      <div class="flex-1 relative">
+        <input type="text" id="search" placeholder="Tìm bài viết..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500">
+        <i class="fa-solid fa-search absolute right-4 top-3 text-gray-400"></i>
+      </div>
+      <select id="category" class="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500">
+        <option value="">Tất Cả Chủ Đề</option>
+        <option value="tips">Mẹo Du Lịch</option>
+        <option value="destination">Điểm Đến</option>
+        <option value="travel">Chuyến Đi</option>
+      </select>
+    </div>
+  </section>
+
+  <!-- Blog Posts -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <!-- Post 1 -->
+      <article class="blog-card bg-white rounded-2xl shadow-md overflow-hidden">
+        <img src="images/hero1.jpg" alt="Blog" class="w-full h-48 object-cover">
+        <div class="p-6">
+          <span class="text-xs text-green-600 font-semibold uppercase tracking-wider">Du Lịch</span>
+          <h3 class="text-xl font-bold text-gray-800 mt-2 mb-2">10 Bí Quyết Du Lịch Tiết Kiệm Cho Nhân Viên</h3>
+          <p class="text-gray-600 text-sm mb-4">Cách tiết kiệm chi phí du lịch mà vẫn có những trải nghiệm tuyệt vời...</p>
+          <div class="flex justify-between items-center text-sm text-gray-500">
+            <span><i class="fa-solid fa-calendar mr-1"></i>01/06/2026</span>
+            <a href="blog1.html" class="text-green-600 font-semibold hover:underline">Đọc tiếp →</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Post 2 -->
+      <article class="blog-card bg-white rounded-2xl shadow-md overflow-hidden">
+        <img src="images/hero2.jpg" alt="Blog" class="w-full h-48 object-cover">
+        <div class="p-6">
+          <span class="text-xs text-green-600 font-semibold uppercase tracking-wider">Điểm Đến</span>
+          <h3 class="text-xl font-bold text-gray-800 mt-2 mb-2">Phú Quốc: Thiên Đường Biển Của Việt Nam</h3>
+          <p class="text-gray-600 text-sm mb-4">Khám phá những bãi biển đẹp nhất, ẩm thực độc đáo và hoạt động thú vị tại Phú Quốc...</p>
+          <div class="flex justify-between items-center text-sm text-gray-500">
+            <span><i class="fa-solid fa-calendar mr-1"></i>29/05/2026</span>
+            <a href="blog2.html" class="text-green-600 font-semibold hover:underline">Đọc tiếp →</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Post 3 -->
+      <article class="blog-card bg-white rounded-2xl shadow-md overflow-hidden">
+        <img src="images/hero3.jpg" alt="Blog" class="w-full h-48 object-cover">
+        <div class="p-6">
+          <span class="text-xs text-green-600 font-semibold uppercase tracking-wider">Mẹo</span>
+          <h3 class="text-xl font-bold text-gray-800 mt-2 mb-2">Cách Chuẩn Bị Hành Lý Thông Minh Cho Chuyến Bay</h3>
+          <p class="text-gray-600 text-sm mb-4">Những bí kíp giúp bạn sắp xếp hành lý gọn gàng, tiện lợi và đúng quy định...</p>
+          <div class="flex justify-between items-center text-sm text-gray-500">
+            <span><i class="fa-solid fa-calendar mr-1"></i>25/05/2026</span>
+            <a href="blog3.html" class="text-green-600 font-semibold hover:underline">Đọc tiếp →</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Post 4 -->
+      <article class="blog-card bg-white rounded-2xl shadow-md overflow-hidden">
+        <img src="images/phuquoc.jpg" alt="Blog" class="w-full h-48 object-cover">
+        <div class="p-6">
+          <span class="text-xs text-green-600 font-semibold uppercase tracking-wider">Điểm Đến</span>
+          <h3 class="text-xl font-bold text-gray-800 mt-2 mb-2">Sapa: Vẻ Đẹp Mù Sương Của Tây Bắc</h3>
+          <p class="text-gray-600 text-sm mb-4">Thưởng ngoạn những cánh đồng lúa bậc thang, văn hóa dân tộc và không khí mát mẻ...</p>
+          <div class="flex justify-between items-center text-sm text-gray-500">
+            <span><i class="fa-solid fa-calendar mr-1"></i>22/05/2026</span>
+            <a href="blog4.html" class="text-green-600 font-semibold hover:underline">Đọc tiếp →</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Post 5 -->
+      <article class="blog-card bg-white rounded-2xl shadow-md overflow-hidden">
+        <img src="images/sapa.jpg" alt="Blog" class="w-full h-48 object-cover">
+        <div class="p-6">
+          <span class="text-xs text-green-600 font-semibold uppercase tracking-wider">Mẹo</span>
+          <h3 class="text-xl font-bold text-gray-800 mt-2 mb-2">Bảo Hiểm Du Lịch: Tại Sao Nó Quan Trọng?</h3>
+          <p class="text-gray-600 text-sm mb-4">Hiểu rõ về bảo hiểm du lịch và cách lựa chọn gói bảo hiểm phù hợp với bạn...</p>
+          <div class="flex justify-between items-center text-sm text-gray-500">
+            <span><i class="fa-solid fa-calendar mr-1"></i>20/05/2026</span>
+            <a href="blog5.html" class="text-green-600 font-semibold hover:underline">Đọc tiếp →</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Post 6 -->
+      <article class="blog-card bg-white rounded-2xl shadow-md overflow-hidden">
+        <img src="images/bali.jpg" alt="Blog" class="w-full h-48 object-cover">
+        <div class="p-6">
+          <span class="text-xs text-green-600 font-semibold uppercase tracking-wider">Chuyến Đi</span>
+          <h3 class="text-xl font-bold text-gray-800 mt-2 mb-2">Bali: Thiên Đường Du Lịch Đông Nam Á</h3>
+          <p class="text-gray-600 text-sm mb-4">Từ các đền thờ cổ kính đến bãi biển thiên đường, Bali là điểm đến không thể bỏ lỡ...</p>
+          <div class="flex justify-between items-center text-sm text-gray-500">
+            <span><i class="fa-solid fa-calendar mr-1"></i>18/05/2026</span>
+            <a href="blog6.html" class="text-green-600 font-semibold hover:underline">Đọc tiếp →</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- Pagination -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 py-12 text-center">
+    <div class="flex justify-center gap-2">
+      <button class="px-4 py-2 bg-green-600 text-white rounded-lg">1</button>
+      <button class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100">2</button>
+      <button class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100">3</button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-400 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div>
+          <img src="images/logo.png" alt="WILTravel" class="h-12 mb-4">
+          <p class="text-sm">Chỉ cần & đi chuyến nghỉ ngơi</p>
+        </div>
+        <div>
+          <h3 class="text-white font-semibold mb-4">Liên Hệ</h3>
+          <p class="text-sm">72/10/6 Văn Chung, Tp.HCM<br>Hotline: 0905 025737</p>
+        </div>
+        <div>
+          <h3 class="text-white font-semibold mb-4">Kết Nối</h3>
+          <div class="flex gap-4 text-2xl">
+            <i class="fa-brands fa-facebook hover:text-white cursor-pointer"></i>
+            <i class="fa-brands fa-instagram hover:text-white cursor-pointer"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const mobileButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    if (mobileButton) {
+      mobileButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    }
+  </script>
+</body>
+</html>

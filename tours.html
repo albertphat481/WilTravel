@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WILTravel - Danh Sách Tour</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <style>
+    html { scroll-behavior: smooth; }
+    .tour-card { transition: all 0.3s ease; }
+    .tour-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.2); }
+  </style>
+</head>
+<body class="font-sans bg-gray-50">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md fixed w-full z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <img src="images/logo.png" alt="WILTravel" class="h-9 sm:h-11 w-auto">
+      </div>
+      
+      <div class="hidden md:flex items-center gap-8 text-gray-700 font-medium">
+        <a href="index.html" class="hover:text-green-600 transition">Trang chủ</a>
+        <a href="tours.html" class="text-green-600 font-semibold">Danh Sách Tour</a>
+        <a href="flight.html" class="hover:text-green-600 transition">Máy Bay</a>
+        <a href="contact.html" class="hover:text-green-600 transition">Liên Hệ</a>
+        <a href="about.html" class="hover:text-green-600 transition">Về Chúng Tôi</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="cart.html" class="relative p-2 hover:text-green-600 transition text-lg">
+          <i class="fa-solid fa-shopping-cart"></i>
+          <span id="cart-count" class="absolute top-1 right-1 bg-green-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+        </a>
+        <a href="login.html" class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-full transition text-sm">Đăng nhập</a>
+        <a href="register.html" class="bg-green-600 text-white px-5 py-2 rounded-full hover:bg-green-700 transition text-sm font-medium">Đăng ký</a>
+      </div>
+
+      <button id="mobile-menu-button" class="md:hidden text-3xl text-gray-700">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+      <div class="px-6 py-6 flex flex-col gap-5 text-gray-700 font-medium">
+        <a href="index.html" class="hover:text-green-600 transition">Trang chủ</a>
+        <a href="tours.html" class="text-green-600 font-semibold transition">Danh Sách Tour</a>
+        <a href="flight.html" class="hover:text-green-600 transition">Máy Bay</a>
+        <a href="contact.html" class="hover:text-green-600 transition">Liên Hệ</a>
+        <a href="about.html" class="hover:text-green-600 transition">Về Chúng Tôi</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-r from-green-600 to-emerald-700 text-white py-16 md:py-20 pt-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4">Khám Phá Các Tour Du Lịch</h1>
+      <p class="text-lg text-green-100">Hàng trăm tour tuyệt vời đang chờ bạn</p>
+    </div>
+  </section>
+
+  <!-- Filter Section -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+    <div class="bg-white rounded-2xl shadow-md p-6 md:p-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Tìm Kiếm</label>
+          <input type="text" id="search-filter" placeholder="Tên tour, điểm đến..." 
+                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500">
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Giá Từ</label>
+          <input type="number" id="price-min" placeholder="Giá tối thiểu" min="0"
+                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500">
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Đến</label>
+          <input type="number" id="price-max" placeholder="Giá tối đa" min="0"
+                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500">
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Sắp Xếp</label>
+          <select id="sort-by" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500">
+            <option value="trending">Phổ Biến Nhất</option>
+            <option value="price-low">Giá Thấp Nhất</option>
+            <option value="price-high">Giá Cao Nhất</option>
+            <option value="rating">Đánh Giá Cao</option>
+          </select>
+        </div>
+      </div>
+      <button onclick="applyFilters()" class="mt-4 bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 transition">
+        <i class="fa-solid fa-filter mr-2"></i>Lọc Kết Quả
+      </button>
+    </div>
+  </section>
+
+  <!-- Tours Grid -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+    <div id="tours-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Tours sẽ được render bằng JS -->
+    </div>
+  </section>
+
+  <!-- Pagination -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 py-8 text-center">
+    <div id="pagination" class="flex justify-center gap-2">
+      <!-- Pagination buttons sẽ được render -->
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-400 py-16 mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div>
+          <img src="images/logo.png" alt="WILTravel" class="h-12 mb-4">
+          <p class="text-sm">Chỉ cần & đi chuyến nghỉ ngơi</p>
+        </div>
+        <div>
+          <h3 class="text-white font-semibold mb-4">Liên Hệ</h3>
+          <p class="text-sm leading-relaxed">
+            72/10/6 Văn Chung, Quận Tân Bình, Tp.HCM<br>
+            Hotline: 0905 025737<br>
+            Email: info@wil-travel.com
+          </p>
+        </div>
+        <div>
+          <h3 class="text-white font-semibold mb-4">Kết Nối</h3>
+          <div class="flex gap-6 text-2xl">
+            <i class="fa-brands fa-facebook hover:text-white cursor-pointer transition"></i>
+            <i class="fa-brands fa-instagram hover:text-white cursor-pointer transition"></i>
+            <i class="fa-brands fa-youtube hover:text-white cursor-pointer transition"></i>
+          </div>
+        </div>
+      </div>
+      <div class="text-center text-xs mt-12 pt-8 border-t border-gray-800">
+        © 2026 WILTravel - Công ty TNHH Thương mại Dịch vụ Du lịch
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const allTours = [
+      { id: 1, name: "Phú Quốc 4N3Đ All Inclusive", location: "Phú Quốc", price: 3290000, image: "images/tour-phuquoc.jpg", rating: 4.8, reviews: 120 },
+      { id: 2, name: "Sapa - Hà Giang 5N4Đ", location: "Sapa", price: 4190000, image: "images/tour-sapa.jpg", rating: 4.7, reviews: 95 },
+      { id: 3, name: "Bali Thiên Đường 6N5Đ", location: "Bali", price: 18500000, image: "images/tour-bali.jpg", rating: 4.9, reviews: 200 },
+      { id: 4, name: "Vịnh Hạ Long - Lan Hạ 4N3Đ", location: "Hạ Long", price: 5690000, image: "images/tour-halong.jpg", rating: 4.6, reviews: 110 },
+      { id: 5, name: "Đà Nẵng - Hội An 4N3Đ", location: "Đà Nẵng", price: 3890000, image: "images/tour-danang.jpg", rating: 4.7, reviews: 140 },
+      { id: 6, name: "Nhật Bản Mùa Hoa Anh Đào", location: "Tokyo - Osaka", price: 32900000, image: "images/tour-japan.jpg", rating: 5.0, reviews: 250 },
+      { id: 7, name: "Đà Lạt Lãng Mạn 3N2Đ", location: "Đà Lạt", price: 2490000, image: "images/tour-dalat.jpg", rating: 4.5, reviews: 80 },
+      { id: 8, name: "Nha Trang - Ninh Hòa 3N2Đ", location: "Nha Trang", price: 2890000, image: "images/tour-nhatrang.jpg", rating: 4.6, reviews: 105 }
+    ];
+
+    const itemsPerPage = 6;
+    let currentPage = 1;
+    let filteredTours = [...allTours];
+
+    function renderTours(tours, page = 1) {
+      const start = (page - 1) * itemsPerPage;
+      const end = start + itemsPerPage;
+      const pageTours = tours.slice(start, end);
+
+      document.getElementById('tours-grid').innerHTML = pageTours.map(tour => `
+        <div class="tour-card bg-white rounded-2xl shadow-md overflow-hidden">
+          <img src="${tour.image}" alt="${tour.name}" class="w-full h-56 object-cover">
+          <div class="p-6">
+            <p class="text-xs text-green-600 font-semibold uppercase tracking-wider mb-2">TOUR</p>
+            <h3 class="text-lg font-bold text-gray-800 mb-2">${tour.name}</h3>
+            <div class="flex items-center justify-between mb-4">
+              <p class="text-gray-600"><i class="fa-solid fa-map-pin mr-1"></i>${tour.location}</p>
+              <div class="text-yellow-500 text-sm">
+                <i class="fa-solid fa-star"></i> ${tour.rating} (${tour.reviews})
+              </div>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-2xl font-bold text-green-600">${(tour.price / 1000000).toFixed(1)}tr</span>
+              <button onclick="viewTour(${tour.id})" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition text-sm">
+                Xem Chi Tiết
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      renderPagination(tours.length);
+    }
+
+    function renderPagination(total) {
+      const pages = Math.ceil(total / itemsPerPage);
+      let html = '';
+      
+      for (let i = 1; i <= pages; i++) {
+        html += `<button onclick="goToPage(${i})" class="px-4 py-2 rounded-lg ${i === currentPage ? 'bg-green-600 text-white' : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'} transition">${i}</button>`;
+      }
+      
+      document.getElementById('pagination').innerHTML = html;
+    }
+
+    function applyFilters() {
+      const search = document.getElementById('search-filter').value.toLowerCase();
+      const priceMin = parseFloat(document.getElementById('price-min').value) || 0;
+      const priceMax = parseFloat(document.getElementById('price-max').value) || Infinity;
+      const sortBy = document.getElementById('sort-by').value;
+
+      filteredTours = allTours.filter(tour => {
+        const matchSearch = tour.name.toLowerCase().includes(search) || tour.location.toLowerCase().includes(search);
+        const matchPrice = tour.price >= priceMin && tour.price <= priceMax;
+        return matchSearch && matchPrice;
+      });
+
+      if (sortBy === 'price-low') filteredTours.sort((a, b) => a.price - b.price);
+      else if (sortBy === 'price-high') filteredTours.sort((a, b) => b.price - a.price);
+      else if (sortBy === 'rating') filteredTours.sort((a, b) => b.rating - a.rating);
+
+      currentPage = 1;
+      renderTours(filteredTours);
+    }
+
+    function goToPage(page) {
+      currentPage = page;
+      renderTours(filteredTours, page);
+      window.scrollTo(0, 0);
+    }
+
+    function viewTour(id) {
+      window.location.href = `tour-detail.html?id=${id}`;
+    }
+
+    const mobileButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    if (mobileButton) {
+      mobileButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    }
+
+    window.onload = () => {
+      renderTours(allTours);
+    };
+  </script>
+</body>
+</html>

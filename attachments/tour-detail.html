@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WILTravel - Chi Tiết Tour</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <style>
+    html { scroll-behavior: smooth; }
+    .image-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+  </style>
+</head>
+<body class="font-sans bg-gray-50">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md fixed w-full z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <a href="index.html"><img src="images/logo.png" alt="WILTravel" class="h-9 sm:h-11 w-auto hover:opacity-80 transition"></a>
+      </div>
+      
+      <div class="hidden md:flex items-center gap-8 text-gray-700 font-medium">
+        <a href="index.html" class="hover:text-green-600 transition">Trang chủ</a>
+        <a href="tours.html" class="hover:text-green-600 transition">Tours</a>
+        <a href="flight.html" class="hover:text-green-600 transition">Máy Bay</a>
+        <a href="contact.html" class="hover:text-green-600 transition">Liên Hệ</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button onclick="addToCart()" class="bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-700 transition text-sm font-medium">
+          <i class="fa-solid fa-cart-plus mr-1"></i>Thêm Vào Giỏ
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Breadcrumb -->
+  <div class="bg-white border-b">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 text-sm text-gray-600">
+      <a href="index.html" class="hover:text-green-600">Trang chủ</a> / 
+      <a href="tours.html" class="hover:text-green-600"> Tours</a> / 
+      <span id="tour-name" class="text-gray-900 font-medium"> Chi Tiết Tour</span>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 py-12 pt-24">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Left Column: Images -->
+      <div class="lg:col-span-2">
+        <div class="bg-white rounded-2xl shadow-md overflow-hidden p-6">
+          <img id="main-image" src="images/tour-phuquoc.jpg" alt="Tour" class="w-full h-96 object-cover rounded-xl mb-6">
+          <div class="image-gallery" id="gallery">
+            <!-- Gallery images -->
+          </div>
+
+          <!-- Tour Description -->
+          <div id="description" class="mt-12">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">Thông Tin Chi Tiết</h2>
+            <div class="space-y-6">
+              <div class="bg-gray-50 p-6 rounded-lg">
+                <h3 class="text-xl font-bold text-gray-800 mb-3"><i class="fa-solid fa-clock text-green-600 mr-2"></i>Thời Gian</h3>
+                <p id="duration" class="text-gray-700">4 ngày 3 đêm</p>
+              </div>
+
+              <div class="bg-gray-50 p-6 rounded-lg">
+                <h3 class="text-xl font-bold text-gray-800 mb-3"><i class="fa-solid fa-check text-green-600 mr-2"></i>Bao Gồm</h3>
+                <ul id="includes" class="space-y-2 text-gray-700">
+                  <li><i class="fa-solid fa-check text-green-600 mr-2"></i>Vé máy bay khứ hồi</li>
+                  <li><i class="fa-solid fa-check text-green-600 mr-2"></i>Khách sạn 4 sao</li>
+                  <li><i class="fa-solid fa-check text-green-600 mr-2"></i>Ăn sáng hàng ngày</li>
+                  <li><i class="fa-solid fa-check text-green-600 mr-2"></i>Hướng dẫn viên tiếng Việt</li>
+                </ul>
+              </div>
+
+              <div class="bg-gray-50 p-6 rounded-lg">
+                <h3 class="text-xl font-bold text-gray-800 mb-3"><i class="fa-solid fa-info text-green-600 mr-2"></i>Lưu Ý</h3>
+                <ul id="notes" class="space-y-2 text-gray-700">
+                  <li><i class="fa-solid fa-circle-dot text-green-600 mr-2"></i>Cần có hộ chiếu còn hiệu lực ít nhất 6 tháng</li>
+                  <li><i class="fa-solid fa-circle-dot text-green-600 mr-2"></i>Bảo hiểm du lịch toàn bộ chuyến đi</li>
+                  <li><i class="fa-solid fa-circle-dot text-green-600 mr-2"></i>Tối thiểu 2 người đăng ký 1 chuyến</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Reviews Section -->
+          <div class="mt-12 bg-gray-50 p-8 rounded-lg">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6">Đánh Giá Từ Khách Hàng</h3>
+            <div class="space-y-6">
+              <div class="bg-white p-4 rounded-lg">
+                <div class="flex justify-between items-start mb-2">
+                  <p class="font-bold text-gray-800">Chị Lan Anh - Hà Nội</p>
+                  <span class="text-yellow-500"><i class="fa-solid fa-star"></i> 5.0</span>
+                </div>
+                <p class="text-gray-700">Tour tuyệt vời! Hướng dẫn viên rất tư tế, khách sạn sạch sẽ, mọi thứ đều hoàn hảo.</p>
+              </div>
+              <div class="bg-white p-4 rounded-lg">
+                <div class="flex justify-between items-start mb-2">
+                  <p class="font-bold text-gray-800">Anh Minh Quân - TP.HCM</p>
+                  <span class="text-yellow-500"><i class="fa-solid fa-star"></i> 4.8</span>
+                </div>
+                <p class="text-gray-700">Tour chất lượng, giá hợp lý, rất đáng để trải nghiệm một lần.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Booking -->
+      <div class="lg:col-span-1">
+        <div class="bg-white rounded-2xl shadow-md p-6 sticky top-24">
+          <h2 id="tour-title" class="text-2xl font-bold text-gray-800 mb-2">Tour Name</h2>
+          <p id="tour-location" class="text-gray-600 mb-4"><i class="fa-solid fa-map-pin mr-2"></i>Địa điểm</p>
+
+          <div class="mb-6 pb-6 border-b">
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-gray-600">Đánh giá:</span>
+              <span class="text-yellow-500"><i class="fa-solid fa-star"></i> <span id="rating">4.8</span> (<span id="reviews-count">120</span>)</span>
+            </div>
+          </div>
+
+          <div class="mb-6 pb-6 border-b">
+            <div class="text-4xl font-bold text-green-600 mb-2" id="tour-price">3.29 triệu</div>
+            <p class="text-gray-600 text-sm">/người</p>
+          </div>
+
+          <!-- Booking Form -->
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-2">Ngày Khởi Hành</label>
+              <input type="date" id="departure-date" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500">
+            </div>
+
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-2">Số Người</label>
+              <div class="flex gap-2">
+                <button onclick="decreaseQuantity()" class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100">-</button>
+                <input type="number" id="quantity" value="1" min="1" class="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-center" readonly>
+                <button onclick="increaseQuantity()" class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100">+</button>
+              </div>
+            </div>
+
+            <div class="bg-gray-50 p-4 rounded-lg">
+              <div class="flex justify-between mb-2">
+                <span class="text-gray-700">Giá tour:</span>
+                <span id="subtotal" class="font-bold text-gray-800">3.29tr</span>
+              </div>
+              <div class="flex justify-between border-t pt-2">
+                <span class="font-bold text-gray-800">Tổng:</span>
+                <span class="text-2xl font-bold text-green-600" id="total">3.29tr</span>
+              </div>
+            </div>
+
+            <button onclick="bookTour()" class="w-full bg-green-600 text-white font-bold py-4 rounded-lg hover:bg-green-700 transition">
+              <i class="fa-solid fa-credit-card mr-2"></i>Đặt Tour Ngay
+            </button>
+
+            <button onclick="addToCart()" class="w-full border-2 border-green-600 text-green-600 font-bold py-3 rounded-lg hover:bg-green-50 transition">
+              <i class="fa-solid fa-cart-plus mr-2"></i>Thêm Vào Giỏ
+            </button>
+          </div>
+
+          <div class="mt-6 pt-6 border-t text-xs text-gray-600">
+            <p><i class="fa-solid fa-shield text-green-600 mr-2"></i>Thanh toán an toàn</p>
+            <p><i class="fa-solid fa-headset text-green-600 mr-2"></i>Hỗ trợ 24/7</p>
+            <p><i class="fa-solid fa-undo text-green-600 mr-2"></i>Hoàn tiền nếu hủy</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-400 py-16 mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div>
+          <img src="images/logo.png" alt="WILTravel" class="h-12 mb-4">
+          <p class="text-sm">Chỉ cần & đi chuyến nghỉ ngơi</p>
+        </div>
+        <div>
+          <h3 class="text-white font-semibold mb-4">Liên Hệ</h3>
+          <p class="text-sm">72/10/6 Văn Chung, Tp.HCM<br>Hotline: 0905 025737</p>
+        </div>
+        <div>
+          <h3 class="text-white font-semibold mb-4">Kết Nối</h3>
+          <div class="flex gap-4 text-2xl">
+            <i class="fa-brands fa-facebook hover:text-white cursor-pointer"></i>
+            <i class="fa-brands fa-instagram hover:text-white cursor-pointer"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const tours = {
+      1: { name: "Phú Quốc 4N3Đ All Inclusive", location: "Phú Quốc", price: 3290000, image: "images/tour-phuquoc.jpg", rating: 4.8, reviews: 120 },
+      2: { name: "Sapa - Hà Giang 5N4Đ", location: "Sapa", price: 4190000, image: "images/tour-sapa.jpg", rating: 4.7, reviews: 95 },
+      3: { name: "Bali Thiên Đường 6N5Đ", location: "Bali", price: 18500000, image: "images/tour-bali.jpg", rating: 4.9, reviews: 200 }
+    };
+
+    let quantity = 1;
+    const urlParams = new URLSearchParams(window.location.search);
+    const tourId = urlParams.get('id') || '1';
+    const tour = tours[tourId] || tours[1];
+
+    function formatPrice(price) {
+      return (price / 1000000).toFixed(2) + 'tr';
+    }
+
+    function updateUI() {
+      document.getElementById('tour-name').textContent = tour.name;
+      document.getElementById('tour-title').textContent = tour.name;
+      document.getElementById('tour-location').textContent = tour.location;
+      document.getElementById('main-image').src = tour.image;
+      document.getElementById('tour-price').textContent = formatPrice(tour.price);
+      document.getElementById('rating').textContent = tour.rating;
+      document.getElementById('reviews-count').textContent = tour.reviews;
+      updateTotal();
+    }
+
+    function increaseQuantity() {
+      quantity++;
+      document.getElementById('quantity').value = quantity;
+      updateTotal();
+    }
+
+    function decreaseQuantity() {
+      if (quantity > 1) {
+        quantity--;
+        document.getElementById('quantity').value = quantity;
+        updateTotal();
+      }
+    }
+
+    function updateTotal() {
+      const subtotal = tour.price * quantity;
+      document.getElementById('subtotal').textContent = formatPrice(subtotal);
+      document.getElementById('total').textContent = formatPrice(subtotal);
+    }
+
+    function bookTour() {
+      alert(`✅ Đặt tour thành công!\n\nTour: ${tour.name}\nSố người: ${quantity}\nTổng tiền: ${formatPrice(tour.price * quantity)}\n\nVui lòng tiến hành thanh toán.`);
+    }
+
+    function addToCart() {
+      alert(`✅ Đã thêm vào giỏ hàng!\n\n${tour.name} x${quantity}`);
+    }
+
+    window.onload = updateUI;
+  </script>
+</body>
+</html>

@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="images/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="images/favicon.png">
+
+  <title>WILTravel - Chỉ cần & đi chuyến nghỉ ngơi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <style>
+    .hero-bg {
+      background-size: cover;
+      background-position: center;
+      transition: background-image 1.2s ease-in-out;
+    }
+    .card-hover {
+      transition: all 0.4s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-12px);
+      box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Advanced Carousel Animations */
+    .carousel-slide {
+      opacity: 0;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .carousel-slide.active {
+      opacity: 1;
+      position: relative;
+      z-index: 5;
+    }
+    .carousel-indicators {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 12px;
+      z-index: 20;
+    }
+    .carousel-indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: rgba(255,255,255,0.5);
+      cursor: pointer;
+      transition: all 0.4s ease;
+      border: 2px solid transparent;
+    }
+    .carousel-indicator:hover {
+      background-color: rgba(255,255,255,0.8);
+      transform: scale(1.2);
+    }
+    .carousel-indicator.active {
+      background-color: #fff;
+      width: 32px;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .carousel-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 20;
+      background-color: rgba(255,255,255,0.15);
+      border: 2px solid rgba(255,255,255,0.6);
+      color: white;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 20px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+    .carousel-nav-btn:hover {
+      background-color: rgba(255,255,255,0.3);
+      border-color: white;
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+    .carousel-nav-btn.prev { left: 20px; }
+    .carousel-nav-btn.next { right: 20px; }
+    .hero-section:hover .carousel-nav-btn { opacity: 1; }
+
+    /* Mobile Optimization */
+    @media (max-width: 768px) {
+      .hero-bg {
+        height: 100vh;
+        min-height: 640px;
+      }
+      h2 {
+        font-size: 2.25rem !important;
+        line-height: 1.1 !important;
+      }
+      .search-container {
+        padding: 12px !important;
+      }
+      .carousel-nav-btn { width: 40px; height: 40px; font-size: 16px; }
+      .carousel-nav-btn.prev { left: 12px; }
+      .carousel-nav-btn.next { right: 12px; }
+      .carousel-indicators { bottom: 20px; gap: 8px; }
+      .carousel-indicator { width: 10px; height: 10px; }
+      .carousel-indicator.active { width: 28px; }
+    }
+  </style>
+  </style>
+</head>
+<body class="font-sans">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md fixed w-full z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <img src="images/logo.png" alt="WILTravel" class="h-9 sm:h-11 w-auto">
+      </div>
+      
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex items-center gap-8 text-gray-700 font-medium">
+        <a href="index.html" class="hover:text-green-600 transition">Trang chủ</a>
+        <a href="tours.html" class="hover:text-green-600 transition">Tours</a>
+        <a href="flight.html" class="hover:text-green-600 transition">Máy Bay</a>
+        <a href="blog.html" class="hover:text-green-600 transition">Blog</a>
+        <a href="contact.html" class="hover:text-green-600 transition">Liên Hệ</a>
+        <a href="about.html" class="hover:text-green-600 transition">Về Chúng Tôi</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="cart.html" class="text-gray-700 hover:text-green-600 transition text-lg"><i class="fa-solid fa-shopping-cart"></i></a>
+        <a href="profile.html" class="text-gray-700 hover:text-green-600 transition text-lg"><i class="fa-solid fa-user"></i></a>
+        <a href="login.html" class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-full transition text-sm sm:text-base">Đăng nhập</a>
+        <a href="register.html" class="bg-green-600 text-white px-5 py-2 rounded-full hover:bg-green-700 transition text-sm sm:text-base font-medium">Đăng ký</a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button id="mobile-menu-button" class="md:hidden text-3xl text-gray-700">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+      <div class="px-6 py-6 flex flex-col gap-5 text-gray-700 font-medium">
+        <a href="index.html" class="hover:text-green-600 transition">Trang chủ</a>
+        <a href="tours.html" class="hover:text-green-600 transition">Tours</a>
+        <a href="flight.html" class="hover:text-green-600 transition">Máy Bay</a>
+        <a href="blog.html" class="hover:text-green-600 transition">Blog</a>
+        <a href="contact.html" class="hover:text-green-600 transition">Liên Hệ</a>
+        <a href="about.html" class="hover:text-green-600 transition">Về Chúng Tôi</a>
+        <hr>
+        <a href="cart.html" class="hover:text-green-600 transition"><i class="fa-solid fa-shopping-cart mr-2"></i>Giỏ Hàng</a>
+        <a href="profile.html" class="hover:text-green-600 transition"><i class="fa-solid fa-user mr-2"></i>Tài Khoản</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Carousel -->
+  <section id="hero" class="hero-bg h-screen flex items-center text-white pt-16 md:pt-20 relative">
+    <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+      <div class="max-w-2xl">
+        <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight mb-6">
+          Chỉ cần &amp; <span class="text-green-400">đi chuyến nghỉ ngơi</span>
+        </h2>
+        <p class="text-lg md:text-xl mb-8 text-gray-200">
+          WILTravel mang đến những hành trình tuyệt vời nhất. Khám phá thế giới theo cách riêng của bạn.
+        </p>
+
+        <div class="bg-white rounded-3xl p-2 shadow-2xl search-container">
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+            <div class="md:col-span-2">
+              <label class="block text-xs text-gray-500 ml-4 mt-2">Bạn muốn đi đâu?</label>
+              <input type="text" id="search-input" placeholder="Phú Quốc, Đà Lạt, Bali, Nhật Bản..." 
+                     class="w-full px-6 py-4 bg-transparent focus:outline-none text-gray-800 text-base md:text-lg">
+            </div>
+            <div class="hidden md:block">
+              <label class="block text-xs text-gray-500 ml-4 mt-2">Ngày đi</label>
+              <input type="date" id="search-date" class="w-full px-6 py-4 bg-transparent focus:outline-none text-gray-800">
+            </div>
+            <div class="flex items-end">
+              <button onclick="searchTour()" 
+                      class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-4 rounded-2xl transition text-base md:text-lg">
+                Tìm chuyến đi
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section id="search-results" class="hidden bg-white py-10">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+          <div>
+            <h3 class="text-2xl font-bold text-gray-800">Kết quả tìm kiếm</h3>
+            <p class="text-gray-500 mt-1" id="search-summary"></p>
+          </div>
+          <button onclick="resetSearchResults()" class="text-sm text-gray-600 hover:text-green-600 underline">Xóa kết quả</button>
+        </div>
+        <div id="search-results-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+      </div>
+    </section>
+
+    <button onclick="prevSlide()" class="carousel-nav-btn prev" aria-label="Previous slide">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <button onclick="nextSlide()" class="carousel-nav-btn next" aria-label="Next slide">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+
+    <div class="carousel-indicators" id="indicators"></div>
+  </section>
+
+  <!-- Statistics -->
+  <section class="py-12 bg-white border-b">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+      <div>
+        <div class="text-4xl font-bold text-green-600 stat-number" data-target="12500">0</div>
+        <p class="text-gray-600 mt-2">Khách hàng hài lòng</p>
+      </div>
+      <div>
+        <div class="text-4xl font-bold text-green-600 stat-number" data-target="248">0</div>
+        <p class="text-gray-600 mt-2">Điểm đến</p>
+      </div>
+      <div>
+        <div class="text-4xl font-bold text-green-600 stat-number" data-target="856">0</div>
+        <p class="text-gray-600 mt-2">Tour đã tổ chức</p>
+      </div>
+      <div>
+        <div class="text-4xl font-bold text-green-600 stat-number" data-target="98">0</div>
+        <p class="text-gray-600 mt-2">% Khách hài lòng</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Popular Destinations -->
+  <section id="destinations" class="py-16 md:py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 md:mb-12 gap-4">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Điểm đến nổi bật</h2>
+          <p class="text-gray-600 mt-2">Những chuyến đi được yêu thích nhất</p>
+        </div>
+        <a href="#destinations" class="text-green-600 hover:underline font-medium flex items-center gap-2 whitespace-nowrap">
+          Xem tất cả <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8" id="destinations-grid"></div>
+    </div>
+  </section>
+
+  <!-- Tour Tiêu Biểu -->
+  <section id="featured-tours-section" class="py-16 md:py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 md:mb-12 gap-4">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Tour Tiêu Biểu</h2>
+          <p class="text-gray-600 mt-2">Những tour chất lượng cao - Giá hợp lý nhất</p>
+        </div>
+        <a href="#featured-tours-section" class="text-green-600 hover:underline font-medium flex items-center gap-2 whitespace-nowrap">
+          Xem tất cả tour <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8" id="featured-tours"></div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us -->
+  <section class="py-16 md:py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Tại sao chọn WILTravel?</h2>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mt-12">
+        <div class="bg-white p-8 rounded-3xl shadow-sm">
+          <i class="fa-solid fa-shield-alt text-5xl text-green-600 mb-4"></i>
+          <h3 class="font-semibold text-xl mb-2">An toàn & Tin cậy</h3>
+          <p class="text-gray-600">Bảo hiểm du lịch toàn diện</p>
+        </div>
+        <div class="bg-white p-8 rounded-3xl shadow-sm">
+          <i class="fa-solid fa-headset text-5xl text-green-600 mb-4"></i>
+          <h3 class="font-semibold text-xl mb-2">Hỗ trợ 24/7</h3>
+          <p class="text-gray-600">Đội ngũ tư vấn chuyên nghiệp</p>
+        </div>
+        <div class="bg-white p-8 rounded-3xl shadow-sm">
+          <i class="fa-solid fa-medal text-5xl text-green-600 mb-4"></i>
+          <h3 class="font-semibold text-xl mb-2">Chất lượng cao</h3>
+          <p class="text-gray-600">Đối tác uy tín toàn cầu</p>
+        </div>
+        <div class="bg-white p-8 rounded-3xl shadow-sm">
+          <i class="fa-solid fa-dollar-sign text-5xl text-green-600 mb-4"></i>
+          <h3 class="font-semibold text-xl mb-2">Giá tốt nhất</h3>
+          <p class="text-gray-600">Cam kết giá cạnh tranh</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="py-16 md:py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-12">Khách hàng nói gì về chúng tôi</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-gray-50 p-8 rounded-3xl">
+          <p class="italic text-gray-600">"Chuyến đi Phú Quốc quá tuyệt vời. Dịch vụ rất chu đáo!"</p>
+          <p class="mt-6 font-medium">Chị Lan Anh - Hà Nội</p>
+        </div>
+        <div class="bg-gray-50 p-8 rounded-3xl">
+          <p class="italic text-gray-600">"Tour Sapa 5 ngày rất đáng tiền. Hướng dẫn viên nhiệt tình."</p>
+          <p class="mt-6 font-medium">Anh Minh Quân - TP.HCM</p>
+        </div>
+        <div class="bg-gray-50 p-8 rounded-3xl">
+          <p class="italic text-gray-600">"Đặt tour Bali dễ dàng, khách sạn đẹp, ăn ngon."</p>
+          <p class="mt-6 font-medium">Chị Thu Hà - Đà Nẵng</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="bg-gradient-to-r from-green-600 to-emerald-700 py-16 md:py-20 text-white">
+    <div class="max-w-4xl mx-auto text-center px-6">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">Sẵn sàng cho chuyến đi tiếp theo?</h2>
+      <p class="text-lg md:text-xl mb-10">Hàng ngàn du khách đã tin tưởng WILTravel để có những kỳ nghỉ tuyệt vời</p>
+      <button onclick="document.getElementById('search-input').focus()" 
+              class="bg-white text-green-600 px-8 md:px-10 py-4 rounded-full text-base md:text-lg font-semibold hover:bg-gray-100 transition">
+        Bắt đầu hành trình ngay
+      </button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="footer" class="bg-gray-900 text-gray-400 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div>
+          <img src="images/logo.png" alt="WILTravel" class="h-12 mb-4">
+          <p class="text-sm">Chỉ cần & đi chuyến nghỉ ngơi</p>
+        </div>
+        
+        <div>
+          <h3 class="text-white font-semibold mb-4">Liên hệ</h3>
+          <p class="text-sm leading-relaxed">
+            CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ DU LỊCH WILTRAVEL<br>
+            72/10/6 Văn Chung, Quận Tân Bình, Tp.HCM<br><br>
+            Điện thoại: (84) 8 38122159<br>
+            Fax: (84) 8 38106577<br>
+            Email: info@wil-travel.com<br>
+            Hotline: 0905 025737 (Ms Phượng)
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-white font-semibold mb-4">Hỗ Trợ</h3>
+          <div class="flex flex-col gap-2 text-sm">
+            <a href="faq.html" class="hover:text-white transition">Câu hỏi thường gặp</a>
+            <a href="wishlist.html" class="hover:text-white transition">Danh sách yêu thích</a>
+            <a href="deals.html" class="hover:text-white transition">Ưu đãi & khuyến mãi</a>
+          </div>
+        </div>
+        <div>
+          <h3 class="text-white font-semibold mb-4">Kết nối với chúng tôi</h3>
+          <div class="flex gap-6 text-3xl">
+            <i class="fa-brands fa-facebook hover:text-white cursor-pointer"></i>
+            <i class="fa-brands fa-instagram hover:text-white cursor-pointer"></i>
+            <i class="fa-brands fa-youtube hover:text-white cursor-pointer"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center text-xs mt-12 pt-8 border-t border-gray-800">
+        © 2026 WILTravel - Công ty TNHH Thương mại Dịch vụ Du lịch WILTRAVEL
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Script menu mobile
+    const mobileButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (mobileButton && mobileMenu) {
+      mobileButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+
+    // Carousel & DOM Element Variables
+    let currentSlide = 0;
+    let autoPlayInterval;
+    let isAutoPlaying = true;
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    const heroSection = document.getElementById('hero');
+    const indicatorsContainer = document.getElementById('indicators');
+    const searchResultsSection = document.getElementById('search-results');
+    const searchResultsGrid = document.getElementById('search-results-grid');
+    const searchSummary = document.getElementById('search-summary');
+    const statNumbers = document.querySelectorAll('.stat-number');
+    const mobileLinks = document.querySelectorAll('#mobile-menu a');
+
+    const heroSlides = [
+      { image: "images/hero1.jpg", gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)" },
+      { image: "images/hero2.jpg", gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)" },
+      { image: "images/hero3.jpg", gradient: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)" }
+    ];
+
+    const destinations = [
+      { name: "Phú Quốc", location: "Việt Nam", price: "2.5tr", image: "images/phuquoc.jpg" },
+      { name: "Sapa", location: "Việt Nam", price: "1.8tr", image: "images/sapa.jpg" },
+      { name: "Bali", location: "Indonesia", price: "18tr", image: "images/bali.jpg" },
+      { name: "Paris", location: "Pháp", price: "45tr", image: "images/paris.jpg" }
+    ];
+
+    const featuredTours = [
+      { name: "Phú Quốc 4N3Đ All Inclusive", location: "Phú Quốc", price: "3.290.000", image: "images/tour-phuquoc.jpg" },
+      { name: "Sapa - Hà Giang 5N4Đ", location: "Sapa", price: "4.190.000", image: "images/tour-sapa.jpg" },
+      { name: "Bali Thiên Đường 6N5Đ", location: "Bali", price: "18.500.000", image: "images/tour-bali.jpg" },
+      { name: "Vịnh Hạ Long - Lan Hạ 4N3Đ", location: "Hạ Long", price: "5.690.000", image: "images/tour-halong.jpg" },
+      { name: "Đà Nẵng - Hội An 4N3Đ", location: "Đà Nẵng", price: "3.890.000", image: "images/tour-danang.jpg" },
+      { name: "Nhật Bản Mùa Hoa Anh Đào", location: "Tokyo - Osaka", price: "32.900.000", image: "images/tour-japan.jpg" }
+    ];
+
+    const searchableItems = [...destinations.map(dest => ({
+      type: 'destination',
+      title: dest.name,
+      subtitle: dest.location,
+      price: dest.price,
+      image: dest.image,
+      label: 'Điểm đến'
+    })), ...featuredTours.map(tour => ({
+      type: 'tour',
+      title: tour.name,
+      subtitle: tour.location,
+      price: tour.price,
+      image: tour.image,
+      label: 'Tour'
+    }))];
+
+    function animateStatValue(element, target) {
+      const duration = 1400;
+      const stepTime = Math.abs(Math.floor(duration / target));
+      let current = 0;
+      const timer = setInterval(() => {
+        current += Math.max(1, Math.floor(target / 25));
+        element.textContent = current > target ? target : current;
+        if (current >= target) clearInterval(timer);
+      }, stepTime);
+    }
+
+    function observeStats() {
+      if (!statNumbers) return;
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            const target = Number(el.dataset.target) || 0;
+            animateStatValue(el, target);
+            observer.unobserve(el);
+          }
+        });
+      }, { threshold: 0.5 });
+      statNumbers.forEach(el => observer.observe(el));
+    }
+
+    function closeMobileMenuOnLink() {
+      mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          if (!mobileMenu.classList.contains('hidden')) {
+            mobileMenu.classList.add('hidden');
+          }
+        });
+      });
+    }
+
+    function displaySearchResults(results, query) {
+      if (!results.length) {
+        searchSummary.textContent = `Không tìm thấy kết quả cho "${query}". Hãy thử từ khác.`;
+        searchResultsGrid.innerHTML = `
+          <div class="col-span-full bg-yellow-50 border border-yellow-200 rounded-3xl p-8 text-center text-yellow-900">
+            Không có kết quả phù hợp. Hãy thử tìm kiếm lại với điểm đến khác.
+          </div>`;
+      } else {
+        searchSummary.textContent = `Tìm thấy ${results.length} kết quả cho "${query}".`;
+        searchResultsGrid.innerHTML = '';
+        results.forEach(item => {
+          const card = document.createElement('div');
+          card.className = 'bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100';
+          card.innerHTML = `
+            <img src="${item.image}" class="w-full h-44 object-cover" alt="${item.title}">
+            <div class="p-5">
+              <div class="flex justify-between items-center mb-3 gap-4">
+                <div>
+                  <p class="text-xs uppercase tracking-[0.2em] text-green-600 font-semibold mb-2">${item.label}</p>
+                  <h4 class="text-xl font-semibold text-gray-800">${item.title}</h4>
+                  <p class="text-gray-500 mt-1">${item.subtitle}</p>
+                </div>
+                <div class="text-right">
+                  <p class="text-xl font-bold text-green-600">${item.price}</p>
+                  <span class="text-xs text-gray-400">VNĐ</span>
+                </div>
+              </div>
+              <button onclick="alert('✅ Đặt ${item.label.toLowerCase()} ${item.title} thành công!')" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-2xl transition">Đặt ngay</button>
+            </div>`;
+          searchResultsGrid.appendChild(card);
+        });
+      }
+
+      searchResultsSection.classList.remove('hidden');
+      searchResultsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function resetSearchResults() {
+      searchResultsSection.classList.add('hidden');
+      searchResultsGrid.innerHTML = '';
+      searchSummary.textContent = '';
+      document.getElementById('search-input').value = '';
+      document.getElementById('search-date').value = '';
+    }
+
+    function searchTour() {
+      const input = document.getElementById('search-input').value.trim();
+      const date = document.getElementById('search-date').value;
+      if (!input) {
+        return alert('Vui lòng nhập điểm đến bạn muốn đi!');
+      }
+      const query = input.toLowerCase();
+      const results = searchableItems.filter(item =>
+        item.title.toLowerCase().includes(query) || item.subtitle.toLowerCase().includes(query)
+      );
+      displaySearchResults(results, input + (date ? ` - ${date}` : ''));
+    }
+
+
+    function updateHero() {
+      const slide = heroSlides[currentSlide];
+      const fallback = slide.gradient || 'linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45))';
+      const bgImage = `linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('${slide.image}'), ${fallback}`;
+      heroSection.style.backgroundImage = bgImage;
+      heroSection.style.backgroundSize = 'cover';
+      heroSection.style.backgroundPosition = 'center';
+      createIndicators();
+    }
+
+    function createIndicators() {
+      indicatorsContainer.innerHTML = '';
+      heroSlides.forEach((_, index) => {
+        const dot = document.createElement('button');
+        dot.className = `carousel-indicator ${index === currentSlide ? 'active' : ''}`;
+        dot.onclick = () => goToSlide(index);
+        dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
+        indicatorsContainer.appendChild(dot);
+      });
+    }
+
+    function goToSlide(index) {
+      currentSlide = index;
+      updateHero();
+      resetAutoPlay();
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % heroSlides.length;
+      updateHero();
+      resetAutoPlay();
+    }
+
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + heroSlides.length) % heroSlides.length;
+      updateHero();
+      resetAutoPlay();
+    }
+
+    function startAutoPlay() {
+      if (!isAutoPlaying) return;
+      autoPlayInterval = setInterval(() => {
+        nextSlide();
+      }, 4000);
+    }
+
+    function stopAutoPlay() {
+      clearInterval(autoPlayInterval);
+    }
+
+    function resetAutoPlay() {
+      stopAutoPlay();
+      if (isAutoPlaying) startAutoPlay();
+    }
+
+    // Pause on hover
+    heroSection.addEventListener('mouseenter', stopAutoPlay);
+    heroSection.addEventListener('mouseleave', resetAutoPlay);
+
+    // Touch swipe support
+    heroSection.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, false);
+
+    heroSection.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, false);
+
+    function handleSwipe() {
+      const swipeThreshold = 50;
+      const diff = touchStartX - touchEndX;
+      if (Math.abs(diff) > swipeThreshold) {
+        if (diff > 0) {
+          nextSlide();
+        } else {
+          prevSlide();
+        }
+      }
+    }
+
+    function renderDestinations() {
+      const grid = document.getElementById('destinations-grid');
+      grid.innerHTML = '';
+      destinations.forEach(dest => {
+        const card = document.createElement('div');
+        card.className = "bg-white rounded-3xl overflow-hidden card-hover cursor-pointer";
+        card.innerHTML = `
+          <img src="${dest.image}" class="w-full h-52 sm:h-64 object-cover" alt="${dest.name}">
+          <div class="p-5 sm:p-6">
+            <div class="flex justify-between items-start">
+              <div>
+                <h3 class="text-lg sm:text-xl font-semibold">${dest.name}</h3>
+                <p class="text-gray-500">${dest.location}</p>
+              </div>
+              <div class="text-right">
+                <span class="text-xl sm:text-2xl font-bold text-green-600">${dest.price}</span>
+                <p class="text-xs text-gray-400">/người</p>
+              </div>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function renderFeaturedTours() {
+      const grid = document.getElementById('featured-tours');
+      grid.innerHTML = '';
+      featuredTours.forEach(tour => {
+        const card = document.createElement('div');
+        card.className = "bg-white rounded-3xl overflow-hidden card-hover cursor-pointer border border-gray-100";
+        card.innerHTML = `
+          <img src="${tour.image}" class="w-full h-48 sm:h-56 object-cover" alt="${tour.name}">
+          <div class="p-5 sm:p-6">
+            <h3 class="font-semibold text-base sm:text-lg mb-1">${tour.name}</h3>
+            <p class="text-gray-500 text-sm">${tour.location}</p>
+            <div class="mt-4 flex justify-between items-end">
+              <div>
+                <span class="text-xl sm:text-2xl font-bold text-green-600">${tour.price}</span>
+                <span class="text-xs text-gray-400"> VNĐ</span>
+              </div>
+              <button class="bg-green-600 text-white px-5 py-2 rounded-full text-sm hover:bg-green-700">Đặt tour</button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function scrollToFooter(e) {
+      e.preventDefault();
+      document.getElementById('footer').scrollIntoView({ behavior: "smooth" });
+    }
+
+    window.onload = () => {
+      updateHero();
+      createIndicators();
+      renderDestinations();
+      renderFeaturedTours();
+      observeStats();
+      closeMobileMenuOnLink();
+      startAutoPlay(); // Start auto-play with enhanced carousel
+    };
+  </script>
+</body>
+</html>

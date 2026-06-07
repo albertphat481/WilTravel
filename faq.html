@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WILTravel - Câu Hỏi Thường Gặp</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <style>
+    html { scroll-behavior: smooth; }
+    .faq-item { transition: all 0.3s ease; }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+    .faq-item.active .faq-answer { max-height: 500px; }
+    .faq-icon { transition: transform 0.3s ease; }
+    .faq-item.active .faq-icon { transform: rotate(180deg); }
+  </style>
+</head>
+<body class="font-sans bg-gray-50">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md fixed w-full z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <img src="images/logo.png" alt="WILTravel" class="h-9 sm:h-11 w-auto">
+      </div>
+      
+      <div class="hidden md:flex items-center gap-8 text-gray-700 font-medium">
+        <a href="index.html" class="hover:text-green-600 transition">Trang chủ</a>
+        <a href="tours.html" class="hover:text-green-600 transition">Tours</a>
+        <a href="flight.html" class="hover:text-green-600 transition">Máy Bay</a>
+        <a href="blog.html" class="hover:text-green-600 transition">Blog</a>
+        <a href="contact.html" class="hover:text-green-600 transition">Liên Hệ</a>
+        <a href="about.html" class="hover:text-green-600 transition">Về Chúng Tôi</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="cart.html" class="text-gray-700 hover:text-green-600 transition text-lg"><i class="fa-solid fa-shopping-cart"></i></a>
+        <a href="profile.html" class="text-gray-700 hover:text-green-600 transition text-lg"><i class="fa-solid fa-user"></i></a>
+        <a href="login.html" class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-full transition text-sm">Đăng nhập</a>
+        <a href="register.html" class="bg-green-600 text-white px-5 py-2 rounded-full hover:bg-green-700 transition text-sm font-medium">Đăng ký</a>
+      </div>
+
+      <button id="mobile-menu-button" class="md:hidden text-3xl text-gray-700">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+      <div class="px-6 py-6 flex flex-col gap-5 text-gray-700 font-medium">
+        <a href="index.html" class="hover:text-green-600 transition">Trang chủ</a>
+        <a href="tours.html" class="hover:text-green-600 transition">Tours</a>
+        <a href="flight.html" class="hover:text-green-600 transition">Máy Bay</a>
+        <a href="blog.html" class="hover:text-green-600 transition">Blog</a>
+        <a href="contact.html" class="hover:text-green-600 transition">Liên Hệ</a>
+        <a href="about.html" class="hover:text-green-600 transition">Về Chúng Tôi</a>
+        <hr>
+        <a href="faq.html" class="text-green-600 font-semibold transition"><i class="fa-solid fa-question-circle mr-2"></i>FAQ</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-r from-green-600 to-emerald-700 text-white py-16 md:py-20 pt-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4">Câu Hỏi Thường Gặp</h1>
+      <p class="text-lg text-green-100">Tìm câu trả lời cho những thắc mắc của bạn</p>
+    </div>
+  </section>
+
+  <!-- Search FAQ -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+    <div class="relative">
+      <input type="text" id="faq-search" placeholder="Tìm câu hỏi..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500">
+      <i class="fa-solid fa-search absolute right-4 top-3 text-gray-400"></i>
+    </div>
+  </section>
+
+  <!-- FAQ Categories & Content -->
+  <section class="max-w-4xl mx-auto px-4 sm:px-6 py-12">
+    <!-- Category Tabs -->
+    <div class="flex flex-wrap gap-2 mb-8 border-b border-gray-200">
+      <button class="faq-cat-btn active px-4 py-2 border-b-2 border-green-600 text-green-600 font-semibold" data-category="booking">Đặt Tour</button>
+      <button class="faq-cat-btn px-4 py-2 border-b-2 border-transparent text-gray-600 font-semibold hover:text-green-600" data-category="payment">Thanh Toán</button>
+      <button class="faq-cat-btn px-4 py-2 border-b-2 border-transparent text-gray-600 font-semibold hover:text-green-600" data-category="cancellation">Hủy/Trả Phòng</button>
+      <button class="faq-cat-btn px-4 py-2 border-b-2 border-transparent text-gray-600 font-semibold hover:text-green-600" data-category="support">Hỗ Trợ</button>
+    </div>
+
+    <!-- FAQ Items - Booking -->
+    <div id="booking" class="faq-category space-y-4">
+      <div class="faq-item bg-white rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
+        <div class="flex justify-between items-start">
+          <h3 class="text-lg font-bold text-gray-800 pr-4">Làm sao để đặt tour?</h3>
+          <i class="fa-solid fa-chevron-down text-green-600 text-xl faq-icon"></i>
+        </div>
+        <div class="faq-answer pt-4 text-gray-600">
+          <p>Bước 1: Chọn tour từ danh sách tours</p>
+          <p>Bước 2: Nhấp "Đặt Ngay"</p>
+          <p>Bước 3: Điền thông tin cá nhân</p>
+          <p>Bước 4: Chọn ngày khởi hành</p>
+          <p>Bước 5: Thanh toán</p>
+        </div>
+      </div>
+
+      <div class="faq-item bg-white rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
+        <div class="flex justify-between items-start">
+          <h3 class="text-lg font-bold text-gray-800 pr-4">Có bao nhiêu loại tour?</h3>
+          <i class="fa-solid fa-chevron-down text-green-600 text-xl faq-icon"></i>
+        </div>
+        <div class="faq-answer pt-4 text-gray-600">
+          <p>Chúng tôi cung cấp:</p>
+          <p>• Tours trong nước (Phú Quốc, Sapa, Hạ Long, Cô Tô...)</p>
+          <p>• Tours quốc tế (Bali, Bangkok, Singapore, Hàng Quân...)</p>
+          <p>• Tours chuyên biệt (Hãm Bay, Lặn, Trekking...)</p>
+          <p>• Tours gia đình (phù hợp trẻ em)</p>
+        </div>
+      </div>
+
+      <div class="faq-item bg-white rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
+        <div class="flex justify-between items-start">
+          <h3 class="text-lg font-bold text-gray-800 pr-4">Tôi có thể thay đổi ngày tour không?</h3>
+          <i class="fa-solid fa-chevron-down text-green-600 text-xl faq-icon"></i>
+        </div>
+        <div class="faq-answer pt-4 text-gray-600">
+          <p>Có, bạn có thể thay đổi ngày tour miễn là:</p>
+          <p>• Thay đổi ít nhất 7 ngày trước khởi hành</p>
+          <p>• Còn chỗ trống vào ngày muốn thay đổi</p>
+          <p>• Liên hệ support để được hỗ trợ</p>
+        </div>
+      </div>
+
+      <div class="faq-item bg-white rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
+        <div class="flex justify-between items-start">
+          <h3 class="text-lg font-bold text-gray-800 pr-4">Giá tour có bao gồm những gì?</h3>
+          <i class="fa-solid fa-chevron-down text-green-600 text-xl faq-icon"></i>
+        </div>
+        <div class="faq-answer pt-4 text-gray-600">
+          <p>Giá tour bao gồm:</p>
+          <p>✓ Vận chuyển (máy bay, xe du lịch)</p>
+          <p>✓ Khách sạn 3-5 sao</p>
+          <p>✓ Ăn sáng, trưa, tối</p>
+          <p>✓ Hướng dẫn viên tiếng Việt</p>
+          <p>✓ Tham quan điểm du lịch chính</p>
+          <p>✓ Bảo hiểm du lịch</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ Items - Payment -->
+    <div id="payment" class="faq-category hidden space-y-4">
+      <div class="faq-item bg-white rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
+        <div class="flex justify-between items-start">
+          <h3 class="text-lg font-bold text-gray-800 pr-4">Những phương thức thanh toán nào được hỗ trợ?</h3>
+          <i class="fa-solid fa-chevron-down text-green-600 text-xl faq-icon"></i>
+        </div>
+        <div class="faq-answer pt-4 text-gray-600">
+          <p>Chúng tôi chấp nhận:</p>
+          <p>💳 Thẻ tín dụng / ghi nợ</p>
+          <p>🏦 Chuyển khoản ngân hàng</p>
+          <p>📱 Ví điện tử (Momo, ZaloPay, PayPal)</p>
+          <p>💰 Thanh toán tại quầy</p>
+          <p>💵 Trả góp 0% (cho tours > 20 triệu)</p>
+        </div>
+      </div>
+
+      <div class="faq-item bg-white rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
+        <div class="flex justify-between items-start">
+          <h3 class="text-lg font-bold text-gray-800 pr-4">Có phí xử lý thanh toán không?</h3>
+          <i class="fa-solid fa-chevron-down text-green-600 text-xl faq-icon"></i>
+        </div>
+        <div class="faq-answer pt-4 text-gray-600">
+          <p>Không có phí xử lý thanh toán khi bạn thanh toán qua:</p>
+          <p>• Chuyển khoản ngân hàng</p>
+          <p>• Thanh toán tại quầy</p>
+          <p>Phí thẻ: 2.5% nếu thanh toán bằng thẻ</p>
+        </div>
+      </div>
+
+      <div class="faq-item bg-white rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
+        <div class="flex justify-between items-start">
+          <h3 class="text-lg font-bold text-gray-800 pr-4">Tôi có được hoàn tiền không?</h3>
+          <i class="fa-solid fa-chevron-down text-green-600 text-xl faq-icon"></i>
+        </div>
+        <div class="faq-answer pt-4 text-gray-600">
+          <p>Chính sách hoàn tiền:</p>
+          <p>📅 Hủy trước 30 ngày: Hoàn 100%</p>
+          <p>📅 Hủy 15-30 ngày: Hoàn 80%</p>
+          <p>📅 Hủy 7-15 ngày: Hoàn 50%</p>
+          <p>📅 Hủy dưới 7 ngày: Không hoàn tiền</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ Items - Cancellation -->
+    <div id="cancellation" class="faq-category hidden space-y-4">
+      <div class="faq-item bg-white rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
+        <div class="flex justify-between items-start">
+          <h3 class="text-lg font-bold text-gray-800 pr-4">Làm cách nào để hủy tour?</h3>
+          <i class="fa-solid fa-chevron-down text-green-600 text-xl faq-icon"></i>
+        </div>
+        <div class="faq-answer pt-4 text-gray-600">
+          <p>Bước 1: Đăng nhập tài khoản</p>
+          <p>Bước 2: Vào mục "Lịch sử đặt tour"</p>
+          <p>Bước 3: Chọn tour cần hủy</p>
+          <p>Bước 4: Nhấp "Hủy Tour"</p>
+          <p>Bước 5: Xác nhận lý do hủy</p>
+          <p>Tiền hoàn sẽ được trả về tài khoản trong 3-5 ngày</p>
+        </div>
+      </div>
+
+      <div class="faq-item bg-white rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
+        <div class="flex justify-between items-start">
+          <h3 class="text-lg font-bold text-gray-800 pr-4">Có thể đổi tour thay vì hủy?</h3>
+          <i class="fa-solid fa-chevron-down text-green-600 text-xl faq-icon"></i>
+        </div>
+        <div class="faq-answer pt-4 text-gray-600">
+          <p>Có, bạn có thể đổi tour miễn là:</p>
+          <p>• Đổi ít nhất 14 ngày trước khởi hành</p>
+          <p>• Chọn tour cùng giá tiền hoặc cao hơn</p>
+          <p>• Nếu tour mới thấp hơn, sẽ hoàn tiền chênh lệch</p>
+          <p>Liên hệ support để được hỗ trợ đổi tour</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ Items - Support -->
+    <div id="support" class="faq-category hidden space-y-4">
+      <div class="faq-item bg-white rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
+        <div class="flex justify-between items-start">
+          <h3 class="text-lg font-bold text-gray-800 pr-4">Làm sao liên hệ support?</h3>
+          <i class="fa-solid fa-chevron-down text-green-600 text-xl faq-icon"></i>
+        </div>
+        <div class="faq-answer pt-4 text-gray-600">
+          <p>📞 Hotline: 0905 025737 (8am - 6pm)</p>
+          <p>💬 Zalo: 0905 025737</p>
+          <p>📧 Email: support@wiltravel.com</p>
+          <p>💬 Live chat: Trên website</p>
+          <p>Thời gian phản hồi: 30 phút</p>
+        </div>
+      </div>
+
+      <div class="faq-item bg-white rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
+        <div class="flex justify-between items-start">
+          <h3 class="text-lg font-bold text-gray-800 pr-4">Có yêu cầu visa không?</h3>
+          <i class="fa-solid fa-chevron-down text-green-600 text-xl faq-icon"></i>
+        </div>
+        <div class="faq-answer pt-4 text-gray-600">
+          <p>Đối với tours trong nước: Không cần visa</p>
+          <p>Đối với tours quốc tế: Cần visa (WilTravel có thể hỗ trợ)</p>
+          <p>Yêu cầu: Hộ chiếu có hiệu lực ít nhất 6 tháng</p>
+          <p>Liên hệ support để được hỗ trợ xin visa</p>
+        </div>
+      </div>
+
+      <div class="faq-item bg-white rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
+        <div class="flex justify-between items-start">
+          <h3 class="text-lg font-bold text-gray-800 pr-4">Có giảm giá cho nhóm lớn?</h3>
+          <i class="fa-solid fa-chevron-down text-green-600 text-xl faq-icon"></i>
+        </div>
+        <div class="faq-answer pt-4 text-gray-600">
+          <p>Có, chúng tôi cung cấp giảm giá theo nhóm:</p>
+          <p>👥 10-20 người: Giảm 5%</p>
+          <p>👥 20-50 người: Giảm 10%</p>
+          <p>👥 Trên 50 người: Giảm 15%</p>
+          <p>Liên hệ sales team để được tư vấn</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-400 py-16 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div>
+          <img src="images/logo.png" alt="WILTravel" class="h-12 mb-4">
+          <p class="text-sm">Chỉ cần & đi chuyến nghỉ ngơi</p>
+        </div>
+        <div>
+          <h3 class="text-white font-semibold mb-4">Liên Hệ</h3>
+          <p class="text-sm">72/10/6 Văn Chung, Tp.HCM<br>Hotline: 0905 025737</p>
+        </div>
+        <div>
+          <h3 class="text-white font-semibold mb-4">Kết Nối</h3>
+          <div class="flex gap-4 text-2xl">
+            <i class="fa-brands fa-facebook hover:text-white cursor-pointer"></i>
+            <i class="fa-brands fa-instagram hover:text-white cursor-pointer"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleFAQ(element) {
+      element.classList.toggle('active');
+    }
+
+    function switchCategory(category) {
+      document.querySelectorAll('.faq-category').forEach(el => el.classList.add('hidden'));
+      document.getElementById(category).classList.remove('hidden');
+      
+      document.querySelectorAll('.faq-cat-btn').forEach(el => {
+        el.classList.remove('border-green-600', 'text-green-600', 'border-b-2');
+        el.classList.add('border-transparent', 'text-gray-600');
+      });
+      event.target.classList.add('border-green-600', 'text-green-600', 'border-b-2');
+      event.target.classList.remove('border-transparent', 'text-gray-600');
+    }
+
+    document.querySelectorAll('.faq-cat-btn').forEach(btn => {
+      btn.addEventListener('click', switchCategory);
+    });
+
+    const mobileButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (mobileButton) {
+      mobileButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    }
+  </script>
+</body>
+</html>
