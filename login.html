@@ -108,6 +108,7 @@
     </div>
   </div>
 
+  <script src="js/app.js"></script>
   <script>
     const GOOGLE_CLIENT_ID = "1038953243276-ef3mtk9jmsbhkjsip1v1ibgluvbsqb.apps.googleusercontent.com";
 
@@ -115,12 +116,34 @@
     const bgImages = [
       "images/hero1.jpg",
       "images/hero2.jpg",
-      "images/hero3.jpg"
+      "images/hero3.jpg",
+      "images/hero4.jpg",
+      "images/hero5.jpg",
+      "images/hero6.jpg",
+      "images/hero7.jpg",
+      "images/hero8.jpg",
+      "images/login-bg1.jpg",
+      "images/login-bg2.jpg",
+      "images/login-bg3.jpg",
+      "images/login-bg4.jpg",
+      "images/login-bg5.jpg",
+      "images/login-bg6.jpg"
     ];
     const gradients = [
+      "linear-gradient(135deg, #0f4c75 0%, #1b6ca8 100%)",
+      "linear-gradient(135deg, #134e5e 0%, #71b280 100%)",
+      "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+      "linear-gradient(135deg, #16a085 0%, #f4d03f 100%)",
+      "linear-gradient(135deg, #c0392b 0%, #e74c3c 100%)",
+      "linear-gradient(135deg, #8e44ad 0%, #c0392b 100%)",
+      "linear-gradient(135deg, #2980b9 0%, #6dd5fa 100%)",
+      "linear-gradient(135deg, #0f2027 0%, #2c5364 100%)",
       "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
       "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
-      "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"
+      "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
+      "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
+      "linear-gradient(135deg, #30cfd0 0%, #330867 100%)",
+      "linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)"
     ];
     
     let currentBg = 0;
@@ -157,6 +180,9 @@
     // Google Login
     function handleCredentialResponse(response) {
       console.log("Google Token:", response.credential);
+      // Simulating Google login
+      const demoUser = { firstName: "Google User", lastName: "G-User", email: "google@user.com", phone: "", password: "" };
+      setCurrentUser(demoUser);
       showSuccessMessage();
     }
 
@@ -228,11 +254,19 @@
     function handleLogin(e) {
       e.preventDefault();
       const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
       if (!validateEmail(email)) {
         alert('Vui lòng nhập email hợp lệ!');
         return;
       }
-      showSuccessMessage();
+
+      const res = loginUser(email, password);
+      if (res.success) {
+        showSuccessMessage();
+      } else {
+        alert('✗ Đăng nhập thất bại: ' + res.message);
+      }
     }
 
     function handleEscapeKey(event) {
@@ -247,6 +281,10 @@
       changeBackground(); // Initialize first background
       startAutoPlay(); // Start enhanced carousel
       document.addEventListener('keydown', handleEscapeKey);
+      
+      // Auto pre-fill demo details for convenience
+      document.getElementById('email').value = 'nguyen@email.com';
+      document.getElementById('password').value = '123456';
     };
   </script>
 </body>

@@ -171,8 +171,16 @@
 
   <!-- Hero Carousel -->
   <section id="hero" class="hero-bg h-screen flex items-center text-white pt-16 md:pt-20 relative">
-    <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-black/65 via-black/45 to-transparent"></div>
     
+    <!-- Slide Caption Badge (top right) -->
+    <div class="absolute top-24 right-6 z-20 text-right hidden md:block">
+      <div id="slide-badge" style="transition: opacity 0.5s ease;" class="inline-block bg-white/10 backdrop-blur-md border border-white/20 px-5 py-3 rounded-2xl">
+        <p id="slide-caption" class="text-white font-bold text-lg">Việt Nam tươi đẹp</p>
+        <p id="slide-sub" class="text-white/70 text-sm mt-0.5">Khám phá những điểm đến tuyệt vời ngay trong nước</p>
+      </div>
+    </div>
+
     <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
       <div class="max-w-2xl">
         <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight mb-6">
@@ -390,6 +398,7 @@
     </div>
   </footer>
 
+  <script src="js/app.js"></script>
   <script>
     // Script menu mobile
     const mobileButton = document.getElementById('mobile-menu-button');
@@ -417,9 +426,14 @@
     const mobileLinks = document.querySelectorAll('#mobile-menu a');
 
     const heroSlides = [
-      { image: "images/hero1.jpg", gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)" },
-      { image: "images/hero2.jpg", gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)" },
-      { image: "images/hero3.jpg", gradient: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)" }
+      { image: "images/hero1.jpg",    gradient: "linear-gradient(135deg, #0f4c75 0%, #1b6ca8 100%)",  caption: "Việt Nam tươi đẹp",   sub: "Khám phá những điểm đến tuyệt vời ngay trong nước" },
+      { image: "images/hero2.jpg",    gradient: "linear-gradient(135deg, #134e5e 0%, #71b280 100%)",  caption: "Miền quê thanh bình",  sub: "Trải nghiệm thiên nhiên hoang sơ và văn hóa bản địa" },
+      { image: "images/hero3.jpg",    gradient: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",  caption: "Châu Á huyền bí",     sub: "Hành trình khám phá các quốc gia châu Á đặc sắc" },
+      { image: "images/hero4.jpg",    gradient: "linear-gradient(135deg, #16a085 0%, #f4d03f 100%)",  caption: "Vịnh Hạ Long",       sub: "Di sản thiên nhiên thế giới UNESCO - Kỳ quan của Việt Nam" },
+      { image: "images/hero5.jpg",    gradient: "linear-gradient(135deg, #c0392b 0%, #e74c3c 100%)",  caption: "Bali thiên đường",   sub: "Đảo của những vị thần - điểm đến mơ ước của mọi du khách" },
+      { image: "images/hero6.jpg",    gradient: "linear-gradient(135deg, #c0392b 0%, #8e44ad 100%)",  caption: "Nhật Bản hoa anh đào", sub: "Mùa xuân Nhật Bản rực rỡ với triệu triệu bông hoa anh đào" },
+      { image: "images/hero7.jpg",    gradient: "linear-gradient(135deg, #2980b9 0%, #6dd5fa 100%)",  caption: "Đà Nẵng - Hội An",   sub: "Thành phố đáng sống nhất Việt Nam với bãi biển và phố cổ" },
+      { image: "images/hero8.jpg",    gradient: "linear-gradient(135deg, #0f2027 0%, #2c5364 100%)",  caption: "Sapa mù sương",      sub: "Thị trấn trong mây với những thửa ruộng bậc thang vàng óng" }
     ];
 
     const destinations = [
@@ -429,30 +443,30 @@
       { name: "Paris", location: "Pháp", price: "45tr", image: "images/paris.jpg" }
     ];
 
-    const featuredTours = [
-      { name: "Phú Quốc 4N3Đ All Inclusive", location: "Phú Quốc", price: "3.290.000", image: "images/tour-phuquoc.jpg" },
-      { name: "Sapa - Hà Giang 5N4Đ", location: "Sapa", price: "4.190.000", image: "images/tour-sapa.jpg" },
-      { name: "Bali Thiên Đường 6N5Đ", location: "Bali", price: "18.500.000", image: "images/tour-bali.jpg" },
-      { name: "Vịnh Hạ Long - Lan Hạ 4N3Đ", location: "Hạ Long", price: "5.690.000", image: "images/tour-halong.jpg" },
-      { name: "Đà Nẵng - Hội An 4N3Đ", location: "Đà Nẵng", price: "3.890.000", image: "images/tour-danang.jpg" },
-      { name: "Nhật Bản Mùa Hoa Anh Đào", location: "Tokyo - Osaka", price: "32.900.000", image: "images/tour-japan.jpg" }
-    ];
+    let searchableItems = [];
 
-    const searchableItems = [...destinations.map(dest => ({
-      type: 'destination',
-      title: dest.name,
-      subtitle: dest.location,
-      price: dest.price,
-      image: dest.image,
-      label: 'Điểm đến'
-    })), ...featuredTours.map(tour => ({
-      type: 'tour',
-      title: tour.name,
-      subtitle: tour.location,
-      price: tour.price,
-      image: tour.image,
-      label: 'Tour'
-    }))];
+    function initSearchableItems() {
+      searchableItems = [
+        ...destinations.map(dest => ({
+          type: 'destination',
+          id: null,
+          title: dest.name,
+          subtitle: dest.location,
+          price: dest.price,
+          image: dest.image,
+          label: 'Điểm đến'
+        })),
+        ...tours.map(tour => ({
+          type: 'tour',
+          id: tour.id,
+          title: tour.name,
+          subtitle: tour.location,
+          price: (tour.price / 1000000).toFixed(1) + 'tr',
+          image: tour.image,
+          label: 'Tour'
+        }))
+      ];
+    }
 
     function animateStatValue(element, target) {
       const duration = 1400;
@@ -494,7 +508,7 @@
       if (!results.length) {
         searchSummary.textContent = `Không tìm thấy kết quả cho "${query}". Hãy thử từ khác.`;
         searchResultsGrid.innerHTML = `
-          <div class="col-span-full bg-yellow-50 border border-yellow-200 rounded-3xl p-8 text-center text-yellow-900">
+          <div class="col-span-full bg-yellow-50 border border-yellow-200 rounded-3xl p-8 text-center text-yellow-900 w-full">
             Không có kết quả phù hợp. Hãy thử tìm kiếm lại với điểm đến khác.
           </div>`;
       } else {
@@ -517,7 +531,7 @@
                   <span class="text-xs text-gray-400">VNĐ</span>
                 </div>
               </div>
-              <button onclick="alert('✅ Đặt ${item.label.toLowerCase()} ${item.title} thành công!')" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-2xl transition">Đặt ngay</button>
+              <button onclick="handleSearchAction('${item.type}', '${item.id || ''}', '${item.title}')" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-2xl transition">Chi tiết</button>
             </div>`;
           searchResultsGrid.appendChild(card);
         });
@@ -525,6 +539,14 @@
 
       searchResultsSection.classList.remove('hidden');
       searchResultsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function handleSearchAction(type, id, title) {
+      if (type === 'tour') {
+        window.location.href = `tour-detail.html?id=${id}`;
+      } else {
+        window.location.href = `tours.html?location=${encodeURIComponent(title)}`;
+      }
     }
 
     function resetSearchResults() {
@@ -556,6 +578,20 @@
       heroSection.style.backgroundImage = bgImage;
       heroSection.style.backgroundSize = 'cover';
       heroSection.style.backgroundPosition = 'center';
+
+      // Update slide caption badge with fade animation
+      const badge = document.getElementById('slide-badge');
+      const captionEl = document.getElementById('slide-caption');
+      const subEl = document.getElementById('slide-sub');
+      if (badge && captionEl && slide.caption) {
+        badge.style.opacity = '0';
+        setTimeout(() => {
+          captionEl.textContent = slide.caption;
+          if (subEl) subEl.textContent = slide.sub || '';
+          badge.style.opacity = '1';
+        }, 300);
+      }
+
       createIndicators();
     }
 
@@ -636,6 +672,7 @@
       destinations.forEach(dest => {
         const card = document.createElement('div');
         card.className = "bg-white rounded-3xl overflow-hidden card-hover cursor-pointer";
+        card.onclick = () => { window.location.href = `tours.html?location=${encodeURIComponent(dest.name)}`; };
         card.innerHTML = `
           <img src="${dest.image}" class="w-full h-52 sm:h-64 object-cover" alt="${dest.name}">
           <div class="p-5 sm:p-6">
@@ -658,9 +695,11 @@
     function renderFeaturedTours() {
       const grid = document.getElementById('featured-tours');
       grid.innerHTML = '';
-      featuredTours.forEach(tour => {
+      const featured = tours.slice(0, 6); // Load from central tours database
+      featured.forEach(tour => {
         const card = document.createElement('div');
         card.className = "bg-white rounded-3xl overflow-hidden card-hover cursor-pointer border border-gray-100";
+        card.onclick = () => { window.location.href = `tour-detail.html?id=${tour.id}`; };
         card.innerHTML = `
           <img src="${tour.image}" class="w-full h-48 sm:h-56 object-cover" alt="${tour.name}">
           <div class="p-5 sm:p-6">
@@ -668,10 +707,10 @@
             <p class="text-gray-500 text-sm">${tour.location}</p>
             <div class="mt-4 flex justify-between items-end">
               <div>
-                <span class="text-xl sm:text-2xl font-bold text-green-600">${tour.price}</span>
+                <span class="text-xl sm:text-2xl font-bold text-green-600">${(tour.price / 1000000).toFixed(1)}tr</span>
                 <span class="text-xs text-gray-400"> VNĐ</span>
               </div>
-              <button class="bg-green-600 text-white px-5 py-2 rounded-full text-sm hover:bg-green-700">Đặt tour</button>
+              <button onclick="event.stopPropagation(); window.location.href='tour-detail.html?id=${tour.id}'" class="bg-green-600 text-white px-5 py-2 rounded-full text-sm hover:bg-green-700">Đặt tour</button>
             </div>
           </div>
         `;
@@ -685,13 +724,14 @@
     }
 
     window.onload = () => {
+      initSearchableItems();
       updateHero();
       createIndicators();
       renderDestinations();
       renderFeaturedTours();
       observeStats();
       closeMobileMenuOnLink();
-      startAutoPlay(); // Start auto-play with enhanced carousel
+      startAutoPlay();
     };
   </script>
 </body>

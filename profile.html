@@ -54,31 +54,31 @@
         <!-- Profile Tab -->
         <div id="profile-tab" class="bg-white rounded-lg shadow-md p-8">
           <h2 class="text-2xl font-bold text-gray-800 mb-6">Thông Tin Cá Nhân</h2>
-          <form class="space-y-6">
+          <form onsubmit="updateProfile(event)" class="space-y-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label class="block text-sm font-semibold text-gray-700 mb-2">Họ</label>
-                <input type="text" value="Nguyễn" class="w-full px-4 py-3 border border-gray-300 rounded-lg">
+                <input type="text" id="profile-lastname" required class="w-full px-4 py-3 border border-gray-300 rounded-lg">
               </div>
               <div>
                 <label class="block text-sm font-semibold text-gray-700 mb-2">Tên</label>
-                <input type="text" value="Văn A" class="w-full px-4 py-3 border border-gray-300 rounded-lg">
+                <input type="text" id="profile-firstname" required class="w-full px-4 py-3 border border-gray-300 rounded-lg">
               </div>
             </div>
 
             <div>
-              <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
-              <input type="email" value="nguyen@email.com" class="w-full px-4 py-3 border border-gray-300 rounded-lg">
+              <label class="block text-sm font-semibold text-gray-700 mb-2">Email (Không thể thay đổi)</label>
+              <input type="email" id="profile-email" readonly class="w-full px-4 py-3 border border-gray-200 rounded-lg bg-gray-50 text-gray-500 cursor-not-allowed">
             </div>
 
             <div>
               <label class="block text-sm font-semibold text-gray-700 mb-2">Số Điện Thoại</label>
-              <input type="tel" value="0901 234 567" class="w-full px-4 py-3 border border-gray-300 rounded-lg">
+              <input type="tel" id="profile-phone" required class="w-full px-4 py-3 border border-gray-300 rounded-lg">
             </div>
 
             <div>
               <label class="block text-sm font-semibold text-gray-700 mb-2">Địa Chỉ</label>
-              <input type="text" value="123 Đường ABC, TP.HCM" class="w-full px-4 py-3 border border-gray-300 rounded-lg">
+              <input type="text" id="profile-address" required class="w-full px-4 py-3 border border-gray-300 rounded-lg">
             </div>
 
             <button type="submit" class="bg-green-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-700 transition">
@@ -90,28 +90,8 @@
         <!-- Bookings Tab -->
         <div id="bookings-tab" class="hidden">
           <h2 class="text-2xl font-bold text-gray-800 mb-6">Lịch Sử Đặt Tour</h2>
-          <div class="space-y-4">
-            <div class="bg-white rounded-lg shadow-md p-6 flex justify-between items-center">
-              <div>
-                <h3 class="font-bold text-gray-800">Phú Quốc 4N3Đ</h3>
-                <p class="text-sm text-gray-600">Đặt ngày: 01/06/2026</p>
-              </div>
-              <div class="text-right">
-                <p class="text-2xl font-bold text-green-600">3.29tr</p>
-                <span class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold">Chờ Xác Nhận</span>
-              </div>
-            </div>
-
-            <div class="bg-white rounded-lg shadow-md p-6 flex justify-between items-center">
-              <div>
-                <h3 class="font-bold text-gray-800">Sapa - Hà Giang 5N4Đ</h3>
-                <p class="text-sm text-gray-600">Đặt ngày: 25/05/2026</p>
-              </div>
-              <div class="text-right">
-                <p class="text-2xl font-bold text-green-600">4.19tr</p>
-                <span class="inline-block bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-semibold">Hoàn Tất</span>
-              </div>
-            </div>
+          <div id="orders-list" class="space-y-4">
+            <!-- Sẽ được tải động -->
           </div>
         </div>
 
@@ -130,10 +110,10 @@
             <div class="bg-white rounded-lg shadow-md p-6">
               <h3 class="font-bold text-gray-800 mb-4">Đổi Mật Khẩu</h3>
               <div class="space-y-4">
-                <input type="password" placeholder="Mật khẩu hiện tại" class="w-full px-4 py-3 border border-gray-300 rounded-lg">
-                <input type="password" placeholder="Mật khẩu mới" class="w-full px-4 py-3 border border-gray-300 rounded-lg">
-                <input type="password" placeholder="Xác nhận mật khẩu" class="w-full px-4 py-3 border border-gray-300 rounded-lg">
-                <button type="button" class="bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700">
+                <input type="password" id="pwd-current" placeholder="Mật khẩu hiện tại" class="w-full px-4 py-3 border border-gray-300 rounded-lg">
+                <input type="password" id="pwd-new" placeholder="Mật khẩu mới" class="w-full px-4 py-3 border border-gray-300 rounded-lg">
+                <input type="password" id="pwd-confirm" placeholder="Xác nhận mật khẩu" class="w-full px-4 py-3 border border-gray-300 rounded-lg">
+                <button type="button" onclick="changePassword()" class="bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700">
                   Đổi Mật Khẩu
                 </button>
               </div>
@@ -144,6 +124,7 @@
     </div>
   </section>
 
+  <script src="js/app.js"></script>
   <script>
     function switchTab(tab) {
       document.querySelectorAll('[id$="-tab"]').forEach(el => el.classList.add('hidden'));
@@ -153,11 +134,130 @@
       event.target.closest('.nav-tab').classList.add('active');
     }
 
+    function initProfile() {
+      const user = getCurrentUser();
+      if (!user) {
+        alert('Vui lòng đăng nhập để xem thông tin tài khoản!');
+        window.location.href = 'login.html';
+        return;
+      }
+
+      // Prefill Profile form
+      document.getElementById('profile-lastname').value = user.lastName || '';
+      document.getElementById('profile-firstname').value = user.firstName || '';
+      document.getElementById('profile-email').value = user.email || '';
+      document.getElementById('profile-phone').value = user.phone || '';
+      document.getElementById('profile-address').value = user.address || '';
+
+      // Update sidebar name
+      document.querySelector('.md\\:col-span-1 h3').textContent = `${user.lastName} ${user.firstName}`;
+      document.querySelector('.md\\:col-span-1 p').textContent = user.email;
+
+      renderBookings();
+    }
+
+    function updateProfile(e) {
+      e.preventDefault();
+      const user = getCurrentUser();
+      if (!user) return;
+      
+      user.lastName = document.getElementById('profile-lastname').value.trim();
+      user.firstName = document.getElementById('profile-firstname').value.trim();
+      user.phone = document.getElementById('profile-phone').value.trim();
+      user.address = document.getElementById('profile-address').value.trim();
+      
+      setCurrentUser(user);
+      
+      // Update in users registry
+      const users = getUsers();
+      const idx = users.findIndex(u => u.email === user.email);
+      if (idx > -1) {
+        users[idx] = user;
+        localStorage.setItem('wil_users', JSON.stringify(users));
+      }
+      
+      alert('✅ Cập nhật thông tin cá nhân thành công!');
+      location.reload();
+    }
+
+    function changePassword() {
+      const curPass = document.getElementById('pwd-current').value;
+      const newPass = document.getElementById('pwd-new').value;
+      const confPass = document.getElementById('pwd-confirm').value;
+
+      const user = getCurrentUser();
+      if (!user) return;
+
+      if (curPass !== user.password) {
+        alert('✗ Mật khẩu hiện tại không chính xác!');
+        return;
+      }
+      if (newPass.length < 6) {
+        alert('✗ Mật khẩu mới phải có ít nhất 6 ký tự!');
+        return;
+      }
+      if (newPass !== confPass) {
+        alert('✗ Xác nhận mật khẩu mới không khớp!');
+        return;
+      }
+
+      user.password = newPass;
+      setCurrentUser(user);
+      
+      const users = getUsers();
+      const idx = users.findIndex(u => u.email === user.email);
+      if (idx > -1) {
+        users[idx] = user;
+        localStorage.setItem('wil_users', JSON.stringify(users));
+      }
+      
+      alert('✅ Đổi mật khẩu thành công!');
+      document.getElementById('pwd-current').value = '';
+      document.getElementById('pwd-new').value = '';
+      document.getElementById('pwd-confirm').value = '';
+    }
+
+    function renderBookings() {
+      const orders = getOrders();
+      const container = document.getElementById('orders-list');
+      
+      if (orders.length === 0) {
+        container.innerHTML = `
+          <div class="bg-white rounded-xl p-8 text-center text-gray-500 border border-gray-100 shadow-sm">
+            Chưa có đơn đặt tour nào.
+          </div>`;
+        return;
+      }
+
+      container.innerHTML = orders.map(ord => {
+        const tour = tours.find(t => t.id === ord.tourId);
+        const tourName = tour ? tour.name : `Tour #${ord.tourId}`;
+        const statusClass = ord.status === 'Hoàn Tất' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800';
+        return `
+          <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div>
+              <h3 class="font-bold text-gray-800 hover:text-green-600 cursor-pointer text-base sm:text-lg" onclick="window.location.href='tour-detail.html?id=${ord.tourId}'">${tourName}</h3>
+              <p class="text-xs text-gray-400 mt-1">Mã đơn: ${ord.orderId}</p>
+              <p class="text-xs text-gray-500 mt-1"><i class="fa-solid fa-calendar mr-1"></i>Ngày đi: ${ord.date} • Số lượng: ${ord.quantity}</p>
+            </div>
+            <div class="text-left sm:text-right w-full sm:w-auto border-t sm:border-0 pt-3 sm:pt-0">
+              <p class="text-xl font-bold text-green-600">${ord.total.toLocaleString('vi-VN')}đ</p>
+              <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold ${statusClass} mt-2">${ord.status}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
     function logout() {
       if (confirm('Bạn chắc chắn muốn đăng xuất?')) {
-        window.location.href = 'login.html';
+        logoutUser();
       }
     }
+
+    window.onload = () => {
+      initProfile();
+    };
   </script>
 </body>
 </html>
