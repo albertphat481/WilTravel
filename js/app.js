@@ -704,6 +704,308 @@ function updateNavbar() {
   }
 }
 
+// ==========================================
+// AI CHATBOT TINA SYSTEM
+// ==========================================
+function initChatbotTina() {
+  // Prevent duplicate initialization
+  if (document.getElementById('chatbot-tina')) return;
+
+  // Insert Chatbot Styles
+  const style = document.createElement('style');
+  style.innerHTML = `
+    #chatbot-window {
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform: translateY(20px) scale(0.95);
+      opacity: 0;
+      pointer-events: none;
+    }
+    #chatbot-window.active {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .chat-bubble-tina {
+      background-color: #f3f4f6;
+      color: #1f2937;
+      border-radius: 18px 18px 18px 4px;
+    }
+    .chat-bubble-user {
+      background: linear-gradient(135deg, #16a34a, #059669);
+      color: white;
+      border-radius: 18px 18px 4px 18px;
+    }
+    .chat-quick-reply {
+      transition: all 0.2s ease;
+    }
+    .chat-quick-reply:hover {
+      background-color: #ecfdf5;
+      border-color: #10b981;
+      color: #047857;
+      transform: translateY(-2px);
+    }
+    @keyframes pulse-chat {
+      0% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.6); }
+      70% { box-shadow: 0 0 0 12px rgba(22, 163, 74, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
+    }
+    .btn-pulse-chat {
+      animation: pulse-chat 2s infinite;
+    }
+  `;
+  document.head.appendChild(style);
+
+  // Create Chatbot Elements
+  const chatbot = document.createElement('div');
+  chatbot.id = 'chatbot-tina';
+  chatbot.className = 'fixed bottom-6 right-6 z-[999] flex flex-col items-end font-sans';
+  chatbot.innerHTML = `
+    <!-- Chatbot Window -->
+    <div id="chatbot-window" class="w-[350px] sm:w-[380px] h-[500px] bg-white rounded-3xl overflow-hidden border border-gray-100 flex flex-col mb-4">
+      <!-- Header -->
+      <div class="bg-gradient-to-r from-green-600 to-emerald-700 p-4 text-white flex items-center justify-between shadow-sm shrink-0">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center border border-white/30 text-xl font-bold relative">
+            T
+            <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-400 border-2 border-green-600 rounded-full"></span>
+          </div>
+          <div>
+            <h4 class="font-bold text-sm">Trợ lý ảo Tina</h4>
+            <p class="text-[11px] text-green-100 flex items-center gap-1"><i class="fa-solid fa-circle text-[6px] text-emerald-400"></i> Sẵn sàng hỗ trợ 24/7</p>
+          </div>
+        </div>
+        <button onclick="toggleTinaChat()" class="text-white/80 hover:text-white text-2xl px-2">×</button>
+      </div>
+
+      <!-- Messages Body -->
+      <div id="chat-messages" class="flex-grow p-4 overflow-y-auto space-y-3 bg-gray-50/50 text-sm">
+        <!-- Welcome Message -->
+        <div class="flex gap-2 items-start">
+          <div class="w-7 h-7 rounded-full bg-green-100 text-green-700 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">T</div>
+          <div class="p-3 chat-bubble-tina max-w-[80%] leading-relaxed shadow-sm">
+            Xin chào! Mình là <strong>Tina</strong> - trợ lý ảo của WILTravel. Mình có thể giúp gì cho bạn hôm nay? 😊
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Replies -->
+      <div class="px-4 py-2 bg-white border-t border-gray-100 flex flex-wrap gap-1.5 shrink-0">
+        <button onclick="askTina('Tư vấn Tour du lịch')" class="chat-quick-reply px-3 py-1.5 rounded-full border border-gray-200 text-xs text-gray-600 font-medium bg-white">🗺️ Tư vấn Tour</button>
+        <button onclick="askTina('Hỏi đáp FAQ & Chính sách')" class="chat-quick-reply px-3 py-1.5 rounded-full border border-gray-200 text-xs text-gray-600 font-medium bg-white">❓ Chính sách & FAQ</button>
+        <button onclick="askTina('Giới thiệu WILTravel')" class="chat-quick-reply px-3 py-1.5 rounded-full border border-gray-200 text-xs text-gray-600 font-medium bg-white">🏢 Về công ty</button>
+        <button onclick="askTina('Liên hệ nhân viên hỗ trợ')" class="chat-quick-reply px-3 py-1.5 rounded-full border border-gray-200 text-xs text-gray-600 font-medium bg-white">📞 Gặp hỗ trợ</button>
+      </div>
+
+      <!-- Input Form -->
+      <form onsubmit="handleTinaSubmit(event)" class="p-3 bg-white border-t border-gray-150 flex gap-2 shrink-0">
+        <input type="text" id="tina-input" placeholder="Nhập câu hỏi của bạn..." class="flex-1 px-4 py-2.5 text-sm border border-gray-300 rounded-2xl focus:outline-none focus:border-green-500 bg-gray-50/50">
+        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white w-10 h-10 rounded-2xl flex items-center justify-center transition shadow-md shadow-green-600/10 shrink-0">
+          <i class="fa-solid fa-paper-plane text-sm"></i>
+        </button>
+      </form>
+    </div>
+
+    <!-- Toggle Button (FAB) -->
+    <button onclick="toggleTinaChat()" class="btn-pulse-chat bg-gradient-to-r from-green-600 to-emerald-700 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-xl hover:scale-105 transition cursor-pointer text-2xl relative" title="Trợ lý ảo Tina">
+      <i class="fa-solid fa-comment-dots"></i>
+    </button>
+  `;
+  document.body.appendChild(chatbot);
+
+  // Push back-to-top button up so it doesn't overlap
+  const backToTop = document.getElementById('back-to-top');
+  if (backToTop) {
+    backToTop.style.bottom = '95px';
+  }
+}
+
+// Global functions for Tina Chatbot
+window.toggleTinaChat = function() {
+  const win = document.getElementById('chatbot-window');
+  if (win) {
+    win.classList.toggle('active');
+    if (win.classList.contains('active')) {
+      document.getElementById('tina-input').focus();
+    }
+  }
+};
+
+window.askTina = function(text) {
+  addMessage(text, 'user');
+  setTimeout(() => {
+    const response = getTinaResponse(text);
+    addMessage(response, 'tina');
+  }, 600);
+};
+
+window.handleTinaSubmit = function(e) {
+  e.preventDefault();
+  const input = document.getElementById('tina-input');
+  const text = input.value.trim();
+  if (!text) return;
+
+  addMessage(text, 'user');
+  input.value = '';
+
+  setTimeout(() => {
+    const response = getTinaResponse(text);
+    addMessage(response, 'tina');
+  }, 600);
+};
+
+function addMessage(text, sender) {
+  const container = document.getElementById('chat-messages');
+  if (!container) return;
+
+  const isTina = sender === 'tina';
+  const msgHtml = isTina 
+    ? `<div class="flex gap-2 items-start">
+         <div class="w-7 h-7 rounded-full bg-green-100 text-green-700 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">T</div>
+         <div class="p-3 chat-bubble-tina max-w-[80%] leading-relaxed shadow-sm">${text}</div>
+       </div>`
+    : `<div class="flex justify-end">
+         <div class="p-3 chat-bubble-user max-w-[80%] leading-relaxed shadow-sm">${text}</div>
+       </div>`;
+
+  container.insertAdjacentHTML('beforeend', msgHtml);
+  container.scrollTop = container.scrollHeight;
+}
+
+// Intelligent response matching engine
+function getTinaResponse(userInput) {
+  const query = userInput.toLowerCase();
+
+  // 1. Tour consultation
+  if (query.includes('tour') || query.includes('chuyến đi') || query.includes('tư vấn') || query.includes('gợi ý') || query.includes('nổi bật') || query.includes('hot') || query.includes('bán chạy')) {
+    // Dynamically list first 3 tours from tours database in app.js
+    if (typeof tours !== 'undefined' && tours.length > 0) {
+      const topTours = tours.slice(0, 3);
+      let list = `<p class="mb-2">WILTravel hiện có nhiều tour du lịch chất lượng cao. Dưới đây là 3 tour tiêu biểu được yêu thích nhất hiện tại:</p><ul class="space-y-2.5 mt-2">`;
+      topTours.forEach(t => {
+        list += `<li class="bg-white p-2.5 rounded-xl border border-gray-100 shadow-xs">
+          <strong>${t.name}</strong> (${t.duration})<br>
+          <span class="text-xs text-gray-500"><i class="fa-solid fa-map-pin text-green-600 mr-1"></i>${t.location}</span> • 
+          <span class="text-green-600 font-bold text-xs">${(t.price / 1000000).toFixed(2)}tr VNĐ</span><br>
+          <a href="tour-detail.html?id=${t.id}" class="inline-block mt-1 text-[11px] text-green-600 font-bold hover:underline">Chi tiết tour →</a>
+        </li>`;
+      });
+      list += `</ul><p class="mt-2.5">Bạn muốn đi biển hay núi? Hãy nói cho mình điểm đến cụ thể (ví dụ: Phú Quốc, Sapa, Bali...) để mình tư vấn sâu hơn nhé! 😊</p>`;
+      return list;
+    }
+    return "Chúng mình có rất nhiều tour biển đảo, vùng cao trong nước và quốc tế hấp dẫn như tour Phú Quốc, Sapa, Hạ Long, Bali, Nhật Bản... Bạn có thể xem danh sách tại <a href='tours.html' class='text-green-600 font-bold hover:underline'>Danh sách Tour</a>.";
+  }
+
+  // 2. Specific destinations check
+  if (query.includes('phú quốc')) {
+    return `🏝️ <strong>Tour Phú Quốc 4N3Đ All Inclusive</strong>:<br>
+      Khám phá biển xanh cát trắng Bãi Sao, lặn ngắm san hô hòn Móng Tay, câu mực đêm Dương Đông và vui chơi VinWonders cực đã. Giá tốt chỉ 3.29tr VNĐ/người.<br>
+      👉 <a href="tour-detail.html?id=1" class="text-green-600 font-bold hover:underline">Đặt tour Phú Quốc ngay</a>`;
+  }
+  if (query.includes('sapa') || query.includes('hà giang')) {
+    return `⛰️ <strong>Tour Sapa - Hà Giang 5N4Đ</strong>:<br>
+      Chinh phục nóc nhà Đông Dương Fansipan cao 3.143m, dạo bước bản Cát Cát thổ cẩm, khám phá cao nguyên đá Đồng Văn hùng vĩ và sông Nho Quế xanh ngọc bích. Giá chỉ 4.19tr VNĐ/người.<br>
+      👉 <a href="tour-detail.html?id=2" class="text-green-600 font-bold hover:underline">Đặt tour Sapa - Hà Giang ngay</a>`;
+  }
+  if (query.includes('bali')) {
+    return `🌴 <strong>Tour Bali Thiên Đường 6N5Đ</strong>:<br>
+      Check-in cổng trời Lempuyang linh thiêng, ngắm hoàng hôn đền Tanah Lot bên bờ biển khơi, xích đu Bali Swing và dạo ruộng bậc thang Tegalalang Ubud. Trọn gói từ vé máy bay chỉ 18.5tr VNĐ/người.<br>
+      👉 <a href="tour-detail.html?id=3" class="text-green-600 font-bold hover:underline">Đặt tour Bali ngay</a>`;
+  }
+  if (query.includes('hạ long')) {
+    return `🛳️ <strong>Tour Vịnh Hạ Long - Lan Hạ 4N3Đ</strong>:<br>
+      Trải nghiệm du thuyền ngủ đêm 5 sao sang trọng giữa vịnh kỳ quan di sản thế giới, chèo kayak qua hang luồn và ngắm thạch nhũ hang Sửng Sốt. Giá trọn gói 5.69tr VNĐ/người.<br>
+      👉 <a href="tour-detail.html?id=4" class="text-green-600 font-bold hover:underline">Đặt tour Hạ Long ngay</a>`;
+  }
+  if (query.includes('đà nẵng') || query.includes('hội an')) {
+    return `🌉 <strong>Tour Đà Nẵng - Hội An 4N3Đ</strong>:<br>
+      Chụp hình Cầu Vàng trong sương mù Bà Nà Hills, dạo bộ ngắm đèn lồng phố cổ Hội An đêm lấp lánh và tắm biển Mỹ Khê đẹp nhất hành tinh. Giá chỉ 3.89tr VNĐ/người.<br>
+      👉 <a href="tour-detail.html?id=5" class="text-green-600 font-bold hover:underline">Đặt tour Đà Nẵng ngay</a>`;
+  }
+  if (query.includes('nhật bản')) {
+    return `🌸 <strong>Tour Nhật Bản Cao Cấp 6N5Đ</strong>:<br>
+      Khám phá thủ đô Tokyo sầm uất, đền vàng chùa vàng Kyoto cổ kính, ngắm đỉnh núi Phú Sĩ hùng vĩ phủ tuyết trắng, tắm Onsen và đi tàu Shinkansen. Giá trọn gói chỉ 32.9tr VNĐ/người.<br>
+      👉 <a href="tour-detail.html?id=6" class="text-green-600 font-bold hover:underline">Đặt tour Nhật Bản ngay</a>`;
+  }
+  if (query.includes('thái lan')) {
+    return `🇹🇭 <strong>Tour Thái Lan - Bangkok - Pattaya 5N4Đ</strong>:<br>
+      Dạo thuyền sông Chao Phraya, ăn buffet nhà hàng xoay 86 tầng Baiyoke Sky sầm uất, xem Alcazar Show và vui chơi bãi biển Coral Pattaya. Giá siêu rẻ chỉ 6.49tr VNĐ/người.<br>
+      👉 <a href="tour-detail.html?id=10" class="text-green-600 font-bold hover:underline">Đặt tour Thái Lan ngay</a>`;
+  }
+  if (query.includes('singapore')) {
+    return `🇸🇬 <strong>Tour Singapore - Malaysia 5N4Đ</strong>:<br>
+      Check-in tượng sư tử Merlion, nhà kính siêu cây Gardens by the Bay phát sáng rực rỡ, mua sắm thả ga tại Orchard và leo Genting Malaysia. Giá chỉ 10.99tr VNĐ/người.<br>
+      👉 <a href="tour-detail.html?id=9" class="text-green-600 font-bold hover:underline">Đặt tour Singapore ngay</a>`;
+  }
+
+  // 3. Price & Discounts
+  if (query.includes('giá') || query.includes('bao nhiêu') || query.includes('tiền') || query.includes('khuyến mãi') || query.includes('mã giảm') || query.includes('rẻ') || query.includes('coupon')) {
+    return `💵 <strong>Chương trình ưu đãi hiện tại của WILTravel:</strong><br>
+      - Giá tour của chúng mình cam kết cạnh tranh nhất thị trường, chỉ từ 1.79tr VNĐ.<br>
+      - Áp dụng mã <strong class="text-green-600 font-mono">SAVE100</strong> để giảm 100k cho hóa đơn trên 2tr VNĐ.<br>
+      - Áp dụng mã <strong class="text-green-600 font-mono">FRIEND20</strong> giảm ngay 20% khi đặt theo nhóm hoặc giới thiệu bạn bè.<br>
+      👉 Xem thêm các ưu đãi flash sale tại trang <a href="deals.html" class="text-green-600 font-bold hover:underline">Khuyến mãi & Ưu đãi</a>.`;
+  }
+
+  // 4. Payment & Billing
+  if (query.includes('thanh toán') || query.includes('chuyển khoản') || query.includes('ngân hàng') || query.includes('momo') || query.includes('tiền mặt')) {
+    return `💳 <strong>Phương thức thanh toán:</strong><br>
+      WILTravel hỗ trợ đa dạng phương thức thanh toán an toàn:<br>
+      1. Chuyển khoản ngân hàng qua mã VietQR (MB Bank).<br>
+      2. Thanh toán ví điện tử MoMo cực nhanh.<br>
+      3. Thẻ tín dụng/ghi nợ nội địa và quốc tế (Visa, Mastercard, JCB).<br>
+      Hệ thống thanh toán của chúng mình được bảo mật đa tầng, cam kết an toàn tuyệt đối.`;
+  }
+
+  // 5. Cancellation & Refunds
+  if (query.includes('hủy') || query.includes('hoàn tiền') || query.includes('trả phòng') || query.includes('đổi ngày') || query.includes('chính sách')) {
+    return `🔄 <strong>Chính sách Hủy & Hoàn tiền:</strong><br>
+      Chúng mình cam kết hoàn tiền linh hoạt nếu kế hoạch của bạn thay đổi:<br>
+      - Hủy trước 30 ngày khởi hành: Hoàn tiền <strong>100%</strong>.<br>
+      - Hủy từ 15 đến 30 ngày: Hoàn tiền <strong>80%</strong>.<br>
+      - Hủy từ 7 đến 15 ngày: Hoàn tiền <strong>50%</strong>.<br>
+      - Đổi ngày tour miễn phí trước 7 ngày (nếu còn chỗ trống).<br>
+      👉 Đọc chi tiết tại trang <a href="faq.html" class="text-green-600 font-bold hover:underline">Câu hỏi thường gặp (FAQ)</a>.`;
+  }
+
+  // 6. Company profile
+  if (query.includes('địa chỉ') || query.includes('văn phòng') || query.includes('đâu') || query.includes('thành lập') || query.includes('năm') || query.includes('công ty')) {
+    return `🏢 <strong>Về Công ty Du lịch WILTravel:</strong><br>
+      - <strong>Thành lập năm:</strong> 2011.<br>
+      - <strong>Tên pháp lý:</strong> Công ty TNHH Thương mại Dịch vụ Du lịch WILTRAVEL.<br>
+      - <strong>Trụ sở chính:</strong> 72/10/6 Văn Chung, Quận Tân Bình, Tp.HCM.<br>
+      - <strong>Sứ mệnh:</strong> Mang đến những hành trình du lịch chất lượng cao, an toàn và mức giá tối ưu nhất cho người Việt.<br>
+      👉 Chi tiết thêm tại trang <a href="about.html" class="text-green-600 font-bold hover:underline">Về chúng tôi</a>.`;
+  }
+
+  // 7. Human Support
+  if (query.includes('nhân viên') || query.includes('hotline') || query.includes('điện thoại') || query.includes('gặp') || query.includes('phương') || query.includes('sđt') || query.includes('gọi')) {
+    return `📞 <strong>Liên hệ Hỗ trợ Trực tiếp:</strong><br>
+      Bạn muốn gặp nhân viên tư vấn trực tiếp? Vui lòng liên hệ với hotline hoặc zalo:<br>
+      - <strong>Hotline/Zalo:</strong> <a href="tel:0905025737" class="text-green-600 font-bold hover:underline">0905 025 737</a> gặp <strong>Ms. Phương</strong>.<br>
+      - <strong>Email hỗ trợ:</strong> info@wil-travel.com.<br>
+      Chúng mình trực hotline 24/7 để đồng hành cùng chuyến đi của bạn!`;
+  }
+
+  // 8. Simple greetings
+  if (query.includes('chào') || query.includes('hi') || query.includes('hello') || query.includes('tina') || query.includes('ở đó không')) {
+    return "Xin chào! Mình là Tina đây. Mình có thể hỗ trợ tư vấn các tour du lịch, cung cấp thông tin về công ty, chính sách hoàn tiền hoặc kết nối bạn với nhân viên hỗ trợ. Bạn muốn tìm hiểu về dịch vụ nào? 😊";
+  }
+  if (query.includes('cảm ơn') || query.includes('thanks') || query.includes('tốt quá') || query.includes('ok')) {
+    return "Rất vui được giúp ích cho bạn! Chúc bạn có một ngày vui vẻ và những chuyến đi đầy ắp kỷ niệm đẹp cùng WILTravel. Nếu cần gì thêm, cứ nhắn Tina nhé! ❤️";
+  }
+  if (query.includes('tạm biệt') || query.includes('bye')) {
+    return "Tạm biệt bạn! Hẹn gặp lại bạn trong những hành trình khám phá thế giới tuyệt vời sắp tới! 👋🌸";
+  }
+
+  // 9. Fallback response
+  return `🤖 Tina chưa hiểu rõ câu hỏi này lắm. Bạn có thể thử các câu hỏi ngắn về chủ đề:<br>
+    - <em>"Tư vấn tour du lịch"</em> hoặc tên địa điểm (ví dụ: Phú Quốc, Sapa, Bali...)<br>
+    - <em>"Mã giảm giá"</em> hoặc <em>"Chính sách hủy tour"</em><br>
+    - <em>"Số hotline"</em> hoặc <em>"Địa chỉ văn phòng"</em><br>
+    Hoặc liên hệ trực tiếp với <strong>Ms. Phương (Hotline: 0905 025 737)</strong> để nhận hỗ trợ ngay nhé!`;
+}
+
 // Global logout handler
 window.appLogout = function() {
   if (confirm('Bạn chắc chắn muốn đăng xuất?')) {
@@ -719,4 +1021,5 @@ document.addEventListener('DOMContentLoaded', () => {
   updateNavbar();
   initBackToTop();
   initFloatingHotline();
+  initChatbotTina();
 });
