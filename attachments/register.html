@@ -6,7 +6,6 @@
   <title>WILTravel - Đăng ký</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     .register-bg {
       background-size: cover;
@@ -67,7 +66,7 @@
 
           <div class="mt-5">
             <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-            <input type="email" id="register-email" class="w-full px-5 py-4 border border-gray-300 rounded-2xl focus:outline-none focus:border-green-500" required>
+            <input type="email" id="register-email" class="w-full px-5 py-4 border border-gray-300 rounded-2xl focus:outline-none focus:border-green-500" placeholder="Nhập email của bạn" required>
           </div>
 
           <div class="mt-5">
@@ -87,7 +86,7 @@
 
           <div class="mt-5 relative">
             <label class="block text-sm font-medium text-gray-700 mb-2">Mật khẩu</label>
-            <input type="password" id="password" oninput="checkPasswordStrength()" class="w-full px-5 py-4 border border-gray-300 rounded-2xl focus:outline-none focus:border-green-500 pr-12" required>
+            <input type="password" id="password" oninput="checkPasswordStrength()" class="w-full px-5 py-4 border border-gray-300 rounded-2xl focus:outline-none focus:border-green-500 pr-12" placeholder="Nhập mật khẩu" required>
             <button type="button" onclick="togglePassword()" class="absolute right-5 top-11 text-gray-400 hover:text-gray-600">
               <i id="eye-icon" class="fa-solid fa-eye"></i>
             </button>
@@ -109,19 +108,106 @@
     </div>
   </div>
 
-  <script>
-    const GOOGLE_CLIENT_ID = "1038953243276-ef3mtk9jmsbhkjsip1v1ibgluvbsqb.apps.googleusercontent.com";
+  <!-- Google Account Chooser Modal (Custom Simulated OAuth) -->
+  <div id="googleModal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-[60] p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl border border-gray-100 flex flex-col">
+      <!-- Modal Header -->
+      <div class="p-6 text-center border-b relative">
+        <button onclick="closeGoogleModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl font-bold">×</button>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" class="w-10 h-10 mx-auto mb-2">
+        <h2 class="text-xl font-bold text-gray-800">Đăng ký bằng Google</h2>
+        <p class="text-xs text-gray-500 mt-1">để tiếp tục đến <span class="font-semibold text-green-600">WILTravel</span></p>
+      </div>
+      
+      <!-- Account Options -->
+      <div class="p-6 space-y-3">
+        <!-- Account 1 -->
+        <button onclick="selectGoogleAccount('Nguyễn', 'Văn A', 'nguyen@gmail.com')" class="w-full flex items-center gap-3 p-3 rounded-2xl hover:bg-gray-50 border border-gray-200 transition text-left">
+          <div class="w-10 h-10 rounded-full bg-green-600 text-white flex items-center justify-center font-bold text-lg">A</div>
+          <div class="flex-1">
+            <p class="font-bold text-sm text-gray-800">Nguyễn Văn A</p>
+            <p class="text-xs text-gray-500">nguyen@gmail.com</p>
+          </div>
+          <span class="text-xs text-green-600 font-semibold bg-green-50 px-2 py-1 rounded-full">Lưu tài khoản</span>
+        </button>
 
+        <!-- Account 2 -->
+        <button onclick="selectGoogleAccount('Trần', 'Thị B', 'tranb@gmail.com')" class="w-full flex items-center gap-3 p-3 rounded-2xl hover:bg-gray-50 border border-gray-200 transition text-left">
+          <div class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-lg">B</div>
+          <div class="flex-1">
+            <p class="font-bold text-sm text-gray-800">Trần Thị B</p>
+            <p class="text-xs text-gray-500">tranb@gmail.com</p>
+          </div>
+        </button>
+
+        <!-- Use another account input toggler -->
+        <button onclick="toggleCustomGoogleAccount()" class="w-full flex items-center gap-3 p-3 rounded-2xl hover:bg-gray-50 border border-gray-200 transition text-left">
+          <div class="w-10 h-10 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center text-lg"><i class="fa-solid fa-user-plus"></i></div>
+          <div class="flex-grow">
+            <p class="font-bold text-sm text-gray-800">Sử dụng tài khoản khác</p>
+            <p class="text-xs text-gray-400">Đăng ký bằng email Google bất kỳ</p>
+          </div>
+        </button>
+
+        <!-- Custom Account Fields -->
+        <div id="custom-google-fields" class="hidden bg-gray-50 p-4 rounded-2xl border border-gray-200 space-y-3">
+          <div>
+            <label class="block text-xs text-gray-600 mb-1">Họ và Tên đệm</label>
+            <input type="text" id="g-lastname" placeholder="Ví dụ: Nguyễn" class="w-full px-4 py-2 text-sm border border-gray-300 rounded-xl focus:outline-none focus:border-green-500">
+          </div>
+          <div>
+            <label class="block text-xs text-gray-600 mb-1">Tên</label>
+            <input type="text" id="g-firstname" placeholder="Ví dụ: Minh" class="w-full px-4 py-2 text-sm border border-gray-300 rounded-xl focus:outline-none focus:border-green-500">
+          </div>
+          <div>
+            <label class="block text-xs text-gray-600 mb-1">Địa chỉ Email</label>
+            <input type="email" id="g-email" placeholder="example@gmail.com" class="w-full px-4 py-2 text-sm border border-gray-300 rounded-xl focus:outline-none focus:border-green-500">
+          </div>
+          <button onclick="submitCustomGoogleAccount()" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-xl text-sm transition">Tiếp tục</button>
+        </div>
+      </div>
+      
+      <!-- Footer terms -->
+      <div class="p-6 bg-gray-50 text-center text-[10px] text-gray-400 border-t">
+        Để tiếp tục, Google sẽ chia sẻ tên, địa chỉ email, tùy chọn ngôn ngữ và ảnh hồ sơ của bạn với WILTravel.
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script>
     // Enhanced Background Carousel cho Register
     const bgImages = [
       "images/hero1.jpg",
       "images/hero2.jpg",
-      "images/hero3.jpg"
+      "images/hero3.jpg",
+      "images/hero4.jpg",
+      "images/hero5.jpg",
+      "images/hero6.jpg",
+      "images/hero7.jpg",
+      "images/hero8.jpg",
+      "images/login-bg1.jpg",
+      "images/login-bg2.jpg",
+      "images/login-bg3.jpg",
+      "images/login-bg4.jpg",
+      "images/login-bg5.jpg",
+      "images/login-bg6.jpg"
     ];
     const gradients = [
+      "linear-gradient(135deg, #0f4c75 0%, #1b6ca8 100%)",
+      "linear-gradient(135deg, #134e5e 0%, #71b280 100%)",
+      "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+      "linear-gradient(135deg, #16a085 0%, #f4d03f 100%)",
+      "linear-gradient(135deg, #c0392b 0%, #e74c3c 100%)",
+      "linear-gradient(135deg, #8e44ad 0%, #c0392b 100%)",
+      "linear-gradient(135deg, #2980b9 0%, #6dd5fa 100%)",
+      "linear-gradient(135deg, #0f2027 0%, #2c5364 100%)",
       "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
       "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
-      "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"
+      "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
+      "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
+      "linear-gradient(135deg, #30cfd0 0%, #330867 100%)",
+      "linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)"
     ];
     let currentBg = 0;
     let autoPlayInterval;
@@ -154,37 +240,125 @@
     registerBg.addEventListener('mouseenter', stopAutoPlay);
     registerBg.addEventListener('mouseleave', resetAutoPlay);
 
-    function handleCredentialResponse(response) {
-      console.log("Google Token:", response.credential);
-      showRegisterSuccess();
+    // Render Custom Google Sign-In Button or Load Real GSI
+    function initGoogleAuth() {
+      const container = document.getElementById("googleButton");
+      if (!container) return;
+
+      if (window.location.protocol === 'file:') {
+        // Render custom simulated button
+        container.innerHTML = `
+          <button onclick="openGooglePopup()" type="button" class="w-full border border-gray-300 rounded-full py-3.5 flex items-center justify-center gap-3 hover:bg-gray-50 transition shadow-sm bg-white">
+            <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24">
+              <path fill="#ea4335" d="M12 5.04c1.67 0 3.17.57 4.35 1.7l3.25-3.25C17.63 1.57 14.97 1 12 1 7.24 1 3.2 3.73 1.25 7.72l3.96 3.07C6.15 7.7 8.84 5.04 12 5.04z"/>
+              <path fill="#4285f4" d="M23.49 12.27c0-.81-.07-1.6-.2-2.3H12v4.51h6.46c-.29 1.48-1.12 2.73-2.38 3.58l3.7 2.87c2.16-2 3.71-4.94 3.71-8.66z"/>
+              <path fill="#fbbc05" d="M5.21 10.79c-.24-.72-.38-1.5-.38-2.3s.14-1.58.38-2.3L1.25 3.12C.45 4.74 0 6.56 0 8.5s.45 3.76 1.25 5.38l3.96-3.09z"/>
+              <path fill="#34a853" d="M12 23c3.24 0 5.97-1.07 7.96-2.92l-3.7-2.87c-1.03.69-2.35 1.1-3.96 1.1-3.16 0-5.85-2.66-6.79-5.75l-3.96 3.07C3.2 20.27 7.24 23 12 23z"/>
+            </svg>
+            <span class="font-semibold text-gray-700 text-sm">Đăng ký bằng Google</span>
+          </button>`;
+      } else {
+        // Load official Google identity services library
+        if (!document.getElementById('gsi-script')) {
+          const script = document.createElement('script');
+          script.id = 'gsi-script';
+          script.src = 'https://accounts.google.com/gsi/client';
+          script.async = true;
+          script.defer = true;
+          script.onload = () => setupRealGoogleGSI();
+          document.head.appendChild(script);
+        } else {
+          setupRealGoogleGSI();
+        }
+      }
     }
+
+    function setupRealGoogleGSI() {
+      if (typeof google === 'undefined') return;
+      google.accounts.id.initialize({
+        client_id: '1064295328905-2b4h8sk437j2kpgt4u9vfeepu59s96j2.apps.googleusercontent.com',
+        callback: handleRealGoogleCredential
+      });
+      google.accounts.id.renderButton(
+        document.getElementById("googleButton"),
+        { theme: "outline", size: "large", width: "380", text: "signup_with" }
+      );
+    }
+
+    // Decode JWT from GSI client response
+    function decodeJwt(token) {
+      try {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+        return JSON.parse(jsonPayload);
+      } catch (e) {
+        console.error("JWT Decode error:", e);
+        return null;
+      }
+    }
+
+    async function handleRealGoogleCredential(response) {
+      const payload = decodeJwt(response.credential);
+      if (payload) {
+        const lastName = payload.family_name || '';
+        const firstName = payload.given_name || '';
+        const email = payload.email;
+        await selectGoogleAccount(lastName, firstName, email);
+      } else {
+        alert("Có lỗi xảy ra khi nhận diện Google.");
+      }
+    }
+
+    // Google Sign-In Actions
+    async function selectGoogleAccount(lastName, firstName, email) {
+      const res = await googleLogin(lastName, firstName, email);
+      if (res.success) {
+        showRegisterSuccess();
+      } else {
+        alert('✗ Đăng ký thất bại: ' + res.message);
+      }
+    }
+
+    // Popup Control for local file simulation
+    let googlePopup = null;
+    function openGooglePopup() {
+      const width = 500;
+      const height = 620;
+      const left = (window.screen.width / 2) - (width / 2);
+      const top = (window.screen.height / 2) - (height / 2);
+      googlePopup = window.open('google-login.html', 'GoogleLoginPopup', 
+        `width=${width},height=${height},left=${left},top=${top},toolbar=no,menubar=no,scrollbars=yes,status=no`
+      );
+    }
+
+    // Listen for messages from Google popup
+    window.addEventListener('message', async function(event) {
+      if (event.data && event.data.type === 'GOOGLE_LOGIN_SUCCESS') {
+        const u = event.data.user;
+        await selectGoogleAccount(u.lastName, u.firstName, u.email);
+      }
+    });
 
     function showRegisterSuccess() {
       const html = `
         <div class="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
-          <div class="bg-white rounded-3xl p-10 text-center max-w-sm">
+          <div class="bg-white rounded-3xl p-10 text-center max-w-sm mx-4 shadow-2xl">
             <i class="fa-solid fa-circle-check text-green-500 text-6xl mb-4"></i>
-            <h2 class="text-2xl font-bold text-gray-800">Đăng ký thành công!</h2>
-            <p class="text-gray-600 mt-2">Đang chuyển sang trang đăng nhập...</p>
+            <h2 class="text-2xl font-bold text-gray-800">Đăng ký & Đăng nhập thành công!</h2>
+            <p class="text-gray-600 mt-2">Đang chuyển hướng về trang chủ...</p>
           </div>
         </div>`;
       document.body.insertAdjacentHTML('beforeend', html);
-      
       setTimeout(() => {
-        window.location.href = "login.html";
-      }, 1800);
+        window.location.href = "index.html";
+      }, 1500);
     }
 
-    function initializeGoogle() {
-      google.accounts.id.initialize({
-        client_id: GOOGLE_CLIENT_ID,
-        callback: handleCredentialResponse
-      });
-
-      google.accounts.id.renderButton(
-        document.getElementById("googleButton"),
-        { theme: "outline", size: "large", width: "100%", text: "signup_with" }
-      );
+    function validateEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     }
 
     // Toggle Password Visibility
@@ -200,15 +374,63 @@
       }
     }
 
+    // Simple Password Strength Indicator
+    function checkPasswordStrength() {
+      const pass = document.getElementById('password').value;
+      const desc = document.getElementById('password-strength');
+      if (!pass) {
+        desc.textContent = "Mật khẩu nên gồm ít nhất 8 ký tự, chữ hoa và số.";
+        desc.className = "text-sm text-gray-500 mt-2";
+        return;
+      }
+      if (pass.length < 6) {
+        desc.textContent = "❌ Mật khẩu quá ngắn (tối thiểu 6 ký tự).";
+        desc.className = "text-sm text-red-500 mt-2 font-medium";
+      } else if (pass.length < 8) {
+        desc.textContent = "⚠️ Mật khẩu trung bình (nên từ 8 ký tự trở lên).";
+        desc.className = "text-sm text-yellow-600 mt-2 font-medium";
+      } else {
+        desc.textContent = "✅ Mật khẩu mạnh và an toàn.";
+        desc.className = "text-sm text-green-600 mt-2 font-medium";
+      }
+    }
+
+    function handleEscapeKey(event) {
+      if (event.key === 'Escape') {
+        // no-op here since no forgot modal in register.html
+      }
+    }
+
     window.onload = () => {
-      initializeGoogle();
+      initGoogleAuth();
       changeBackground(); // Initialize first background
       startAutoPlay(); // Start enhanced carousel
+      document.addEventListener('keydown', handleEscapeKey);
     };
 
-    function handleRegister(e) {
+    async function handleRegister(e) {
       e.preventDefault();
-      showRegisterSuccess();
+      const firstName = document.getElementById('first-name').value.trim();
+      const lastName = document.getElementById('last-name').value.trim();
+      const email = document.getElementById('register-email').value.trim();
+      const countryCode = document.getElementById('country-code').value;
+      const phone = countryCode + ' ' + document.getElementById('phone').value.trim();
+      const password = document.getElementById('password').value;
+
+      if (!validateEmail(email)) {
+        alert('Vui lòng nhập email hợp lệ!');
+        return;
+      }
+
+      // Register user through shared script
+      const res = await registerUser(firstName, lastName, email, phone, password);
+      if (res.success) {
+        // Also auto login for convenience
+        await loginUser(email, password);
+        showRegisterSuccess();
+      } else {
+        alert('✗ Đăng ký thất bại: ' + res.message);
+      }
     }
   </script>
 </body>

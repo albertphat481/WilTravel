@@ -157,9 +157,14 @@
               <i class="fa-solid fa-credit-card mr-2"></i>Đặt Tour Ngay
             </button>
 
-            <button onclick="addToCart()" class="w-full border-2 border-green-600 text-green-600 font-bold py-3 rounded-lg hover:bg-green-50 transition">
-              <i class="fa-solid fa-cart-plus mr-2"></i>Thêm Vào Giỏ
-            </button>
+            <div class="flex gap-2">
+              <button onclick="addToCartClick()" class="flex-1 border-2 border-green-600 text-green-600 font-bold py-3 rounded-lg hover:bg-green-50 transition">
+                <i class="fa-solid fa-cart-plus mr-1"></i>Thêm Vào Giỏ
+              </button>
+              <button id="detail-fav-btn" onclick="toggleDetailFav()" class="px-4 border border-gray-300 rounded-lg hover:bg-gray-50 transition text-gray-400" aria-label="Add to wishlist">
+                <i class="fa-solid fa-heart text-xl"></i>
+              </button>
+            </div>
           </div>
 
           <div class="mt-6 pt-6 border-t text-xs text-gray-600">
@@ -177,7 +182,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
         <div>
-          <img src="images/logo.png" alt="WILTravel" class="h-12 mb-4">
+          <img src="images/logo-footer-colored.png" alt="WILTravel" class="h-12 mb-4 bg-white/10 rounded-xl p-1">
           <p class="text-sm">Chỉ cần & đi chuyến nghỉ ngơi</p>
         </div>
         <div>
@@ -195,30 +200,49 @@
     </div>
   </footer>
 
+  <script src="js/app.js"></script>
   <script>
-    const tours = {
-      1: { name: "Phú Quốc 4N3Đ All Inclusive", location: "Phú Quốc", price: 3290000, image: "images/tour-phuquoc.jpg", rating: 4.8, reviews: 120 },
-      2: { name: "Sapa - Hà Giang 5N4Đ", location: "Sapa", price: 4190000, image: "images/tour-sapa.jpg", rating: 4.7, reviews: 95 },
-      3: { name: "Bali Thiên Đường 6N5Đ", location: "Bali", price: 18500000, image: "images/tour-bali.jpg", rating: 4.9, reviews: 200 }
-    };
-
     let quantity = 1;
     const urlParams = new URLSearchParams(window.location.search);
-    const tourId = urlParams.get('id') || '1';
-    const tour = tours[tourId] || tours[1];
+    const tourId = parseInt(urlParams.get('id')) || 1;
+    const tour = tours.find(t => t.id === tourId) || tours[0];
 
     function formatPrice(price) {
-      return (price / 1000000).toFixed(2) + 'tr';
+      return price.toLocaleString('vi-VN') + 'đ';
     }
 
     function updateUI() {
+      // Set name
       document.getElementById('tour-name').textContent = tour.name;
       document.getElementById('tour-title').textContent = tour.name;
-      document.getElementById('tour-location').textContent = tour.location;
+      document.getElementById('tour-location').innerHTML = `<i class="fa-solid fa-map-pin mr-2"></i>${tour.location}`;
+      
+      // Set main elements
       document.getElementById('main-image').src = tour.image;
       document.getElementById('tour-price').textContent = formatPrice(tour.price);
       document.getElementById('rating').textContent = tour.rating;
       document.getElementById('reviews-count').textContent = tour.reviews;
+      document.getElementById('duration').textContent = tour.duration;
+
+      // Populate dynamic lists
+      document.getElementById('includes').innerHTML = tour.includes.map(inc => `<li><i class="fa-solid fa-check text-green-600 mr-2"></i>${inc}</li>`).join('');
+      document.getElementById('notes').innerHTML = tour.notes.map(note => `<li><i class="fa-solid fa-circle-dot text-green-600 mr-2"></i>${note}</li>`).join('');
+
+      // Setup wishlist heart icon state
+      const favBtn = document.getElementById('detail-fav-btn');
+      const isFav = isInWishlist(tour.id);
+      if (isFav) {
+        favBtn.classList.remove('text-gray-400');
+        favBtn.classList.add('text-red-600');
+      } else {
+        favBtn.classList.remove('text-red-600');
+        favBtn.classList.add('text-gray-400');
+      }
+
+      // Initialize date inputs min date to today
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('departure-date').setAttribute('min', today);
+
       updateTotal();
     }
 
@@ -242,12 +266,37 @@
       document.getElementById('total').textContent = formatPrice(subtotal);
     }
 
-    function bookTour() {
-      alert(`✅ Đặt tour thành công!\n\nTour: ${tour.name}\nSố người: ${quantity}\nTổng tiền: ${formatPrice(tour.price * quantity)}\n\nVui lòng tiến hành thanh toán.`);
+    function toggleDetailFav() {
+      const added = toggleWishlist(tour.id);
+      const btn = document.getElementById('detail-fav-btn');
+      if (added) {
+        btn.classList.remove('text-gray-400');
+        btn.classList.add('text-red-600');
+      } else {
+        btn.classList.remove('text-red-600');
+        btn.classList.add('text-gray-400');
+      }
     }
 
-    function addToCart() {
-      alert(`✅ Đã thêm vào giỏ hàng!\n\n${tour.name} x${quantity}`);
+    function addToCartClick() {
+      const dateInput = document.getElementById('departure-date').value;
+      if (!dateInput) {
+        alert('Vui lòng chọn ngày khởi hành!');
+        return;
+      }
+      addToCart(tour.id, quantity, dateInput);
+      alert(`✅ Đã thêm vào giỏ hàng!\n\nTour: ${tour.name}\nNgày đi: ${dateInput}\nSố người: ${quantity}`);
+    }
+
+    function bookTour() {
+      const dateInput = document.getElementById('departure-date').value;
+      if (!dateInput) {
+        alert('Vui lòng chọn ngày khởi hành!');
+        return;
+      }
+      // Direct buy: we add to cart and redirect
+      addToCart(tour.id, quantity, dateInput);
+      window.location.href = `booking.html?tourId=${tour.id}&quantity=${quantity}&date=${dateInput}`;
     }
 
     window.onload = updateUI;

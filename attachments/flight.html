@@ -119,6 +119,66 @@
     </div>
   </section>
 
+  <!-- Đối tác hãng bay -->
+  <section class="py-12 bg-white border-b">
+    <div class="max-w-7xl mx-auto px-6">
+      <h2 class="text-2xl font-bold text-gray-800 text-center mb-2">Hãng bay đối tác</h2>
+      <p class="text-gray-500 text-center mb-10">WILTravel hợp tác với các hãng hàng không uy tín trên toàn cầu</p>
+      <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-10 gap-5 items-start">
+        <!-- Vietnam Airlines -->
+        <div class="flex flex-col items-center gap-2 group cursor-pointer">
+          <img src="images/vietnam-airlines.png" alt="Vietnam Airlines" class="w-14 h-14 object-contain rounded-2xl bg-white p-1.5 shadow-md group-hover:scale-110 transition-all duration-300 border border-gray-100">
+          <span class="text-[11px] text-gray-600 text-center leading-tight font-medium">Vietnam<br>Airlines</span>
+        </div>
+        <!-- VietJet Air -->
+        <div class="flex flex-col items-center gap-2 group cursor-pointer">
+          <img src="images/vietjet-air.png" alt="VietJet Air" class="w-14 h-14 object-contain rounded-2xl bg-white p-1.5 shadow-md group-hover:scale-110 transition-all duration-300 border border-gray-100">
+          <span class="text-[11px] text-gray-600 text-center leading-tight font-medium">VietJet<br>Air</span>
+        </div>
+        <!-- Bamboo Airways -->
+        <div class="flex flex-col items-center gap-2 group cursor-pointer">
+          <img src="images/bamboo-airways.png" alt="Bamboo Airways" class="w-14 h-14 object-contain rounded-2xl bg-white p-1.5 shadow-md group-hover:scale-110 transition-all duration-300 border border-gray-100">
+          <span class="text-[11px] text-gray-600 text-center leading-tight font-medium">Bamboo<br>Airways</span>
+        </div>
+        <!-- Pacific Airlines -->
+        <div class="flex flex-col items-center gap-2 group cursor-pointer">
+          <img src="images/pacific-airlines.png" alt="Pacific Airlines" class="w-14 h-14 object-contain rounded-2xl bg-white p-1.5 shadow-md group-hover:scale-110 transition-all duration-300 border border-gray-100">
+          <span class="text-[11px] text-gray-600 text-center leading-tight font-medium">Pacific<br>Airlines</span>
+        </div>
+        <!-- Vietravel Airlines -->
+        <div class="flex flex-col items-center gap-2 group cursor-pointer">
+          <img src="images/vietravel.png" alt="Vietravel" class="w-14 h-14 object-contain rounded-2xl bg-white p-1.5 shadow-md group-hover:scale-110 transition-all duration-300 border border-gray-100">
+          <span class="text-[11px] text-gray-600 text-center leading-tight font-medium">Vietravel<br>Airlines</span>
+        </div>
+        <!-- AirAsia -->
+        <div class="flex flex-col items-center gap-2 group cursor-pointer">
+          <img src="images/airasia.png" alt="AirAsia" class="w-14 h-14 object-contain rounded-2xl bg-white p-1.5 shadow-md group-hover:scale-110 transition-all duration-300 border border-gray-100">
+          <span class="text-[11px] text-gray-600 text-center leading-tight font-medium">AirAsia</span>
+        </div>
+        <!-- Thai Airways -->
+        <div class="flex flex-col items-center gap-2 group cursor-pointer">
+          <img src="images/thai-airways.png" alt="Thai Airways" class="w-14 h-14 object-contain rounded-2xl bg-white p-1.5 shadow-md group-hover:scale-110 transition-all duration-300 border border-gray-100">
+          <span class="text-[11px] text-gray-600 text-center leading-tight font-medium">Thai<br>Airways</span>
+        </div>
+        <!-- Singapore Airlines -->
+        <div class="flex flex-col items-center gap-2 group cursor-pointer">
+          <img src="images/singapore-airlines.png" alt="Singapore Airlines" class="w-14 h-14 object-contain rounded-2xl bg-white p-1.5 shadow-md group-hover:scale-110 transition-all duration-300 border border-gray-100">
+          <span class="text-[11px] text-gray-600 text-center leading-tight font-medium">Singapore<br>Airlines</span>
+        </div>
+        <!-- Scoot -->
+        <div class="flex flex-col items-center gap-2 group cursor-pointer">
+          <img src="images/scoot.png" alt="Scoot" class="w-14 h-14 object-contain rounded-2xl bg-white p-1.5 shadow-md group-hover:scale-110 transition-all duration-300 border border-gray-100">
+          <span class="text-[11px] text-gray-600 text-center leading-tight font-medium">Scoot</span>
+        </div>
+        <!-- Emirates -->
+        <div class="flex flex-col items-center gap-2 group cursor-pointer">
+          <img src="images/emirates.png" alt="Emirates" class="w-14 h-14 object-contain rounded-2xl bg-white p-1.5 shadow-md group-hover:scale-110 transition-all duration-300 border border-gray-100">
+          <span class="text-[11px] text-gray-600 text-center leading-tight font-medium">Emirates</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Danh sách chuyến bay -->
   <section class="py-16 bg-gray-50">
     <div class="max-w-7xl mx-auto px-6">
@@ -130,12 +190,13 @@
     </div>
   </section>
 
+
   <!-- Footer -->
   <footer id="footer" class="bg-gray-900 text-gray-400 py-16">
     <div class="max-w-7xl mx-auto px-6">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
         <div>
-          <img src="images/logo.png" alt="WILTravel" class="h-12 mb-4">
+          <img src="images/logo-footer-colored.png" alt="WILTravel" class="h-12 mb-4 bg-white/10 rounded-xl p-1">
           <p class="text-sm">Chỉ cần & đi chuyến nghỉ ngơi</p>
         </div>
         <div>
@@ -158,140 +219,98 @@
     </div>
   </footer>
 
+  <script src="js/app.js"></script>
   <script>
+    // Airline brand colors map
+    const airlineBrands = {
+      'Vietnam Airlines':    { code: 'VN', bg: 'linear-gradient(135deg, #0a3d8f, #1565c0)', text: '#fff' },
+      'VietJet Air':         { code: 'VJ', bg: 'linear-gradient(135deg, #d32f2f, #f44336)', text: '#fff' },
+      'Bamboo Airways':      { code: 'QH', bg: 'linear-gradient(135deg, #1b5e20, #388e3c)', text: '#fff' },
+      'Pacific Airlines':    { code: 'BL', bg: 'linear-gradient(135deg, #1976d2, #42a5f5)', text: '#fff' },
+      'Vietravel Airlines':  { code: 'VU', bg: 'linear-gradient(135deg, #e65100, #fb8c00)', text: '#fff' },
+      'AirAsia':             { code: 'AK', bg: 'linear-gradient(135deg, #b71c1c, #e53935)', text: '#fff' },
+      'Thai Airways':        { code: 'TG', bg: 'linear-gradient(135deg, #4a148c, #7b1fa2)', text: '#fff' },
+      'Singapore Airlines':  { code: 'SQ', bg: 'linear-gradient(135deg, #0d47a1, #1565c0)', text: '#fff' },
+      'Scoot':               { code: 'TR', bg: 'linear-gradient(135deg, #f9a825, #fdd835)', text: '#1a1a1a' },
+      'Emirates':            { code: 'EK', bg: 'linear-gradient(135deg, #8b0000, #c62828)', text: '#fdd835' },
+      'Qatar Airways':       { code: 'QR', bg: 'linear-gradient(135deg, #4a0e2e, #7b1f52)', text: '#fff' }
+    };
+
     const flights = [
-      {
-        id: 1,
-        from: "SGN",
-        to: "HAN",
-        departure: "07:30",
-        arrival: "09:45",
-        duration: "2h 15p",
-        price: "1.290.000",
-        airline: "Vietnam Airlines",
-        logo: "images/vietnam-airlines.png"
-      },
-      {
-        id: 2,
-        from: "SGN",
-        to: "DAD",
-        departure: "08:45",
-        arrival: "10:20",
-        duration: "1h 35p",
-        price: "890.000",
-        airline: "VietJet Air",
-        logo: "images/vietjet-air.png"
-      },
-      {
-        id: 3,
-        from: "SGN",
-        to: "HAN",
-        departure: "14:00",
-        arrival: "16:20",
-        duration: "2h 20p",
-        price: "1.450.000",
-        airline: "Bamboo Airways",
-        logo: "images/bamboo-airways.png"
-      },
-      {
-        id: 4,
-        from: "SGN",
-        to: "DAD",
-        departure: "19:15",
-        arrival: "20:50",
-        duration: "1h 35p",
-        price: "750.000",
-        airline: "VietJet Air",
-        logo: "images/vietjet-air.png"
-      },
-      {
-        id: 5,
-        from: "HAN",
-        to: "SGN",
-        departure: "06:50",
-        arrival: "09:10",
-        duration: "2h 20p",
-        price: "1.350.000",
-        airline: "Vietnam Airlines",
-        logo: "images/vietnam-airlines.png"
-      },
-      {
-        id: 6,
-        from: "DAD",
-        to: "SGN",
-        departure: "10:30",
-        arrival: "12:05",
-        duration: "1h 35p",
-        price: "820.000",
-        airline: "Pacific Airlines",
-        logo: "images/pacific-airlines.png"
-      },
-      {
-        id: 7,
-        from: "SGN",
-        to: "HAN",
-        departure: "21:45",
-        arrival: "00:05",
-        duration: "2h 20p",
-        price: "1.680.000",
-        airline: "Vietnam Airlines",
-        logo: "images/vietnam-airlines.png"
-      },
-      {
-        id: 8,
-        from: "SGN",
-        to: "BKK",
-        departure: "08:00",
-        arrival: "09:50",
-        duration: "1h 50p",
-        price: "2.450.000",
-        airline: "Thai Airways",
-        logo: "images/thai-airways.png"
-      },
-      {
-        id: 9,
-        from: "HAN",
-        to: "SIN",
-        departure: "13:20",
-        arrival: "17:10",
-        duration: "3h 50p",
-        price: "3.890.000",
-        airline: "Singapore Airlines",
-        logo: "images/singapore-airlines.png"
-      },
-      {
-        id: 10,
-        from: "SGN",
-        to: "DAD",
-        departure: "16:40",
-        arrival: "18:15",
-        duration: "1h 35p",
-        price: "680.000",
-        airline: "VietJet Air",
-        logo: "images/vietjet-air.png"
-      }
+      { id: 1, from: "SGN", to: "HAN", departure: "07:30", arrival: "09:45", duration: "2h 15p", price: "1.290.000", airline: "Vietnam Airlines" },
+      { id: 2, from: "SGN", to: "DAD", departure: "08:45", arrival: "10:20", duration: "1h 35p", price: "890.000", airline: "VietJet Air" },
+      { id: 3, from: "SGN", to: "HAN", departure: "14:00", arrival: "16:20", duration: "2h 20p", price: "1.450.000", airline: "Bamboo Airways" },
+      { id: 4, from: "SGN", to: "DAD", departure: "19:15", arrival: "20:50", duration: "1h 35p", price: "750.000", airline: "VietJet Air" },
+      { id: 5, from: "HAN", to: "SGN", departure: "06:50", arrival: "09:10", duration: "2h 20p", price: "1.350.000", airline: "Vietnam Airlines" },
+      { id: 6, from: "DAD", to: "SGN", departure: "10:30", arrival: "12:05", duration: "1h 35p", price: "820.000", airline: "Pacific Airlines" },
+      { id: 7, from: "SGN", to: "HAN", departure: "21:45", arrival: "00:05", duration: "2h 20p", price: "1.680.000", airline: "Vietnam Airlines" },
+      { id: 8, from: "SGN", to: "BKK", departure: "08:00", arrival: "09:50", duration: "1h 50p", price: "2.450.000", airline: "Thai Airways" },
+      { id: 9, from: "HAN", to: "SIN", departure: "13:20", arrival: "17:10", duration: "3h 50p", price: "3.890.000", airline: "Singapore Airlines" },
+      { id: 10, from: "SGN", to: "DAD", departure: "16:40", arrival: "18:15", duration: "1h 35p", price: "680.000", airline: "VietJet Air" },
+      { id: 11, from: "SGN", to: "BKK", departure: "11:15", arrival: "13:05", duration: "1h 50p", price: "1.890.000", airline: "AirAsia" },
+      { id: 12, from: "HAN", to: "DAD", departure: "07:00", arrival: "08:20", duration: "1h 20p", price: "1.150.000", airline: "Vietravel Airlines" },
+      { id: 13, from: "HAN", to: "BKK", departure: "09:40", arrival: "11:35", duration: "1h 55p", price: "2.100.000", airline: "VietJet Air" },
+      { id: 14, from: "DAD", to: "HAN", departure: "18:30", arrival: "19:50", duration: "1h 20p", price: "950.000", airline: "Bamboo Airways" },
+      { id: 15, from: "SGN", to: "SIN", departure: "09:10", arrival: "12:15", duration: "2h 05p", price: "2.890.000", airline: "Scoot" },
+      { id: 16, from: "SGN", to: "SIN", departure: "14:20", arrival: "17:30", duration: "2h 10p", price: "4.250.000", airline: "Singapore Airlines" },
+      { id: 17, from: "HAN", to: "SGN", departure: "12:00", arrival: "14:20", duration: "2h 20p", price: "1.890.000", airline: "Vietravel Airlines" },
+      { id: 18, from: "SGN", to: "HAN", departure: "17:00", arrival: "19:20", duration: "2h 20p", price: "1.100.000", airline: "Pacific Airlines" },
+      { id: 19, from: "HAN", to: "SIN", departure: "17:30", arrival: "21:20", duration: "3h 50p", price: "9.500.000", airline: "Emirates" },
+      { id: 20, from: "SGN", to: "BKK", departure: "16:20", arrival: "18:15", duration: "1h 55p", price: "8.900.000", airline: "Qatar Airways" }
     ];
 
-    function renderFlights(list = flights) {
+    const airlineLogos = {
+      'Vietnam Airlines': 'images/vietnam-airlines.png',
+      'VietJet Air': 'images/vietjet-air.png',
+      'Bamboo Airways': 'images/bamboo-airways.png',
+      'Pacific Airlines': 'images/pacific-airlines.png',
+      'Vietravel Airlines': 'images/vietravel.png',
+      'AirAsia': 'images/airasia.png',
+      'Thai Airways': 'images/thai-airways.png',
+      'Singapore Airlines': 'images/singapore-airlines.png',
+      'Scoot': 'images/scoot.png',
+      'Emirates': 'images/emirates.png',
+      'Qatar Airways': 'images/qatar.png'
+    };
+
+    let currentPage = 1;
+    const flightsPerPage = 10;
+    let currentFilteredFlights = flights;
+
+    function renderFlights(list = currentFilteredFlights, page = 1) {
+      currentFilteredFlights = list;
+      currentPage = page;
+      
       const container = document.getElementById('flights-list');
       container.innerHTML = '';
 
       if (!list.length) {
         container.innerHTML = `
-          <div class="bg-yellow-50 border border-yellow-200 rounded-3xl p-8 text-center text-yellow-900">
+          <div class="bg-yellow-50 border border-yellow-200 rounded-3xl p-8 text-center text-yellow-900 w-full">
             <p class="text-lg font-semibold">Không tìm thấy chuyến bay phù hợp.</p>
             <p class="mt-2 text-gray-600">Hãy thử thay đổi hành trình hoặc chọn ngày khác.</p>
           </div>`;
         return;
       }
 
-      list.forEach(flight => {
+      const startIndex = (page - 1) * flightsPerPage;
+      const endIndex = startIndex + flightsPerPage;
+      const paginatedList = list.slice(startIndex, endIndex);
+
+      paginatedList.forEach(flight => {
+        const initials = flight.airline.split(' ').map(w => w[0]).join('');
+        const logoPath = airlineLogos[flight.airline];
         const card = document.createElement('div');
         card.className = "flight-card bg-white rounded-3xl p-6 shadow-sm border border-gray-100";
         card.innerHTML = `
           <div class="flex flex-col md:flex-row justify-between items-center gap-6">
             <div class="flex items-center gap-6">
-              <img src="${flight.logo}" alt="${flight.airline}" class="w-12 h-12 object-contain">
+              <div class="w-12 h-12 flex items-center justify-center relative shrink-0">
+                ${logoPath 
+                  ? `<img src="${logoPath}" alt="${flight.airline}" class="w-12 h-12 object-contain bg-white rounded-full p-1 border border-gray-100">`
+                  : `<div class="w-12 h-12 rounded-full bg-green-100 text-green-700 flex items-center justify-center font-bold text-sm shadow-sm">${initials}</div>`
+                }
+              </div>
               <div>
                 <p class="font-semibold text-lg">${flight.airline}</p>
                 <p class="text-gray-500">${flight.from} → ${flight.to}</p>
@@ -307,10 +326,10 @@
               <p class="text-2xl font-bold">${flight.arrival}</p>
             </div>
             
-            <div class="text-right">
+            <div class="text-right w-full md:w-auto">
               <p class="text-3xl font-bold text-green-600">${flight.price}<span class="text-base font-normal">đ</span></p>
               <button onclick="bookFlight(${flight.id})" 
-                      class="mt-3 bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-2xl transition">
+                      class="mt-3 w-full md:w-auto bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-2xl transition">
                 Chọn chuyến
               </button>
             </div>
@@ -318,10 +337,48 @@
         `;
         container.appendChild(card);
       });
+
+      renderPagination(list.length, page);
+    }
+
+    function renderPagination(totalItems, page) {
+      const container = document.getElementById('flights-list');
+      const totalPages = Math.ceil(totalItems / flightsPerPage);
+      
+      if (totalPages <= 1) return;
+      
+      let html = '<div class="flex justify-center items-center gap-2 mt-8">';
+      
+      // Prev
+      html += `<button onclick="renderFlights(currentFilteredFlights, ${page - 1})" class="w-10 h-10 rounded-full flex items-center justify-center border border-gray-200 text-gray-600 hover:bg-green-50 hover:text-green-600 transition ${page === 1 ? 'opacity-50 pointer-events-none' : ''}"><i class="fa-solid fa-chevron-left"></i></button>`;
+      
+      for (let i = 1; i <= totalPages; i++) {
+        if (totalPages > 7) {
+          if (i !== 1 && i !== totalPages && (i < page - 1 || i > page + 1)) {
+            if (i === 2 || i === totalPages - 1) {
+              html += `<span class="px-1 text-gray-400">...</span>`;
+            }
+            continue;
+          }
+        }
+        
+        if (i === page) {
+          html += `<button class="w-10 h-10 rounded-full flex items-center justify-center bg-green-600 text-white font-bold shadow-md">${i}</button>`;
+        } else {
+          html += `<button onclick="renderFlights(currentFilteredFlights, ${i})" class="w-10 h-10 rounded-full flex items-center justify-center border border-gray-200 text-gray-600 hover:bg-green-50 hover:text-green-600 font-medium transition">${i}</button>`;
+        }
+      }
+      
+      // Next
+      html += `<button onclick="renderFlights(currentFilteredFlights, ${page + 1})" class="w-10 h-10 rounded-full flex items-center justify-center border border-gray-200 text-gray-600 hover:bg-green-50 hover:text-green-600 transition ${page === totalPages ? 'opacity-50 pointer-events-none' : ''}"><i class="fa-solid fa-chevron-right"></i></button>`;
+      
+      html += '</div>';
+      container.insertAdjacentHTML('beforeend', html);
     }
 
     function bookFlight(id) {
-      alert(`✅ Đã chọn chuyến bay #${id}\n\nBạn sẽ được chuyển đến trang thanh toán.`);
+      const flight = flights.find(f => f.id === id);
+      alert(`✅ Bạn đã chọn chuyến bay của hãng ${flight.airline} từ ${flight.from} đi ${flight.to} (${flight.departure} - ${flight.arrival}).\n\nTính năng đặt vé máy bay riêng biệt đang được nâng cấp!`);
     }
 
     function searchFlights() {
@@ -336,14 +393,13 @@
       }
 
       const filtered = flights.filter(flight => flight.from === from && flight.to === to);
-      const summary = document.createElement('div');
-      renderFlights(filtered);
+      renderFlights(filtered, 1);
 
       if (filtered.length) {
-        const info = `Tìm thấy ${filtered.length} chuyến bay ${from} → ${to}` + (departureDate ? ` vào ${departureDate}` : '') + (returnDate ? ` và về ${returnDate}` : '');
+        const info = `Tìm thấy ${filtered.length} chuyến bay ${from} → ${to}` + (departureDate ? ` vào ngày ${departureDate}` : '') + (returnDate ? ` và ngày về ${returnDate}` : '');
         alert(`🔍 ${info}`);
       } else {
-        alert(`⚠️ Không tìm thấy chuyến bay từ ${from} đến ${to}. Hãy thử thay đổi hành trình.`);
+        alert(`⚠️ Không tìm thấy chuyến bay trực tiếp từ ${from} đến ${to}.`);
       }
     }
 
@@ -367,8 +423,84 @@
       });
     }
 
+    function generateMoreFlights() {
+      const airlines = [
+        "Vietnam Airlines", "VietJet Air", "Bamboo Airways", "Pacific Airlines", 
+        "Vietravel Airlines", "AirAsia", "Thai Airways", "Singapore Airlines", 
+        "Scoot", "Emirates", "Qatar Airways"
+      ];
+      const froms = ["SGN", "HAN", "DAD"];
+      const tos = ["HAN", "DAD", "SGN", "BKK", "SIN"];
+      
+      let currentId = 21;
+      for (let i = 0; i < 100; i++) {
+        let from = froms[Math.floor(Math.random() * froms.length)];
+        let to = tos[Math.floor(Math.random() * tos.length)];
+        while (from === to) {
+          from = froms[Math.floor(Math.random() * froms.length)];
+          to = tos[Math.floor(Math.random() * tos.length)];
+        }
+        
+        const airline = airlines[Math.floor(Math.random() * airlines.length)];
+        
+        // Generate random departure time (e.g. 05:00 to 23:45)
+        const depHour = String(Math.floor(Math.random() * 19) + 5).padStart(2, '0');
+        const depMin = String(Math.floor(Math.random() * 4) * 15).padStart(2, '0');
+        const departure = `${depHour}:${depMin}`;
+        
+        // Calculate duration and arrival based on route
+        let durationMinutes = 90;
+        if ((from === "SGN" && to === "HAN") || (from === "HAN" && to === "SGN")) {
+          durationMinutes = 135 + Math.floor(Math.random() * 3) * 5;
+        } else if ((from === "HAN" && to === "SIN") || (from === "SIN" && to === "HAN")) {
+          durationMinutes = 220 + Math.floor(Math.random() * 3) * 10;
+        } else if ((from === "SGN" && to === "SIN") || (from === "SIN" && to === "SGN")) {
+          durationMinutes = 125 + Math.floor(Math.random() * 3) * 5;
+        } else if ((from === "SGN" && to === "BKK") || (from === "BKK" && to === "SGN")) {
+          durationMinutes = 110 + Math.floor(Math.random() * 3) * 5;
+        } else if ((from === "HAN" && to === "BKK") || (from === "BKK" && to === "HAN")) {
+          durationMinutes = 115 + Math.floor(Math.random() * 3) * 5;
+        } else {
+          durationMinutes = 80 + Math.floor(Math.random() * 3) * 5;
+        }
+        
+        const durHours = Math.floor(durationMinutes / 60);
+        const durMins = durationMinutes % 60;
+        const duration = `${durHours}h ${durMins}p`;
+        
+        // Calculate arrival time
+        const depTotal = parseInt(depHour) * 60 + parseInt(depMin);
+        const arrTotal = (depTotal + durationMinutes) % 1440;
+        const arrHour = String(Math.floor(arrTotal / 60)).padStart(2, '0');
+        const arrMin = String(arrTotal % 60).padStart(2, '0');
+        const arrival = `${arrHour}:${arrMin}`;
+        
+        // Price: in millions VND
+        let basePrice = 800000;
+        if (to === "SIN" || to === "BKK") {
+          basePrice = 1800000 + Math.floor(Math.random() * 15) * 200000;
+        } else {
+          basePrice = 700000 + Math.floor(Math.random() * 12) * 100000;
+        }
+        const price = basePrice.toLocaleString('vi-VN');
+        
+        flights.push({
+          id: currentId++,
+          from,
+          to,
+          departure,
+          arrival,
+          duration,
+          price,
+          airline
+        });
+      }
+    }
+
     window.onload = () => {
-      renderFlights();
+      generateMoreFlights();
+      currentFilteredFlights = flights;
+      renderFlights(flights, 1);
       if (mobileButton) {
         mobileButton.addEventListener('click', toggleMobileMenu);
       }

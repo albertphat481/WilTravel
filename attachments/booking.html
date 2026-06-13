@@ -17,75 +17,511 @@
   </nav>
 
   <section class="max-w-4xl mx-auto px-4 sm:px-6 py-16 pt-24">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+    <!-- Step Indicators -->
+    <div class="grid grid-cols-3 gap-2 sm:gap-8 mb-12">
       <div class="text-center">
-        <div class="inline-block bg-green-600 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg mb-2">1</div>
-        <p class="font-semibold text-gray-800">Thông Tin Cá Nhân</p>
+        <div id="indicator-1" class="inline-block bg-green-600 text-white w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-bold text-base sm:text-lg mb-2 transition-all duration-300">1</div>
+        <p class="font-semibold text-gray-800 text-xs sm:text-sm">Thông Tin</p>
       </div>
       <div class="text-center">
-        <div class="inline-block bg-green-200 text-green-600 w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg mb-2">2</div>
-        <p class="font-semibold text-gray-800">Xác Nhận</p>
+        <div id="indicator-2" class="inline-block bg-green-200 text-green-600 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-bold text-base sm:text-lg mb-2 transition-all duration-300">2</div>
+        <p class="font-semibold text-gray-800 text-xs sm:text-sm">Xác Nhận</p>
       </div>
       <div class="text-center">
-        <div class="inline-block bg-green-200 text-green-600 w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg mb-2">3</div>
-        <p class="font-semibold text-gray-800">Thanh Toán</p>
+        <div id="indicator-3" class="inline-block bg-green-200 text-green-600 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-bold text-base sm:text-lg mb-2 transition-all duration-300">3</div>
+        <p class="font-semibold text-gray-800 text-xs sm:text-sm">Thanh Toán</p>
       </div>
     </div>
 
-    <div class="bg-white rounded-2xl shadow-md p-8">
-      <h1 class="text-3xl font-bold text-gray-800 mb-8">Thông Tin Cá Nhân</h1>
+    <!-- Wizard Steps Containers -->
+    <div class="bg-white rounded-3xl shadow-xl p-6 sm:p-8 border border-gray-100">
       
-      <form onsubmit="submitBooking(event)" class="space-y-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-2">Họ</label>
-            <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500">
+      <!-- STEP 1: Personal Information -->
+      <div id="step-1" class="transition-opacity duration-300">
+        <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 sm:mb-8">Thông Tin Liên Hệ</h1>
+        <form onsubmit="goToStep2(event)" class="space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-2">Họ</label>
+              <input type="text" id="cust-lastname" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-green-500">
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-2">Tên</label>
+              <input type="text" id="cust-firstname" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-green-500">
+            </div>
           </div>
+
           <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-2">Tên</label>
-            <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500">
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+            <input type="email" id="cust-email" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-green-500">
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Số Điện Thoại</label>
+            <input type="tel" id="cust-phone" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-green-500">
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Địa Chỉ</label>
+            <input type="text" id="cust-address" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-green-500">
+          </div>
+
+          <div class="bg-gray-50 p-6 rounded-2xl">
+            <label class="block font-bold text-gray-800 mb-3">Yêu Cầu Đặc Biệt (Tùy chọn)</label>
+            <textarea id="cust-request" rows="3" placeholder="Ví dụ: Ăn chay, phòng tầng cao, cần xe đẩy trẻ em..." class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-green-500 resize-none"></textarea>
+          </div>
+
+          <div class="flex items-center gap-3 bg-yellow-50 p-4 rounded-xl">
+            <input type="checkbox" id="terms" required class="w-4 h-4 accent-green-600">
+            <label for="terms" class="text-sm text-gray-700">
+              Tôi đã đọc và đồng ý với các <a href="#" class="text-green-600 font-semibold hover:underline">Điều khoản dịch vụ của WILTravel</a>
+            </label>
+          </div>
+
+          <button type="submit" class="w-full bg-green-600 text-white font-bold py-4 rounded-xl hover:bg-green-700 transition shadow-lg shadow-green-600/20">
+            Tiếp Tục Xác Nhận
+          </button>
+        </form>
+      </div>
+
+      <!-- STEP 2: Order Summary & Discount -->
+      <div id="step-2" class="hidden transition-opacity duration-300">
+        <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6">Xác Nhận Đơn Hàng</h1>
+        
+        <div id="checkout-items" class="space-y-4 mb-6">
+          <!-- Items to buy will be listed here -->
+        </div>
+
+        <!-- Promo Code Apply -->
+        <div class="bg-gray-50 p-5 rounded-2xl mb-6 border border-gray-100">
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Mã Giảm Giá (Coupon)</label>
+          <div class="flex gap-2">
+            <input type="text" id="promo-code" placeholder="Ví dụ: SAVE100, SUMMER50, FRIEND20" class="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-green-500 uppercase">
+            <button onclick="applyPromoCode()" class="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded-xl transition">Áp dụng</button>
+          </div>
+          <p id="promo-status" class="text-sm mt-2 font-medium"></p>
+        </div>
+
+        <!-- Price breakdown -->
+        <div class="bg-emerald-50/50 p-6 rounded-2xl mb-8 space-y-3">
+          <div class="flex justify-between text-gray-700">
+            <span>Tạm tính:</span>
+            <span id="summary-subtotal" class="font-semibold">0đ</span>
+          </div>
+          <div class="flex justify-between text-gray-700">
+            <span>Phí dịch vụ:</span>
+            <span id="summary-fee" class="font-semibold">0đ</span>
+          </div>
+          <div id="summary-discount-row" class="flex justify-between text-red-600 hidden">
+            <span>Giảm giá:</span>
+            <span id="summary-discount" class="font-semibold">-0đ</span>
+          </div>
+          <hr class="border-gray-200">
+          <div class="flex justify-between text-xl font-bold text-gray-800">
+            <span>Tổng thanh toán:</span>
+            <span id="summary-total" class="text-green-600">0đ</span>
           </div>
         </div>
 
-        <div>
-          <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
-          <input type="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500">
+        <div class="flex gap-4">
+          <button onclick="goToStep1()" class="flex-1 border border-gray-300 text-gray-700 font-bold py-4 rounded-xl hover:bg-gray-50 transition">
+            Quay lại
+          </button>
+          <button onclick="goToStep3()" class="flex-1 bg-green-600 text-white font-bold py-4 rounded-xl hover:bg-green-700 transition shadow-lg shadow-green-600/20">
+            Thanh Toán
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 3: Payment Selection -->
+      <div id="step-3" class="hidden transition-opacity duration-300">
+        <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6">Thanh Toán</h1>
+        
+        <div class="mb-8">
+          <label class="block font-bold text-gray-800 mb-4">Chọn Phương Thức Thanh Toán</label>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Bank transfer card -->
+            <label class="border-2 border-green-600 rounded-2xl p-5 flex items-start gap-3 cursor-pointer bg-green-50/20" id="pay-bank-label">
+              <input type="radio" name="pay-method" value="bank" checked onclick="togglePaymentFields('bank')" class="mt-1 accent-green-600">
+              <div>
+                <span class="font-bold text-gray-800 block mb-1"><i class="fa-solid fa-building-columns mr-2 text-green-600"></i>Chuyển khoản Ngân hàng</span>
+                <span class="text-xs text-gray-500">Thanh toán qua quét mã QR hoặc chuyển khoản truyền thống.</span>
+              </div>
+            </label>
+            <!-- Card card -->
+            <label class="border-2 border-gray-200 rounded-2xl p-5 flex items-start gap-3 cursor-pointer hover:border-green-600" id="pay-card-label">
+              <input type="radio" name="pay-method" value="card" onclick="togglePaymentFields('card')" class="mt-1 accent-green-600">
+              <div>
+                <span class="font-bold text-gray-800 block mb-1"><i class="fa-solid fa-credit-card mr-2 text-green-600"></i>Thẻ tín dụng / Ghi nợ</span>
+                <span class="text-xs text-gray-500">Chấp nhận thẻ Visa, Mastercard, JCB, thẻ nội địa.</span>
+              </div>
+            </label>
+          </div>
         </div>
 
-        <div>
-          <label class="block text-sm font-semibold text-gray-700 mb-2">Số Điện Thoại</label>
-          <input type="tel" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500">
+        <!-- Payment Details Content -->
+        <div class="bg-gray-50 p-6 rounded-2xl mb-8">
+          <!-- Bank transfer info -->
+          <div id="payment-bank" class="text-center space-y-4">
+            <p class="font-bold text-gray-800">Quét Mã QR MoMo/VietQR Để Thanh Toán</p>
+            <div class="flex justify-center">
+              <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 w-48 h-48 flex flex-col items-center justify-center">
+                <!-- Mock QR Code representation -->
+                <i class="fa-solid fa-qrcode text-9xl text-gray-800"></i>
+                <p class="text-[9px] text-gray-400 font-bold uppercase tracking-wider mt-2">VietQR - NAPAS247</p>
+              </div>
+            </div>
+            <div class="text-left max-w-sm mx-auto text-sm space-y-2 border-t pt-4">
+              <p class="text-gray-600"><strong>Ngân hàng:</strong> MB Bank (Quân Đội)</p>
+              <p class="text-gray-600"><strong>Số tài khoản:</strong> 0905025737</p>
+              <p class="text-gray-600"><strong>Chủ tài khoản:</strong> NGUYEN VAN A</p>
+              <p class="text-gray-600"><strong>Số tiền:</strong> <span class="text-green-600 font-bold" id="bank-total-price">0đ</span></p>
+              <p class="text-gray-600"><strong>Nội dung CK:</strong> <span class="text-green-600 font-bold font-mono" id="bank-desc">WILTRAVEL 12345</span></p>
+            </div>
+          </div>
+
+          <!-- Credit card form -->
+          <div id="payment-card" class="hidden space-y-4">
+            <p class="font-bold text-gray-800 mb-2">Nhập Thông Tin Thẻ</p>
+            <div class="space-y-4">
+              <div>
+                <label class="block text-xs text-gray-500 mb-1">Tên trên thẻ</label>
+                <input type="text" placeholder="NGUYEN VAN A" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-green-500 uppercase">
+              </div>
+              <div>
+                <label class="block text-xs text-gray-500 mb-1">Số thẻ</label>
+                <input type="text" placeholder="4111 2222 3333 4444" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-green-500">
+              </div>
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs text-gray-500 mb-1">Hạn dùng (MM/YY)</label>
+                  <input type="text" placeholder="12/29" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-green-500">
+                </div>
+                <div>
+                  <label class="block text-xs text-gray-500 mb-1">Mã bảo mật (CVV)</label>
+                  <input type="password" placeholder="•••" maxlength="3" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-green-500">
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div>
-          <label class="block text-sm font-semibold text-gray-700 mb-2">Địa Chỉ</label>
-          <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500">
+        <div class="flex gap-4">
+          <button onclick="goToStep2()" class="flex-1 border border-gray-300 text-gray-700 font-bold py-4 rounded-xl hover:bg-gray-50 transition">
+            Quay lại
+          </button>
+          <button onclick="completeCheckout()" class="flex-1 bg-green-600 text-white font-bold py-4 rounded-xl hover:bg-green-700 transition shadow-lg shadow-green-600/20">
+            Xác Nhận Đã Thanh Toán
+          </button>
         </div>
+      </div>
 
-        <div class="bg-gray-50 p-6 rounded-lg">
-          <h3 class="font-bold text-gray-800 mb-4">Yêu Cầu Đặc Biệt</h3>
-          <textarea rows="4" placeholder="Thêm ghi chú..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500 resize-none"></textarea>
-        </div>
-
-        <div class="flex items-center gap-3 bg-yellow-50 p-4 rounded-lg">
-          <input type="checkbox" id="terms" required class="w-4 h-4">
-          <label for="terms" class="text-sm text-gray-700">
-            Tôi đã đọc và đồng ý với <a href="#" class="text-green-600 font-semibold hover:underline">Điều khoản & Điều kiện</a>
-          </label>
-        </div>
-
-        <button type="submit" class="w-full bg-green-600 text-white font-bold py-3 rounded-lg hover:bg-green-700 transition">
-          Tiếp Tục Xác Nhận
-        </button>
-      </form>
     </div>
   </section>
 
+  <!-- Success Overlay screen -->
+  <div id="success-overlay" class="fixed inset-0 bg-black/70 hidden flex items-center justify-center z-[100] p-4">
+    <div class="bg-white rounded-3xl p-8 max-w-md w-full text-center shadow-2xl space-y-6">
+      <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-4xl mx-auto">
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold text-gray-800">Đặt Tour Thành Công!</h2>
+        <p class="text-gray-500 mt-2">Cảm ơn bạn đã tin tưởng dịch vụ của WILTravel. Đơn hàng của bạn đã được lưu lại thành công.</p>
+      </div>
+      <div class="bg-gray-50 p-4 rounded-xl text-sm text-left space-y-1">
+        <p><strong>Mã giao dịch:</strong> <span id="success-ord-id" class="font-mono font-bold text-green-600">ORD1234</span></p>
+        <p><strong>Khách hàng:</strong> <span id="success-ord-name">Nguyễn Văn A</span></p>
+        <p><strong>Tổng cộng:</strong> <span id="success-ord-total" class="font-bold text-green-600">0đ</span></p>
+      </div>
+      <p class="text-xs text-gray-400">Hệ thống sẽ tự động chuyển hướng về Trang cá nhân để xem lịch sử đơn hàng...</p>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
   <script>
-    function submitBooking(e) {
-      e.preventDefault();
-      alert('✅ Thông tin đã được lưu!\n\nChuyển sang bước xác nhận...');
+    let checkoutData = {
+      items: [], // { tourId, quantity, date, price, total }
+      personalInfo: {},
+      subtotal: 0,
+      serviceFee: 50000,
+      discount: 0,
+      total: 0,
+      promoCode: ''
+    };
+
+    // Load initial checkout items
+    function loadCheckoutItems() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const queryTourId = urlParams.get('tourId');
+      const queryQty = parseInt(urlParams.get('quantity')) || 1;
+      const queryDate = urlParams.get('date');
+
+      if (queryTourId) {
+        // Direct buy checkout
+        const id = parseInt(queryTourId);
+        const tour = tours.find(t => t.id === id);
+        if (tour) {
+          checkoutData.items = [{
+            tourId: id,
+            name: tour.name,
+            image: tour.image,
+            location: tour.location,
+            quantity: queryQty,
+            date: queryDate || new Date().toISOString().split('T')[0],
+            price: tour.price,
+            total: tour.price * queryQty
+          }];
+        }
+      } else {
+        // Cart checkout
+        const cart = getCart();
+        checkoutData.items = cart.map(cItem => {
+          const tour = tours.find(t => t.id === cItem.tourId);
+          if (!tour) return null;
+          return {
+            tourId: cItem.tourId,
+            name: tour.name,
+            image: tour.image,
+            location: tour.location,
+            quantity: cItem.quantity,
+            date: cItem.date,
+            price: tour.price,
+            total: tour.price * cItem.quantity
+          };
+        }).filter(item => item !== null);
+      }
+
+      if (checkoutData.items.length === 0) {
+        alert('Không có tour nào cần đặt hàng! Quay lại giỏ hàng.');
+        window.location.href = 'cart.html';
+        return;
+      }
+
+      // Calculate subtotal
+      checkoutData.subtotal = checkoutData.items.reduce((sum, item) => sum + item.total, 0);
+      recalculateTotals();
     }
+
+    function recalculateTotals() {
+      checkoutData.total = checkoutData.subtotal + checkoutData.serviceFee - checkoutData.discount;
+      if (checkoutData.total < 0) checkoutData.total = 0;
+
+      // Update Summary UI
+      document.getElementById('summary-subtotal').textContent = checkoutData.subtotal.toLocaleString('vi-VN') + 'đ';
+      document.getElementById('summary-fee').textContent = checkoutData.serviceFee.toLocaleString('vi-VN') + 'đ';
+      
+      const discountRow = document.getElementById('summary-discount-row');
+      if (checkoutData.discount > 0) {
+        discountRow.classList.remove('hidden');
+        document.getElementById('summary-discount').textContent = '-' + checkoutData.discount.toLocaleString('vi-VN') + 'đ';
+      } else {
+        discountRow.classList.add('hidden');
+      }
+
+      document.getElementById('summary-total').textContent = checkoutData.total.toLocaleString('vi-VN') + 'đ';
+      document.getElementById('bank-total-price').textContent = checkoutData.total.toLocaleString('vi-VN') + 'đ';
+    }
+
+    // Step navigation
+    function setStep(stepNum) {
+      document.getElementById('step-1').classList.add('hidden');
+      document.getElementById('step-2').classList.add('hidden');
+      document.getElementById('step-3').classList.add('hidden');
+      document.getElementById(`step-${stepNum}`).classList.remove('hidden');
+
+      // Update indicators
+      for (let i = 1; i <= 3; i++) {
+        const ind = document.getElementById(`indicator-${i}`);
+        if (i === stepNum) {
+          ind.className = 'inline-block bg-green-600 text-white w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-bold text-base sm:text-lg mb-2 transition-all duration-300';
+        } else {
+          ind.className = 'inline-block bg-green-200 text-green-600 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-bold text-base sm:text-lg mb-2 transition-all duration-300';
+        }
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function goToStep1() {
+      setStep(1);
+    }
+
+    function goToStep2(e) {
+      if (e) e.preventDefault();
+      
+      // Save personal info
+      checkoutData.personalInfo = {
+        firstName: document.getElementById('cust-firstname').value.trim(),
+        lastName: document.getElementById('cust-lastname').value.trim(),
+        email: document.getElementById('cust-email').value.trim(),
+        phone: document.getElementById('cust-phone').value.trim(),
+        address: document.getElementById('cust-address').value.trim(),
+        request: document.getElementById('cust-request').value.trim()
+      };
+
+      // Populate summary items list
+      const itemsContainer = document.getElementById('checkout-items');
+      itemsContainer.innerHTML = checkoutData.items.map(item => `
+        <div class="flex items-center justify-between border-b pb-4">
+          <div class="flex items-center gap-3">
+            <img src="${item.image}" class="w-16 h-12 object-cover rounded-lg" alt="">
+            <div>
+              <p class="font-bold text-gray-800 text-sm sm:text-base">${item.name}</p>
+              <p class="text-xs text-gray-400">Ngày đi: ${item.date} • Số người: ${item.quantity}</p>
+            </div>
+          </div>
+          <p class="font-semibold text-gray-800 text-sm sm:text-base shrink-0">${item.total.toLocaleString('vi-VN')}đ</p>
+        </div>
+      `).join('');
+
+      setStep(2);
+    }
+
+    function applyPromoCode() {
+      const code = document.getElementById('promo-code').value.trim().toUpperCase();
+      const statusEl = document.getElementById('promo-status');
+      
+      if (!code) {
+        alert('Vui lòng nhập mã giảm giá!');
+        return;
+      }
+
+      if (code === 'SAVE100') {
+        if (checkoutData.subtotal >= 2000000) {
+          checkoutData.discount = 1000000;
+          checkoutData.promoCode = code;
+          statusEl.className = 'text-sm mt-2 font-medium text-green-600';
+          statusEl.textContent = '✓ Áp dụng mã SAVE100 thành công! Giảm 100.000đ';
+        } else {
+          statusEl.className = 'text-sm mt-2 font-medium text-red-600';
+          statusEl.textContent = '✗ Mã SAVE100 chỉ áp dụng cho hóa đơn trên 2.000.000đ';
+        }
+      } else if (code === 'SUMMER50') {
+        checkoutData.discount = 50000;
+        checkoutData.promoCode = code;
+        statusEl.className = 'text-sm mt-2 font-medium text-green-600';
+        statusEl.textContent = '✓ Áp dụng mã SUMMER50 thành công! Giảm 50.000đ';
+      } else if (code === 'FRIEND20') {
+        checkoutData.discount = Math.round(checkoutData.subtotal * 0.20);
+        checkoutData.promoCode = code;
+        statusEl.className = 'text-sm mt-2 font-medium text-green-600';
+        statusEl.textContent = `✓ Áp dụng mã FRIEND20 thành công! Giảm 20% (${checkoutData.discount.toLocaleString('vi-VN')}đ)`;
+      } else {
+        checkoutData.discount = 0;
+        checkoutData.promoCode = '';
+        statusEl.className = 'text-sm mt-2 font-medium text-red-600';
+        statusEl.textContent = '✗ Mã giảm giá không hợp lệ hoặc đã hết hạn!';
+      }
+
+      recalculateTotals();
+    }
+
+    function goToStep3() {
+      // Set bank transaction details description
+      const transactionId = Math.floor(10000 + Math.random() * 90000);
+      document.getElementById('bank-desc').textContent = `WILTRAVEL ORD${transactionId}`;
+      setStep(3);
+    }
+
+    function togglePaymentFields(method) {
+      const bankDiv = document.getElementById('payment-bank');
+      const cardDiv = document.getElementById('payment-card');
+      const bankLabel = document.getElementById('pay-bank-label');
+      const cardLabel = document.getElementById('pay-card-label');
+
+      if (method === 'bank') {
+        bankDiv.classList.remove('hidden');
+        cardDiv.classList.add('hidden');
+        bankLabel.className = 'border-2 border-green-600 rounded-2xl p-5 flex items-start gap-3 cursor-pointer bg-green-50/20';
+        cardLabel.className = 'border-2 border-gray-200 rounded-2xl p-5 flex items-start gap-3 cursor-pointer hover:border-green-600';
+      } else {
+        bankDiv.classList.add('hidden');
+        cardDiv.classList.remove('hidden');
+        bankLabel.className = 'border-2 border-gray-200 rounded-2xl p-5 flex items-start gap-3 cursor-pointer hover:border-green-600';
+        cardLabel.className = 'border-2 border-green-600 rounded-2xl p-5 flex items-start gap-3 cursor-pointer bg-green-50/20';
+      }
+    }
+
+    function completeCheckout() {
+      // Validate payment if card is selected
+      const selectedMethod = document.querySelector('input[name="pay-method"]:checked').value;
+      if (selectedMethod === 'card') {
+        // Just mock validate (non-empty fields)
+        const inputs = document.querySelectorAll('#payment-card input');
+        let valid = true;
+        inputs.forEach(inp => { if (!inp.value.trim()) valid = false; });
+        if (!valid) {
+          alert('Vui lòng điền đầy đủ thông tin thẻ tín dụng!');
+          return;
+        }
+      }
+
+      // Checkout Success Processing:
+      // 1. Add orders to localstorage
+      let generatedCode = '';
+      
+      // Calculate order share factor if multiple items
+      const count = checkoutData.items.length;
+      checkoutData.items.forEach((item, index) => {
+        // Share out discount and fee across items proportionally
+        const ratio = item.total / checkoutData.subtotal;
+        const sharedFee = checkoutData.serviceFee * ratio;
+        const sharedDiscount = checkoutData.discount * ratio;
+        const itemTotalPayment = item.total + sharedFee - sharedDiscount;
+
+        const orderInfo = addOrder(
+          item.tourId, 
+          item.date, 
+          item.quantity, 
+          itemTotalPayment, 
+          checkoutData.personalInfo
+        );
+        
+        if (index === 0) generatedCode = orderInfo.orderId;
+      });
+
+      // 2. Clear Shopping Cart (since items are purchased)
+      // Wait: only clear the cart if the purchase was initiated from the cart page!
+      const urlParams = new URLSearchParams(window.location.search);
+      if (!urlParams.get('tourId')) {
+        clearCart();
+      } else {
+        // If single checkout, remove ONLY this item from cart if it exists
+        const idToRemove = parseInt(urlParams.get('tourId'));
+        const dateToRemove = urlParams.get('date');
+        removeFromCart(idToRemove, dateToRemove);
+      }
+
+      // 3. Show Success Modal
+      document.getElementById('success-ord-id').textContent = generatedCode;
+      document.getElementById('success-ord-name').textContent = `${checkoutData.personalInfo.lastName} ${checkoutData.personalInfo.firstName}`;
+      document.getElementById('success-ord-total').textContent = checkoutData.total.toLocaleString('vi-VN') + 'đ';
+      
+      const overlay = document.getElementById('success-overlay');
+      overlay.classList.remove('hidden');
+
+      // 4. Redirect to profile after delay
+      setTimeout(() => {
+        window.location.href = 'profile.html';
+      }, 4000);
+    }
+
+    // Prefill user profile info if logged in
+    function prefillUserInfo() {
+      const user = getCurrentUser();
+      if (user) {
+        document.getElementById('cust-firstname').value = user.firstName || '';
+        document.getElementById('cust-lastname').value = user.lastName || '';
+        document.getElementById('cust-email').value = user.email || '';
+        document.getElementById('cust-phone').value = user.phone || '';
+        document.getElementById('cust-address').value = user.address || '123 Đường Văn Chung, Quận Tân Bình, Tp.HCM';
+      }
+    }
+
+    window.onload = () => {
+      loadCheckoutItems();
+      prefillUserInfo();
+    };
   </script>
 </body>
 </html>

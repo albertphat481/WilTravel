@@ -1,0 +1,13 @@
+# robots.txt for WILTravel
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /config/
+Disallow: /private/
+Disallow: /profile.html
+Disallow: /cart.html
+Disallow: /wishlist.html
+Disallow: /booking.html
+
+Sitemap: https://wil-travel.com/sitemap.xml

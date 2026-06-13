@@ -6,7 +6,6 @@
   <title>WILTravel - Đăng ký</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     .register-bg {
       background-size: cover;
@@ -241,12 +240,15 @@
     registerBg.addEventListener('mouseenter', stopAutoPlay);
     registerBg.addEventListener('mouseleave', resetAutoPlay);
 
-    // Custom Google Signup Modal controls
-    function renderCustomGoogleButton() {
+    // Render Custom Google Sign-In Button or Load Real GSI
+    function initGoogleAuth() {
       const container = document.getElementById("googleButton");
-      if (container) {
+      if (!container) return;
+
+      if (window.location.protocol === 'file:') {
+        // Render custom simulated button
         container.innerHTML = `
-          <button onclick="openGoogleModal()" type="button" class="w-full border border-gray-300 rounded-full py-3.5 flex items-center justify-center gap-3 hover:bg-gray-50 transition shadow-sm bg-white">
+          <button onclick="openGooglePopup()" type="button" class="w-full border border-gray-300 rounded-full py-3.5 flex items-center justify-center gap-3 hover:bg-gray-50 transition shadow-sm bg-white">
             <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24">
               <path fill="#ea4335" d="M12 5.04c1.67 0 3.17.57 4.35 1.7l3.25-3.25C17.63 1.57 14.97 1 12 1 7.24 1 3.2 3.73 1.25 7.72l3.96 3.07C6.15 7.7 8.84 5.04 12 5.04z"/>
               <path fill="#4285f4" d="M23.49 12.27c0-.81-.07-1.6-.2-2.3H12v4.51h6.46c-.29 1.48-1.12 2.73-2.38 3.58l3.7 2.87c2.16-2 3.71-4.94 3.71-8.66z"/>
@@ -255,63 +257,101 @@
             </svg>
             <span class="font-semibold text-gray-700 text-sm">Đăng ký bằng Google</span>
           </button>`;
+      } else {
+        // Load official Google identity services library
+        if (!document.getElementById('gsi-script')) {
+          const script = document.createElement('script');
+          script.id = 'gsi-script';
+          script.src = 'https://accounts.google.com/gsi/client';
+          script.async = true;
+          script.defer = true;
+          script.onload = () => setupRealGoogleGSI();
+          document.head.appendChild(script);
+        } else {
+          setupRealGoogleGSI();
+        }
       }
     }
 
-    function openGoogleModal() {
-      document.getElementById('googleModal').classList.remove('hidden');
+    function setupRealGoogleGSI() {
+      if (typeof google === 'undefined') return;
+      google.accounts.id.initialize({
+        client_id: '1064295328905-2b4h8sk437j2kpgt4u9vfeepu59s96j2.apps.googleusercontent.com',
+        callback: handleRealGoogleCredential
+      });
+      google.accounts.id.renderButton(
+        document.getElementById("googleButton"),
+        { theme: "outline", size: "large", width: "380", text: "signup_with" }
+      );
     }
 
-    function closeGoogleModal() {
-      document.getElementById('googleModal').classList.add('hidden');
-      document.getElementById('custom-google-fields').classList.add('hidden');
-    }
-
-    function toggleCustomGoogleAccount() {
-      const el = document.getElementById('custom-google-fields');
-      el.classList.toggle('hidden');
-    }
-
-    function selectGoogleAccount(lastName, firstName, email) {
-      const users = getUsers();
-      let user = users.find(u => u.email === email);
-      if (!user) {
-        user = { firstName, lastName, email, phone: "Google Auth", password: "google-oauth-user" };
-        users.push(user);
-        localStorage.setItem('wil_users', JSON.stringify(users));
+    // Decode JWT from GSI client response
+    function decodeJwt(token) {
+      try {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+        return JSON.parse(jsonPayload);
+      } catch (e) {
+        console.error("JWT Decode error:", e);
+        return null;
       }
-      setCurrentUser(user);
-      closeGoogleModal();
-      showRegisterSuccess();
     }
 
-    function submitCustomGoogleAccount() {
-      const lastName = document.getElementById('g-lastname').value.trim();
-      const firstName = document.getElementById('g-firstname').value.trim();
-      const email = document.getElementById('g-email').value.trim();
-
-      if (!lastName || !firstName || !email) {
-        alert("Vui lòng nhập đầy đủ thông tin!");
-        return;
+    async function handleRealGoogleCredential(response) {
+      const payload = decodeJwt(response.credential);
+      if (payload) {
+        const lastName = payload.family_name || '';
+        const firstName = payload.given_name || '';
+        const email = payload.email;
+        await selectGoogleAccount(lastName, firstName, email);
+      } else {
+        alert("Có lỗi xảy ra khi nhận diện Google.");
       }
-      if (!validateEmail(email)) {
-        alert("Vui lòng nhập email hợp lệ!");
-        return;
-      }
-      selectGoogleAccount(lastName, firstName, email);
     }
+
+    // Google Sign-In Actions
+    async function selectGoogleAccount(lastName, firstName, email) {
+      const res = await googleLogin(lastName, firstName, email);
+      if (res.success) {
+        showRegisterSuccess();
+      } else {
+        alert('✗ Đăng ký thất bại: ' + res.message);
+      }
+    }
+
+    // Popup Control for local file simulation
+    let googlePopup = null;
+    function openGooglePopup() {
+      const width = 500;
+      const height = 620;
+      const left = (window.screen.width / 2) - (width / 2);
+      const top = (window.screen.height / 2) - (height / 2);
+      googlePopup = window.open('google-login.html', 'GoogleLoginPopup', 
+        `width=${width},height=${height},left=${left},top=${top},toolbar=no,menubar=no,scrollbars=yes,status=no`
+      );
+    }
+
+    // Listen for messages from Google popup
+    window.addEventListener('message', async function(event) {
+      if (event.data && event.data.type === 'GOOGLE_LOGIN_SUCCESS') {
+        const u = event.data.user;
+        await selectGoogleAccount(u.lastName, u.firstName, u.email);
+      }
+    });
 
     function showRegisterSuccess() {
       const html = `
         <div class="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
-          <div class="bg-white rounded-3xl p-10 text-center max-w-sm mx-4">
+          <div class="bg-white rounded-3xl p-10 text-center max-w-sm mx-4 shadow-2xl">
             <i class="fa-solid fa-circle-check text-green-500 text-6xl mb-4"></i>
             <h2 class="text-2xl font-bold text-gray-800">Đăng ký & Đăng nhập thành công!</h2>
             <p class="text-gray-600 mt-2">Đang chuyển hướng về trang chủ...</p>
           </div>
         </div>`;
       document.body.insertAdjacentHTML('beforeend', html);
-      
       setTimeout(() => {
         window.location.href = "index.html";
       }, 1500);
@@ -357,18 +397,18 @@
 
     function handleEscapeKey(event) {
       if (event.key === 'Escape') {
-        closeGoogleModal();
+        // no-op here since no forgot modal in register.html
       }
     }
 
     window.onload = () => {
-      renderCustomGoogleButton();
+      initGoogleAuth();
       changeBackground(); // Initialize first background
       startAutoPlay(); // Start enhanced carousel
       document.addEventListener('keydown', handleEscapeKey);
     };
 
-    function handleRegister(e) {
+    async function handleRegister(e) {
       e.preventDefault();
       const firstName = document.getElementById('first-name').value.trim();
       const lastName = document.getElementById('last-name').value.trim();
@@ -383,10 +423,10 @@
       }
 
       // Register user through shared script
-      const res = registerUser(firstName, lastName, email, phone, password);
+      const res = await registerUser(firstName, lastName, email, phone, password);
       if (res.success) {
         // Also auto login for convenience
-        loginUser(email, password);
+        await loginUser(email, password);
         showRegisterSuccess();
       } else {
         alert('✗ Đăng ký thất bại: ' + res.message);

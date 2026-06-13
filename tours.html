@@ -115,7 +115,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
         <div>
-          <img src="images/logo.png" alt="WILTravel" class="h-12 mb-4">
+          <img src="images/logo-footer-colored.png" alt="WILTravel" class="h-12 mb-4 bg-white/10 rounded-xl p-1">
           <p class="text-sm">Chỉ cần & đi chuyến nghỉ ngơi</p>
         </div>
         <div>
@@ -179,30 +179,40 @@
       document.getElementById('tours-grid').innerHTML = pageTours.map(tour => {
         const isFav = isInWishlist(tour.id);
         const heartColorClass = isFav ? 'text-red-600' : 'text-gray-400';
-        
+        const badgeHtml = tour.badge 
+          ? `<span class="absolute top-4 left-4 bg-green-600 text-white text-[10px] font-semibold px-2.5 py-1 rounded-full shadow-md z-10">${tour.badge}</span>`
+          : '';
+          
         return `
-          <div class="tour-card bg-white rounded-2xl shadow-md overflow-hidden relative">
-            <div class="relative">
-              <img src="${tour.image}" alt="${tour.name}" class="w-full h-56 object-cover">
+          <div class="tour-card bg-white rounded-3xl shadow-md overflow-hidden relative flex flex-col justify-between border border-gray-100 card-hover">
+            <div class="relative overflow-hidden">
+              ${badgeHtml}
+              <img src="${tour.image}" alt="${tour.name}" class="w-full h-56 object-cover hover:scale-105 transition duration-500">
               <button onclick="toggleFav(${tour.id}, this)" class="absolute top-4 right-4 bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition z-10" aria-label="Toggle wishlist">
                 <i class="fa-solid fa-heart ${heartColorClass} text-lg"></i>
               </button>
             </div>
-            <div class="p-6">
-              <p class="text-xs text-green-600 font-semibold uppercase tracking-wider mb-2">TOUR</p>
-              <h3 class="text-lg font-bold text-gray-800 mb-2 h-12 line-clamp-2">${tour.name}</h3>
-              <div class="flex items-center justify-between mb-4">
-                <p class="text-gray-600"><i class="fa-solid fa-map-pin mr-1"></i>${tour.location}</p>
-                <div class="text-yellow-500 text-sm">
-                  <i class="fa-solid fa-star"></i> ${tour.rating} (${tour.reviews})
+            <div class="p-6 flex-grow flex flex-col justify-between">
+              <div>
+                <p class="text-xs text-green-600 font-semibold uppercase tracking-wider mb-2">TOUR</p>
+                <h3 class="text-lg font-bold text-gray-800 mb-2 h-12 line-clamp-2 hover:text-green-600 transition cursor-pointer" onclick="viewTour(${tour.id})">${tour.name}</h3>
+                <div class="flex items-center justify-between mb-4 mt-3">
+                  <p class="text-gray-500 text-sm"><i class="fa-solid fa-map-pin text-green-600 mr-1.5"></i>${tour.location}</p>
+                  <div class="text-yellow-500 text-sm font-semibold">
+                    <i class="fa-solid fa-star mr-1"></i>${tour.rating} <span class="text-gray-400 text-xs font-normal">(${tour.reviews})</span>
+                  </div>
+                </div>
+                <div class="text-xs text-gray-500 flex items-center gap-1.5 mb-4">
+                  <i class="fa-solid fa-clock text-green-600"></i>
+                  <span>Thời lượng: ${tour.duration}</span>
                 </div>
               </div>
-              <div class="flex justify-between items-center mt-4 pt-4 border-t border-gray-100">
+              <div class="flex justify-between items-center mt-auto pt-4 border-t border-gray-100">
                 <div>
-                  <span class="text-2xl font-bold text-green-600">${(tour.price / 1000000).toFixed(1)}tr</span>
-                  <span class="text-xs text-gray-400"> VNĐ</span>
+                  <span class="text-2xl font-black text-green-600">${(tour.price / 1000000).toFixed(2)}tr</span>
+                  <span class="text-xs text-gray-400 font-medium"> VNĐ</span>
                 </div>
-                <button onclick="viewTour(${tour.id})" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition text-sm">
+                <button onclick="viewTour(${tour.id})" class="bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-full text-sm font-bold transition shadow-sm">
                   Xem Chi Tiết
                 </button>
               </div>
@@ -233,9 +243,34 @@
         return;
       }
       let html = '';
-      for (let i = 1; i <= pages; i++) {
+      
+      const maxPagesToShow = 5;
+      let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
+      let endPage = startPage + maxPagesToShow - 1;
+
+      if (endPage > pages) {
+        endPage = pages;
+        startPage = Math.max(1, endPage - maxPagesToShow + 1);
+      }
+
+      if (startPage > 1) {
+        html += `<button onclick="goToPage(1)" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 transition">1</button>`;
+        if (startPage > 2) {
+          html += `<span class="px-4 py-2 text-gray-500">...</span>`;
+        }
+      }
+
+      for (let i = startPage; i <= endPage; i++) {
         html += `<button onclick="goToPage(${i})" class="px-4 py-2 rounded-lg ${i === currentPage ? 'bg-green-600 text-white' : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'} transition">${i}</button>`;
       }
+
+      if (endPage < pages) {
+        if (endPage < pages - 1) {
+          html += `<span class="px-4 py-2 text-gray-500">...</span>`;
+        }
+        html += `<button onclick="goToPage(${pages})" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 transition">${pages}</button>`;
+      }
+
       document.getElementById('pagination').innerHTML = html;
     }
 

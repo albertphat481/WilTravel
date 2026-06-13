@@ -275,7 +275,50 @@
   </section>
 
   <!-- Tour Tiêu Biểu -->
-  <section id="featured-tours-section" class="py-16 md:py-20 bg-white">
+  <!-- Special Offers -->
+  <section class="py-16 md:py-20 bg-white overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="bg-gradient-to-r from-emerald-600 to-teal-800 rounded-3xl p-8 md:p-12 text-white relative flex flex-col lg:flex-row items-center justify-between shadow-2xl">
+        <div class="absolute inset-0 bg-[url('images/hero1.jpg')] opacity-20 bg-cover bg-center rounded-3xl mix-blend-overlay"></div>
+        
+        <div class="relative z-10 lg:w-1/2 mb-8 lg:mb-0 text-center lg:text-left">
+          <span class="bg-yellow-400 text-yellow-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-4 inline-block shadow-md">Flash Sale</span>
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 leading-tight">Ưu Đãi Đặc Biệt<br>Mùa Hè Sôi Động</h2>
+          <p class="text-emerald-100 text-base md:text-lg mb-6">Giảm giá lên đến 40% cho các tour nội địa và quốc tế. Số lượng có hạn, đặt ngay kẻo lỡ!</p>
+          <button onclick="document.getElementById('search-input').focus()" class="bg-white text-emerald-700 hover:bg-emerald-50 px-8 py-3.5 rounded-full font-bold transition shadow-lg flex items-center justify-center gap-2 mx-auto lg:mx-0 w-full sm:w-auto">
+            Khám Phá Ngay <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+
+        <div class="relative z-10 flex flex-col items-center bg-black/30 backdrop-blur-md p-6 rounded-2xl border border-white/20 w-full sm:w-auto shadow-xl">
+          <p class="text-sm uppercase tracking-widest text-emerald-200 font-semibold mb-4">Thời gian ưu đãi còn lại</p>
+          <div class="flex justify-center gap-2 sm:gap-4 text-center w-full" id="countdown-timer">
+            <div class="flex flex-col">
+              <span class="text-2xl sm:text-3xl md:text-4xl font-black bg-white/20 px-3 sm:px-4 py-3 rounded-xl mb-1 min-w-[60px] sm:min-w-[70px] shadow-inner" id="cd-days">00</span>
+              <span class="text-[10px] sm:text-xs uppercase text-emerald-200 font-medium">Ngày</span>
+            </div>
+            <span class="text-2xl sm:text-3xl md:text-4xl font-black mt-2 text-white/50">:</span>
+            <div class="flex flex-col">
+              <span class="text-2xl sm:text-3xl md:text-4xl font-black bg-white/20 px-3 sm:px-4 py-3 rounded-xl mb-1 min-w-[60px] sm:min-w-[70px] shadow-inner" id="cd-hours">00</span>
+              <span class="text-[10px] sm:text-xs uppercase text-emerald-200 font-medium">Giờ</span>
+            </div>
+            <span class="text-2xl sm:text-3xl md:text-4xl font-black mt-2 text-white/50">:</span>
+            <div class="flex flex-col">
+              <span class="text-2xl sm:text-3xl md:text-4xl font-black bg-white/20 px-3 sm:px-4 py-3 rounded-xl mb-1 min-w-[60px] sm:min-w-[70px] shadow-inner" id="cd-minutes">00</span>
+              <span class="text-[10px] sm:text-xs uppercase text-emerald-200 font-medium">Phút</span>
+            </div>
+            <span class="text-2xl sm:text-3xl md:text-4xl font-black mt-2 text-white/50">:</span>
+            <div class="flex flex-col">
+              <span class="text-2xl sm:text-3xl md:text-4xl font-black bg-white/20 px-3 sm:px-4 py-3 rounded-xl mb-1 min-w-[60px] sm:min-w-[70px] shadow-inner" id="cd-seconds">00</span>
+              <span class="text-[10px] sm:text-xs uppercase text-emerald-200 font-medium">Giây</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="featured-tours-section" class="py-16 md:py-20 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 md:mb-12 gap-4">
         <div>
@@ -358,7 +401,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
         <div>
-          <img src="images/logo.png" alt="WILTravel" class="h-12 mb-4">
+          <img src="images/logo-footer-colored.png" alt="WILTravel" class="h-12 mb-4 bg-white/10 rounded-xl p-1">
           <p class="text-sm">Chỉ cần & đi chuyến nghỉ ngơi</p>
         </div>
         
@@ -370,7 +413,7 @@
             Điện thoại: (84) 8 38122159<br>
             Fax: (84) 8 38106577<br>
             Email: info@wil-travel.com<br>
-            Hotline: 0905 025737 (Ms Phượng)
+            Hotline: 0905 025737 (Ms Phương)
           </p>
         </div>
 
@@ -437,9 +480,13 @@
     ];
 
     const destinations = [
-      { name: "Phú Quốc", location: "Việt Nam", price: "2.5tr", image: "images/phuquoc.jpg" },
-      { name: "Sapa", location: "Việt Nam", price: "1.8tr", image: "images/sapa.jpg" },
-      { name: "Bali", location: "Indonesia", price: "18tr", image: "images/bali.jpg" },
+      { name: "Phú Quốc", location: "Việt Nam", price: "3.29tr", image: "images/phuquoc.jpg" },
+      { name: "Sapa", location: "Việt Nam", price: "2.19tr", image: "images/sapa.jpg" },
+      { name: "Huế", location: "Việt Nam", price: "2.49tr", image: "images/tour-danang.jpg" },
+      { name: "Đà Nẵng", location: "Việt Nam", price: "3.89tr", image: "images/tour-danang.jpg" },
+      { name: "Hạ Long", location: "Việt Nam", price: "5.69tr", image: "images/tour-halong.jpg" },
+      { name: "Nha Trang", location: "Việt Nam", price: "2.99tr", image: "images/tour-nhatrang.jpg" },
+      { name: "Bali", location: "Indonesia", price: "18.5tr", image: "images/bali.jpg" },
       { name: "Paris", location: "Pháp", price: "45tr", image: "images/paris.jpg" }
     ];
 
@@ -698,19 +745,36 @@
       const featured = tours.slice(0, 6); // Load from central tours database
       featured.forEach(tour => {
         const card = document.createElement('div');
-        card.className = "bg-white rounded-3xl overflow-hidden card-hover cursor-pointer border border-gray-100";
+        const badgeHtml = tour.badge 
+          ? `<span class="absolute top-4 left-4 bg-green-600 text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-md z-10">${tour.badge}</span>`
+          : '';
+          
+        card.className = "bg-white rounded-3xl overflow-hidden card-hover cursor-pointer border border-gray-100 relative flex flex-col justify-between";
         card.onclick = () => { window.location.href = `tour-detail.html?id=${tour.id}`; };
         card.innerHTML = `
-          <img src="${tour.image}" class="w-full h-48 sm:h-56 object-cover" alt="${tour.name}">
-          <div class="p-5 sm:p-6">
-            <h3 class="font-semibold text-base sm:text-lg mb-1">${tour.name}</h3>
-            <p class="text-gray-500 text-sm">${tour.location}</p>
-            <div class="mt-4 flex justify-between items-end">
-              <div>
-                <span class="text-xl sm:text-2xl font-bold text-green-600">${(tour.price / 1000000).toFixed(1)}tr</span>
-                <span class="text-xs text-gray-400"> VNĐ</span>
+          <div class="relative overflow-hidden">
+            ${badgeHtml}
+            <img src="${tour.image}" class="w-full h-48 sm:h-56 object-cover hover:scale-105 transition duration-500" alt="${tour.name}">
+          </div>
+          <div class="p-5 sm:p-6 flex-grow flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-1.5 text-xs text-yellow-500 font-semibold mb-2">
+                <i class="fa-solid fa-star"></i>
+                <span>${tour.rating || 4.8}</span>
+                <span class="text-gray-400">(${tour.reviews || 80} đánh giá)</span>
               </div>
-              <button onclick="event.stopPropagation(); window.location.href='tour-detail.html?id=${tour.id}'" class="bg-green-600 text-white px-5 py-2 rounded-full text-sm hover:bg-green-700">Đặt tour</button>
+              <h3 class="font-bold text-base sm:text-lg mb-1 text-gray-800 line-clamp-1 hover:text-green-600 transition">${tour.name}</h3>
+              <div class="flex items-center gap-3 text-xs text-gray-500 mt-2 mb-4">
+                <span><i class="fa-solid fa-map-pin text-green-600 mr-1"></i>${tour.location}</span>
+                <span><i class="fa-solid fa-clock text-green-600 mr-1"></i>${tour.duration}</span>
+              </div>
+            </div>
+            <div class="mt-auto flex justify-between items-center pt-4 border-t border-gray-50">
+              <div>
+                <span class="text-xl sm:text-2xl font-black text-green-600">${(tour.price / 1000000).toFixed(2)}tr</span>
+                <span class="text-xs text-gray-400 font-medium"> VNĐ</span>
+              </div>
+              <button onclick="event.stopPropagation(); window.location.href='tour-detail.html?id=${tour.id}'" class="bg-green-600 text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-green-700 transition">Đặt tour</button>
             </div>
           </div>
         `;
@@ -723,6 +787,36 @@
       document.getElementById('footer').scrollIntoView({ behavior: "smooth" });
     }
 
+    function initCountdown() {
+      // Set end date to 3 days from now
+      const countDownDate = new Date().getTime() + (3 * 24 * 60 * 60 * 1000) + (8 * 60 * 60 * 1000) + (45 * 60 * 1000);
+
+      const updateTimer = () => {
+        const now = new Date().getTime();
+        const distance = countDownDate - now;
+
+        if (distance < 0) return; // Stop if expired
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        const elDays = document.getElementById("cd-days");
+        const elHours = document.getElementById("cd-hours");
+        const elMinutes = document.getElementById("cd-minutes");
+        const elSeconds = document.getElementById("cd-seconds");
+        
+        if(elDays) elDays.innerText = String(days).padStart(2, '0');
+        if(elHours) elHours.innerText = String(hours).padStart(2, '0');
+        if(elMinutes) elMinutes.innerText = String(minutes).padStart(2, '0');
+        if(elSeconds) elSeconds.innerText = String(seconds).padStart(2, '0');
+      };
+
+      updateTimer();
+      setInterval(updateTimer, 1000);
+    }
+
     window.onload = () => {
       initSearchableItems();
       updateHero();
@@ -732,6 +826,7 @@
       observeStats();
       closeMobileMenuOnLink();
       startAutoPlay();
+      initCountdown();
     };
   </script>
 </body>

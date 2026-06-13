@@ -115,7 +115,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
         <div>
-          <img src="images/logo.png" alt="WILTravel" class="h-12 mb-4">
+          <img src="images/logo-footer-colored.png" alt="WILTravel" class="h-12 mb-4 bg-white/10 rounded-xl p-1">
           <p class="text-sm">Chỉ cần & đi chuyến nghỉ ngơi</p>
         </div>
         <div>
@@ -141,60 +141,136 @@
     </div>
   </footer>
 
+  <script src="js/app.js"></script>
   <script>
-    const allTours = [
-      { id: 1, name: "Phú Quốc 4N3Đ All Inclusive", location: "Phú Quốc", price: 3290000, image: "images/tour-phuquoc.jpg", rating: 4.8, reviews: 120 },
-      { id: 2, name: "Sapa - Hà Giang 5N4Đ", location: "Sapa", price: 4190000, image: "images/tour-sapa.jpg", rating: 4.7, reviews: 95 },
-      { id: 3, name: "Bali Thiên Đường 6N5Đ", location: "Bali", price: 18500000, image: "images/tour-bali.jpg", rating: 4.9, reviews: 200 },
-      { id: 4, name: "Vịnh Hạ Long - Lan Hạ 4N3Đ", location: "Hạ Long", price: 5690000, image: "images/tour-halong.jpg", rating: 4.6, reviews: 110 },
-      { id: 5, name: "Đà Nẵng - Hội An 4N3Đ", location: "Đà Nẵng", price: 3890000, image: "images/tour-danang.jpg", rating: 4.7, reviews: 140 },
-      { id: 6, name: "Nhật Bản Mùa Hoa Anh Đào", location: "Tokyo - Osaka", price: 32900000, image: "images/tour-japan.jpg", rating: 5.0, reviews: 250 },
-      { id: 7, name: "Đà Lạt Lãng Mạn 3N2Đ", location: "Đà Lạt", price: 2490000, image: "images/tour-dalat.jpg", rating: 4.5, reviews: 80 },
-      { id: 8, name: "Nha Trang - Ninh Hòa 3N2Đ", location: "Nha Trang", price: 2890000, image: "images/tour-nhatrang.jpg", rating: 4.6, reviews: 105 }
-    ];
-
     const itemsPerPage = 6;
     let currentPage = 1;
-    let filteredTours = [...allTours];
+    let filteredTours = [];
 
-    function renderTours(tours, page = 1) {
+    function initToursPage() {
+      // Use the global tours array from app.js
+      filteredTours = [...tours];
+      
+      // Check query parameter 'location'
+      const urlParams = new URLSearchParams(window.location.search);
+      const loc = urlParams.get('location');
+      if (loc) {
+        document.getElementById('search-filter').value = loc;
+        applyFilters();
+      } else {
+        renderTours(filteredTours);
+      }
+    }
+
+    function renderTours(toursList, page = 1) {
       const start = (page - 1) * itemsPerPage;
       const end = start + itemsPerPage;
-      const pageTours = tours.slice(start, end);
+      const pageTours = toursList.slice(start, end);
 
-      document.getElementById('tours-grid').innerHTML = pageTours.map(tour => `
-        <div class="tour-card bg-white rounded-2xl shadow-md overflow-hidden">
-          <img src="${tour.image}" alt="${tour.name}" class="w-full h-56 object-cover">
-          <div class="p-6">
-            <p class="text-xs text-green-600 font-semibold uppercase tracking-wider mb-2">TOUR</p>
-            <h3 class="text-lg font-bold text-gray-800 mb-2">${tour.name}</h3>
-            <div class="flex items-center justify-between mb-4">
-              <p class="text-gray-600"><i class="fa-solid fa-map-pin mr-1"></i>${tour.location}</p>
-              <div class="text-yellow-500 text-sm">
-                <i class="fa-solid fa-star"></i> ${tour.rating} (${tour.reviews})
-              </div>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="text-2xl font-bold text-green-600">${(tour.price / 1000000).toFixed(1)}tr</span>
-              <button onclick="viewTour(${tour.id})" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition text-sm">
-                Xem Chi Tiết
+      if (pageTours.length === 0) {
+        document.getElementById('tours-grid').innerHTML = `
+          <div class="col-span-full bg-yellow-50 border border-yellow-200 rounded-3xl p-8 text-center text-yellow-900 w-full">
+            Không tìm thấy tour phù hợp với bộ lọc hiện tại.
+          </div>`;
+        document.getElementById('pagination').innerHTML = '';
+        return;
+      }
+
+      document.getElementById('tours-grid').innerHTML = pageTours.map(tour => {
+        const isFav = isInWishlist(tour.id);
+        const heartColorClass = isFav ? 'text-red-600' : 'text-gray-400';
+        const badgeHtml = tour.badge 
+          ? `<span class="absolute top-4 left-4 bg-green-600 text-white text-[10px] font-semibold px-2.5 py-1 rounded-full shadow-md z-10">${tour.badge}</span>`
+          : '';
+          
+        return `
+          <div class="tour-card bg-white rounded-3xl shadow-md overflow-hidden relative flex flex-col justify-between border border-gray-100 card-hover">
+            <div class="relative overflow-hidden">
+              ${badgeHtml}
+              <img src="${tour.image}" alt="${tour.name}" class="w-full h-56 object-cover hover:scale-105 transition duration-500">
+              <button onclick="toggleFav(${tour.id}, this)" class="absolute top-4 right-4 bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition z-10" aria-label="Toggle wishlist">
+                <i class="fa-solid fa-heart ${heartColorClass} text-lg"></i>
               </button>
             </div>
+            <div class="p-6 flex-grow flex flex-col justify-between">
+              <div>
+                <p class="text-xs text-green-600 font-semibold uppercase tracking-wider mb-2">TOUR</p>
+                <h3 class="text-lg font-bold text-gray-800 mb-2 h-12 line-clamp-2 hover:text-green-600 transition cursor-pointer" onclick="viewTour(${tour.id})">${tour.name}</h3>
+                <div class="flex items-center justify-between mb-4 mt-3">
+                  <p class="text-gray-500 text-sm"><i class="fa-solid fa-map-pin text-green-600 mr-1.5"></i>${tour.location}</p>
+                  <div class="text-yellow-500 text-sm font-semibold">
+                    <i class="fa-solid fa-star mr-1"></i>${tour.rating} <span class="text-gray-400 text-xs font-normal">(${tour.reviews})</span>
+                  </div>
+                </div>
+                <div class="text-xs text-gray-500 flex items-center gap-1.5 mb-4">
+                  <i class="fa-solid fa-clock text-green-600"></i>
+                  <span>Thời lượng: ${tour.duration}</span>
+                </div>
+              </div>
+              <div class="flex justify-between items-center mt-auto pt-4 border-t border-gray-100">
+                <div>
+                  <span class="text-2xl font-black text-green-600">${(tour.price / 1000000).toFixed(2)}tr</span>
+                  <span class="text-xs text-gray-400 font-medium"> VNĐ</span>
+                </div>
+                <button onclick="viewTour(${tour.id})" class="bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-full text-sm font-bold transition shadow-sm">
+                  Xem Chi Tiết
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
 
-      renderPagination(tours.length);
+      renderPagination(toursList.length);
+    }
+
+    function toggleFav(id, btn) {
+      const added = toggleWishlist(id);
+      const icon = btn.querySelector('i');
+      if (added) {
+        icon.classList.remove('text-gray-400');
+        icon.classList.add('text-red-600');
+      } else {
+        icon.classList.remove('text-red-600');
+        icon.classList.add('text-gray-400');
+      }
     }
 
     function renderPagination(total) {
       const pages = Math.ceil(total / itemsPerPage);
+      if (pages <= 1) {
+        document.getElementById('pagination').innerHTML = '';
+        return;
+      }
       let html = '';
       
-      for (let i = 1; i <= pages; i++) {
+      const maxPagesToShow = 5;
+      let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
+      let endPage = startPage + maxPagesToShow - 1;
+
+      if (endPage > pages) {
+        endPage = pages;
+        startPage = Math.max(1, endPage - maxPagesToShow + 1);
+      }
+
+      if (startPage > 1) {
+        html += `<button onclick="goToPage(1)" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 transition">1</button>`;
+        if (startPage > 2) {
+          html += `<span class="px-4 py-2 text-gray-500">...</span>`;
+        }
+      }
+
+      for (let i = startPage; i <= endPage; i++) {
         html += `<button onclick="goToPage(${i})" class="px-4 py-2 rounded-lg ${i === currentPage ? 'bg-green-600 text-white' : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'} transition">${i}</button>`;
       }
-      
+
+      if (endPage < pages) {
+        if (endPage < pages - 1) {
+          html += `<span class="px-4 py-2 text-gray-500">...</span>`;
+        }
+        html += `<button onclick="goToPage(${pages})" class="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 transition">${pages}</button>`;
+      }
+
       document.getElementById('pagination').innerHTML = html;
     }
 
@@ -204,7 +280,7 @@
       const priceMax = parseFloat(document.getElementById('price-max').value) || Infinity;
       const sortBy = document.getElementById('sort-by').value;
 
-      filteredTours = allTours.filter(tour => {
+      filteredTours = tours.filter(tour => {
         const matchSearch = tour.name.toLowerCase().includes(search) || tour.location.toLowerCase().includes(search);
         const matchPrice = tour.price >= priceMin && tour.price <= priceMax;
         return matchSearch && matchPrice;
@@ -221,7 +297,7 @@
     function goToPage(page) {
       currentPage = page;
       renderTours(filteredTours, page);
-      window.scrollTo(0, 0);
+      window.scrollTo({ top: 200, behavior: 'smooth' });
     }
 
     function viewTour(id) {
@@ -236,7 +312,7 @@
     }
 
     window.onload = () => {
-      renderTours(allTours);
+      initToursPage();
     };
   </script>
 </body>
