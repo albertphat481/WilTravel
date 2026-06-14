@@ -639,7 +639,12 @@ function generateMoreTours() {
     { name: "Bangkok", cat: ["Văn hóa", "Quốc tế"], img: "images/tour-bali.jpg", desc: "Chùa vàng linh thiêng, thiên đường mua sắm sầm uất và ẩm thực đường phố đặc sắc.", detailLoc: "Thái Lan" },
     { name: "Bali", cat: ["Biển", "Quốc tế"], img: "images/tour-bali.jpg", desc: "Hòn đảo của các vị thần linh thiêng, biển xanh sóng vỗ rì rào và xích đu giữa rừng dừa.", detailLoc: "Indonesia" },
     { name: "Singapore", cat: ["Đô thị", "Quốc tế"], img: "images/tour-bali.jpg", desc: "Đô thị xanh thông minh hiện đại bậc nhất, đảo nhân tạo Sentosa kỳ thú.", detailLoc: "Singapore" },
-    { name: "Tokyo", cat: ["Văn hóa", "Quốc tế"], img: "images/tour-japan.jpg", desc: "Sự kết hợp giữa cổ kính và hiện đại bậc nhất, ngắm núi Phú Sĩ tuyết phủ trắng xóa.", detailLoc: "Nhật Bản" }
+    { name: "Tokyo", cat: ["Văn hóa", "Quốc tế"], img: "images/tour-japan.jpg", desc: "Sự kết hợp giữa cổ kính và hiện đại bậc nhất, ngắm núi Phú Sĩ tuyết phủ trắng xóa.", detailLoc: "Nhật Bản" },
+    { name: "Paris", cat: ["Châu Âu", "Quốc tế", "Văn hóa"], img: "images/tour-japan.jpg", desc: "Kinh đô ánh sáng lãng mạn, tháp Eiffel kiêu hãnh và dòng sông Seine êm đềm.", detailLoc: "Pháp" },
+    { name: "Seoul", cat: ["Châu Á", "Quốc tế"], img: "images/tour-japan.jpg", desc: "Khám phá cung điện Gyeongbokgung mùa lá đỏ, đảo Nami lãng mạn.", detailLoc: "Hàn Quốc" },
+    { name: "Đài Bắc", cat: ["Châu Á", "Quốc tế"], img: "images/tour-bali.jpg", desc: "Tháp Taipei 101, thả đèn trời Thập Phần và làng cổ Cửu Phần.", detailLoc: "Đài Loan" },
+    { name: "Sydney", cat: ["Châu Úc", "Quốc tế"], img: "images/tour-bali.jpg", desc: "Nhà hát con sò Opera House, ngắm cầu cảng Sydney vĩ đại.", detailLoc: "Úc" },
+    { name: "Los Angeles", cat: ["Châu Mỹ", "Quốc tế"], img: "images/tour-japan.jpg", desc: "Khám phá Hollywood hoa lệ, phim trường Universal và đại lộ danh vọng.", detailLoc: "Mỹ" }
   ];
 
   const prefixes = [
@@ -988,38 +993,46 @@ function updateNavbar() {
 
   // 3. Update User Auth buttons
   const currentUser = getCurrentUser();
-  const loginBtn = document.querySelector('a[href="login.html"]');
-  const registerBtn = document.querySelector('a[href="register.html"]');
+  const loginBtns = document.querySelectorAll('a[href="login.html"]');
+  const registerBtns = document.querySelectorAll('a[href="register.html"]');
 
-  if (currentUser && loginBtn) {
-    const parent = loginBtn.parentElement;
-    if (parent) {
-      if (registerBtn) registerBtn.style.display = 'none';
-      let userWidget = parent.querySelector('.user-nav-widget');
-      if (!userWidget) {
-        loginBtn.style.display = 'none';
-        userWidget = document.createElement('div');
-        userWidget.className = 'user-nav-widget flex items-center gap-3';
-        userWidget.innerHTML = `
-          <a href="profile.html" class="flex items-center gap-1.5 text-gray-700 hover:text-green-600 transition font-medium">
-            <i class="fa-solid fa-circle-user text-xl text-green-600"></i>
-            <span class="hidden sm:inline text-sm">${currentUser.lastName || 'Tài khoản'}</span>
-          </a>
-          <button onclick="appLogout()" class="px-3 py-1.5 text-xs text-red-600 border border-red-200 rounded-full hover:bg-red-50 transition">Đăng xuất</button>
-        `;
-        parent.appendChild(userWidget);
-      } else {
-        const nameSpan = userWidget.querySelector('span');
-        if (nameSpan) nameSpan.textContent = currentUser.lastName;
+  if (currentUser && loginBtns.length > 0) {
+    loginBtns.forEach(btn => btn.style.display = 'none');
+    registerBtns.forEach(btn => btn.style.display = 'none');
+    
+    const desktopLoginBtn = loginBtns[0];
+    if (desktopLoginBtn) {
+      const parent = desktopLoginBtn.parentElement;
+      if (parent) {
+        let userWidget = parent.querySelector('.user-nav-widget');
+        if (!userWidget) {
+          userWidget = document.createElement('div');
+          userWidget.className = 'user-nav-widget flex items-center gap-3';
+          userWidget.innerHTML = `
+            <a href="profile.html" class="flex items-center gap-1.5 text-gray-700 hover:text-green-600 transition font-medium">
+              <i class="fa-solid fa-circle-user text-xl text-green-600"></i>
+              <span class="hidden sm:inline text-sm">${currentUser.lastName || 'Tài khoản'}</span>
+            </a>
+            <button onclick="appLogout()" class="px-3 py-1.5 text-xs text-red-600 border border-red-200 rounded-full hover:bg-red-50 transition">Đăng xuất</button>
+          `;
+          parent.appendChild(userWidget);
+        } else {
+          const nameSpan = userWidget.querySelector('span');
+          if (nameSpan) nameSpan.textContent = currentUser.lastName;
+        }
       }
     }
-  } else if (!currentUser && loginBtn) {
-    loginBtn.style.display = '';
-    if (registerBtn) registerBtn.style.display = '';
-    const parent = loginBtn.parentElement;
-    if (parent) {
-      const widget = parent.querySelector('.user-nav-widget');
-      if (widget) widget.remove();
+  } else if (!currentUser && loginBtns.length > 0) {
+    loginBtns.forEach(btn => btn.style.display = '');
+    registerBtns.forEach(btn => btn.style.display = '');
+    
+    const desktopLoginBtn = loginBtns[0];
+    if (desktopLoginBtn) {
+      const parent = desktopLoginBtn.parentElement;
+      if (parent) {
+        const widget = parent.querySelector('.user-nav-widget');
+        if (widget) widget.remove();
+      }
     }
   }
 
@@ -1118,7 +1131,7 @@ function initChatbotTina() {
   chatbot.className = 'fixed bottom-6 right-6 z-[999] flex flex-col items-end font-sans';
   chatbot.innerHTML = `
     <!-- Chatbot Window -->
-    <div id="chatbot-window" class="w-[350px] sm:w-[380px] h-[500px] bg-white rounded-3xl overflow-hidden border border-gray-100 flex flex-col mb-4">
+    <div id="chatbot-window" class="w-[calc(100vw-48px)] sm:w-[380px] h-[500px] max-h-[70vh] bg-white rounded-3xl overflow-hidden border border-gray-100 flex flex-col mb-4">
       <!-- Header -->
       <div class="bg-gradient-to-r from-green-600 to-emerald-700 p-4 text-white flex items-center justify-between shadow-sm shrink-0">
         <div class="flex items-center gap-3">
@@ -1259,6 +1272,20 @@ function addMessage(text, sender) {
 // Intelligent response matching engine
 function getTinaResponse(userInput) {
   const query = userInput.toLowerCase();
+
+  // 0. Language Detection
+  let lang = 'vi';
+  
+  if (/[\u4e00-\u9fa5]/.test(userInput)) {
+    lang = 'zh';
+  } else if (/\b(hello|hi|tour|travel|book|cheap|price|beach|mountain|flight|cancel|refund|how|what|where)\b/i.test(query)) {
+    if (!query.includes('đi') && !query.includes('giá') && !query.includes('biển') && !query.includes('mua') && !query.includes('tư vấn')) {
+      lang = 'en';
+    }
+  }
+
+  if (lang === 'en') return getTinaResponseEN(query);
+  if (lang === 'zh') return getTinaResponseZH(query);
 
   // Smart matching for Huế and Backend Info
   if (query.includes('huế') || query.includes('hương') || query.includes('kinh thành') || query.includes('cố đô')) {
@@ -1444,6 +1471,104 @@ function getTinaResponse(userInput) {
     Hoặc liên hệ trực tiếp với <strong>Ms. Phương (Hotline: 0905 025 737)</strong> để nhận hỗ trợ ngay nhé!`;
 }
 
+// English Chatbot Logic
+function getTinaResponseEN(query) {
+  if (query.includes('flight') || query.includes('ticket') || query.includes('fly')) {
+    return `✈️ <strong>WILTravel Flight Booking:</strong><br>
+      We partner with over 10 major airlines, offering prices 10-15% lower than the market.<br>
+      👉 Search and book flights here: <a href="flight.html" class="text-green-600 font-bold hover:underline">Flight Booking System</a>.`;
+  }
+  if (query.includes('book') || query.includes('buy') || query.includes('how to')) {
+    return `🛍️ <strong>How to Book a Tour:</strong><br>
+      1. Find a tour you like on our website.<br>
+      2. Click "Add to Cart" or "Book Tour".<br>
+      3. Go to your cart, fill in the details, and checkout.<br>
+      👉 View your cart here: <a href="cart.html" class="text-green-600 font-bold hover:underline">Your Cart</a>.`;
+  }
+  
+  let scoredTours = tours.map(t => {
+    let score = 0;
+    const term = query.trim().toLowerCase();
+    if (t.location.toLowerCase().includes(term)) score += 10;
+    if (term.includes('cheap') && t.price < 4000000) score += 5;
+    if (term.includes('luxury') && t.price > 8000000) score += 5;
+    if (term.includes('beach') && t.category.includes('Biển')) score += 5;
+    if (term.includes('mountain') && t.category.includes('Núi')) score += 5;
+    if (term.includes(t.name.toLowerCase().split(' ')[0])) score += 3;
+    return { tour: t, score };
+  }).filter(item => item.score > 0).sort((a,b) => b.score - a.score).map(i => i.tour);
+
+  if (scoredTours.length > 0) {
+    const topTours = scoredTours.slice(0, 3);
+    let list = `✨ <strong>I found ${scoredTours.length} tours that match your request:</strong><br><ul class="space-y-2.5 mt-2">`;
+    topTours.forEach(t => {
+      list += `<li class="bg-white p-2.5 rounded-xl border border-gray-100 shadow-xs">
+        <strong>${t.name}</strong> (${t.duration})<br>
+        <span class="text-xs text-gray-500"><i class="fa-solid fa-map-pin text-green-600 mr-1"></i>${t.location}</span> • 
+        <span class="text-green-600 font-bold text-xs">${(t.price / 1000000).toFixed(2)}m VND</span><br>
+        <a href="tour-detail.html?id=${t.id}" class="inline-block mt-1 text-[11px] text-green-600 font-bold hover:underline">Details & Book →</a>
+      </li>`;
+    });
+    list += `</ul>`;
+    return list;
+  }
+
+  return `🤖 I'm sorry, I couldn't fully understand. Could you try asking about specific destinations (e.g., Bali, Sapa) or saying "flight", "book tour"?<br>
+    For direct support, call <strong>+84 905 025 737</strong> (Ms. Phuong).`;
+}
+
+// Chinese Chatbot Logic
+function getTinaResponseZH(query) {
+  if (query.includes('航班') || query.includes('机票') || query.includes('飞机')) {
+    return `✈️ <strong>WILTravel 航班预订:</strong><br>
+      我们与10多家主要航空公司合作，价格比市场低10-15%。<br>
+      👉 在这里搜索和预订航班：<a href="flight.html" class="text-green-600 font-bold hover:underline">航班预订系统</a>。`;
+  }
+  if (query.includes('预订') || query.includes('买') || query.includes('怎么')) {
+    return `🛍️ <strong>如何预订旅游:</strong><br>
+      1. 在我们的网站上找到您喜欢的旅游路线。<br>
+      2. 点击“加入购物车”或“预订旅游”。<br>
+      3. 进入您的购物车，填写详细信息并结账。<br>
+      👉 在这里查看您的购物车：<a href="cart.html" class="text-green-600 font-bold hover:underline">您的购物车</a>。`;
+  }
+  
+  let scoredTours = tours.map(t => {
+    let score = 0;
+    if (query.includes('便宜') && t.price < 4000000) score += 5;
+    if (query.includes('豪华') && t.price > 8000000) score += 5;
+    if (query.includes('海滩') && t.category.includes('Biển')) score += 5;
+    if (query.includes('山') && t.category.includes('Núi')) score += 5;
+    if (t.location === 'Bali' && query.includes('巴厘岛')) score += 10;
+    if (t.location === 'Sapa' && query.includes('沙坝')) score += 10;
+    if (t.location === 'Phú Quốc' && query.includes('富国岛')) score += 10;
+    if (t.location === 'Nha Trang' && query.includes('芽庄')) score += 10;
+    if (t.location === 'Đà Nẵng' && query.includes('岘港')) score += 10;
+    if (t.location === 'Hà Nội' && query.includes('河内')) score += 10;
+    if (t.location === 'TP.HCM' && query.includes('胡志明市')) score += 10;
+    if (t.location === 'Đài Loan' && query.includes('台湾')) score += 10;
+    if (t.location === 'Nhật Bản' && query.includes('日本')) score += 10;
+    return { tour: t, score };
+  }).filter(item => item.score > 0).sort((a,b) => b.score - a.score).map(i => i.tour);
+
+  if (scoredTours.length > 0) {
+    const topTours = scoredTours.slice(0, 3);
+    let list = `✨ <strong>我找到了 ${scoredTours.length} 个符合您要求的旅游路线：</strong><br><ul class="space-y-2.5 mt-2">`;
+    topTours.forEach(t => {
+      list += `<li class="bg-white p-2.5 rounded-xl border border-gray-100 shadow-xs">
+        <strong>${t.name}</strong> (${t.duration})<br>
+        <span class="text-xs text-gray-500"><i class="fa-solid fa-map-pin text-green-600 mr-1"></i>${t.location}</span> • 
+        <span class="text-green-600 font-bold text-xs">${(t.price / 1000000).toFixed(2)}百万越南盾</span><br>
+        <a href="tour-detail.html?id=${t.id}" class="inline-block mt-1 text-[11px] text-green-600 font-bold hover:underline">详情与预订 →</a>
+      </li>`;
+    });
+    list += `</ul>`;
+    return list;
+  }
+
+  return `🤖 抱歉，我不太明白。您可以尝试询问特定目的地（例如：巴厘岛、沙坝），或说“航班”、“预订”。<br>
+    如需直接支持，请致电 <strong>+84 905 025 737</strong>（Phuong女士）。`;
+}
+
 // Global logout handler
 window.appLogout = function() {
   if (confirm('Bạn chắc chắn muốn đăng xuất?')) {
@@ -1461,3 +1586,15 @@ document.addEventListener('DOMContentLoaded', () => {
   initFloatingHotline();
   initChatbotTina();
 });
+
+// Global Language change handler
+window.changeLanguage = function(langCode, label) {
+  document.getElementById('current-lang').innerText = label;
+  const selectField = document.querySelector("select.goog-te-combo");
+  if(selectField) {
+    selectField.value = langCode;
+    selectField.dispatchEvent(new Event('change'));
+  }
+  // Save preference
+  localStorage.setItem('userLang', JSON.stringify({code: langCode, label: label}));
+};

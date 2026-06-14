@@ -50,8 +50,8 @@
 
       <div class="flex items-center gap-3">
         <a href="cart.html" class="text-gray-700 hover:text-green-600 transition text-lg"><i class="fa-solid fa-shopping-cart"></i></a>
-        <a href="login.html" class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-full transition text-sm sm:text-base">Đăng nhập</a>
-        <a href="register.html" class="bg-green-600 text-white px-5 py-2 rounded-full hover:bg-green-700 transition text-sm sm:text-base font-medium">Đăng ký</a>
+        <a href="login.html" class="hidden md:inline-block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-full transition text-sm sm:text-base">Đăng nhập</a>
+        <a href="register.html" class="hidden md:inline-block bg-green-600 text-white px-5 py-2 rounded-full hover:bg-green-700 transition text-sm sm:text-base font-medium">Đăng ký</a>
       </div>
       <button id="mobile-menu-button" class="md:hidden text-3xl text-gray-700">
         <i class="fa-solid fa-bars"></i>
@@ -88,6 +88,11 @@
               <option value="SGN">TP. Hồ Chí Minh (SGN)</option>
               <option value="HAN">Hà Nội (HAN)</option>
               <option value="DAD">Đà Nẵng (DAD)</option>
+              <option value="HUI">Huế (HUI)</option>
+              <option value="DLI">Đà Lạt (DLI)</option>
+              <option value="CXR">Nha Trang (CXR)</option>
+              <option value="PQC">Phú Quốc (PQC)</option>
+              <option value="HPH">Hải Phòng (HPH)</option>
             </select>
           </div>
           <div>
@@ -96,6 +101,11 @@
               <option value="HAN">Hà Nội (HAN)</option>
               <option value="DAD">Đà Nẵng (DAD)</option>
               <option value="SGN">TP. Hồ Chí Minh (SGN)</option>
+              <option value="HUI">Huế (HUI)</option>
+              <option value="DLI">Đà Lạt (DLI)</option>
+              <option value="CXR">Nha Trang (CXR)</option>
+              <option value="PQC">Phú Quốc (PQC)</option>
+              <option value="HPH">Hải Phòng (HPH)</option>
               <option value="BKK">Bangkok (BKK)</option>
               <option value="SIN">Singapore (SIN)</option>
             </select>
@@ -429,8 +439,8 @@
         "Vietravel Airlines", "AirAsia", "Thai Airways", "Singapore Airlines", 
         "Scoot", "Emirates", "Qatar Airways"
       ];
-      const froms = ["SGN", "HAN", "DAD"];
-      const tos = ["HAN", "DAD", "SGN", "BKK", "SIN"];
+      const froms = ["SGN", "HAN", "DAD", "HUI", "DLI", "CXR", "PQC", "HPH"];
+      const tos = ["HAN", "DAD", "SGN", "BKK", "SIN", "HUI", "DLI", "CXR", "PQC", "HPH"];
       
       let currentId = 21;
       for (let i = 0; i < 100; i++) {
