@@ -4,6 +4,23 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const path = require('path');
 
+// Load local .env file if it exists (for local development key configuration)
+const envPath = path.join(__dirname, '.env');
+if (fs.existsSync(envPath)) {
+  const envContent = fs.readFileSync(envPath, 'utf8');
+  envContent.split('\n').forEach(line => {
+    const match = line.match(/^\s*([^#=]+)\s*=\s*(.*)\s*$/);
+    if (match) {
+      const key = match[1].trim();
+      let value = match[2].trim();
+      if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
+        value = value.substring(1, value.length - 1);
+      }
+      process.env[key] = value;
+    }
+  });
+}
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
