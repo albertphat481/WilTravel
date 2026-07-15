@@ -17,7 +17,8 @@ window.blogPosts = [
     metaDesc: "Khám phá 10 bí quyết du lịch tiết kiệm cực kỳ hiệu quả dành riêng cho nhân viên văn phòng bận rộn.",
     content: `
       <p class="mb-4">Là nhân viên văn phòng với thu nhập trung bình và quỹ thời gian eo hẹp, việc đi du lịch thường xuyên có vẻ là một thử thách lớn. Tuy nhiên, nếu biết cách lên kế hoạch thông minh và áp dụng những bí quyết tiết kiệm chi phí, bạn hoàn toàn có thể thực hiện những chuyến đi trong mơ mà không phải lo lắng về việc rỗng túi. Dưới đây là cẩm nang chi tiết với 10 bí quyết thực tế nhất giúp bạn hiện thực hóa đam mê dịch chuyển của mình.</p>
-      <h3 class="text-xl font-bold mt-6 mb-3">1. Lên kế hoạch sớm và chọn thời điểm thấp điểm</h3>
+      <h3 class="text-xl font-bold mt-6 mb-3"><img src="images/blog-prepare.jpg" class="w-full rounded-2xl my-6 object-cover max-h-[380px] shadow-md" alt="Lên kế hoạch du lịch thông minh"><p class="text-xs text-gray-400 text-center italic mb-4">Lên kế hoạch du lịch thông minh</p>
+      1. Lên kế hoạch sớm và chọn thời điểm thấp điểm</h3>
       <p class="mb-4">Yếu tố quyết định chi phí chuyến đi chính là thời điểm đặt dịch vụ. Nếu bạn lên kế hoạch trước từ 2 đến 3 tháng, giá vé máy bay và phòng khách sạn luôn ở mức tốt nhất. Hãy tránh đi vào các dịp lễ lớn như Tết, 30/4, hay mùa hè cao điểm (tháng 6 đến tháng 8). Đi du lịch vào mùa thấp điểm (tháng 3-4 hoặc tháng 9-11) không chỉ giúp bạn tiết kiệm đến 50% chi phí mà còn giúp bạn tận hưởng không gian yên bình, không chen lấn.</p>
       <h3 class="text-xl font-bold mt-6 mb-3">2. Săn vé máy bay giá rẻ và linh hoạt ngày bay</h3>
       <p class="mb-4">Hãy đăng ký nhận email thông báo khuyến mãi từ các hãng bay như Vietjet Air, Vietnam Airlines hay Bamboo Airways. Thường xuyên sử dụng các công cụ so sánh giá vé như Google Flights hay Skyscanner để tìm ra ngày bay có giá tốt nhất. Một mẹo nhỏ là các chuyến bay khởi hành vào giữa tuần (Thứ 3, Thứ 4) thường có giá rẻ hơn nhiều so với cuối tuần (Thứ 6, Chủ nhật). Nếu có thể bay vào sáng sớm hoặc đêm muộn, bạn sẽ tiết kiệm thêm một khoản kha khá.</p>
@@ -42,7 +43,8 @@ window.blogPosts = [
     metaDesc: "Cẩm nang du lịch Phú Quốc từ A đến Z: Bãi Sao, cáp treo Hòn Thơm, ngắm hoàng hôn Dinh Cậu và hải sản chợ đêm.",
     content: `
       <p class="mb-4">Phú Quốc, hay còn được gọi là Đảo Ngọc, là hòn đảo lớn nhất Việt Nam nằm trong vịnh Thái Lan. Nơi đây nổi tiếng với những bãi biển cát trắng mịn màng, làn nước biển trong xanh màu ngọc bích và những khu rừng nguyên sinh trù phú. Dưới đây là những cẩm nang bỏ túi giúp bạn có một chuyến đi Phú Quốc hoàn hảo.</p>
-      <h3 class="text-xl font-bold mt-6 mb-3">Những bãi biển không thể bỏ qua</h3>
+      <h3 class="text-xl font-bold mt-6 mb-3"><img src="images/blog-phuquoc.jpg" class="w-full rounded-2xl my-6 object-cover max-h-[380px] shadow-md" alt="Bãi biển cát trắng Phú Quốc"><p class="text-xs text-gray-400 text-center italic mb-4">Bãi biển cát trắng Phú Quốc</p>
+      Những bãi biển không thể bỏ qua</h3>
       <p class="mb-4">Bãi Sao được mệnh danh là bãi biển đẹp nhất Phú Quốc với bãi cát cong hình vầng trăng khuyết và những hàng dừa xanh mát nghiêng bóng. Nước biển ở đây rất nông, êm ả và trong vắt, thích hợp cho việc tắm biển và chụp hình check-in. Ngoài ra, Bãi Trường là nơi ngắm hoàng hôn đẹp nhất đảo, với các quán bar bãi biển lung linh ánh đèn lúc chiều tà.</p>
       <h3 class="text-xl font-bold mt-6 mb-3">Các hoạt động trải nghiệm thú vị</h3>
       <p class="mb-4">Hãy thử trải nghiệm tuyến cáp treo vượt biển Hòn Thơm dài nhất thế giới để ngắm nhìn toàn cảnh quần đảo An Thới từ trên cao. Bên cạnh đó, các tour lặn biển ngắm san hô tại hòn Móng Tay, hòn Gầm Ghì hay câu mực đêm giữa biển khơi cũng mang lại những kỷ niệm khó quên cho du khách thích khám phá.</p>
@@ -62,7 +64,8 @@ window.blogPosts = [
     metaDesc: "Cách xếp hành lý ký gửi và xách tay thông minh, nhẹ nhàng, tránh quá cước khi đi máy bay.",
     content: `
       <p class="mb-4">Chuẩn bị hành lý luôn là bước khiến nhiều người đau đầu trước mỗi chuyến đi. Làm sao để mang đủ đồ dùng cần thiết nhưng hành lý vẫn gọn nhẹ và không vượt quá số ký quy định của hãng bay? Dưới đây là hướng dẫn chi tiết giúp bạn xếp đồ như một chuyên gia du lịch thực thụ.</p>
-      <h3 class="text-xl font-bold mt-6 mb-3">Quy tắc cuộn quần áo thay vì gấp</h3>
+      <h3 class="text-xl font-bold mt-6 mb-3"><img src="images/blog-prepare.jpg" class="w-full rounded-2xl my-6 object-cover max-h-[380px] shadow-md" alt="Cách cuộn quần áo tiết kiệm diện tích vali"><p class="text-xs text-gray-400 text-center italic mb-4">Cách cuộn quần áo tiết kiệm diện tích vali</p>
+      Quy tắc cuộn quần áo thay vì gấp</h3>
       <p class="mb-4">Phương pháp cuộn quần áo (rolling) thay vì gấp phẳng (folding) là bí quyết hàng đầu giúp tiết kiệm diện tích vali và giảm thiểu nếp nhăn trên vải. Hãy cuộn chặt từng chiếc áo thun, quần jean và xếp chúng sát vào nhau ở đáy vali. Bạn sẽ ngạc nhiên về lượng đồ mình có thể mang theo bằng phương pháp này.</p>
       <h3 class="text-xl font-bold mt-6 mb-3">Tận dụng các khoảng trống nhỏ</h3>
       <p class="mb-4">Hãy nhét tất (vớ), bộ sạc điện thoại hoặc đồ dùng nhỏ vào bên trong giày để giữ phom dáng giày và tận dụng triệt để không gian. Xếp giày dọc theo thành vali và bọc chúng trong túi nylon sạch để tránh làm bẩn quần áo xung quanh.</p>
@@ -82,7 +85,8 @@ window.blogPosts = [
     metaDesc: "Kinh nghiệm du lịch Sapa tự túc: Khám phá bản Cát Cát, chinh phục đỉnh Fansipan và thưởng thức ẩm thực Tây Bắc.",
     content: `
       <p class="mb-4">Sapa là thị trấn vùng cao xinh đẹp nằm ẩn mình trong mây ngàn của tỉnh Lào Cai. Nơi đây quyến rũ du khách bởi khí hậu mát mẻ quanh năm, những dãy núi trùng điệp kỳ vĩ và những nét văn hóa đậm đà bản sắc của các đồng bào dân tộc H'Mông, Dao, Tày.</p>
-      <h3 class="text-xl font-bold mt-6 mb-3">Chinh phục nóc nhà Đông Dương - Fansipan</h3>
+      <h3 class="text-xl font-bold mt-6 mb-3"><img src="images/blog-sapa.jpg" class="w-full rounded-2xl my-6 object-cover max-h-[380px] shadow-md" alt="Fansipan hùng vĩ chìm trong mây ngàn"><p class="text-xs text-gray-400 text-center italic mb-4">Fansipan hùng vĩ chìm trong mây ngàn</p>
+      Chinh phục nóc nhà Đông Dương - Fansipan</h3>
       <p class="mb-4">Đỉnh Fansipan cao 3.143m là mục tiêu chinh phục của mọi du khách khi đến Sapa. Nếu trước đây phải leo bộ ròng rã nhiều ngày, thì nay bạn có thể dễ dàng chạm tay vào cột mốc kỳ vĩ này chỉ sau 15-20 phút di chuyển bằng cáp treo Fansipan hiện đại, băng qua thung lũng Mường Hoa rực rỡ sắc màu.</p>
       <h3 class="text-xl font-bold mt-6 mb-3">Khám phá văn hóa bản địa</h3>
       <p class="mb-4">Bản Cát Cát nằm ngay chân núi Hoàng Liên Sơn là địa điểm lý tưởng để tìm hiểu cuộc sống của người H'Mông. Bạn có thể thuê những bộ trang phục thổ cẩm rực rỡ, đi bộ qua những cây cầu tre, ngắm thác nước và trải nghiệm dệt vải, nhuộm chàm truyền thống cùng người dân địa phương.</p>
@@ -100,7 +104,8 @@ window.blogPosts = [
     metaDesc: "Tìm hiểu tầm quan trọng của bảo hiểm du lịch quốc tế và các lưu ý khi mua bảo hiểm để tự bảo vệ bản thân.",
     content: `
       <p class="mb-4">Khi chuẩn bị cho một chuyến du lịch, chúng ta thường bận rộn đặt vé máy bay, đặt phòng khách sạn hay lên lịch trình vui chơi mà bỏ quên một yếu tố cực kỳ quan trọng: bảo hiểm du lịch. Đây chính là tấm lá chắn bảo vệ tài chính và sức khỏe của bạn trước những rủi ro không lường trước được ở nơi đất khách quê người.</p>
-      <h3 class="text-xl font-bold mt-6 mb-3">Bảo hiểm du lịch chi trả cho những gì?</h3>
+      <h3 class="text-xl font-bold mt-6 mb-3"><img src="images/blog-insurance.jpg" class="w-full rounded-2xl my-6 object-cover max-h-[380px] shadow-md" alt="Lựa chọn bảo hiểm du lịch phù hợp"><p class="text-xs text-gray-400 text-center italic mb-4">Lựa chọn bảo hiểm du lịch phù hợp</p>
+      Bảo hiểm du lịch chi trả cho những gì?</h3>
       <p class="mb-4">Một hợp đồng bảo hiểm tiêu chuẩn thường bao gồm các quyền lợi: chi phí y tế khẩn cấp khi ốm đau/tai nạn, đền bù mất mát hành lý hoặc tài sản cá nhân, hỗ trợ tài chính khi chuyến bay bị hoãn/hủy chuyến, và dịch vụ cứu trợ y tế khẩn cấp toàn cầu 24/7.</p>
       <h3 class="text-xl font-bold mt-6 mb-3">Tránh những khoản nợ y tế khổng lồ</h3>
       <p class="mb-4">Tại nhiều quốc gia phát triển, chi phí y tế cho người nước ngoài cực kỳ đắt đỏ. Chỉ một ca cấp cứu đơn giản có thể tiêu tốn hàng ngàn USD, làm khánh kiệt tài chính của bạn. Có bảo hiểm du lịch sẽ giúp bạn yên tâm tận hưởng chuyến đi mà không phải lo lắng về những hóa đơn viện phí ngoài tầm kiểm soát.</p>
@@ -118,7 +123,8 @@ window.blogPosts = [
     metaDesc: "Khám phá đảo ngọc Bali với đền Uluwatu cổ kính, ruộng bậc thang Tegalalang và biển Kuta xinh đẹp.",
     content: `
       <p class="mb-4">Đảo Bali của Indonesia luôn là điểm đến hấp dẫn bậc nhất châu Á nhờ sự kết hợp hoàn hảo giữa cảnh quan thiên nhiên hoang sơ, bãi biển tuyệt đẹp và nền văn hóa Hindu độc đáo có một không hai.</p>
-      <h3 class="text-xl font-bold mt-6 mb-3">Trái tim nghệ thuật Ubud</h3>
+      <h3 class="text-xl font-bold mt-6 mb-3"><img src="images/blog-bali.jpg" class="w-full rounded-2xl my-6 object-cover max-h-[380px] shadow-md" alt="Ruộng bậc thang uốn lượn tại Ubud Bali"><p class="text-xs text-gray-400 text-center italic mb-4">Ruộng bậc thang uốn lượn tại Ubud Bali</p>
+      Trái tim nghệ thuật Ubud</h3>
       <p class="mb-4">Ubud là trung tâm văn hóa nghệ thuật của Bali, bao quanh bởi rừng cây nhiệt đới xanh rì và những thửa ruộng bậc thang Tegalalang uốn lượn kỳ vĩ. Đây là nơi bạn có thể tìm thấy sự bình yên qua các lớp yoga, thiền định, hoặc ghé thăm rừng khỉ cổ kính linh thiêng.</p>
       <h3 class="text-xl font-bold mt-6 mb-3">Những đền thờ huyền bí bên bờ biển</h3>
       <p class="mb-4">Hãy ghé thăm đền Tanah Lot nằm cô độc trên một mỏm đá giữa đại dương rộng lớn, đón nhận những đợt sóng vỗ rì rào lúc hoàng hôn buông xuống. Đền Uluwatu nằm chênh vênh trên vách đá dựng đứng cao 70m cũng là địa điểm ngắm mặt trời lặn tuyệt mỹ kết hợp xem múa Kecak truyền thống dưới ánh lửa bập bùng.</p>
@@ -136,7 +142,8 @@ window.blogPosts = [
     metaDesc: "Kinh nghiệm du lịch Đà Nẵng - Hội An tự túc chi tiết: Bà Nà Hills, Cầu Vàng, ngắm rồng phun lửa.",
     content: `
       <p class="mb-4">Đà Nẵng thu hút du khách nhờ cơ sở hạ tầng hiện đại, bãi biển Mỹ Khê cát trắng trải dài cùng thái độ thân thiện, hiếu khách của người dân địa phương. Kết hợp đi Hội An sẽ tạo nên một hành trình di sản đầy màu sắc.</p>
-      <h3 class="text-xl font-bold mt-6 mb-3">Cầu Vàng trên mây ngàn Bà Nà Hills</h3>
+      <h3 class="text-xl font-bold mt-6 mb-3"><img src="images/tour-danang.jpg" class="w-full rounded-2xl my-6 object-cover max-h-[380px] shadow-md" alt="Cầu Vàng Đà Nẵng nâng đỡ bởi bàn tay khổng lồ"><p class="text-xs text-gray-400 text-center italic mb-4">Cầu Vàng Đà Nẵng nâng đỡ bởi bàn tay khổng lồ</p>
+      Cầu Vàng trên mây ngàn Bà Nà Hills</h3>
       <p class="mb-4">Được nâng đỡ bởi hai bàn tay khổng lồ phủ rêu phong cổ kính, Cầu Vàng tại Bà Nà Hills đã trở thành biểu tượng du lịch nổi tiếng thế giới. Đi bộ trên cây cầu cao hơn 1.400m so với mực nước biển, bạn sẽ cảm giác như đang dạo chơi giữa những làn mây trắng bồng bềnh.</p>
       <h3 class="text-xl font-bold mt-6 mb-3">Dạo bước phố cổ Hội An rực rỡ đèn lồng</h3>
       <p class="mb-4">Hội An cách Đà Nẵng chỉ khoảng 30km, mang vẻ đẹp hoài cổ yên bình với những ngôi nhà tường vàng mái ngói rêu phong. Vào ban đêm, cả phố cổ lung linh dưới ánh sáng ấm áp của hàng ngàn chiếc đèn lồng thủ công. Bạn có thể thuê thuyền thả hoa đăng trên sông Hoài để cầu mong may mắn.</p>
@@ -154,7 +161,8 @@ window.blogPosts = [
     metaDesc: "Khám phá 7 món ăn đường phố Thái Lan ngon nhất như Pad Thai, gỏi đu đủ Som Tum và xôi xoài ngọt béo.",
     content: `
       <p class="mb-4">Thái Lan được mệnh danh là thiên đường ẩm thực đường phố của thế giới. Ẩm thực Thái là sự kết hợp tinh tế giữa vị chua, cay, mặn, ngọt đặc trưng. Dưới đây là danh sách những món ăn đường phố bạn nhất định phải nếm thử.</p>
-      <h3 class="text-xl font-bold mt-6 mb-3">Pad Thai (Hủ tiếu xào Thái Lan)</h3>
+      <h3 class="text-xl font-bold mt-6 mb-3"><img src="images/tour-bali.jpg" class="w-full rounded-2xl my-6 object-cover max-h-[380px] shadow-md" alt="Thưởng thức Pad Thai đường phố Bangkok"><p class="text-xs text-gray-400 text-center italic mb-4">Thưởng thức Pad Thai đường phố Bangkok</p>
+      Pad Thai (Hủ tiếu xào Thái Lan)</h3>
       <p class="mb-4">Món hủ tiếu xào đặc trưng với tôm, trứng, đậu hũ, giá đỗ và hẹ tây, được nêm nếm gia vị chua chua từ nước cốt me, cay nhẹ từ ớt bột và ngọt béo từ đậu phộng rang giã nhỏ. Pad Thai là linh hồn của ẩm thực đường phố Bangkok.</p>
       <h3 class="text-xl font-bold mt-6 mb-3">Som Tum (Gỏi đu đủ) và Xôi Xoài</h3>
       <p class="mb-4">Som Tum chua cay mặn ngọt giòn giã kết hợp cùng nước mắm cá cơm đậm đà sẽ đánh thức mọi giác quan của bạn. Để tráng miệng, đĩa xôi xoài ngọt ngào, thơm béo nước cốt dừa rưới lên những hạt xôi dẻo thơm và những lát xoài chín mọng là sự kết thúc hoàn hảo.</p>
@@ -172,7 +180,8 @@ window.blogPosts = [
     metaDesc: "Kinh nghiệm đặt tour du thuyền ngủ đêm vịnh Hạ Long, chèo thuyền kayak và ngắm hang Sửng Sốt.",
     content: `
       <p class="mb-4">Vịnh Hạ Long với hàng ngàn hòn đảo đá vôi nhô lên từ làn nước biển xanh ngọc là di sản thiên nhiên thế giới được UNESCO công nhận. Nơi đây mang một vẻ đẹp thần tiên làm say đắm biết bao du khách quốc tế.</p>
-      <h3 class="text-xl font-bold mt-6 mb-3">Trải nghiệm du thuyền ngủ đêm trên vịnh</h3>
+      <h3 class="text-xl font-bold mt-6 mb-3"><img src="images/tour-halong.jpg" class="w-full rounded-2xl my-6 object-cover max-h-[380px] shadow-md" alt="Du thuyền sang trọng trên vịnh Hạ Long"><p class="text-xs text-gray-400 text-center italic mb-4">Du thuyền sang trọng trên vịnh Hạ Long</p>
+      Trải nghiệm du thuyền ngủ đêm trên vịnh</h3>
       <p class="mb-4">Thay vì đi tàu tiếng trong ngày, hãy chọn các tour du thuyền 4-5 sao ngủ đêm trên vịnh. Bạn sẽ được nghỉ ngơi trong cabin sang trọng view biển, ngắm sao đêm giữa đại dương yên tĩnh, tập thái cực quyền đón bình minh và thưởng thức tiệc hải sản hấp dẫn.</p>
       <h3 class="text-xl font-bold mt-6 mb-3">Chèo thuyền kayak và khám phá hang động</h3>
       <p class="mb-4">Tự tay chèo thuyền kayak lách qua những hang nước luồn dưới đảo đá vôi là cách tốt nhất để cảm nhận sự hùng vĩ của thiên nhiên. Bạn cũng sẽ được tham quan hang Sửng Sốt - hang động lớn nhất vịnh Hạ Long với hàng triệu nhũ đá thạch nhũ lộng lẫy.</p>
@@ -190,7 +199,8 @@ window.blogPosts = [
     metaDesc: "Cẩm nang xin visa du lịch Nhật Bản tự túc: Hồ sơ tài chính, lịch trình du lịch và thủ tục chi tiết.",
     content: `
       <p class="mb-4">Nhật Bản là điểm đến mơ ước nhưng cũng nổi tiếng với thủ tục xét duyệt visa khá nghiêm ngặt. Để nâng cao tỷ lệ đậu visa du lịch tự túc Nhật Bản, bạn cần chuẩn bị một bộ hồ sơ thật chỉn chu và minh bạch.</p>
-      <h3 class="text-xl font-bold mt-6 mb-3">Hồ sơ nhân thân và công việc</h3>
+      <h3 class="text-xl font-bold mt-6 mb-3"><img src="images/tour-japan.jpg" class="w-full rounded-2xl my-6 object-cover max-h-[380px] shadow-md" alt="Chuẩn bị hồ sơ xin visa du lịch Nhật Bản"><p class="text-xs text-gray-400 text-center italic mb-4">Chuẩn bị hồ sơ xin visa du lịch Nhật Bản</p>
+      Hồ sơ nhân thân và công việc</h3>
       <p class="mb-4">Bạn cần chuẩn bị hộ chiếu còn hạn trên 6 tháng, tờ khai xin cấp visa dán ảnh 4.5x4.5 nền trắng. Về công việc, cần có hợp đồng lao động, bảng lương 3 tháng gần nhất và đơn xin nghỉ phép đi du lịch có đóng dấu đỏ của công ty.</p>
       <h3 class="text-xl font-bold mt-6 mb-3">Chứng minh tài chính vững vàng</h3>
       <p class="mb-4">Sổ tiết kiệm ngân hàng nên có số dư tối thiểu là 100 triệu đồng (kỳ hạn gửi ít nhất 3 tháng) kèm giấy xác nhận số dư tài khoản của ngân hàng. Một lịch trình chi tiết từng ngày đi đâu, ở khách sạn nào tại Nhật Bản cũng là điểm cộng rất lớn.</p>
@@ -208,7 +218,8 @@ window.blogPosts = [
     metaDesc: "Lịch trình du lịch Đà Lạt 3 ngày 2 đêm tự túc lãng mạn cho cặp đôi và gia đình.",
     content: `
       <p class="mb-4">Đà Lạt với khí hậu se lạnh quanh năm, ngập tràn muôn sắc hoa luôn là điểm trốn nóng hoàn hảo cho du khách miền Nam. Lịch trình 3 ngày 2 đêm dưới đây giúp bạn khám phá trọn vẹn thành phố tình yêu.</p>
-      <h3 class="text-xl font-bold mt-6 mb-3">Ngày 1: Chợ Đà Lạt - Vườn Hoa - Café sương mù</h3>
+      <h3 class="text-xl font-bold mt-6 mb-3"><img src="images/tour-dalat.jpg" class="w-full rounded-2xl my-6 object-cover max-h-[380px] shadow-md" alt="Vườn hoa cẩm tú cầu rực rỡ tại Đà Lạt"><p class="text-xs text-gray-400 text-center italic mb-4">Vườn hoa cẩm tú cầu rực rỡ tại Đà Lạt</p>
+      Ngày 1: Chợ Đà Lạt - Vườn Hoa - Café sương mù</h3>
       <p class="mb-4">Đến Đà Lạt buổi sáng, check-in khách sạn. Chiều ghé vườn hoa thành phố ngắm cẩm tú cầu, hoa hồng Pháp. Chiều tối dạo bước chợ đêm Đà Lạt thưởng thức bánh tráng nướng nóng hổi và sữa đậu nành nóng ấm áp giữa cái lạnh Tây Nguyên.</p>
       <h3 class="text-xl font-bold mt-6 mb-3">Ngày 2: Chinh phục đỉnh Langbiang hùng vĩ</h3>
       <p class="mb-4">Lên xe Jeep chinh phục đỉnh núi Langbiang ở độ cao 2.167m ngắm toàn cảnh suối Vàng suối Bạc thơ mộng trong làn sương mù. Chiều tham quan chùa Linh Phước (Chùa Ve Chai) với kiến trúc khảm sành độc đáo hàng đầu Việt Nam.</p>
@@ -226,7 +237,8 @@ window.blogPosts = [
     metaDesc: "Kinh nghiệm đi tour 4 đảo Nha Trang lặn ngắm san hô Hòn Mun và tắm bùn khoáng nóng Tháp Bà.",
     content: `
       <p class="mb-4">Nha Trang sở hữu một trong những vịnh biển đẹp nhất thế giới, nổi tiếng với dải san hô đa dạng sắc màu và làn nước biển trong suốt có độ tầm nhìn cực tốt dưới mặt nước.</p>
-      <h3 class="text-xl font-bold mt-6 mb-3">Tour 4 đảo và lặn ngắm san hô Hòn Mun</h3>
+      <h3 class="text-xl font-bold mt-6 mb-3"><img src="images/tour-nhatrang.jpg" class="w-full rounded-2xl my-6 object-cover max-h-[380px] shadow-md" alt="Thế giới san hô lộng lẫy dưới biển Nha Trang"><p class="text-xs text-gray-400 text-center italic mb-4">Thế giới san hô lộng lẫy dưới biển Nha Trang</p>
+      Tour 4 đảo và lặn ngắm san hô Hòn Mun</h3>
       <p class="mb-4">Hòn Mun là khu bảo tồn biển lớn nhất Việt Nam. Tham gia tour lặn bình khí hoặc lặn ống thở (snorkeling) tại đây, bạn sẽ được bơi lội giữa hàng trăm loài cá nhỏ sặc sỡ và ngắm nhìn thế giới đại dương lung linh kỳ ảo dưới đáy vịnh Nha Trang.</p>
       <h3 class="text-xl font-bold mt-6 mb-3">Tắm bùn khoáng nóng chăm sóc cơ thể</h3>
       <p class="mb-4">Sau một ngày dài vẫy vùng ngoài biển khơi, hãy tự thưởng cho mình một buổi tắm bùn khoáng thiên nhiên tại Tháp Bà hoặc I-Resort. Bùn khoáng nóng giúp thư giãn cơ bắp, thanh lọc độc tố trên da và phục hồi năng lượng cực kỳ hiệu quả.</p>

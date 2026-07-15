@@ -7,13 +7,20 @@ const tours = [
     name: "Phú Quốc 4N3Đ All Inclusive",
     location: "Phú Quốc",
     category: ["Biển", "Trong nước"],
-    price: 3290000,
+    price: 3890000,
     image: "images/tour-phuquoc.jpg",
     rating: 4.8,
     reviews: 120,
     duration: "4 ngày 3 đêm",
     badge: "Bán chạy",
-    includes: ["Vé máy bay khứ hồi", "Resort 4 sao sát biển", "Ăn sáng buffet & 2 bữa chính", "Hướng dẫn viên & xe đưa đón"],
+    includes: [
+      "Vé máy bay khứ hồi (đã gồm 7kg xách tay & 20kg ký gửi)",
+      "Resort 4 sao sát biển (2 người/phòng)",
+      "Ăn sáng buffet & 3 bữa chính đặc sản đảo",
+      "Bảo hiểm du lịch mức bồi thường tới 100.000.000đ",
+      "Nước suối & khăn lạnh phục vụ suốt tuyến (2 chai/ngày)",
+      "Quà tặng độc quyền từ WILTravel (mũ du lịch, gối chữ U)"
+    ],
     notes: ["Cần mang theo CMND/CCCD", "Đăng ký trước tối thiểu 7 ngày", "Trẻ em dưới 2 tuổi miễn phí vé"],
     itinerary: [
       { day: "Ngày 1", title: "TP.HCM → Phú Quốc - Khám phá thị trấn Dương Đông", desc: "Tập trung tại sân bay Tân Sơn Nhất, bay ra Phú Quốc. Nhận phòng resort, nghỉ ngơi. Buổi tối khám phá chợ đêm Phú Quốc, thưởng thức hải sản tươi sống." },
@@ -27,13 +34,20 @@ const tours = [
     name: "Sapa - Hà Giang 5N4Đ",
     location: "Sapa",
     category: ["Núi", "Trong nước"],
-    price: 4190000,
+    price: 4990000,
     image: "images/tour-sapa.jpg",
     rating: 4.7,
     reviews: 95,
     duration: "5 ngày 4 đêm",
     badge: "Mới",
-    includes: ["Xe giường nằm chất lượng cao", "Khách sạn 3 sao view núi", "Ăn uống theo chương trình Tây Bắc", "Vé tham quan các điểm Bản Cát Cát, Đèo Mã Pí Lèng"],
+    includes: [
+      "Xe giường nằm Cabin VIP khứ hồi",
+      "Khách sạn 3-4 sao trung tâm view thung lũng",
+      "Trải nghiệm xe Jeep leo đèo Mã Pí Lèng",
+      "Vé cáp treo Fansipan khứ hồi",
+      "Bảo hiểm du lịch mức bồi thường tới 100.000.000đ",
+      "Nước suối & khăn lạnh phục vụ suốt hành trình"
+    ],
     notes: ["Nên mang theo giày thể thao đi bộ", "Mang theo áo ấm vì nhiệt độ vùng cao thấp", "Lịch trình có thể thay đổi nhẹ tùy thời tiết"],
     itinerary: [
       { day: "Ngày 1", title: "TP.HCM → Hà Nội → Sapa", desc: "Bay đến Hà Nội, đón xe lên Sapa. Nhận phòng khách sạn view núi. Tối đi bộ tham quan thị trấn Sapa về đêm, thưởng thức thắng cố và rượu táo mèo." },
@@ -48,13 +62,20 @@ const tours = [
     name: "Bali Thiên Đường 6N5Đ",
     location: "Bali",
     category: ["Biển", "Quốc tế"],
-    price: 18500000,
+    price: 16990000,
     image: "images/tour-bali.jpg",
     rating: 4.9,
     reviews: 200,
     duration: "6 ngày 5 đêm",
     badge: "Hot",
-    includes: ["Vé máy bay khứ hồi từ Việt Nam", "Khách sạn/Resort 4 sao có hồ bơi", "Các bữa ăn đặc sản Bali", "Sim 4G du lịch & Vé vào cổng các đền thờ cổ"],
+    includes: [
+      "Vé máy bay khứ hồi quốc tế (Vietnam Airlines/Vietjet)",
+      "Resort 4 sao có hồ bơi vô cực chuẩn Bali",
+      "Sim 4G tốc độ cao không giới hạn dung lượng",
+      "Vé vào cổng Cổng Trời Lempuyang & Đền Uluwatu",
+      "Bảo hiểm du lịch quốc tế mức bồi thường tới 1 tỷ đồng",
+      "Quà tặng từ WILTravel: bao da hộ chiếu, mũ du lịch"
+    ],
     notes: ["Hộ chiếu còn hạn trên 6 tháng", "Đổi tiền USD hoặc IDR trước khi đi", "Trang phục lịch sự khi vào đền thờ"],
     itinerary: [
       { day: "Ngày 1", title: "Bay đến Bali - Kuta - Legian Beach", desc: "Đáp xuống sân bay quốc tế Ngurah Rai. Nhận phòng resort. Tắm biển Kuta, ngắm hoàng hôn tuyệt đẹp từ bờ biển Legian." },
@@ -70,13 +91,20 @@ const tours = [
     name: "Vịnh Hạ Long - Lan Hạ 4N3Đ",
     location: "Hạ Long",
     category: ["Biển", "Trong nước"],
-    price: 5690000,
+    price: 5290000,
     image: "images/tour-halong.jpg",
     rating: 4.6,
     reviews: 110,
     duration: "4 ngày 3 đêm",
     badge: "",
-    includes: ["Du thuyền sang trọng 5 sao (1 đêm)", "Khách sạn 4 sao tại Tuần Châu (2 đêm)", "Chèo thuyền kayak miễn phí", "Vé tham quan động Thiên Cung, hang Sửng Sốt"],
+    includes: [
+      "Du thuyền 5 sao chuẩn quốc tế ngủ đêm trên vịnh",
+      "Khách sạn 4 sao tại Bãi Cháy (2 đêm)",
+      "Chèo thuyền kayak & tắm biển tự do",
+      "Vé trọn gói tham quan Động Thiên Cung & hang Sửng Sốt",
+      "Bảo hiểm du lịch trọn gói suốt tuyến",
+      "Nước suối & khăn lạnh phục vụ hàng ngày"
+    ],
     notes: ["Mang theo đồ bơi & kem chống nắng", "Đăng ký quốc tịch trước khi lên tàu", "Nước uống miễn phí 2 chai/phòng/ngày"],
     itinerary: [
       { day: "Ngày 1", title: "Hà Nội → Hạ Long - Lên Du Thuyền", desc: "Xe đón tại Hà Nội, di chuyển đến Hạ Long. Lên du thuyền 5 sao, làm thủ tục nhận phòng. Tham quan hang Sửng Sốt, chèo kayak qua các hòn đảo đá vôi." },
@@ -90,13 +118,20 @@ const tours = [
     name: "Đà Nẵng - Hội An 4N3Đ",
     location: "Đà Nẵng",
     category: ["Biển", "Trong nước"],
-    price: 3890000,
+    price: 4290000,
     image: "images/tour-danang.jpg",
     rating: 4.7,
     reviews: 140,
     duration: "4 ngày 3 đêm",
     badge: "Bán chạy",
-    includes: ["Vé máy bay khứ hồi", "Khách sạn 4 sao gần biển Mỹ Khê", "Vé cáp treo Bà Nà Hills & Buffet trưa", "Vé tham quan phố cổ Hội An"],
+    includes: [
+      "Vé máy bay khứ hồi (đầy đủ hành lý)",
+      "Khách sạn 4 sao sát bãi biển Mỹ Khê",
+      "Vé cáp treo khứ hồi & buffet trưa tại Bà Nà Hills",
+      "Vé du thuyền sông Hàn ngắm cầu Rồng phun lửa",
+      "Bảo hiểm du lịch mức bồi thường tới 100.000.000đ",
+      "Mũ du lịch & gối chữ U từ WILTravel"
+    ],
     notes: ["Bà Nà Hills thường có sương mù vào chiều", "Chuẩn bị mũ nón cho các điểm ngoài trời", "Hỗ trợ xe điện di chuyển trong phố cổ"],
     itinerary: [
       { day: "Ngày 1", title: "Bay đến Đà Nẵng - Bà Nà Hills", desc: "Bay đến Đà Nẵng. Trực chỉ Bà Nà Hills - leo cáp treo dài nhất thế giới, thăm Cầu Vàng trong mây, vườn hoa Le Jardin d'Amour." },
@@ -110,13 +145,20 @@ const tours = [
     name: "Nhật Bản Mùa Hoa Anh Đào",
     location: "Tokyo - Osaka",
     category: ["Thành phố", "Quốc tế"],
-    price: 32900000,
+    price: 28990000,
     image: "images/tour-japan.jpg",
     rating: 5.0,
     reviews: 250,
     duration: "6 ngày 5 đêm",
     badge: "Premium",
-    includes: ["Vé máy bay khứ hồi Vietnam Airlines", "Lệ phí visa du lịch Nhật Bản", "Khách sạn 3-4 sao trung tâm", "Trải nghiệm tắm Onsen truyền thống & Tàu Shinkansen"],
+    includes: [
+      "Vé máy bay khứ hồi Vietnam Airlines (gồm 46kg hành lý ký gửi)",
+      "Thủ tục trọn gói Visa du lịch Nhật Bản",
+      "Khách sạn 3-4 sao trung tâm Tokyo & Osaka",
+      "Trải nghiệm tắm Onsen truyền thống & đi tàu siêu tốc Shinkansen",
+      "Bảo hiểm du lịch quốc tế mức bồi thường 1 tỷ đồng",
+      "Sim 4G tốc độ cao & bộ phát wifi suốt hành trình"
+    ],
     notes: ["Hồ sơ visa nộp trước tối thiểu 1 tháng", "Thời tiết mùa xuân lạnh (10-15°C)", "Cần tuân thủ quy định hướng dẫn viên"],
     itinerary: [
       { day: "Ngày 1", title: "TP.HCM → Tokyo - Narita", desc: "Bay đêm đến Tokyo. Nhận phòng khách sạn tại Shinjuku. Tối dạo phố Shibuya, ngắm Crossing nổi tiếng nhất thế giới." },
@@ -132,13 +174,20 @@ const tours = [
     name: "Đà Lạt Lãng Mạn 3N2Đ",
     location: "Đà Lạt",
     category: ["Núi", "Trong nước"],
-    price: 2490000,
+    price: 2890000,
     image: "images/tour-dalat.jpg",
     rating: 4.5,
     reviews: 80,
     duration: "3 ngày 2 đêm",
     badge: "",
-    includes: ["Xe limousine đưa đón từ TP.HCM", "Khách sạn trung tâm gần chợ Đà Lạt", "Vé tham quan Thung lũng tình yêu, Langbiang", "Lẩu rau buffet Đà Lạt"],
+    includes: [
+      "Xe Limousine D-Car đưa đón đời mới khứ hồi",
+      "Khách sạn view rừng thông gần hồ Xuân Hương",
+      "Vé tham quan trọn gói các điểm: Langbiang, Thác Datanla",
+      "Trải nghiệm hái dâu tây trực tiếp tại vườn công nghệ cao",
+      "Bảo hiểm du lịch trọn gói",
+      "Khăn lạnh & nước suối phục vụ suốt tuyến"
+    ],
     notes: ["Đà Lạt se lạnh về đêm và sáng sớm", "Nên chuẩn bị trang phục giữ ấm nhẹ", "Có thời gian tự do khám phá chợ đêm"],
     itinerary: [
       { day: "Ngày 1", title: "TP.HCM → Đà Lạt - Thác Datanla", desc: "Xe limousine khởi hành sáng sớm. Đến Đà Lạt, tham quan Thác Datanla, trượt ray máng hào hứng. Chiều khám phá Vườn hoa Đà Lạt rực rỡ." },
@@ -151,13 +200,20 @@ const tours = [
     name: "Nha Trang - Ninh Hòa 3N2Đ",
     location: "Nha Trang",
     category: ["Biển", "Trong nước"],
-    price: 2890000,
+    price: 3190000,
     image: "images/tour-nhatrang.jpg",
     rating: 4.6,
     reviews: 105,
     duration: "3 ngày 2 đêm",
     badge: "",
-    includes: ["Xe giường nằm đưa đón", "Khách sạn 3 sao sát biển Trần Phú", "Tour đảo 3 vịnh có lặn ngắm san hô", "Vé tắm bùn khoáng nóng chăm sóc sức khỏe"],
+    includes: [
+      "Xe giường nằm cao cấp đưa đón từ Tp.HCM",
+      "Khách sạn 3-4 sao view biển Trần Phú",
+      "Cano cao tốc đi tour 3 đảo VIP",
+      "Vé tắm bùn khoáng nóng chăm sóc sức khỏe",
+      "Bảo hiểm du lịch mức bồi thường tới 100.000.000đ",
+      "Quà tặng độc quyền từ WILTravel (mũ du lịch, túi đựng đồ ướt)"
+    ],
     notes: ["Nên mang theo túi chống nước điện thoại", "Uống đủ nước khi đi tour đảo", "Có dịch vụ chụp hình dưới nước có phí"],
     itinerary: [
       { day: "Ngày 1", title: "TP.HCM → Nha Trang - Tháp Chàm", desc: "Xe giường nằm khởi hành tối. Đến Nha Trang sáng sớm, nhận phòng, nghỉ ngơi. Chiều thăm Tháp Bà Ponagar, tắm biển Trần Phú." },
@@ -170,13 +226,20 @@ const tours = [
     name: "Singapore - Malaysia 5N4Đ",
     location: "Singapore",
     category: ["Thành phố", "Quốc tế"],
-    price: 10990000,
+    price: 12490000,
     image: "images/hero3.jpg",
     rating: 4.8,
     reviews: 165,
     duration: "5 ngày 4 đêm",
     badge: "Hot",
-    includes: ["Vé máy bay khứ hồi quốc tế", "Khách sạn 3-4 sao tiện nghi", "Vé tham quan Gardens by the Bay, Cao nguyên Genting", "Xe du lịch đưa đón suốt tuyến"],
+    includes: [
+      "Vé máy bay khứ hồi quốc tế (đầy đủ hành lý)",
+      "Khách sạn 3-4 sao trung tâm Singapore & Kuala Lumpur",
+      "Vé tham quan Gardens by the Bay & cáp treo Genting",
+      "Sim 4G sử dụng tại cả 2 nước",
+      "Bảo hiểm du lịch quốc tế mức 1 tỷ đồng",
+      "Nước suối, khăn lạnh phục vụ suốt tuyến"
+    ],
     notes: ["Hộ chiếu hạn trên 6 tháng", "Không mang kẹo cao su vào Singapore", "Múi giờ đi nhanh hơn Việt Nam 1 tiếng"],
     itinerary: [
       { day: "Ngày 1", title: "Bay đến Singapore - Orchard Road", desc: "Bay đến Changi Airport - sân bay đẹp nhất thế giới 8 năm liền. Khám phá Jewel Changi với thác nước trong nhà cao nhất thế giới. Dạo phố mua sắm Orchard Road." },
@@ -191,13 +254,20 @@ const tours = [
     name: "Thái Lan - Bangkok - Pattaya 5N4Đ",
     location: "Thái Lan",
     category: ["Biển", "Quốc tế"],
-    price: 6490000,
+    price: 6990000,
     image: "images/bali.jpg",
     rating: 4.7,
     reviews: 180,
     duration: "5 ngày 4 đêm",
     badge: "Bán chạy",
-    includes: ["Vé máy bay khứ hồi kèm hành lý ký gửi", "Khách sạn 4 sao sang trọng", "Vé xem Alcazar Show / Tiffany Show", "Ăn buffet nhà hàng xoay 86 tầng Baiyoke Sky"],
+    includes: [
+      "Vé máy bay khứ hồi (đã gồm hành lý)",
+      "Khách sạn 4 sao có hồ bơi tại Bangkok & Pattaya",
+      "Vé xem Alcazar Show / Tiffany Show ghế VIP",
+      "Thưởng thức Buffet trưa tại tòa nhà Baiyoke Sky 86 tầng",
+      "Bảo hiểm du lịch quốc tế mức bồi thường tới 500.000.000đ",
+      "Sim 4G Thái Lan không giới hạn dung lượng"
+    ],
     notes: ["Chuẩn bị tiền Baht Thái tiêu dùng", "Mặc quần áo dài qua gối khi thăm Chùa Bình Minh", "Nên thử massage Thái truyền thống"],
     itinerary: [
       { day: "Ngày 1", title: "Bay đến Bangkok - Wat Arun", desc: "Bay đến Suvarnabhumi. Tham quan chùa Wat Arun - Chùa Bình Minh rực rỡ. Tối du thuyền sông Chao Phraya, ngắm Bangkok về đêm." },
@@ -212,13 +282,20 @@ const tours = [
     name: "Miền Tây Sông Nước Cần Thơ - Bến Tre 2N1Đ",
     location: "Mekong",
     category: ["Trong nước"],
-    price: 1790000,
+    price: 1990000,
     image: "images/hero2.jpg",
     rating: 4.5,
     reviews: 74,
     duration: "2 ngày 1 đêm",
     badge: "",
-    includes: ["Xe du lịch máy lạnh đưa đón", "Khách sạn 3 sao có hồ bơi tại Cần Thơ", "Xuồng chèo ba lá đi len lỏi rạch dừa nước", "Vé tham quan Chợ nổi Cái Răng, vườn cây ăn trái"],
+    includes: [
+      "Xe du lịch máy lạnh đưa đón suốt hành trình",
+      "Khách sạn 3 sao có hồ bơi view sông Cần Thơ",
+      "Tàu tham quan chợ nổi Cái Răng & Xuồng chèo ba lá",
+      "Ăn uống trọn gói các món đặc sản miền Tây",
+      "Bảo hiểm du lịch trong nước",
+      "Trái cây ăn thỏa thích tại nhà vườn"
+    ],
     notes: ["Nên mang theo thuốc chống muỗi", "Chuẩn bị nón lá và áo khoác mỏng", "Mua trái cây tại vườn giá rất rẻ"],
     itinerary: [
       { day: "Ngày 1", title: "TP.HCM → Bến Tre → Cần Thơ", desc: "Khởi hành sáng sớm. Đến Bến Tre, đi xuồng len lỏi rạch dừa nước xanh mướt. Thăm làng nghề kẹo dừa, làm kẹo dừa thủ công. Chiều di chuyển về Cần Thơ, nhận phòng." },
@@ -230,13 +307,20 @@ const tours = [
     name: "Hà Nội - Tràng An - Bái Đính 3N2Đ",
     location: "Ninh Bình",
     category: ["Núi", "Trong nước"],
-    price: 2990000,
+    price: 3490000,
     image: "images/hero1.jpg",
     rating: 4.6,
     reviews: 90,
     duration: "3 ngày 2 đêm",
     badge: "Mới",
-    includes: ["Xe đưa đón tham quan theo lịch trình", "Khách sạn tại phố cổ Hà Nội (2 đêm)", "Vé đò Tràng An & Vé xe điện chùa Bái Đính", "Ăn uống đặc sản dê núi Ninh Bình"],
+    includes: [
+      "Xe du lịch đưa đón đời mới khứ hồi từ Hà Nội",
+      "Khách sạn tại phố cổ Hà Nội tiện nghi",
+      "Vé thuyền đò Tràng An & vé xe điện chùa Bái Đính",
+      "Bữa ăn đặc sản dê núi & cơm cháy Ninh Bình",
+      "Bảo hiểm du lịch trọn gói suốt tuyến",
+      "Nước suối & khăn lạnh phục vụ hàng ngày"
+    ],
     notes: ["Đường đi chùa Bái Đính đi bộ khá nhiều", "Nên mặc trang phục trang nghiêm khi viếng chùa", "Nên thử bánh mì và cafe trứng Hà Nội"],
     itinerary: [
       { day: "Ngày 1", title: "Bay đến Hà Nội - Phố Cổ", desc: "Bay đến Nội Bài. Khám phá phố cổ Hà Nội 36 phố phường. Thăm Hồ Gươm, đền Ngọc Sơn, cầu Thê Húc. Tối thưởng thức bún chả, cafe trứng huyền thoại." },
@@ -571,8 +655,8 @@ function getWishlistCount() {
 function getOrders() {
   const orders = localStorage.getItem('wil_orders');
   return orders ? JSON.parse(orders) : [
-    { orderId: "ORD1001", tourId: 1, date: "2026-06-01", quantity: 1, price: 3290000, total: 3290000, status: "Chờ Xác Nhận" },
-    { orderId: "ORD1002", tourId: 2, date: "2026-05-25", quantity: 1, price: 4190000, total: 4190000, status: "Hoàn Tất" }
+    { orderId: "ORD1001", tourId: 1, date: "2026-06-01", quantity: 1, price: 3490000, total: 3290000, status: "Chờ Xác Nhận" },
+    { orderId: "ORD1002", tourId: 2, date: "2026-05-25", quantity: 1, price: 3490000, total: 4190000, status: "Hoàn Tất" }
   ];
 }
 
@@ -747,10 +831,10 @@ function generateMoreTours() {
   
   // Huế Specific Tours
   const hueTours = [
-    { name: "Hành trình di sản Huế cổ kính 3N2Đ", price: 2490000, duration: "3 ngày 2 đêm", badge: "Hot" },
-    { name: "Nghỉ dưỡng Lăng Cô - Huế Premium 4N3Đ", price: 4890000, duration: "4 ngày 3 đêm", badge: "Trọn gói" },
-    { name: "Tour Huế - Đà Nẵng - Hội An Di Sản Miền Trung 5N4Đ", price: 5290000, duration: "5 ngày 4 đêm", badge: "Bán chạy" },
-    { name: "Khám phá ẩm thực & văn hóa cố đô Huế 2N1Đ", price: 1690000, duration: "2 ngày 1 đêm", badge: "Giá tốt" }
+    { name: "Hành trình di sản Huế cổ kính 3N2Đ", price: 3490000, duration: "3 ngày 2 đêm", badge: "Hot" },
+    { name: "Nghỉ dưỡng Lăng Cô - Huế Premium 4N3Đ", price: 3490000, duration: "4 ngày 3 đêm", badge: "Trọn gói" },
+    { name: "Tour Huế - Đà Nẵng - Hội An Di Sản Miền Trung 5N4Đ", price: 3490000, duration: "5 ngày 4 đêm", badge: "Bán chạy" },
+    { name: "Khám phá ẩm thực & văn hóa cố đô Huế 2N1Đ", price: 3490000, duration: "2 ngày 1 đêm", badge: "Giá tốt" }
   ];
 
   hueTours.forEach(ht => {
@@ -765,7 +849,14 @@ function generateMoreTours() {
       reviews: Math.floor(Math.random() * 80) + 40,
       duration: ht.duration,
       badge: ht.badge,
-      includes: ["Khách sạn trung tâm tiện nghi", "Ăn uống đặc sản cố đô", "Vé tham quan Đại Nội, các lăng tẩm", "Hướng dẫn viên nhiệt tình"],
+      includes: [
+      "Xe du lịch đưa đón đời mới khứ hồi từ Hà Nội",
+      "Khách sạn tại phố cổ Hà Nội tiện nghi",
+      "Vé thuyền đò Tràng An & vé xe điện chùa Bái Đính",
+      "Bữa ăn đặc sản dê núi & cơm cháy Ninh Bình",
+      "Bảo hiểm du lịch trọn gói suốt tuyến",
+      "Nước suối & khăn lạnh phục vụ hàng ngày"
+    ],
       notes: ["Trang phục lịch sự khi viếng lăng tẩm", "Mang theo ô/nón che nắng nhẹ", "Đăng ký trước tối thiểu 5 ngày"],
       itinerary: [
         { day: "Ngày 1", title: "Khám phá Đại Nội - Cung điện Huế", desc: "Tham quan Ngọ Môn, Điện Thái Hòa, Thế Miếu, Hiển Lâm Các. Trải nghiệm ca Huế trên sông Hương về đêm lung linh ánh đèn." },
@@ -813,7 +904,14 @@ function generateMoreTours() {
       reviews: Math.floor(Math.random() * 250) + 10,
       duration,
       badge,
-      includes: ["Vé máy bay khứ hồi hoặc xe du lịch đời mới", "Khách sạn tiêu chuẩn tiện nghi đầy đủ", "Vé tham quan các điểm trong chương trình", "Bảo hiểm du lịch trọn gói"],
+      includes: [
+      "Xe du lịch đưa đón đời mới khứ hồi từ Hà Nội",
+      "Khách sạn tại phố cổ Hà Nội tiện nghi",
+      "Vé thuyền đò Tràng An & vé xe điện chùa Bái Đính",
+      "Bữa ăn đặc sản dê núi & cơm cháy Ninh Bình",
+      "Bảo hiểm du lịch trọn gói suốt tuyến",
+      "Nước suối & khăn lạnh phục vụ hàng ngày"
+    ],
       notes: ["Mang theo trang phục phù hợp thời tiết", "Chú ý lịch khởi hành và thời gian tập trung", "Trẻ em nhận ưu đãi giá theo chiều cao"],
       itinerary
     });
@@ -1940,4 +2038,4 @@ function initAOSDynamically() {
   // Disabled dynamically injected AOS animations to prevent elements from vanishing/collapsing
 }
 
-document.addEventListener('DOMContentLoaded', () => { setTimeout(() => { initAOSDynamically(); if(typeof AOS !== 'undefined') AOS.refresh(); }, 500); });
+document.addEventListener('DOMContentLoaded', () => { setTimeout(() => { initAOSDynamically(); if(typeof AOS !== 'undefined') AOS.refresh(); }, 500); });
