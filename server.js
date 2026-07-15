@@ -228,6 +228,123 @@ app.post('/api/user/sync', (req, res) => {
   return res.json({ success: true, message: 'Đồng bộ dữ liệu thành công!' });
 });
 
+// 6. Chatbot Tina API (Google Gemini Integration)
+app.post('/api/chat', async (req, res) => {
+  const { message, history } = req.body;
+  if (!message) {
+    return res.status(400).json({ success: false, message: 'Thiếu tin nhắn.' });
+  }
+
+  const apiKey = process.env.GEMINI_API_KEY || 'YOUR_GEMINI_API_KEY_HERE';
+  
+  if (apiKey === 'YOUR_GEMINI_API_KEY_HERE') {
+    // Return mock indicator to trigger frontend local fallback smoothly
+    return res.json({ 
+      success: false, 
+      message: 'Chưa cấu hình khóa API Gemini.' 
+    });
+  }
+
+  try {
+    const https = require('https');
+    
+    // Construct rich context system prompt about WILTravel tours database
+    const systemPrompt = `Bạn là Tina, trợ lý ảo thông minh và vô cùng thân thiện của công ty du lịch WILTravel.
+Nhiệm vụ của bạn là tư vấn du lịch, giải đáp thắc mắc về giá vé, lịch trình, dịch vụ của các tour du lịch và vé máy bay tại WILTravel.
+Hãy trả lời một cách dễ mến, nhiệt tình, lịch sự và ngắn gọn.
+Luôn khuyến khích khách hàng đặt tour của WILTravel bằng cách nêu bật các dịch vụ đẳng cấp đi kèm (bảo hiểm du lịch 100tr-1tỷ, nước uống/khăn lạnh miễn phí suốt tuyến, quà tặng độc quyền như mũ du lịch, gối chữ U).
+
+Dưới đây là cơ sở dữ liệu các tour hiện tại của WILTravel để bạn tham khảo trả lời chính xác:
+1. Phú Quốc 4N3Đ All Inclusive: giá 3.890.000 VNĐ, nghỉ resort 4 sao sát biển, ăn buffet sáng & 3 bữa chính hải sản.
+2. Sapa - Hà Giang 5N4Đ: giá 4.990.000 VNĐ, đi xe cabin giường nằm VIP khứ hồi, khách sạn view thung lũng, vé cáp treo Fansipan khứ hồi, đi xe Jeep Mã Pí Lèng.
+3. Bali Thiên Đường 6N5Đ: giá 16.990.000 VNĐ, resort 4 sao hồ bơi vô cực, tặng sim 4G, vé cổng trời Lempuyang & đền Uluwatu.
+4. Vịnh Hạ Long - Lan Hạ 4N3Đ: giá 5.290.000 VNĐ, ngủ đêm du thuyền 5 sao, chèo kayak, thăm hang Sửng Sốt.
+5. Đà Nẵng - Hội An 4N3Đ: giá 4.290.000 VNĐ, khách sạn 4 sao sát biển Mỹ Khê, vé cáp treo Bà Nà Hills, du thuyền sông Hàn ngắm rồng phun lửa.
+6. Nhật Bản Mùa Hoa Anh Đào 6N5Đ: giá 28.990.000 VNĐ, trọn gói visa, bay Vietnam Airlines, trải nghiệm tắm Onsen & tàu siêu tốc Shinkansen.
+7. Đà Lạt Lãng Mạn 3N2Đ: giá 2.890.000 VNĐ, xe limousine đưa đón, khách sạn trung tâm, tham quan Langbiang, hái dâu tây vườn công nghệ cao.
+8. Nha Trang - Ninh Hòa 3N2Đ: giá 3.190.000 VNĐ, cano đi tour 3 đảo VIP, tắm bùn khoáng nóng.
+9. Singapore - Malaysia 5N4Đ: giá 12.490.000 VNĐ, đi trọn gói 2 nước, ngắm Gardens by the Bay, cao nguyên Genting, tháp đôi Petronas.
+10. Thái Lan - Bangkok - Pattaya 5N4Đ: giá 6.990.000 VNĐ, khách sạn 4 sao, vé Alcazar Show VIP, buffet nhà hàng xoay Baiyoke Sky 86 tầng.
+11. Miền Tây Sông Nước Cần Thơ - Bến Tre 2N1Đ: giá 1.990.000 VNĐ, xuồng chèo rạch dừa, đi chợ nổi Cái Răng bình minh.
+12. Hà Nội - Tràng An - Bái Đính 3N2Đ: giá 3.490.000 VNĐ, vé đò Tràng An, xe điện chùa Bái Đính, ăn dê núi Ninh Bình.
+
+Địa chỉ công ty WILTravel: 72/10/6 Văn Chung, P.12, Tân Bình, Tp.HCM. Hotline hỗ trợ: 0905 025737.`;
+
+    const contents = [];
+    
+    // Inject system prompt to establish character context
+    contents.push({
+      role: 'user',
+      parts: [{ text: `${systemPrompt}\n\nChào bạn Tina!` }]
+    });
+    contents.push({
+      role: 'model',
+      parts: [{ text: 'Xin chào! Mình là Tina, trợ lý ảo của WILTravel. Mình rất vui được hỗ trợ bạn tư vấn và đặt tour du lịch. Bạn cần mình giúp gì hôm nay? 😊' }]
+    });
+
+    // Populate conversation history
+    if (history && history.length) {
+      history.forEach(item => {
+        contents.push({
+          role: item.sender === 'user' ? 'user' : 'model',
+          parts: [{ text: item.text }]
+        });
+      });
+    }
+    
+    // Append the latest user query
+    contents.push({
+      role: 'user',
+      parts: [{ text: message }]
+    });
+
+    const postData = JSON.stringify({ contents });
+
+    const requestOptions = {
+      hostname: 'generativelanguage.googleapis.com',
+      port: 443,
+      path: `/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(postData)
+      }
+    };
+
+    const reqPost = https.request(requestOptions, (response) => {
+      let responseBody = '';
+      response.on('data', (chunk) => { responseBody += chunk; });
+      response.on('end', () => {
+        try {
+          const jsonRes = JSON.parse(responseBody);
+          if (jsonRes.candidates && jsonRes.candidates[0] && jsonRes.candidates[0].content && jsonRes.candidates[0].content.parts[0]) {
+            const reply = jsonRes.candidates[0].content.parts[0].text;
+            res.json({ success: true, reply });
+          } else {
+            console.error('Gemini API Error details:', responseBody);
+            res.json({ success: false, message: 'Lỗi phản hồi từ AI.' });
+          }
+        } catch (parseErr) {
+          console.error('Error parsing Gemini response:', parseErr);
+          res.json({ success: false, message: 'Lỗi giải mã phản hồi.' });
+        }
+      });
+    });
+
+    reqPost.on('error', (err) => {
+      console.error('Gemini connection error:', err);
+      res.json({ success: false, message: 'Không thể kết nối đến máy chủ AI.' });
+    });
+
+    reqPost.write(postData);
+    reqPost.end();
+
+  } catch (error) {
+    console.error('Server error in chat API:', error);
+    res.json({ success: false, message: 'Lỗi xử lý hệ thống.' });
+  }
+});
+
 // Route catch-all to serve index.html for unknown routes
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));

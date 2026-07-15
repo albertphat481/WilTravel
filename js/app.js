@@ -1294,31 +1294,75 @@ function hideTinaTyping() {
   if (el) el.remove();
 }
 
-window.askTina = function(text) {
+// Chat history to maintain conversation context for the AI
+let tinaChatHistory = [];
+
+window.askTina = async function(text) {
   addMessage(text, 'user');
+  tinaChatHistory.push({ sender: 'user', text });
+  
   showTinaTyping();
-  setTimeout(() => {
+  try {
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: text, history: tinaChatHistory.slice(-6, -1) }) // send last 5 messages for context
+    });
+    const data = await res.json();
+    hideTinaTyping();
+    if (data.success && data.reply) {
+      addMessage(data.reply, 'tina');
+      tinaChatHistory.push({ sender: 'tina', text: data.reply });
+    } else {
+      // Fallback to local rule-based engine
+      const response = getTinaResponse(text);
+      addMessage(response, 'tina');
+      tinaChatHistory.push({ sender: 'tina', text: response });
+    }
+  } catch (err) {
+    console.warn('Chat API error, falling back to local database:', err);
     hideTinaTyping();
     const response = getTinaResponse(text);
     addMessage(response, 'tina');
-  }, 1200);
+    tinaChatHistory.push({ sender: 'tina', text: response });
+  }
 };
 
-window.handleTinaSubmit = function(e) {
+window.handleTinaSubmit = async function(e) {
   e.preventDefault();
   const input = document.getElementById('tina-input');
   const text = input.value.trim();
   if (!text) return;
 
   addMessage(text, 'user');
+  tinaChatHistory.push({ sender: 'user', text });
   input.value = '';
 
   showTinaTyping();
-  setTimeout(() => {
+  try {
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: text, history: tinaChatHistory.slice(-6, -1) })
+    });
+    const data = await res.json();
+    hideTinaTyping();
+    if (data.success && data.reply) {
+      addMessage(data.reply, 'tina');
+      tinaChatHistory.push({ sender: 'tina', text: data.reply });
+    } else {
+      // Fallback
+      const response = getTinaResponse(text);
+      addMessage(response, 'tina');
+      tinaChatHistory.push({ sender: 'tina', text: response });
+    }
+  } catch (err) {
+    console.warn('Chat API error, falling back to local database:', err);
     hideTinaTyping();
     const response = getTinaResponse(text);
     addMessage(response, 'tina');
-  }, 1200);
+    tinaChatHistory.push({ sender: 'tina', text: response });
+  }
 };
 
 function addMessage(text, sender) {
