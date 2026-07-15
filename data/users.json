@@ -1,1 +1,10 @@
-[]
+[
+  {
+    "firstName": "XD",
+    "lastName": "Albert",
+    "email": "giaphathoang95@gmail.com",
+    "phone": "Google Auth",
+    "password": "google-oauth-user",
+    "createdAt": "2026-07-15T08:56:22.528Z"
+  }
+]

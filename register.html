@@ -5,6 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>WILTravel - Đăng ký</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            jakarta: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            primary: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              300: '#86efac',
+              400: '#4ade80',
+              500: '#22c55e',
+              600: '#16a34a', // original green
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <style>
     .register-bg {
@@ -21,10 +49,10 @@
     }
   </style>
 </head>
-<body class="font-sans">
+<body class="font-jakarta bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-300">
 
   <div id="register-bg" class="register-bg flex items-center justify-center p-4 sm:p-6">
-    <div class="max-w-md w-full bg-white rounded-3xl shadow-2xl overflow-hidden relative">
+    <div class="max-w-md w-full bg-white dark:bg-slate-800 rounded-3xl shadow-2xl overflow-hidden relative">
 
       <!-- Nút Quay lại -->
       <a href="index.html" 
@@ -34,43 +62,51 @@
       </a>
 
       <div class="p-8 text-center border-b pt-16">
-        <img src="images/logo.png" alt="WILTravel" class="h-12 mx-auto mb-4">
-        <h1 class="text-2xl font-bold text-gray-800">Tạo tài khoản mới</h1>
-        <p class="text-gray-500 mt-1">Tham gia cùng WILTravel ngay hôm nay</p>
+        <img src="images/logo-transparent.png" alt="WILTravel" class="h-12 mx-auto mb-4 dark:hidden">
+        <img src="images/logo-footer.png" alt="WILTravel" class="h-12 mx-auto mb-4 hidden dark:block">
+        <h1 class="text-2xl font-bold text-gray-800 dark:text-slate-100">Tạo tài khoản mới</h1>
+        <p class="text-gray-500 dark:text-slate-400 mt-1">Tham gia cùng WILTravel ngay hôm nay</p>
       </div>
 
       <div class="p-8 space-y-6">
         <!-- Google Sign Up -->
         <div id="googleButton" class="flex justify-center"></div>
+        
+        <!-- Developer Tip for Google Auth -->
+        <div id="google-dev-tip" class="hidden mt-2 p-3 bg-blue-50 dark:bg-slate-805/40 rounded-xl border border-blue-150 dark:border-blue-900/30 text-xs text-blue-700 dark:text-blue-350">
+          <p class="font-semibold"><i class="fa-solid fa-circle-info mr-1"></i> Chế độ chạy thử nghiệm (Local File)</p>
+          <p class="mt-1">Để dùng đăng ký Google thật, hãy khởi động server bằng lệnh <code>node server.js</code> và truy cập qua <code>http://localhost:3000/register.html</code>.</p>
+        </div>
+
 
         <div class="relative">
           <div class="absolute inset-0 flex items-center">
             <div class="w-full border-t border-gray-300"></div>
           </div>
           <div class="relative flex justify-center text-sm">
-            <span class="px-4 bg-white text-gray-500">Hoặc đăng ký bằng email</span>
+            <span class="px-4 bg-white text-gray-500 dark:text-slate-400">Hoặc đăng ký bằng email</span>
           </div>
         </div>
 
         <form id="registerForm" onsubmit="handleRegister(event)">
           <div class="grid grid-cols-2 gap-4">
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">Họ</label>
+              <label class="block text-sm font-medium text-gray-700 dark:text-slate-200 mb-2">Họ</label>
               <input type="text" id="first-name" class="w-full px-5 py-4 border border-gray-300 rounded-2xl focus:outline-none focus:border-green-500" required>
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">Tên</label>
+              <label class="block text-sm font-medium text-gray-700 dark:text-slate-200 mb-2">Tên</label>
               <input type="text" id="last-name" class="w-full px-5 py-4 border border-gray-300 rounded-2xl focus:outline-none focus:border-green-500" required>
             </div>
           </div>
 
           <div class="mt-5">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+            <label class="block text-sm font-medium text-gray-700 dark:text-slate-200 mb-2">Email</label>
             <input type="email" id="register-email" class="w-full px-5 py-4 border border-gray-300 rounded-2xl focus:outline-none focus:border-green-500" placeholder="Nhập email của bạn" required>
           </div>
 
           <div class="mt-5">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Số điện thoại</label>
+            <label class="block text-sm font-medium text-gray-700 dark:text-slate-200 mb-2">Số điện thoại</label>
             <div class="flex gap-3">
               <select id="country-code" class="w-32 px-4 py-4 border border-gray-300 rounded-2xl focus:outline-none focus:border-green-500">
                 <option value="+84">+84 (Việt Nam)</option>
@@ -85,24 +121,24 @@
           </div>
 
           <div class="mt-5 relative">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Mật khẩu</label>
+            <label class="block text-sm font-medium text-gray-700 dark:text-slate-200 mb-2">Mật khẩu</label>
             <input type="password" id="password" oninput="checkPasswordStrength()" class="w-full px-5 py-4 border border-gray-300 rounded-2xl focus:outline-none focus:border-green-500 pr-12" placeholder="Nhập mật khẩu" required>
-            <button type="button" onclick="togglePassword()" class="absolute right-5 top-11 text-gray-400 hover:text-gray-600">
+            <button type="button" onclick="togglePassword()" class="absolute right-5 top-11 text-gray-400 hover:text-gray-600 dark:text-slate-300">
               <i id="eye-icon" class="fa-solid fa-eye"></i>
             </button>
-            <p id="password-strength" class="text-sm text-gray-500 mt-2">Mật khẩu nên gồm ít nhất 8 ký tự, chữ hoa và số.</p>
+            <p id="password-strength" class="text-sm text-gray-500 dark:text-slate-400 mt-2">Mật khẩu nên gồm ít nhất 8 ký tự, chữ hoa và số.</p>
           </div>
 
-          <button type="submit" class="w-full mt-8 bg-green-600 hover:bg-green-700 text-white font-semibold py-4 rounded-2xl text-lg">
+          <button type="submit" class="w-full mt-8 bg-primary-600 dark:bg-primary-700 hover:bg-primary-700 dark:hover:bg-primary-600 text-white font-semibold py-4 rounded-2xl text-lg">
             Đăng ký
           </button>
         </form>
       </div>
 
-      <div class="p-6 bg-gray-50 text-center border-t">
-        <p class="text-gray-600">
+      <div class="p-6 bg-gray-50 dark:bg-slate-800/50 text-center border-t">
+        <p class="text-gray-600 dark:text-slate-300">
           Đã có tài khoản? 
-          <a href="login.html" class="text-green-600 font-semibold hover:underline">Đăng nhập</a>
+          <a href="login.html" class="text-primary-600 dark:text-primary-400 font-semibold hover:underline">Đăng nhập</a>
         </p>
       </div>
     </div>
@@ -110,65 +146,65 @@
 
   <!-- Google Account Chooser Modal (Custom Simulated OAuth) -->
   <div id="googleModal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-[60] p-4">
-    <div class="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl border border-gray-100 flex flex-col">
+    <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-md w-full overflow-hidden shadow-2xl border border-gray-100 flex flex-col">
       <!-- Modal Header -->
       <div class="p-6 text-center border-b relative">
-        <button onclick="closeGoogleModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl font-bold">×</button>
+        <button onclick="closeGoogleModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:text-slate-300 text-2xl font-bold">×</button>
         <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" class="w-10 h-10 mx-auto mb-2">
-        <h2 class="text-xl font-bold text-gray-800">Đăng ký bằng Google</h2>
-        <p class="text-xs text-gray-500 mt-1">để tiếp tục đến <span class="font-semibold text-green-600">WILTravel</span></p>
+        <h2 class="text-xl font-bold text-gray-800 dark:text-slate-100">Đăng ký bằng Google</h2>
+        <p class="text-xs text-gray-500 dark:text-slate-400 mt-1">để tiếp tục đến <span class="font-semibold text-primary-600 dark:text-primary-400">WILTravel</span></p>
       </div>
       
       <!-- Account Options -->
       <div class="p-6 space-y-3">
         <!-- Account 1 -->
-        <button onclick="selectGoogleAccount('Nguyễn', 'Văn A', 'nguyen@gmail.com')" class="w-full flex items-center gap-3 p-3 rounded-2xl hover:bg-gray-50 border border-gray-200 transition text-left">
-          <div class="w-10 h-10 rounded-full bg-green-600 text-white flex items-center justify-center font-bold text-lg">A</div>
+        <button onclick="selectGoogleAccount('Nguyễn', 'Văn A', 'nguyen@gmail.com')" class="w-full flex items-center gap-3 p-3 rounded-2xl hover:bg-gray-50 dark:bg-slate-800/50 border border-gray-200 transition text-left">
+          <div class="w-10 h-10 rounded-full bg-primary-600 dark:bg-primary-700 text-white flex items-center justify-center font-bold text-lg">A</div>
           <div class="flex-1">
-            <p class="font-bold text-sm text-gray-800">Nguyễn Văn A</p>
-            <p class="text-xs text-gray-500">nguyen@gmail.com</p>
+            <p class="font-bold text-sm text-gray-800 dark:text-slate-100">Nguyễn Văn A</p>
+            <p class="text-xs text-gray-500 dark:text-slate-400">nguyen@gmail.com</p>
           </div>
-          <span class="text-xs text-green-600 font-semibold bg-green-50 px-2 py-1 rounded-full">Lưu tài khoản</span>
+          <span class="text-xs text-primary-600 dark:text-primary-400 font-semibold bg-green-50 px-2 py-1 rounded-full">Lưu tài khoản</span>
         </button>
 
         <!-- Account 2 -->
-        <button onclick="selectGoogleAccount('Trần', 'Thị B', 'tranb@gmail.com')" class="w-full flex items-center gap-3 p-3 rounded-2xl hover:bg-gray-50 border border-gray-200 transition text-left">
+        <button onclick="selectGoogleAccount('Trần', 'Thị B', 'tranb@gmail.com')" class="w-full flex items-center gap-3 p-3 rounded-2xl hover:bg-gray-50 dark:bg-slate-800/50 border border-gray-200 transition text-left">
           <div class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-lg">B</div>
           <div class="flex-1">
-            <p class="font-bold text-sm text-gray-800">Trần Thị B</p>
-            <p class="text-xs text-gray-500">tranb@gmail.com</p>
+            <p class="font-bold text-sm text-gray-800 dark:text-slate-100">Trần Thị B</p>
+            <p class="text-xs text-gray-500 dark:text-slate-400">tranb@gmail.com</p>
           </div>
         </button>
 
         <!-- Use another account input toggler -->
-        <button onclick="toggleCustomGoogleAccount()" class="w-full flex items-center gap-3 p-3 rounded-2xl hover:bg-gray-50 border border-gray-200 transition text-left">
-          <div class="w-10 h-10 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center text-lg"><i class="fa-solid fa-user-plus"></i></div>
+        <button onclick="toggleCustomGoogleAccount()" class="w-full flex items-center gap-3 p-3 rounded-2xl hover:bg-gray-50 dark:bg-slate-800/50 border border-gray-200 transition text-left">
+          <div class="w-10 h-10 rounded-full bg-gray-100 dark:bg-slate-800 text-gray-500 dark:text-slate-400 flex items-center justify-center text-lg"><i class="fa-solid fa-user-plus"></i></div>
           <div class="flex-grow">
-            <p class="font-bold text-sm text-gray-800">Sử dụng tài khoản khác</p>
+            <p class="font-bold text-sm text-gray-800 dark:text-slate-100">Sử dụng tài khoản khác</p>
             <p class="text-xs text-gray-400">Đăng ký bằng email Google bất kỳ</p>
           </div>
         </button>
 
         <!-- Custom Account Fields -->
-        <div id="custom-google-fields" class="hidden bg-gray-50 p-4 rounded-2xl border border-gray-200 space-y-3">
+        <div id="custom-google-fields" class="hidden bg-gray-50 dark:bg-slate-800/50 p-4 rounded-2xl border border-gray-200 space-y-3">
           <div>
-            <label class="block text-xs text-gray-600 mb-1">Họ và Tên đệm</label>
+            <label class="block text-xs text-gray-600 dark:text-slate-300 mb-1">Họ và Tên đệm</label>
             <input type="text" id="g-lastname" placeholder="Ví dụ: Nguyễn" class="w-full px-4 py-2 text-sm border border-gray-300 rounded-xl focus:outline-none focus:border-green-500">
           </div>
           <div>
-            <label class="block text-xs text-gray-600 mb-1">Tên</label>
+            <label class="block text-xs text-gray-600 dark:text-slate-300 mb-1">Tên</label>
             <input type="text" id="g-firstname" placeholder="Ví dụ: Minh" class="w-full px-4 py-2 text-sm border border-gray-300 rounded-xl focus:outline-none focus:border-green-500">
           </div>
           <div>
-            <label class="block text-xs text-gray-600 mb-1">Địa chỉ Email</label>
+            <label class="block text-xs text-gray-600 dark:text-slate-300 mb-1">Địa chỉ Email</label>
             <input type="email" id="g-email" placeholder="example@gmail.com" class="w-full px-4 py-2 text-sm border border-gray-300 rounded-xl focus:outline-none focus:border-green-500">
           </div>
-          <button onclick="submitCustomGoogleAccount()" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-xl text-sm transition">Tiếp tục</button>
+          <button onclick="submitCustomGoogleAccount()" class="w-full bg-primary-600 dark:bg-primary-700 hover:bg-primary-700 dark:hover:bg-primary-600 text-white font-semibold py-2 rounded-xl text-sm transition">Tiếp tục</button>
         </div>
       </div>
       
       <!-- Footer terms -->
-      <div class="p-6 bg-gray-50 text-center text-[10px] text-gray-400 border-t">
+      <div class="p-6 bg-gray-50 dark:bg-slate-800/50 text-center text-[10px] text-gray-400 border-t">
         Để tiếp tục, Google sẽ chia sẻ tên, địa chỉ email, tùy chọn ngôn ngữ và ảnh hồ sơ của bạn với WILTravel.
       </div>
     </div>
@@ -246,16 +282,18 @@
       if (!container) return;
 
       if (window.location.protocol === 'file:') {
+        const devTip = document.getElementById('google-dev-tip');
+        if (devTip) devTip.classList.remove('hidden');
         // Render custom simulated button
         container.innerHTML = `
-          <button onclick="openGooglePopup()" type="button" class="w-full border border-gray-300 rounded-full py-3.5 flex items-center justify-center gap-3 hover:bg-gray-50 transition shadow-sm bg-white">
+          <button onclick="openGooglePopup()" type="button" class="w-full border border-gray-300 rounded-full py-3.5 flex items-center justify-center gap-3 hover:bg-gray-50 dark:bg-slate-800/50 transition shadow-sm bg-white">
             <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24">
               <path fill="#ea4335" d="M12 5.04c1.67 0 3.17.57 4.35 1.7l3.25-3.25C17.63 1.57 14.97 1 12 1 7.24 1 3.2 3.73 1.25 7.72l3.96 3.07C6.15 7.7 8.84 5.04 12 5.04z"/>
               <path fill="#4285f4" d="M23.49 12.27c0-.81-.07-1.6-.2-2.3H12v4.51h6.46c-.29 1.48-1.12 2.73-2.38 3.58l3.7 2.87c2.16-2 3.71-4.94 3.71-8.66z"/>
               <path fill="#fbbc05" d="M5.21 10.79c-.24-.72-.38-1.5-.38-2.3s.14-1.58.38-2.3L1.25 3.12C.45 4.74 0 6.56 0 8.5s.45 3.76 1.25 5.38l3.96-3.09z"/>
               <path fill="#34a853" d="M12 23c3.24 0 5.97-1.07 7.96-2.92l-3.7-2.87c-1.03.69-2.35 1.1-3.96 1.1-3.16 0-5.85-2.66-6.79-5.75l-3.96 3.07C3.2 20.27 7.24 23 12 23z"/>
             </svg>
-            <span class="font-semibold text-gray-700 text-sm">Đăng ký bằng Google</span>
+            <span class="font-semibold text-gray-700 dark:text-slate-200 text-sm">Đăng ký bằng Google</span>
           </button>`;
       } else {
         // Load official Google identity services library
@@ -276,7 +314,7 @@
     function setupRealGoogleGSI() {
       if (typeof google === 'undefined') return;
       google.accounts.id.initialize({
-        client_id: '1064295328905-2b4h8sk437j2kpgt4u9vfeepu59s96j2.apps.googleusercontent.com',
+        client_id: '1038953243276-5c2dil5umbcse4jnmb5443mh12bea6gu.apps.googleusercontent.com',
         callback: handleRealGoogleCredential
       });
       google.accounts.id.renderButton(
@@ -306,15 +344,15 @@
         const lastName = payload.family_name || '';
         const firstName = payload.given_name || '';
         const email = payload.email;
-        await selectGoogleAccount(lastName, firstName, email);
+        await selectGoogleAccount(lastName, firstName, email, response.credential);
       } else {
         alert("Có lỗi xảy ra khi nhận diện Google.");
       }
     }
 
     // Google Sign-In Actions
-    async function selectGoogleAccount(lastName, firstName, email) {
-      const res = await googleLogin(lastName, firstName, email);
+    async function selectGoogleAccount(lastName, firstName, email, credential = null) {
+      const res = await googleLogin(lastName, firstName, email, credential);
       if (res.success) {
         showRegisterSuccess();
       } else {
@@ -345,10 +383,10 @@
     function showRegisterSuccess() {
       const html = `
         <div class="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
-          <div class="bg-white rounded-3xl p-10 text-center max-w-sm mx-4 shadow-2xl">
+          <div class="bg-white dark:bg-slate-800 rounded-3xl p-10 text-center max-w-sm mx-4 shadow-2xl">
             <i class="fa-solid fa-circle-check text-green-500 text-6xl mb-4"></i>
-            <h2 class="text-2xl font-bold text-gray-800">Đăng ký & Đăng nhập thành công!</h2>
-            <p class="text-gray-600 mt-2">Đang chuyển hướng về trang chủ...</p>
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-slate-100">Đăng ký & Đăng nhập thành công!</h2>
+            <p class="text-gray-600 dark:text-slate-300 mt-2">Đang chuyển hướng về trang chủ...</p>
           </div>
         </div>`;
       document.body.insertAdjacentHTML('beforeend', html);
@@ -380,7 +418,7 @@
       const desc = document.getElementById('password-strength');
       if (!pass) {
         desc.textContent = "Mật khẩu nên gồm ít nhất 8 ký tự, chữ hoa và số.";
-        desc.className = "text-sm text-gray-500 mt-2";
+        desc.className = "text-sm text-gray-500 dark:text-slate-400 mt-2";
         return;
       }
       if (pass.length < 6) {
@@ -391,7 +429,7 @@
         desc.className = "text-sm text-yellow-600 mt-2 font-medium";
       } else {
         desc.textContent = "✅ Mật khẩu mạnh và an toàn.";
-        desc.className = "text-sm text-green-600 mt-2 font-medium";
+        desc.className = "text-sm text-primary-600 dark:text-primary-400 mt-2 font-medium";
       }
     }
 
@@ -432,6 +470,14 @@
         alert('✗ Đăng ký thất bại: ' + res.message);
       }
     }
+  </script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof AOS !== 'undefined') {
+        AOS.init({ duration: 800, once: true });
+      }
+    });
   </script>
 </body>
 </html>

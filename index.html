@@ -10,19 +10,68 @@
 
   <title>WILTravel - Chỉ cần & đi chuyến nghỉ ngơi</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            jakarta: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            primary: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              300: '#86efac',
+              400: '#4ade80',
+              500: '#22c55e',
+              600: '#16a34a', // original green
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <style>
-    .hero-bg {
+    .hero-bg-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       background-size: cover;
       background-position: center;
-      transition: background-image 1.2s ease-in-out;
+      transition: opacity 1.8s ease-in-out, transform 8s ease-out;
+      transform: scale(1.08);
+      opacity: 0;
+      z-index: 0;
+    }
+    .hero-bg-layer.active {
+      opacity: 1;
+      transform: scale(1);
     }
     .card-hover {
-      transition: all 0.4s ease;
+      transition: transform 0.4s ease, box-shadow 0.4s ease !important;
+      opacity: 1 !important;
     }
     .card-hover:hover {
-      transform: translateY(-12px);
-      box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+      transform: translateY(-12px) !important;
+      box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25) !important;
+    }
+    /* Prevent AOS from hiding home page card-hover components */
+    [data-aos].card-hover {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+    [data-aos].card-hover:hover {
+      transform: translateY(-12px) !important;
     }
     html {
       scroll-behavior: smooth;
@@ -102,10 +151,7 @@
 
     /* Mobile Optimization */
     @media (max-width: 768px) {
-      .hero-bg {
-        height: 100vh;
-        min-height: 640px;
-      }
+
       h2 {
         font-size: 2.25rem !important;
         line-height: 1.1 !important;
@@ -121,59 +167,62 @@
       .carousel-indicator.active { width: 28px; }
     }
   </style>
-  </style>
 </head>
-<body class="font-sans">
+<body class="font-jakarta bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-300">
 
   <!-- Navbar -->
-  <nav class="bg-white shadow-md fixed w-full z-50">
+  <nav class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-md fixed w-full z-50 border-b border-gray-100 dark:border-white/10 transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-      <div class="flex items-center gap-3">
-        <img src="images/logo.png" alt="WILTravel" class="h-9 sm:h-11 w-auto">
-      </div>
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="images/logo-transparent.png?v=1.0.1" alt="WILTravel" class="h-9 sm:h-11 w-auto dark:hidden">
+        <img src="images/logo-footer.png" alt="WILTravel" class="h-9 sm:h-11 w-auto hidden dark:block">
+      </a>
       
       <!-- Desktop Menu -->
-      <div class="hidden md:flex items-center gap-8 text-gray-700 font-medium">
-        <a href="index.html" class="hover:text-green-600 transition">Trang chủ</a>
-        <a href="tours.html" class="hover:text-green-600 transition">Tours</a>
-        <a href="flight.html" class="hover:text-green-600 transition">Máy Bay</a>
-        <a href="blog.html" class="hover:text-green-600 transition">Blog</a>
-        <a href="contact.html" class="hover:text-green-600 transition">Liên Hệ</a>
-        <a href="about.html" class="hover:text-green-600 transition">Về Chúng Tôi</a>
+      <div class="hidden md:flex items-center gap-8 text-gray-700 dark:text-slate-200 font-medium">
+        <a href="index.html" class="hover:text-primary-600 dark:text-primary-400 transition">Trang chủ</a>
+        <a href="tours.html" class="hover:text-primary-600 dark:text-primary-400 transition">Tours</a>
+        <a href="flight.html" class="hover:text-primary-600 dark:text-primary-400 transition">Máy Bay</a>
+        <a href="blog.html" class="hover:text-primary-600 dark:text-primary-400 transition">Blog</a>
+        <a href="contact.html" class="hover:text-primary-600 dark:text-primary-400 transition">Liên Hệ</a>
+        <a href="about.html" class="hover:text-primary-600 dark:text-primary-400 transition">Về Chúng Tôi</a>
       </div>
 
       <div class="flex items-center gap-3">
-        <a href="cart.html" class="text-gray-700 hover:text-green-600 transition text-lg"><i class="fa-solid fa-shopping-cart"></i></a>
-        <a href="profile.html" class="text-gray-700 hover:text-green-600 transition text-lg"><i class="fa-solid fa-user"></i></a>
-        <a href="login.html" class="hidden md:inline-block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-full transition text-sm sm:text-base">Đăng nhập</a>
-        <a href="register.html" class="hidden md:inline-block bg-green-600 text-white px-5 py-2 rounded-full hover:bg-green-700 transition text-sm sm:text-base font-medium">Đăng ký</a>
+        <a href="cart.html" class="text-gray-700 dark:text-slate-200 hover:text-primary-600 dark:text-primary-400 transition text-lg"><i class="fa-solid fa-shopping-cart"></i></a>
+        <a href="profile.html" class="text-gray-700 dark:text-slate-200 hover:text-primary-600 dark:text-primary-400 transition text-lg"><i class="fa-solid fa-user"></i></a>
+        <a href="login.html" class="hidden md:inline-block px-4 py-2 text-gray-700 dark:text-slate-200 hover:bg-gray-100 dark:bg-slate-800 rounded-full transition text-sm sm:text-base">Đăng nhập</a>
+        <a href="register.html" class="hidden md:inline-block bg-primary-600 dark:bg-primary-700 text-white px-5 py-2 rounded-full hover:bg-primary-700 dark:hover:bg-primary-600 transition text-sm sm:text-base font-medium">Đăng ký</a>
       </div>
 
       <!-- Mobile Menu Button -->
-      <button id="mobile-menu-button" class="md:hidden text-3xl text-gray-700">
+      <button id="mobile-menu-button" class="md:hidden text-3xl text-gray-700 dark:text-slate-200">
         <i class="fa-solid fa-bars"></i>
       </button>
     </div>
     <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
-      <div class="px-6 py-6 flex flex-col gap-5 text-gray-700 font-medium">
-        <a href="index.html" class="hover:text-green-600 transition">Trang chủ</a>
-        <a href="tours.html" class="hover:text-green-600 transition">Tours</a>
-        <a href="flight.html" class="hover:text-green-600 transition">Máy Bay</a>
-        <a href="blog.html" class="hover:text-green-600 transition">Blog</a>
-        <a href="contact.html" class="hover:text-green-600 transition">Liên Hệ</a>
-        <a href="about.html" class="hover:text-green-600 transition">Về Chúng Tôi</a>
+      <div class="px-6 py-6 flex flex-col gap-5 text-gray-700 dark:text-slate-200 font-medium">
+        <a href="index.html" class="hover:text-primary-600 dark:text-primary-400 transition">Trang chủ</a>
+        <a href="tours.html" class="hover:text-primary-600 dark:text-primary-400 transition">Tours</a>
+        <a href="flight.html" class="hover:text-primary-600 dark:text-primary-400 transition">Máy Bay</a>
+        <a href="blog.html" class="hover:text-primary-600 dark:text-primary-400 transition">Blog</a>
+        <a href="contact.html" class="hover:text-primary-600 dark:text-primary-400 transition">Liên Hệ</a>
+        <a href="about.html" class="hover:text-primary-600 dark:text-primary-400 transition">Về Chúng Tôi</a>
         <hr>
-        <a href="cart.html" class="hover:text-green-600 transition"><i class="fa-solid fa-shopping-cart mr-2"></i>Giỏ Hàng</a>
-        <a href="profile.html" class="hover:text-green-600 transition"><i class="fa-solid fa-user mr-2"></i>Tài Khoản</a>
-        <a href="login.html" class="hover:text-green-600 transition md:hidden"><i class="fa-solid fa-sign-in-alt mr-2"></i>Đăng nhập</a>
-        <a href="register.html" class="hover:text-green-600 transition md:hidden"><i class="fa-solid fa-user-plus mr-2"></i>Đăng ký</a>
+        <a href="cart.html" class="hover:text-primary-600 dark:text-primary-400 transition"><i class="fa-solid fa-shopping-cart mr-2"></i>Giỏ Hàng</a>
+        <a href="profile.html" class="hover:text-primary-600 dark:text-primary-400 transition"><i class="fa-solid fa-user mr-2"></i>Tài Khoản</a>
+        <a href="login.html" class="hover:text-primary-600 dark:text-primary-400 transition md:hidden"><i class="fa-solid fa-sign-in-alt mr-2"></i>Đăng nhập</a>
+        <a href="register.html" class="hover:text-primary-600 dark:text-primary-400 transition md:hidden"><i class="fa-solid fa-user-plus mr-2"></i>Đăng ký</a>
       </div>
     </div>
   </nav>
 
   <!-- Hero Carousel -->
-  <section id="hero" class="hero-bg h-screen flex items-center text-white pt-16 md:pt-20 relative">
-    <div class="absolute inset-0 bg-gradient-to-r from-black/65 via-black/45 to-transparent"></div>
+  <section id="hero" class="h-screen min-h-[640px] flex items-center text-white pt-16 md:pt-20 relative overflow-hidden" style="height: 100vh; min-height: 640px;">
+    <!-- Background Layers for Cross-fade transition -->
+    <div id="hero-bg-1" class="hero-bg-layer active" style="background-image: url('images/hero1.jpg');"></div>
+    <div id="hero-bg-2" class="hero-bg-layer"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-black/65 via-black/45 to-transparent z-10"></div>
     
     <!-- Slide Caption Badge (top right) -->
     <div class="absolute top-24 right-6 z-20 text-right hidden md:block">
@@ -183,29 +232,29 @@
       </div>
     </div>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-20">
       <div class="max-w-2xl">
         <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight mb-6">
-          Chỉ cần &amp; <span class="text-green-400">đi chuyến nghỉ ngơi</span>
+          Chỉ cần &amp; <span class="text-primary-400 dark:text-primary-300">đi chuyến nghỉ ngơi</span>
         </h2>
         <p class="text-lg md:text-xl mb-8 text-gray-200">
           WILTravel mang đến những hành trình tuyệt vời nhất. Khám phá thế giới theo cách riêng của bạn.
         </p>
 
-        <div class="bg-white rounded-3xl p-2 shadow-2xl search-container">
+        <div class="bg-white dark:bg-slate-800 rounded-3xl p-2 shadow-2xl search-container">
           <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
             <div class="md:col-span-2">
-              <label class="block text-xs text-gray-500 ml-4 mt-2">Bạn muốn đi đâu?</label>
+              <label class="block text-xs text-gray-500 dark:text-slate-400 ml-4 mt-2">Bạn muốn đi đâu?</label>
               <input type="text" id="search-input" placeholder="Phú Quốc, Đà Lạt, Bali, Nhật Bản..." 
-                     class="w-full px-6 py-4 bg-transparent focus:outline-none text-gray-800 text-base md:text-lg">
+                     class="w-full px-6 py-4 bg-transparent focus:outline-none text-gray-800 dark:text-slate-100 text-base md:text-lg">
             </div>
             <div class="hidden md:block">
-              <label class="block text-xs text-gray-500 ml-4 mt-2">Ngày đi</label>
-              <input type="date" id="search-date" class="w-full px-6 py-4 bg-transparent focus:outline-none text-gray-800">
+              <label class="block text-xs text-gray-500 dark:text-slate-400 ml-4 mt-2">Ngày đi</label>
+              <input type="date" id="search-date" class="w-full px-6 py-4 bg-transparent focus:outline-none text-gray-800 dark:text-slate-100">
             </div>
             <div class="flex items-end">
               <button onclick="searchTour()" 
-                      class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-4 rounded-2xl transition text-base md:text-lg">
+                      class="w-full bg-primary-600 dark:bg-primary-700 hover:bg-primary-700 dark:hover:bg-primary-600 text-white font-semibold py-4 rounded-2xl transition text-base md:text-lg">
                 Tìm chuyến đi
               </button>
             </div>
@@ -218,10 +267,10 @@
       <div class="max-w-7xl mx-auto px-6">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
           <div>
-            <h3 class="text-2xl font-bold text-gray-800">Kết quả tìm kiếm</h3>
-            <p class="text-gray-500 mt-1" id="search-summary"></p>
+            <h3 class="text-2xl font-bold text-gray-800 dark:text-slate-100">Kết quả tìm kiếm</h3>
+            <p class="text-gray-500 dark:text-slate-400 mt-1" id="search-summary"></p>
           </div>
-          <button onclick="resetSearchResults()" class="text-sm text-gray-600 hover:text-green-600 underline">Xóa kết quả</button>
+          <button onclick="resetSearchResults()" class="text-sm text-gray-600 dark:text-slate-300 hover:text-primary-600 dark:text-primary-400 underline">Xóa kết quả</button>
         </div>
         <div id="search-results-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
       </div>
@@ -241,33 +290,33 @@
   <section class="py-12 bg-white border-b">
     <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
       <div>
-        <div class="text-4xl font-bold text-green-600 stat-number" data-target="12500">0</div>
-        <p class="text-gray-600 mt-2">Khách hàng hài lòng</p>
+        <div class="text-4xl font-bold text-primary-600 dark:text-primary-400 stat-number" data-target="12500">0</div>
+        <p class="text-gray-600 dark:text-slate-300 mt-2">Khách hàng hài lòng</p>
       </div>
       <div>
-        <div class="text-4xl font-bold text-green-600 stat-number" data-target="248">0</div>
-        <p class="text-gray-600 mt-2">Điểm đến</p>
+        <div class="text-4xl font-bold text-primary-600 dark:text-primary-400 stat-number" data-target="248">0</div>
+        <p class="text-gray-600 dark:text-slate-300 mt-2">Điểm đến</p>
       </div>
       <div>
-        <div class="text-4xl font-bold text-green-600 stat-number" data-target="856">0</div>
-        <p class="text-gray-600 mt-2">Tour đã tổ chức</p>
+        <div class="text-4xl font-bold text-primary-600 dark:text-primary-400 stat-number" data-target="856">0</div>
+        <p class="text-gray-600 dark:text-slate-300 mt-2">Tour đã tổ chức</p>
       </div>
       <div>
-        <div class="text-4xl font-bold text-green-600 stat-number" data-target="98">0</div>
-        <p class="text-gray-600 mt-2">% Khách hài lòng</p>
+        <div class="text-4xl font-bold text-primary-600 dark:text-primary-400 stat-number" data-target="98">0</div>
+        <p class="text-gray-600 dark:text-slate-300 mt-2">% Khách hài lòng</p>
       </div>
     </div>
   </section>
 
   <!-- Popular Destinations -->
-  <section id="destinations" class="py-16 md:py-20 bg-gray-50">
+  <section id="destinations" class="py-16 md:py-20 bg-gray-50 dark:bg-slate-800/50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 md:mb-12 gap-4">
         <div>
-          <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Điểm đến nổi bật</h2>
-          <p class="text-gray-600 mt-2">Những chuyến đi được yêu thích nhất</p>
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-slate-100">Điểm đến nổi bật</h2>
+          <p class="text-gray-600 dark:text-slate-300 mt-2">Những chuyến đi được yêu thích nhất</p>
         </div>
-        <a href="#destinations" class="text-green-600 hover:underline font-medium flex items-center gap-2 whitespace-nowrap">
+        <a href="#destinations" class="text-primary-600 dark:text-primary-400 hover:underline font-medium flex items-center gap-2 whitespace-nowrap">
           Xem tất cả <i class="fa-solid fa-arrow-right"></i>
         </a>
       </div>
@@ -276,7 +325,91 @@
     </div>
   </section>
 
-  <!-- Tour Tiêu Biểu -->
+  <!-- Interactive Tour Quiz Section -->
+  <section class="py-16 bg-gray-50 dark:bg-slate-900 border-t border-b border-gray-100 dark:border-white/10">
+    <div class="max-w-4xl mx-auto px-6 text-center animate-fade-in">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-800 dark:text-slate-100">Tìm Hành Trình Hoàn Hảo Của Bạn 🗺️</h2>
+      <p class="text-gray-600 dark:text-slate-350 mb-10 max-w-lg mx-auto">Chỉ với 3 câu hỏi nhanh, trợ lý ảo Tina sẽ đề xuất cho bạn tour du lịch lý tưởng nhất kèm mã giảm giá đặc quyền!</p>
+      
+      <div class="bg-white dark:bg-slate-800 rounded-3xl p-8 md:p-12 shadow-xl border border-gray-100 dark:border-white/5 relative min-h-[350px] flex flex-col justify-center items-center overflow-hidden">
+        
+        <!-- Step 1: Style -->
+        <div id="quiz-step-1" class="quiz-step w-full flex flex-col items-center transition-all duration-300">
+          <span class="text-xs font-semibold text-primary-600 dark:text-primary-400 bg-green-50 dark:bg-green-900/30 px-3 py-1 rounded-full mb-3">Bước 1 / 3</span>
+          <h3 class="text-xl md:text-2xl font-bold mb-6 text-gray-800 dark:text-slate-100">Bạn thích trải nghiệm phong cách nào nhất?</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-2xl">
+            <button onclick="selectQuizAnswer('style', 'Biển')" class="p-6 border-2 border-gray-150 dark:border-white/10 rounded-2xl hover:border-primary-600 dark:hover:border-primary-400 hover:bg-green-50/20 text-center font-bold text-gray-800 dark:text-slate-200 transition">
+              <span class="text-3xl block mb-2">🏖️</span> Biển đảo mát mẻ
+            </button>
+            <button onclick="selectQuizAnswer('style', 'Núi')" class="p-6 border-2 border-gray-150 dark:border-white/10 rounded-2xl hover:border-primary-600 dark:hover:border-primary-400 hover:bg-green-50/20 text-center font-bold text-gray-800 dark:text-slate-200 transition">
+              <span class="text-3xl block mb-2">🏔️</span> Núi cao kỳ vĩ
+            </button>
+            <button onclick="selectQuizAnswer('style', 'Thành phố')" class="p-6 border-2 border-gray-150 dark:border-white/10 rounded-2xl hover:border-primary-600 dark:hover:border-primary-400 hover:bg-green-50/20 text-center font-bold text-gray-800 dark:text-slate-200 transition">
+              <span class="text-3xl block mb-2">🏙️</span> Văn hóa & Thành phố
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 2: Budget -->
+        <div id="quiz-step-2" class="quiz-step hidden w-full flex flex-col items-center transition-all duration-300">
+          <span class="text-xs font-semibold text-primary-600 dark:text-primary-400 bg-green-50 dark:bg-green-900/30 px-3 py-1 rounded-full mb-3">Bước 2 / 3</span>
+          <h3 class="text-xl md:text-2xl font-bold mb-6 text-gray-800 dark:text-slate-100">Ngân sách dự kiến của bạn cho mỗi người?</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-2xl">
+            <button onclick="selectQuizAnswer('budget', 'low')" class="p-6 border-2 border-gray-150 dark:border-white/10 rounded-2xl hover:border-primary-600 dark:hover:border-primary-400 hover:bg-green-50/20 text-center font-bold text-gray-800 dark:text-slate-200 transition">
+              <span class="text-3xl block mb-2">💵</span> Tiết kiệm (&lt; 4 triệu)
+            </button>
+            <button onclick="selectQuizAnswer('budget', 'mid')" class="p-6 border-2 border-gray-150 dark:border-white/10 rounded-2xl hover:border-primary-600 dark:hover:border-primary-400 hover:bg-green-50/20 text-center font-bold text-gray-800 dark:text-slate-200 transition">
+              <span class="text-3xl block mb-2">💳</span> Vừa vặn (4tr - 10tr)
+            </button>
+            <button onclick="selectQuizAnswer('budget', 'high')" class="p-6 border-2 border-gray-150 dark:border-white/10 rounded-2xl hover:border-primary-600 dark:hover:border-primary-400 hover:bg-green-50/20 text-center font-bold text-gray-800 dark:text-slate-200 transition">
+              <span class="text-3xl block mb-2">💎</span> Cao cấp (&gt; 10 triệu)
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 3: Companions -->
+        <div id="quiz-step-3" class="quiz-step hidden w-full flex flex-col items-center transition-all duration-300">
+          <span class="text-xs font-semibold text-primary-600 dark:text-primary-400 bg-green-50 dark:bg-green-900/30 px-3 py-1 rounded-full mb-3">Bước 3 / 3</span>
+          <h3 class="text-xl md:text-2xl font-bold mb-6 text-gray-800 dark:text-slate-100">Bạn sẽ đi cùng ai trong chuyến hành trình này?</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-2xl">
+            <button onclick="selectQuizAnswer('companion', 'solo')" class="p-6 border-2 border-gray-150 dark:border-white/10 rounded-2xl hover:border-primary-600 dark:hover:border-primary-400 hover:bg-green-50/20 text-center font-bold text-gray-800 dark:text-slate-200 transition">
+              <span class="text-3xl block mb-2">🎒</span> Một mình (Solo)
+            </button>
+            <button onclick="selectQuizAnswer('companion', 'couple')" class="p-6 border-2 border-gray-150 dark:border-white/10 rounded-2xl hover:border-primary-600 dark:hover:border-primary-400 hover:bg-green-50/20 text-center font-bold text-gray-800 dark:text-slate-200 transition">
+              <span class="text-3xl block mb-2">👩‍❤️‍👨</span> Cặp đôi / Bạn thân
+            </button>
+            <button onclick="selectQuizAnswer('companion', 'family')" class="p-6 border-2 border-gray-150 dark:border-white/10 rounded-2xl hover:border-primary-600 dark:hover:border-primary-400 hover:bg-green-50/20 text-center font-bold text-gray-800 dark:text-slate-200 transition">
+              <span class="text-3xl block mb-2">👨‍👩‍👧‍👦</span> Gia đình / Nhóm lớn
+            </button>
+          </div>
+        </div>
+
+        <!-- Result -->
+        <div id="quiz-result" class="quiz-step hidden w-full flex flex-col items-center transition-all duration-300">
+          <h3 class="text-2xl font-bold mb-6 text-gray-800 dark:text-slate-100">Hành trình hoàn hảo dành cho bạn! 🎉</h3>
+          
+          <div id="quiz-result-card" class="w-full max-w-md bg-slate-50 dark:bg-slate-700/30 rounded-3xl p-6 border border-gray-200 dark:border-white/10 text-left flex flex-col sm:flex-row gap-5 items-center mb-6">
+            <!-- Dynamic content injected here -->
+          </div>
+
+          <!-- Coupon area -->
+          <div class="bg-green-50 dark:bg-green-950/40 border border-green-200 dark:border-green-900 rounded-2xl px-6 py-4 flex flex-col sm:flex-row items-center gap-4 justify-between w-full max-w-md">
+            <div class="text-left w-full sm:w-auto">
+              <p class="text-xs text-green-700 dark:text-green-300 font-semibold uppercase tracking-wider">Mã giảm giá độc quyền</p>
+              <p class="text-xl font-black text-primary-600 dark:text-primary-400">WILPREMIUM10</p>
+            </div>
+            <button onclick="copyQuizCoupon(this)" class="bg-primary-600 hover:bg-primary-700 text-white font-bold py-2.5 px-4 rounded-xl transition text-sm flex items-center gap-2 w-full sm:w-auto justify-center">
+              <i class="fa-solid fa-copy"></i> Sao chép
+            </button>
+          </div>
+          
+          <button onclick="resetQuiz()" class="mt-6 text-sm text-gray-500 hover:text-primary-600 transition underline font-medium">Làm lại bài trắc nghiệm</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- Special Offers -->
   <section class="py-16 md:py-20 bg-white overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
@@ -320,14 +453,14 @@
     </div>
   </section>
 
-  <section id="featured-tours-section" class="py-16 md:py-20 bg-gray-50">
+  <section id="featured-tours-section" class="py-16 md:py-20 bg-gray-50 dark:bg-slate-800/50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 md:mb-12 gap-4">
         <div>
-          <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Tour Tiêu Biểu</h2>
-          <p class="text-gray-600 mt-2">Những tour chất lượng cao - Giá hợp lý nhất</p>
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-slate-100">Tour Tiêu Biểu</h2>
+          <p class="text-gray-600 dark:text-slate-300 mt-2">Những tour chất lượng cao - Giá hợp lý nhất</p>
         </div>
-        <a href="#featured-tours-section" class="text-green-600 hover:underline font-medium flex items-center gap-2 whitespace-nowrap">
+        <a href="#featured-tours-section" class="text-primary-600 dark:text-primary-400 hover:underline font-medium flex items-center gap-2 whitespace-nowrap">
           Xem tất cả tour <i class="fa-solid fa-arrow-right"></i>
         </a>
       </div>
@@ -337,29 +470,29 @@
   </section>
 
   <!-- Why Choose Us -->
-  <section class="py-16 md:py-20 bg-gray-50">
+  <section class="py-16 md:py-20 bg-gray-50 dark:bg-slate-800/50">
     <div class="max-w-7xl mx-auto px-6 text-center">
       <h2 class="text-3xl md:text-4xl font-bold mb-4">Tại sao chọn WILTravel?</h2>
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mt-12">
         <div class="bg-white p-8 rounded-3xl shadow-sm">
-          <i class="fa-solid fa-shield-alt text-5xl text-green-600 mb-4"></i>
+          <i class="fa-solid fa-shield-alt text-5xl text-primary-600 dark:text-primary-400 mb-4"></i>
           <h3 class="font-semibold text-xl mb-2">An toàn & Tin cậy</h3>
-          <p class="text-gray-600">Bảo hiểm du lịch toàn diện</p>
+          <p class="text-gray-600 dark:text-slate-300">Bảo hiểm du lịch toàn diện</p>
         </div>
         <div class="bg-white p-8 rounded-3xl shadow-sm">
-          <i class="fa-solid fa-headset text-5xl text-green-600 mb-4"></i>
+          <i class="fa-solid fa-headset text-5xl text-primary-600 dark:text-primary-400 mb-4"></i>
           <h3 class="font-semibold text-xl mb-2">Hỗ trợ 24/7</h3>
-          <p class="text-gray-600">Đội ngũ tư vấn chuyên nghiệp</p>
+          <p class="text-gray-600 dark:text-slate-300">Đội ngũ tư vấn chuyên nghiệp</p>
         </div>
         <div class="bg-white p-8 rounded-3xl shadow-sm">
-          <i class="fa-solid fa-medal text-5xl text-green-600 mb-4"></i>
+          <i class="fa-solid fa-medal text-5xl text-primary-600 dark:text-primary-400 mb-4"></i>
           <h3 class="font-semibold text-xl mb-2">Chất lượng cao</h3>
-          <p class="text-gray-600">Đối tác uy tín toàn cầu</p>
+          <p class="text-gray-600 dark:text-slate-300">Đối tác uy tín toàn cầu</p>
         </div>
         <div class="bg-white p-8 rounded-3xl shadow-sm">
-          <i class="fa-solid fa-dollar-sign text-5xl text-green-600 mb-4"></i>
+          <i class="fa-solid fa-dollar-sign text-5xl text-primary-600 dark:text-primary-400 mb-4"></i>
           <h3 class="font-semibold text-xl mb-2">Giá tốt nhất</h3>
-          <p class="text-gray-600">Cam kết giá cạnh tranh</p>
+          <p class="text-gray-600 dark:text-slate-300">Cam kết giá cạnh tranh</p>
         </div>
       </div>
     </div>
@@ -370,16 +503,16 @@
     <div class="max-w-7xl mx-auto px-6 text-center">
       <h2 class="text-3xl md:text-4xl font-bold mb-12">Khách hàng nói gì về chúng tôi</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="bg-gray-50 p-8 rounded-3xl">
-          <p class="italic text-gray-600">"Chuyến đi Phú Quốc quá tuyệt vời. Dịch vụ rất chu đáo!"</p>
+        <div class="bg-gray-50 dark:bg-slate-800/50 p-8 rounded-3xl">
+          <p class="italic text-gray-600 dark:text-slate-300">"Chuyến đi Phú Quốc quá tuyệt vời. Dịch vụ rất chu đáo!"</p>
           <p class="mt-6 font-medium">Chị Lan Anh - Hà Nội</p>
         </div>
-        <div class="bg-gray-50 p-8 rounded-3xl">
-          <p class="italic text-gray-600">"Tour Sapa 5 ngày rất đáng tiền. Hướng dẫn viên nhiệt tình."</p>
+        <div class="bg-gray-50 dark:bg-slate-800/50 p-8 rounded-3xl">
+          <p class="italic text-gray-600 dark:text-slate-300">"Tour Sapa 5 ngày rất đáng tiền. Hướng dẫn viên nhiệt tình."</p>
           <p class="mt-6 font-medium">Anh Minh Quân - TP.HCM</p>
         </div>
-        <div class="bg-gray-50 p-8 rounded-3xl">
-          <p class="italic text-gray-600">"Đặt tour Bali dễ dàng, khách sạn đẹp, ăn ngon."</p>
+        <div class="bg-gray-50 dark:bg-slate-800/50 p-8 rounded-3xl">
+          <p class="italic text-gray-600 dark:text-slate-300">"Đặt tour Bali dễ dàng, khách sạn đẹp, ăn ngon."</p>
           <p class="mt-6 font-medium">Chị Thu Hà - Đà Nẵng</p>
         </div>
       </div>
@@ -392,7 +525,7 @@
       <h2 class="text-3xl md:text-4xl font-bold mb-6">Sẵn sàng cho chuyến đi tiếp theo?</h2>
       <p class="text-lg md:text-xl mb-10">Hàng ngàn du khách đã tin tưởng WILTravel để có những kỳ nghỉ tuyệt vời</p>
       <button onclick="document.getElementById('search-input').focus()" 
-              class="bg-white text-green-600 px-8 md:px-10 py-4 rounded-full text-base md:text-lg font-semibold hover:bg-gray-100 transition">
+              class="bg-white text-primary-600 dark:text-primary-400 px-8 md:px-10 py-4 rounded-full text-base md:text-lg font-semibold hover:bg-gray-100 dark:bg-slate-800 transition">
         Bắt đầu hành trình ngay
       </button>
     </div>
@@ -403,7 +536,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
         <div>
-          <img src="images/logo-footer-colored.png" alt="WILTravel" class="h-12 mb-4 bg-white/10 rounded-xl p-1">
+          <img src="images/logo-footer.png" alt="WILTravel" class="h-12 mb-4">
           <p class="text-sm">Chỉ cần & đi chuyến nghỉ ngơi</p>
         </div>
         
@@ -443,8 +576,27 @@
     </div>
   </footer>
 
-  <script src="js/app.js"></script>
+  <script src="js/app.js?v=1.0.2"></script>
   <script>
+    // Global error listener for visual debugging
+    window.onerror = function(message, source, lineno, colno, error) {
+      const div = document.createElement('div');
+      div.style.position = 'fixed';
+      div.style.top = '0';
+      div.style.left = '0';
+      div.style.width = '100%';
+      div.style.backgroundColor = '#ef4444';
+      div.style.color = '#ffffff';
+      div.style.padding = '15px';
+      div.style.zIndex = '99999';
+      div.style.fontSize = '14px';
+      div.style.fontFamily = 'monospace';
+      div.style.whiteSpace = 'pre-wrap';
+      div.textContent = 'JS Error: ' + message + '\nAt: ' + source + ':' + lineno + ':' + colno + '\nStack: ' + (error ? error.stack : 'N/A');
+      document.body.appendChild(div);
+      return false;
+    };
+
     // Script menu mobile
     const mobileButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
@@ -565,22 +717,21 @@
         searchResultsGrid.innerHTML = '';
         results.forEach(item => {
           const card = document.createElement('div');
-          card.className = 'bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100';
+          card.className = 'bg-white dark:bg-slate-800 rounded-3xl overflow-hidden shadow-sm border border-gray-100';
           card.innerHTML = `
             <img src="${item.image}" class="w-full h-44 object-cover" alt="${item.title}">
             <div class="p-5">
               <div class="flex justify-between items-center mb-3 gap-4">
                 <div>
-                  <p class="text-xs uppercase tracking-[0.2em] text-green-600 font-semibold mb-2">${item.label}</p>
-                  <h4 class="text-xl font-semibold text-gray-800">${item.title}</h4>
-                  <p class="text-gray-500 mt-1">${item.subtitle}</p>
+                  <p class="text-xs uppercase tracking-[0.2em] text-primary-600 dark:text-primary-400 font-semibold mb-2">${item.label}</p>
+                  <h4 class="text-xl font-semibold text-gray-800 dark:text-slate-100">${item.title}</h4>
+                  <p class="text-gray-500 dark:text-slate-400 mt-1">${item.subtitle}</p>
                 </div>
                 <div class="text-right">
-                  <p class="text-xl font-bold text-green-600">${item.price}</p>
-                  <span class="text-xs text-gray-400">VNĐ</span>
+                  <p class="text-xl font-bold text-primary-600 dark:text-primary-400">${formatPriceString(item.price)}</p>
                 </div>
               </div>
-              <button onclick="handleSearchAction('${item.type}', '${item.id || ''}', '${item.title}')" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-2xl transition">Chi tiết</button>
+              <button onclick="handleSearchAction('${item.type}', '${item.id || ''}', '${item.title}')" class="w-full bg-primary-600 dark:bg-primary-700 hover:bg-primary-700 dark:hover:bg-primary-600 text-white py-3 rounded-2xl transition">Chi tiết</button>
             </div>`;
           searchResultsGrid.appendChild(card);
         });
@@ -620,13 +771,25 @@
     }
 
 
+    let activeBgLayer = 1;
     function updateHero() {
       const slide = heroSlides[currentSlide];
-      const fallback = slide.gradient || 'linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45))';
-      const bgImage = `linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('${slide.image}'), ${fallback}`;
-      heroSection.style.backgroundImage = bgImage;
-      heroSection.style.backgroundSize = 'cover';
-      heroSection.style.backgroundPosition = 'center';
+      const bgUrl = `url('${slide.image}')`;
+      
+      const layer1 = document.getElementById('hero-bg-1');
+      const layer2 = document.getElementById('hero-bg-2');
+      
+      if (activeBgLayer === 1) {
+        layer2.style.backgroundImage = bgUrl;
+        layer2.classList.add('active');
+        layer1.classList.remove('active');
+        activeBgLayer = 2;
+      } else {
+        layer1.style.backgroundImage = bgUrl;
+        layer1.classList.add('active');
+        layer2.classList.remove('active');
+        activeBgLayer = 1;
+      }
 
       // Update slide caption badge with fade animation
       const badge = document.getElementById('slide-badge');
@@ -718,9 +881,13 @@
     function renderDestinations() {
       const grid = document.getElementById('destinations-grid');
       grid.innerHTML = '';
+      const h2 = document.querySelector('#destinations h2');
+      if (h2) {
+        h2.textContent = `Điểm đến nổi bật (${destinations.length})`;
+      }
       destinations.forEach(dest => {
         const card = document.createElement('div');
-        card.className = "bg-white rounded-3xl overflow-hidden card-hover cursor-pointer";
+        card.className = "bg-white dark:bg-slate-800 rounded-3xl overflow-hidden card-hover cursor-pointer";
         card.onclick = () => { window.location.href = `tours.html?location=${encodeURIComponent(dest.name)}`; };
         card.innerHTML = `
           <img src="${dest.image}" class="w-full h-52 sm:h-64 object-cover" alt="${dest.name}">
@@ -728,10 +895,10 @@
             <div class="flex justify-between items-start">
               <div>
                 <h3 class="text-lg sm:text-xl font-semibold">${dest.name}</h3>
-                <p class="text-gray-500">${dest.location}</p>
+                <p class="text-gray-500 dark:text-slate-400">${dest.location}</p>
               </div>
               <div class="text-right">
-                <span class="text-xl sm:text-2xl font-bold text-green-600">${dest.price}</span>
+                <span class="text-xl sm:text-2xl font-bold text-primary-600 dark:text-primary-400">${formatPriceString(dest.price)}</span>
                 <p class="text-xs text-gray-400">/người</p>
               </div>
             </div>
@@ -745,13 +912,17 @@
       const grid = document.getElementById('featured-tours');
       grid.innerHTML = '';
       const featured = tours.slice(0, 6); // Load from central tours database
+      const h2 = document.querySelector('#featured-tours-section h2');
+      if (h2) {
+        h2.textContent = `Tour Tiêu Biểu (${featured.length})`;
+      }
       featured.forEach(tour => {
         const card = document.createElement('div');
         const badgeHtml = tour.badge 
-          ? `<span class="absolute top-4 left-4 bg-green-600 text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-md z-10">${tour.badge}</span>`
+          ? `<span class="absolute top-4 left-4 bg-primary-600 dark:bg-primary-700 text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-md z-10">${tour.badge}</span>`
           : '';
           
-        card.className = "bg-white rounded-3xl overflow-hidden card-hover cursor-pointer border border-gray-100 relative flex flex-col justify-between";
+        card.className = "bg-white dark:bg-slate-800 rounded-3xl overflow-hidden card-hover cursor-pointer border border-gray-100 relative flex flex-col justify-between";
         card.onclick = () => { window.location.href = `tour-detail.html?id=${tour.id}`; };
         card.innerHTML = `
           <div class="relative overflow-hidden">
@@ -765,24 +936,32 @@
                 <span>${tour.rating || 4.8}</span>
                 <span class="text-gray-400">(${tour.reviews || 80} đánh giá)</span>
               </div>
-              <h3 class="font-bold text-base sm:text-lg mb-1 text-gray-800 line-clamp-1 hover:text-green-600 transition">${tour.name}</h3>
-              <div class="flex items-center gap-3 text-xs text-gray-500 mt-2 mb-4">
-                <span><i class="fa-solid fa-map-pin text-green-600 mr-1"></i>${tour.location}</span>
-                <span><i class="fa-solid fa-clock text-green-600 mr-1"></i>${tour.duration}</span>
+              <h3 class="font-bold text-base sm:text-lg mb-1 text-gray-800 dark:text-slate-100 line-clamp-1 hover:text-primary-600 dark:text-primary-400 transition">${tour.name}</h3>
+              <div class="flex items-center gap-3 text-xs text-gray-500 dark:text-slate-400 mt-2 mb-4">
+                <span><i class="fa-solid fa-map-pin text-primary-600 dark:text-primary-400 mr-1"></i>${tour.location}</span>
+                <span><i class="fa-solid fa-clock text-primary-600 dark:text-primary-400 mr-1"></i>${tour.duration}</span>
               </div>
             </div>
             <div class="mt-auto flex justify-between items-center pt-4 border-t border-gray-50">
               <div>
-                <span class="text-xl sm:text-2xl font-black text-green-600">${(tour.price / 1000000).toFixed(2)}tr</span>
-                <span class="text-xs text-gray-400 font-medium"> VNĐ</span>
+                <span class="text-xl sm:text-2xl font-black text-primary-600 dark:text-primary-400">${formatPriceGlobal(tour.price)}</span>
               </div>
-              <button onclick="event.stopPropagation(); window.location.href='tour-detail.html?id=${tour.id}'" class="bg-green-600 text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-green-700 transition">Đặt tour</button>
+              <button onclick="event.stopPropagation(); window.location.href='tour-detail.html?id=${tour.id}'" class="bg-primary-600 dark:bg-primary-700 text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-primary-700 dark:hover:bg-primary-600 transition">Đặt tour</button>
             </div>
           </div>
         `;
         grid.appendChild(card);
       });
     }
+
+    window.addEventListener('currencyChange', () => {
+      renderDestinations();
+      renderFeaturedTours();
+      const searchGrid = document.getElementById('search-results-grid');
+      if (searchGrid && searchGrid.innerHTML !== '') {
+        searchTour();
+      }
+    });
 
     function scrollToFooter(e) {
       e.preventDefault();
@@ -819,17 +998,124 @@
       setInterval(updateTimer, 1000);
     }
 
-    window.onload = () => {
-      initSearchableItems();
-      updateHero();
-      createIndicators();
-      renderDestinations();
-      renderFeaturedTours();
-      observeStats();
-      closeMobileMenuOnLink();
-      startAutoPlay();
-      initCountdown();
+    const quizAnswers = {
+      style: '',
+      budget: '',
+      companion: ''
     };
+
+    function selectQuizAnswer(key, value) {
+      quizAnswers[key] = value;
+      if (key === 'style') {
+        document.getElementById('quiz-step-1').classList.add('hidden');
+        document.getElementById('quiz-step-2').classList.remove('hidden');
+      } else if (key === 'budget') {
+        document.getElementById('quiz-step-2').classList.add('hidden');
+        document.getElementById('quiz-step-3').classList.remove('hidden');
+      } else if (key === 'companion') {
+        document.getElementById('quiz-step-3').classList.add('hidden');
+        showQuizResult();
+      }
+    }
+
+    function showQuizResult() {
+      let matchedTour = null;
+      let candidates = tours.filter(t => t.category.includes(quizAnswers.style));
+      if (candidates.length === 0) candidates = tours;
+      
+      let filteredByBudget = [];
+      if (quizAnswers.budget === 'low') {
+        filteredByBudget = candidates.filter(t => t.price <= 4000000);
+      } else if (quizAnswers.budget === 'mid') {
+        filteredByBudget = candidates.filter(t => t.price > 4000000 && t.price <= 10000000);
+      } else {
+        filteredByBudget = candidates.filter(t => t.price > 10000000);
+      }
+      
+      if (filteredByBudget.length > 0) {
+        matchedTour = filteredByBudget[Math.floor(Math.random() * filteredByBudget.length)];
+      } else {
+        matchedTour = candidates[Math.floor(Math.random() * candidates.length)];
+      }
+      
+      const resultCard = document.getElementById('quiz-result-card');
+      resultCard.innerHTML = `
+        <img src="${matchedTour.image}" class="w-full sm:w-28 h-28 object-cover rounded-2xl shadow-sm shrink-0" alt="">
+        <div class="flex-grow">
+          <span class="text-[10px] uppercase font-bold tracking-wider text-primary-600 dark:text-primary-400 bg-green-100 dark:bg-green-900/30 px-2 py-0.5 rounded">${matchedTour.location}</span>
+          <h4 class="font-bold text-gray-800 dark:text-slate-100 mt-1 line-clamp-2">${matchedTour.name}</h4>
+          <p class="text-xs text-gray-500 dark:text-slate-400 mt-1"><i class="fa-solid fa-clock mr-1"></i>${matchedTour.duration}</p>
+          <div class="mt-2.5 flex justify-between items-center">
+            <span class="text-lg font-black text-primary-600 dark:text-primary-400">${formatPriceGlobal(matchedTour.price)}</span>
+            <a href="tour-detail.html?id=${matchedTour.id}" class="text-xs font-bold text-white bg-primary-600 hover:bg-primary-700 px-3.5 py-1.5 rounded-lg transition">Xem tour →</a>
+          </div>
+        </div>
+      `;
+      
+      document.getElementById('quiz-result').classList.remove('hidden');
+    }
+
+    function copyQuizCoupon(btn) {
+      navigator.clipboard.writeText('WILPREMIUM10').then(() => {
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Đã sao chép';
+        btn.classList.remove('bg-primary-600');
+        btn.classList.add('bg-emerald-600');
+        setTimeout(() => {
+          btn.innerHTML = '<i class="fa-solid fa-copy"></i> Sao chép';
+          btn.classList.remove('bg-emerald-600');
+          btn.classList.add('bg-primary-600');
+        }, 2000);
+      });
+    }
+
+    function resetQuiz() {
+      quizAnswers.style = '';
+      quizAnswers.budget = '';
+      quizAnswers.companion = '';
+      document.getElementById('quiz-result').classList.add('hidden');
+      document.getElementById('quiz-step-1').classList.remove('hidden');
+    }
+
+    window.onload = () => {
+      try {
+        initSearchableItems();
+        updateHero();
+        createIndicators();
+        renderDestinations();
+        renderFeaturedTours();
+        observeStats();
+        closeMobileMenuOnLink();
+        startAutoPlay();
+        initCountdown();
+        if (typeof AOS !== 'undefined') {
+          AOS.refresh();
+        }
+      } catch (err) {
+        console.error(err);
+        const div = document.createElement('div');
+        div.style.position = 'fixed';
+        div.style.top = '0';
+        div.style.left = '0';
+        div.style.width = '100%';
+        div.style.backgroundColor = '#ef4444';
+        div.style.color = '#ffffff';
+        div.style.padding = '15px';
+        div.style.zIndex = '99999';
+        div.style.fontSize = '14px';
+        div.style.fontFamily = 'monospace';
+        div.style.whiteSpace = 'pre-wrap';
+        div.textContent = 'Onload Error: ' + err.message + '\nStack: ' + err.stack;
+        document.body.appendChild(div);
+      }
+    };
+  </script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof AOS !== 'undefined') {
+        AOS.init({ duration: 800, once: true });
+      }
+    });
   </script>
 </body>
 </html>

@@ -5,22 +5,53 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WILTravel - Giỏ Hàng</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            jakarta: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            primary: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              300: '#86efac',
+              400: '#4ade80',
+              500: '#22c55e',
+              600: '#16a34a', // original green
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
-<body class="font-sans bg-gray-50">
+<body class="font-jakarta bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-300">
 
-  <nav class="bg-white shadow-md fixed w-full z-50">
+  <nav class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-md fixed w-full z-50 border-b border-gray-100 dark:border-white/10 transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-      <a href="index.html"><img src="images/logo.png" alt="WILTravel" class="h-10 w-auto"></a>
-      <a href="tours.html" class="text-gray-700 hover:text-green-600">Quay Lại Mua Hàng</a>
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="images/logo-transparent.png" alt="WILTravel" class="h-9 sm:h-11 w-auto dark:hidden">
+        <img src="images/logo-footer.png" alt="WILTravel" class="h-9 sm:h-11 w-auto hidden dark:block">
+      </a>
+      <a href="tours.html" class="text-gray-700 dark:text-slate-200 hover:text-primary-600 dark:text-primary-400">Quay Lại Mua Hàng</a>
       <div class="flex gap-3">
-        <a href="profile.html" class="text-gray-700 hover:text-green-600"><i class="fa-solid fa-user text-lg"></i></a>
+        <a href="profile.html" class="text-gray-700 dark:text-slate-200 hover:text-primary-600 dark:text-primary-400"><i class="fa-solid fa-user text-lg"></i></a>
       </div>
     </div>
   </nav>
 
   <section class="max-w-7xl mx-auto px-4 sm:px-6 py-16 pt-24">
-    <h1 class="text-4xl font-bold text-gray-800 mb-8">Giỏ Hàng</h1>
+    <h1 class="text-4xl font-bold text-gray-800 dark:text-slate-100 mb-8">Giỏ Hàng</h1>
     
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
       <!-- Left side: items list -->
@@ -32,26 +63,26 @@
 
       <!-- Right side: summary -->
       <div class="lg:col-span-1">
-        <div class="bg-white rounded-2xl shadow-md p-6 sticky top-24 border border-gray-100">
-          <h2 class="text-2xl font-bold text-gray-800 mb-6">Tóm Tắt Đơn Hàng</h2>
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-md p-6 sticky top-24 border border-gray-100">
+          <h2 class="text-2xl font-bold text-gray-800 dark:text-slate-100 mb-6">Tóm Tắt Đơn Hàng</h2>
           <div class="space-y-3 pb-4 border-b">
-            <div class="flex justify-between text-gray-700">
+            <div class="flex justify-between text-gray-700 dark:text-slate-200">
               <span>Tổng tiền tour:</span>
               <span id="subtotal" class="font-semibold">0đ</span>
             </div>
-            <div class="flex justify-between text-gray-700">
+            <div class="flex justify-between text-gray-700 dark:text-slate-200">
               <span>Phí dịch vụ:</span>
               <span id="fee" class="font-semibold">0đ</span>
             </div>
           </div>
-          <div class="flex justify-between mt-4 text-xl font-bold text-gray-800 mb-6">
+          <div class="flex justify-between mt-4 text-xl font-bold text-gray-800 dark:text-slate-100 mb-6">
             <span>Tổng:</span>
-            <span id="total" class="text-green-600">0đ</span>
+            <span id="total" class="text-primary-600 dark:text-primary-400">0đ</span>
           </div>
-          <button onclick="proceedToCheckout()" class="w-full text-center bg-green-600 text-white font-bold py-4 rounded-xl hover:bg-green-700 transition block shadow-lg shadow-green-600/20">
+          <button onclick="proceedToCheckout()" class="w-full text-center bg-primary-600 dark:bg-primary-700 text-white font-bold py-4 rounded-xl hover:bg-primary-700 dark:hover:bg-primary-600 transition block shadow-lg shadow-green-600/20">
             Tiếp Tục Đặt Hàng
           </button>
-          <a href="tours.html" class="w-full text-center text-gray-500 hover:text-green-600 font-semibold text-sm transition mt-4 block">
+          <a href="tours.html" class="w-full text-center text-gray-500 dark:text-slate-400 hover:text-primary-600 dark:text-primary-400 font-semibold text-sm transition mt-4 block">
             ← Tiếp tục mua sắm
           </a>
         </div>
@@ -67,11 +98,11 @@
       
       if (cart.length === 0) {
         container.innerHTML = `
-          <div class="bg-white rounded-3xl p-10 text-center text-gray-500 border border-gray-100">
+          <div class="bg-white dark:bg-slate-800 rounded-3xl p-10 text-center text-gray-500 dark:text-slate-400 border border-gray-100">
             <i class="fa-solid fa-shopping-cart text-5xl mb-4 text-gray-300"></i>
             <p class="text-lg font-medium">Giỏ hàng của bạn đang trống</p>
             <p class="text-sm text-gray-400 mt-1">Hãy khám phá các tour du lịch tuyệt vời của chúng tôi!</p>
-            <a href="tours.html" class="inline-block mt-6 bg-green-600 text-white px-8 py-3 rounded-xl hover:bg-green-700 font-semibold transition">
+            <a href="tours.html" class="inline-block mt-6 bg-primary-600 dark:bg-primary-700 text-white px-8 py-3 rounded-xl hover:bg-primary-700 dark:hover:bg-primary-600 font-semibold transition">
               Khám Phá Tours
             </a>
           </div>`;
@@ -91,31 +122,31 @@
         subtotal += itemTotal;
 
         return `
-          <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 flex flex-col sm:flex-row gap-4 items-center justify-between">
+          <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-sm border border-gray-100 flex flex-col sm:flex-row gap-4 items-center justify-between">
             <div class="flex items-center gap-4 w-full sm:w-auto">
               <img src="${tour.image}" alt="${tour.name}" class="w-24 h-20 object-cover rounded-xl shrink-0">
               <div>
-                <h3 class="font-bold text-gray-800 text-base sm:text-lg hover:text-green-600 cursor-pointer" onclick="window.location.href='tour-detail.html?id=${tour.id}'">${tour.name}</h3>
+                <h3 class="font-bold text-gray-800 dark:text-slate-100 text-base sm:text-lg hover:text-primary-600 dark:text-primary-400 cursor-pointer" onclick="window.location.href='tour-detail.html?id=${tour.id}'">${tour.name}</h3>
                 <p class="text-xs text-gray-400 mt-1"><i class="fa-solid fa-map-pin mr-1"></i>${tour.location}</p>
-                <p class="text-xs text-green-600 font-medium mt-1"><i class="fa-solid fa-calendar mr-1"></i>Khởi hành: ${item.date}</p>
+                <p class="text-xs text-primary-600 dark:text-primary-400 font-medium mt-1"><i class="fa-solid fa-calendar mr-1"></i>Khởi hành: ${item.date}</p>
               </div>
             </div>
 
             <div class="flex items-center justify-between sm:justify-end gap-6 w-full sm:w-auto border-t sm:border-0 pt-3 sm:pt-0">
               <div class="text-left sm:text-right">
                 <p class="text-xs text-gray-400">Đơn giá</p>
-                <p class="font-semibold text-gray-700">${tour.price.toLocaleString('vi-VN')}đ</p>
+                <p class="font-semibold text-gray-700 dark:text-slate-200">${tour.price.toLocaleString('vi-VN')}đ</p>
               </div>
 
               <div class="flex items-center gap-1.5 border border-gray-200 rounded-lg p-1">
-                <button onclick="changeQty(${tour.id}, '${item.date}', -1)" class="w-7 h-7 rounded hover:bg-gray-100 font-bold flex items-center justify-center text-sm">-</button>
+                <button onclick="changeQty(${tour.id}, '${item.date}', -1)" class="w-7 h-7 rounded hover:bg-gray-100 dark:bg-slate-800 font-bold flex items-center justify-center text-sm">-</button>
                 <span class="w-8 text-center text-sm font-semibold">${item.quantity}</span>
-                <button onclick="changeQty(${tour.id}, '${item.date}', 1)" class="w-7 h-7 rounded hover:bg-gray-100 font-bold flex items-center justify-center text-sm">+</button>
+                <button onclick="changeQty(${tour.id}, '${item.date}', 1)" class="w-7 h-7 rounded hover:bg-gray-100 dark:bg-slate-800 font-bold flex items-center justify-center text-sm">+</button>
               </div>
 
               <div class="text-right shrink-0">
                 <p class="text-xs text-gray-400">Thành tiền</p>
-                <p class="font-bold text-green-600 text-base sm:text-lg">${itemTotal.toLocaleString('vi-VN')}đ</p>
+                <p class="font-bold text-primary-600 dark:text-primary-400 text-base sm:text-lg">${itemTotal.toLocaleString('vi-VN')}đ</p>
               </div>
 
               <button onclick="deleteItem(${tour.id}, '${item.date}')" class="text-red-500 hover:text-red-700 p-2" aria-label="Xóa">
@@ -163,6 +194,14 @@
     window.onload = () => {
       renderCartItems();
     };
+  </script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof AOS !== 'undefined') {
+        AOS.init({ duration: 800, once: true });
+      }
+    });
   </script>
 </body>
 </html>

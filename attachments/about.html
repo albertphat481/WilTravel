@@ -5,6 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WILTravel - Về Chúng Tôi</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            jakarta: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            primary: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              300: '#86efac',
+              400: '#4ade80',
+              500: '#22c55e',
+              600: '#16a34a', // original green
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <style>
     .about-hero {
@@ -18,39 +46,40 @@
     }
   </style>
 </head>
-<body class="font-sans">
+<body class="font-jakarta bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-300">
 
   <!-- Navbar -->
-  <nav class="bg-white shadow-md fixed w-full z-50">
+  <nav class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-md fixed w-full z-50 border-b border-gray-100 dark:border-white/10 transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <div class="flex items-center gap-3">
-        <img src="images/logo.png" alt="WILTravel" class="h-11 w-auto">
-      </div>
-      <div class="hidden md:flex items-center gap-8 text-gray-700 font-medium">
-        <a href="index.html" class="hover:text-green-600 transition">Trang chủ</a>
-        <a href="tours.html" class="hover:text-green-600 transition">Tours</a>
-        <a href="flight.html" class="hover:text-green-600 transition">Máy Bay</a>
-        <a href="blog.html" class="hover:text-green-600 transition">Blog</a>
-        <a href="deals.html" class="hover:text-green-600 transition">Ưu Đãi</a>
-        <a href="contact.html" class="hover:text-green-600 transition">Liên Hệ</a>
-        <a href="about.html" class="text-green-600 font-semibold">Về Chúng Tôi</a>
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="images/logo-transparent.png" alt="WILTravel" class="h-9 sm:h-11 w-auto dark:hidden">
+        <img src="images/logo-footer.png" alt="WILTravel" class="h-9 sm:h-11 w-auto hidden dark:block">
+      </a>
+      <div class="hidden md:flex items-center gap-8 text-gray-700 dark:text-slate-200 font-medium">
+        <a href="index.html" class="hover:text-primary-600 dark:text-primary-400 transition">Trang chủ</a>
+        <a href="tours.html" class="hover:text-primary-600 dark:text-primary-400 transition">Tours</a>
+        <a href="flight.html" class="hover:text-primary-600 dark:text-primary-400 transition">Máy Bay</a>
+        <a href="blog.html" class="hover:text-primary-600 dark:text-primary-400 transition">Blog</a>
+        <a href="deals.html" class="hover:text-primary-600 dark:text-primary-400 transition">Ưu Đãi</a>
+        <a href="contact.html" class="hover:text-primary-600 dark:text-primary-400 transition">Liên Hệ</a>
+        <a href="about.html" class="text-primary-600 dark:text-primary-400 font-semibold">Về Chúng Tôi</a>
       </div>
       <div class="flex items-center gap-4">
-        <a href="login.html" class="px-5 py-2 text-gray-700 hover:bg-gray-100 rounded-full transition">Đăng nhập</a>
-        <a href="register.html" class="bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-700 transition font-medium">Đăng ký</a>
+        <a href="login.html" class="px-5 py-2 text-gray-700 dark:text-slate-200 hover:bg-gray-100 dark:bg-slate-800 rounded-full transition">Đăng nhập</a>
+        <a href="register.html" class="bg-primary-600 dark:bg-primary-700 text-white px-6 py-2 rounded-full hover:bg-primary-700 dark:hover:bg-primary-600 transition font-medium">Đăng ký</a>
       </div>
-      <button id="mobile-menu-button" class="md:hidden text-3xl text-gray-700">
+      <button id="mobile-menu-button" class="md:hidden text-3xl text-gray-700 dark:text-slate-200">
         <i class="fa-solid fa-bars"></i>
       </button>
     </div>
     <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
-      <div class="px-6 py-6 flex flex-col gap-5 text-gray-700 font-medium">
-        <a href="index.html" class="hover:text-green-600 transition">Trang chủ</a>
-        <a href="tours.html" class="hover:text-green-600 transition">Tours</a>
-        <a href="flight.html" class="hover:text-green-600 transition">Máy Bay</a>
-        <a href="blog.html" class="hover:text-green-600 transition">Blog</a>
-        <a href="contact.html" class="hover:text-green-600 transition">Liên Hệ</a>
-        <a href="about.html" class="text-green-600 font-semibold transition">Về Chúng Tôi</a>
+      <div class="px-6 py-6 flex flex-col gap-5 text-gray-700 dark:text-slate-200 font-medium">
+        <a href="index.html" class="hover:text-primary-600 dark:text-primary-400 transition">Trang chủ</a>
+        <a href="tours.html" class="hover:text-primary-600 dark:text-primary-400 transition">Tours</a>
+        <a href="flight.html" class="hover:text-primary-600 dark:text-primary-400 transition">Máy Bay</a>
+        <a href="blog.html" class="hover:text-primary-600 dark:text-primary-400 transition">Blog</a>
+        <a href="contact.html" class="hover:text-primary-600 dark:text-primary-400 transition">Liên Hệ</a>
+        <a href="about.html" class="text-primary-600 dark:text-primary-400 font-semibold transition">Về Chúng Tôi</a>
       </div>
     </div>
   </nav>
@@ -68,11 +97,11 @@
     <div class="max-w-6xl mx-auto px-6">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         <div>
-          <h2 class="text-4xl font-bold text-gray-800 mb-6">Câu chuyện WILTravel</h2>
-          <p class="text-gray-600 text-lg leading-relaxed mb-6">
+          <h2 class="text-4xl font-bold text-gray-800 dark:text-slate-100 mb-6">Câu chuyện WILTravel</h2>
+          <p class="text-gray-600 dark:text-slate-300 text-lg leading-relaxed mb-6">
             Thành lập năm 2011 tại TP. Hồ Chí Minh, WILTravel được xây dựng từ niềm đam mê du lịch và mong muốn mang đến những chuyến đi chất lượng cao, an toàn cho người Việt.
           </p>
-          <p class="text-gray-600 text-lg leading-relaxed">
+          <p class="text-gray-600 dark:text-slate-300 text-lg leading-relaxed">
             Sau gần 20 năm, chúng tôi đã đồng hành cùng hàng chục ngàn du khách khám phá Việt Nam và nhiều điểm đến quốc tế.
           </p>
         </div>
@@ -84,24 +113,24 @@
   </section>
 
   <!-- Giá trị cốt lõi -->
-  <section class="py-20 bg-gray-50">
+  <section class="py-20 bg-gray-50 dark:bg-slate-800/50">
     <div class="max-w-6xl mx-auto px-6 text-center">
       <h2 class="text-4xl font-bold mb-12">Giá trị cốt lõi</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
         <div class="bg-white p-10 rounded-3xl shadow-sm">
-          <i class="fa-solid fa-heart text-6xl text-green-600 mb-6"></i>
+          <i class="fa-solid fa-heart text-6xl text-primary-600 dark:text-primary-400 mb-6"></i>
           <h3 class="text-2xl font-semibold mb-4">Tận Tâm</h3>
-          <p class="text-gray-600">Luôn đặt khách hàng làm trung tâm.</p>
+          <p class="text-gray-600 dark:text-slate-300">Luôn đặt khách hàng làm trung tâm.</p>
         </div>
         <div class="bg-white p-10 rounded-3xl shadow-sm">
-          <i class="fa-solid fa-shield-halved text-6xl text-green-600 mb-6"></i>
+          <i class="fa-solid fa-shield-halved text-6xl text-primary-600 dark:text-primary-400 mb-6"></i>
           <h3 class="text-2xl font-semibold mb-4">An Toàn</h3>
-          <p class="text-gray-600">Cam kết an toàn tuyệt đối cho mọi hành trình.</p>
+          <p class="text-gray-600 dark:text-slate-300">Cam kết an toàn tuyệt đối cho mọi hành trình.</p>
         </div>
         <div class="bg-white p-10 rounded-3xl shadow-sm">
-          <i class="fa-solid fa-leaf text-6xl text-green-600 mb-6"></i>
+          <i class="fa-solid fa-leaf text-6xl text-primary-600 dark:text-primary-400 mb-6"></i>
           <h3 class="text-2xl font-semibold mb-4">Bền Vững</h3>
-          <p class="text-gray-600">Du lịch trách nhiệm với môi trường và cộng đồng.</p>
+          <p class="text-gray-600 dark:text-slate-300">Du lịch trách nhiệm với môi trường và cộng đồng.</p>
         </div>
       </div>
     </div>
@@ -111,8 +140,8 @@
   <section class="py-20 bg-white">
     <div class="max-w-4xl mx-auto px-6">
       <h2 class="text-4xl font-bold text-center mb-12">Thông tin công ty</h2>
-      <div class="bg-gray-50 rounded-3xl p-10">
-        <div class="space-y-4 text-gray-700">
+      <div class="bg-gray-50 dark:bg-slate-800/50 rounded-3xl p-10">
+        <div class="space-y-4 text-gray-700 dark:text-slate-200">
           <p><strong>CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ DU LỊCH WILTRAVEL</strong></p>
           <p><strong>Trụ sở:</strong> 72/10/6 Văn Chung, Quận Tân Bình, Tp.HCM</p>
           <p><strong>Hotline:</strong> 0905 025737 (Ms Phương)</p>
@@ -128,7 +157,7 @@
     <div class="max-w-7xl mx-auto px-6">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
         <div>
-          <img src="images/logo-footer-colored.png" alt="WILTravel" class="h-12 mb-4 bg-white/10 rounded-xl p-1">
+          <img src="images/logo-footer.png" alt="WILTravel" class="h-12 mb-4">
           <p class="text-sm">Chỉ cần & đi chuyến nghỉ ngơi</p>
         </div>
         <div>
@@ -200,6 +229,14 @@
       }
       closeMobileMenuOnLink();
     };
+  </script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof AOS !== 'undefined') {
+        AOS.init({ duration: 800, once: true });
+      }
+    });
   </script>
 </body>
 </html>

@@ -5,6 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WILTravel - Câu Hỏi Thường Gặp</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            jakarta: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            primary: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              300: '#86efac',
+              400: '#4ade80',
+              500: '#22c55e',
+              600: '#16a34a', // original green
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <style>
     html { scroll-behavior: smooth; }
@@ -15,45 +43,46 @@
     .faq-item.active .faq-icon { transform: rotate(180deg); }
   </style>
 </head>
-<body class="font-sans bg-gray-50">
+<body class="font-jakarta bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-300">
 
   <!-- Navbar -->
-  <nav class="bg-white shadow-md fixed w-full z-50">
+  <nav class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-md fixed w-full z-50 border-b border-gray-100 dark:border-white/10 transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-      <div class="flex items-center gap-3">
-        <img src="images/logo.png" alt="WILTravel" class="h-9 sm:h-11 w-auto">
-      </div>
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="images/logo-transparent.png" alt="WILTravel" class="h-9 sm:h-11 w-auto dark:hidden">
+        <img src="images/logo-footer.png" alt="WILTravel" class="h-9 sm:h-11 w-auto hidden dark:block">
+      </a>
       
-      <div class="hidden md:flex items-center gap-8 text-gray-700 font-medium">
-        <a href="index.html" class="hover:text-green-600 transition">Trang chủ</a>
-        <a href="tours.html" class="hover:text-green-600 transition">Tours</a>
-        <a href="flight.html" class="hover:text-green-600 transition">Máy Bay</a>
-        <a href="blog.html" class="hover:text-green-600 transition">Blog</a>
-        <a href="contact.html" class="hover:text-green-600 transition">Liên Hệ</a>
-        <a href="about.html" class="hover:text-green-600 transition">Về Chúng Tôi</a>
+      <div class="hidden md:flex items-center gap-8 text-gray-700 dark:text-slate-200 font-medium">
+        <a href="index.html" class="hover:text-primary-600 dark:text-primary-400 transition">Trang chủ</a>
+        <a href="tours.html" class="hover:text-primary-600 dark:text-primary-400 transition">Tours</a>
+        <a href="flight.html" class="hover:text-primary-600 dark:text-primary-400 transition">Máy Bay</a>
+        <a href="blog.html" class="hover:text-primary-600 dark:text-primary-400 transition">Blog</a>
+        <a href="contact.html" class="hover:text-primary-600 dark:text-primary-400 transition">Liên Hệ</a>
+        <a href="about.html" class="hover:text-primary-600 dark:text-primary-400 transition">Về Chúng Tôi</a>
       </div>
 
       <div class="flex items-center gap-3">
-        <a href="cart.html" class="text-gray-700 hover:text-green-600 transition text-lg"><i class="fa-solid fa-shopping-cart"></i></a>
-        <a href="profile.html" class="text-gray-700 hover:text-green-600 transition text-lg"><i class="fa-solid fa-user"></i></a>
-        <a href="login.html" class="hidden md:inline-block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-full transition text-sm">Đăng nhập</a>
-        <a href="register.html" class="hidden md:inline-block bg-green-600 text-white px-5 py-2 rounded-full hover:bg-green-700 transition text-sm font-medium">Đăng ký</a>
+        <a href="cart.html" class="text-gray-700 dark:text-slate-200 hover:text-primary-600 dark:text-primary-400 transition text-lg"><i class="fa-solid fa-shopping-cart"></i></a>
+        <a href="profile.html" class="text-gray-700 dark:text-slate-200 hover:text-primary-600 dark:text-primary-400 transition text-lg"><i class="fa-solid fa-user"></i></a>
+        <a href="login.html" class="hidden md:inline-block px-4 py-2 text-gray-700 dark:text-slate-200 hover:bg-gray-100 dark:bg-slate-800 rounded-full transition text-sm">Đăng nhập</a>
+        <a href="register.html" class="hidden md:inline-block bg-primary-600 dark:bg-primary-700 text-white px-5 py-2 rounded-full hover:bg-primary-700 dark:hover:bg-primary-600 transition text-sm font-medium">Đăng ký</a>
       </div>
 
-      <button id="mobile-menu-button" class="md:hidden text-3xl text-gray-700">
+      <button id="mobile-menu-button" class="md:hidden text-3xl text-gray-700 dark:text-slate-200">
         <i class="fa-solid fa-bars"></i>
       </button>
     </div>
     <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
-      <div class="px-6 py-6 flex flex-col gap-5 text-gray-700 font-medium">
-        <a href="index.html" class="hover:text-green-600 transition">Trang chủ</a>
-        <a href="tours.html" class="hover:text-green-600 transition">Tours</a>
-        <a href="flight.html" class="hover:text-green-600 transition">Máy Bay</a>
-        <a href="blog.html" class="hover:text-green-600 transition">Blog</a>
-        <a href="contact.html" class="hover:text-green-600 transition">Liên Hệ</a>
-        <a href="about.html" class="hover:text-green-600 transition">Về Chúng Tôi</a>
+      <div class="px-6 py-6 flex flex-col gap-5 text-gray-700 dark:text-slate-200 font-medium">
+        <a href="index.html" class="hover:text-primary-600 dark:text-primary-400 transition">Trang chủ</a>
+        <a href="tours.html" class="hover:text-primary-600 dark:text-primary-400 transition">Tours</a>
+        <a href="flight.html" class="hover:text-primary-600 dark:text-primary-400 transition">Máy Bay</a>
+        <a href="blog.html" class="hover:text-primary-600 dark:text-primary-400 transition">Blog</a>
+        <a href="contact.html" class="hover:text-primary-600 dark:text-primary-400 transition">Liên Hệ</a>
+        <a href="about.html" class="hover:text-primary-600 dark:text-primary-400 transition">Về Chúng Tôi</a>
         <hr>
-        <a href="faq.html" class="text-green-600 font-semibold transition"><i class="fa-solid fa-question-circle mr-2"></i>FAQ</a>
+        <a href="faq.html" class="text-primary-600 dark:text-primary-400 font-semibold transition"><i class="fa-solid fa-question-circle mr-2"></i>FAQ</a>
       </div>
     </div>
   </nav>
@@ -78,20 +107,20 @@
   <section class="max-w-4xl mx-auto px-4 sm:px-6 py-12">
     <!-- Category Tabs -->
     <div class="flex flex-wrap gap-2 mb-8 border-b border-gray-200">
-      <button class="faq-cat-btn active px-4 py-2 border-b-2 border-green-600 text-green-600 font-semibold" data-category="booking">Đặt Tour</button>
-      <button class="faq-cat-btn px-4 py-2 border-b-2 border-transparent text-gray-600 font-semibold hover:text-green-600" data-category="payment">Thanh Toán</button>
-      <button class="faq-cat-btn px-4 py-2 border-b-2 border-transparent text-gray-600 font-semibold hover:text-green-600" data-category="cancellation">Hủy/Trả Phòng</button>
-      <button class="faq-cat-btn px-4 py-2 border-b-2 border-transparent text-gray-600 font-semibold hover:text-green-600" data-category="support">Hỗ Trợ</button>
+      <button class="faq-cat-btn active px-4 py-2 border-b-2 border-green-600 text-primary-600 dark:text-primary-400 font-semibold" data-category="booking">Đặt Tour</button>
+      <button class="faq-cat-btn px-4 py-2 border-b-2 border-transparent text-gray-600 dark:text-slate-300 font-semibold hover:text-primary-600 dark:text-primary-400" data-category="payment">Thanh Toán</button>
+      <button class="faq-cat-btn px-4 py-2 border-b-2 border-transparent text-gray-600 dark:text-slate-300 font-semibold hover:text-primary-600 dark:text-primary-400" data-category="cancellation">Hủy/Trả Phòng</button>
+      <button class="faq-cat-btn px-4 py-2 border-b-2 border-transparent text-gray-600 dark:text-slate-300 font-semibold hover:text-primary-600 dark:text-primary-400" data-category="support">Hỗ Trợ</button>
     </div>
 
     <!-- FAQ Items - Booking -->
     <div id="booking" class="faq-category space-y-4">
-      <div class="faq-item bg-white rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
+      <div class="faq-item bg-white dark:bg-slate-800 rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
         <div class="flex justify-between items-start">
-          <h3 class="text-lg font-bold text-gray-800 pr-4">Làm sao để đặt tour?</h3>
-          <i class="fa-solid fa-chevron-down text-green-600 text-xl faq-icon"></i>
+          <h3 class="text-lg font-bold text-gray-800 dark:text-slate-100 pr-4">Làm sao để đặt tour?</h3>
+          <i class="fa-solid fa-chevron-down text-primary-600 dark:text-primary-400 text-xl faq-icon"></i>
         </div>
-        <div class="faq-answer pt-4 text-gray-600">
+        <div class="faq-answer pt-4 text-gray-600 dark:text-slate-300">
           <p>Bước 1: Chọn tour từ danh sách tours</p>
           <p>Bước 2: Nhấp "Đặt Ngay"</p>
           <p>Bước 3: Điền thông tin cá nhân</p>
@@ -100,12 +129,12 @@
         </div>
       </div>
 
-      <div class="faq-item bg-white rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
+      <div class="faq-item bg-white dark:bg-slate-800 rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
         <div class="flex justify-between items-start">
-          <h3 class="text-lg font-bold text-gray-800 pr-4">Có bao nhiêu loại tour?</h3>
-          <i class="fa-solid fa-chevron-down text-green-600 text-xl faq-icon"></i>
+          <h3 class="text-lg font-bold text-gray-800 dark:text-slate-100 pr-4">Có bao nhiêu loại tour?</h3>
+          <i class="fa-solid fa-chevron-down text-primary-600 dark:text-primary-400 text-xl faq-icon"></i>
         </div>
-        <div class="faq-answer pt-4 text-gray-600">
+        <div class="faq-answer pt-4 text-gray-600 dark:text-slate-300">
           <p>Chúng tôi cung cấp:</p>
           <p>• Tours trong nước (Phú Quốc, Sapa, Hạ Long, Cô Tô...)</p>
           <p>• Tours quốc tế (Bali, Bangkok, Singapore, Hàng Quân...)</p>
@@ -114,12 +143,12 @@
         </div>
       </div>
 
-      <div class="faq-item bg-white rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
+      <div class="faq-item bg-white dark:bg-slate-800 rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
         <div class="flex justify-between items-start">
-          <h3 class="text-lg font-bold text-gray-800 pr-4">Tôi có thể thay đổi ngày tour không?</h3>
-          <i class="fa-solid fa-chevron-down text-green-600 text-xl faq-icon"></i>
+          <h3 class="text-lg font-bold text-gray-800 dark:text-slate-100 pr-4">Tôi có thể thay đổi ngày tour không?</h3>
+          <i class="fa-solid fa-chevron-down text-primary-600 dark:text-primary-400 text-xl faq-icon"></i>
         </div>
-        <div class="faq-answer pt-4 text-gray-600">
+        <div class="faq-answer pt-4 text-gray-600 dark:text-slate-300">
           <p>Có, bạn có thể thay đổi ngày tour miễn là:</p>
           <p>• Thay đổi ít nhất 7 ngày trước khởi hành</p>
           <p>• Còn chỗ trống vào ngày muốn thay đổi</p>
@@ -127,12 +156,12 @@
         </div>
       </div>
 
-      <div class="faq-item bg-white rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
+      <div class="faq-item bg-white dark:bg-slate-800 rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
         <div class="flex justify-between items-start">
-          <h3 class="text-lg font-bold text-gray-800 pr-4">Giá tour có bao gồm những gì?</h3>
-          <i class="fa-solid fa-chevron-down text-green-600 text-xl faq-icon"></i>
+          <h3 class="text-lg font-bold text-gray-800 dark:text-slate-100 pr-4">Giá tour có bao gồm những gì?</h3>
+          <i class="fa-solid fa-chevron-down text-primary-600 dark:text-primary-400 text-xl faq-icon"></i>
         </div>
-        <div class="faq-answer pt-4 text-gray-600">
+        <div class="faq-answer pt-4 text-gray-600 dark:text-slate-300">
           <p>Giá tour bao gồm:</p>
           <p>✓ Vận chuyển (máy bay, xe du lịch)</p>
           <p>✓ Khách sạn 3-5 sao</p>
@@ -146,12 +175,12 @@
 
     <!-- FAQ Items - Payment -->
     <div id="payment" class="faq-category hidden space-y-4">
-      <div class="faq-item bg-white rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
+      <div class="faq-item bg-white dark:bg-slate-800 rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
         <div class="flex justify-between items-start">
-          <h3 class="text-lg font-bold text-gray-800 pr-4">Những phương thức thanh toán nào được hỗ trợ?</h3>
-          <i class="fa-solid fa-chevron-down text-green-600 text-xl faq-icon"></i>
+          <h3 class="text-lg font-bold text-gray-800 dark:text-slate-100 pr-4">Những phương thức thanh toán nào được hỗ trợ?</h3>
+          <i class="fa-solid fa-chevron-down text-primary-600 dark:text-primary-400 text-xl faq-icon"></i>
         </div>
-        <div class="faq-answer pt-4 text-gray-600">
+        <div class="faq-answer pt-4 text-gray-600 dark:text-slate-300">
           <p>Chúng tôi chấp nhận:</p>
           <p>💳 Thẻ tín dụng / ghi nợ</p>
           <p>🏦 Chuyển khoản ngân hàng</p>
@@ -161,12 +190,12 @@
         </div>
       </div>
 
-      <div class="faq-item bg-white rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
+      <div class="faq-item bg-white dark:bg-slate-800 rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
         <div class="flex justify-between items-start">
-          <h3 class="text-lg font-bold text-gray-800 pr-4">Có phí xử lý thanh toán không?</h3>
-          <i class="fa-solid fa-chevron-down text-green-600 text-xl faq-icon"></i>
+          <h3 class="text-lg font-bold text-gray-800 dark:text-slate-100 pr-4">Có phí xử lý thanh toán không?</h3>
+          <i class="fa-solid fa-chevron-down text-primary-600 dark:text-primary-400 text-xl faq-icon"></i>
         </div>
-        <div class="faq-answer pt-4 text-gray-600">
+        <div class="faq-answer pt-4 text-gray-600 dark:text-slate-300">
           <p>Không có phí xử lý thanh toán khi bạn thanh toán qua:</p>
           <p>• Chuyển khoản ngân hàng</p>
           <p>• Thanh toán tại quầy</p>
@@ -174,12 +203,12 @@
         </div>
       </div>
 
-      <div class="faq-item bg-white rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
+      <div class="faq-item bg-white dark:bg-slate-800 rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
         <div class="flex justify-between items-start">
-          <h3 class="text-lg font-bold text-gray-800 pr-4">Tôi có được hoàn tiền không?</h3>
-          <i class="fa-solid fa-chevron-down text-green-600 text-xl faq-icon"></i>
+          <h3 class="text-lg font-bold text-gray-800 dark:text-slate-100 pr-4">Tôi có được hoàn tiền không?</h3>
+          <i class="fa-solid fa-chevron-down text-primary-600 dark:text-primary-400 text-xl faq-icon"></i>
         </div>
-        <div class="faq-answer pt-4 text-gray-600">
+        <div class="faq-answer pt-4 text-gray-600 dark:text-slate-300">
           <p>Chính sách hoàn tiền:</p>
           <p>📅 Hủy trước 30 ngày: Hoàn 100%</p>
           <p>📅 Hủy 15-30 ngày: Hoàn 80%</p>
@@ -191,12 +220,12 @@
 
     <!-- FAQ Items - Cancellation -->
     <div id="cancellation" class="faq-category hidden space-y-4">
-      <div class="faq-item bg-white rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
+      <div class="faq-item bg-white dark:bg-slate-800 rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
         <div class="flex justify-between items-start">
-          <h3 class="text-lg font-bold text-gray-800 pr-4">Làm cách nào để hủy tour?</h3>
-          <i class="fa-solid fa-chevron-down text-green-600 text-xl faq-icon"></i>
+          <h3 class="text-lg font-bold text-gray-800 dark:text-slate-100 pr-4">Làm cách nào để hủy tour?</h3>
+          <i class="fa-solid fa-chevron-down text-primary-600 dark:text-primary-400 text-xl faq-icon"></i>
         </div>
-        <div class="faq-answer pt-4 text-gray-600">
+        <div class="faq-answer pt-4 text-gray-600 dark:text-slate-300">
           <p>Bước 1: Đăng nhập tài khoản</p>
           <p>Bước 2: Vào mục "Lịch sử đặt tour"</p>
           <p>Bước 3: Chọn tour cần hủy</p>
@@ -206,12 +235,12 @@
         </div>
       </div>
 
-      <div class="faq-item bg-white rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
+      <div class="faq-item bg-white dark:bg-slate-800 rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
         <div class="flex justify-between items-start">
-          <h3 class="text-lg font-bold text-gray-800 pr-4">Có thể đổi tour thay vì hủy?</h3>
-          <i class="fa-solid fa-chevron-down text-green-600 text-xl faq-icon"></i>
+          <h3 class="text-lg font-bold text-gray-800 dark:text-slate-100 pr-4">Có thể đổi tour thay vì hủy?</h3>
+          <i class="fa-solid fa-chevron-down text-primary-600 dark:text-primary-400 text-xl faq-icon"></i>
         </div>
-        <div class="faq-answer pt-4 text-gray-600">
+        <div class="faq-answer pt-4 text-gray-600 dark:text-slate-300">
           <p>Có, bạn có thể đổi tour miễn là:</p>
           <p>• Đổi ít nhất 14 ngày trước khởi hành</p>
           <p>• Chọn tour cùng giá tiền hoặc cao hơn</p>
@@ -223,12 +252,12 @@
 
     <!-- FAQ Items - Support -->
     <div id="support" class="faq-category hidden space-y-4">
-      <div class="faq-item bg-white rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
+      <div class="faq-item bg-white dark:bg-slate-800 rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
         <div class="flex justify-between items-start">
-          <h3 class="text-lg font-bold text-gray-800 pr-4">Làm sao liên hệ support?</h3>
-          <i class="fa-solid fa-chevron-down text-green-600 text-xl faq-icon"></i>
+          <h3 class="text-lg font-bold text-gray-800 dark:text-slate-100 pr-4">Làm sao liên hệ support?</h3>
+          <i class="fa-solid fa-chevron-down text-primary-600 dark:text-primary-400 text-xl faq-icon"></i>
         </div>
-        <div class="faq-answer pt-4 text-gray-600">
+        <div class="faq-answer pt-4 text-gray-600 dark:text-slate-300">
           <p>📞 Hotline: 0905 025737 (8am - 6pm)</p>
           <p>💬 Zalo: 0905 025737</p>
           <p>📧 Email: support@wiltravel.com</p>
@@ -237,12 +266,12 @@
         </div>
       </div>
 
-      <div class="faq-item bg-white rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
+      <div class="faq-item bg-white dark:bg-slate-800 rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
         <div class="flex justify-between items-start">
-          <h3 class="text-lg font-bold text-gray-800 pr-4">Có yêu cầu visa không?</h3>
-          <i class="fa-solid fa-chevron-down text-green-600 text-xl faq-icon"></i>
+          <h3 class="text-lg font-bold text-gray-800 dark:text-slate-100 pr-4">Có yêu cầu visa không?</h3>
+          <i class="fa-solid fa-chevron-down text-primary-600 dark:text-primary-400 text-xl faq-icon"></i>
         </div>
-        <div class="faq-answer pt-4 text-gray-600">
+        <div class="faq-answer pt-4 text-gray-600 dark:text-slate-300">
           <p>Đối với tours trong nước: Không cần visa</p>
           <p>Đối với tours quốc tế: Cần visa (WilTravel có thể hỗ trợ)</p>
           <p>Yêu cầu: Hộ chiếu có hiệu lực ít nhất 6 tháng</p>
@@ -250,12 +279,12 @@
         </div>
       </div>
 
-      <div class="faq-item bg-white rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
+      <div class="faq-item bg-white dark:bg-slate-800 rounded-lg shadow-md p-6 cursor-pointer" onclick="toggleFAQ(this)">
         <div class="flex justify-between items-start">
-          <h3 class="text-lg font-bold text-gray-800 pr-4">Có giảm giá cho nhóm lớn?</h3>
-          <i class="fa-solid fa-chevron-down text-green-600 text-xl faq-icon"></i>
+          <h3 class="text-lg font-bold text-gray-800 dark:text-slate-100 pr-4">Có giảm giá cho nhóm lớn?</h3>
+          <i class="fa-solid fa-chevron-down text-primary-600 dark:text-primary-400 text-xl faq-icon"></i>
         </div>
-        <div class="faq-answer pt-4 text-gray-600">
+        <div class="faq-answer pt-4 text-gray-600 dark:text-slate-300">
           <p>Có, chúng tôi cung cấp giảm giá theo nhóm:</p>
           <p>👥 10-20 người: Giảm 5%</p>
           <p>👥 20-50 người: Giảm 10%</p>
@@ -271,7 +300,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
         <div>
-          <img src="images/logo-footer-colored.png" alt="WILTravel" class="h-12 mb-4 bg-white/10 rounded-xl p-1">
+          <img src="images/logo-footer.png" alt="WILTravel" class="h-12 mb-4">
           <p class="text-sm">Chỉ cần & đi chuyến nghỉ ngơi</p>
         </div>
         <div>
@@ -299,11 +328,11 @@
       document.getElementById(category).classList.remove('hidden');
       
       document.querySelectorAll('.faq-cat-btn').forEach(el => {
-        el.classList.remove('border-green-600', 'text-green-600', 'border-b-2');
-        el.classList.add('border-transparent', 'text-gray-600');
+        el.classList.remove('border-green-600', 'text-primary-600 dark:text-primary-400', 'border-b-2');
+        el.classList.add('border-transparent', 'text-gray-600 dark:text-slate-300');
       });
-      event.target.classList.add('border-green-600', 'text-green-600', 'border-b-2');
-      event.target.classList.remove('border-transparent', 'text-gray-600');
+      event.target.classList.add('border-green-600', 'text-primary-600 dark:text-primary-400', 'border-b-2');
+      event.target.classList.remove('border-transparent', 'text-gray-600 dark:text-slate-300');
     }
 
     document.querySelectorAll('.faq-cat-btn').forEach(btn => {
@@ -315,6 +344,14 @@
     if (mobileButton) {
       mobileButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
     }
+  </script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof AOS !== 'undefined') {
+        AOS.init({ duration: 800, once: true });
+      }
+    });
   </script>
 </body>
 </html>

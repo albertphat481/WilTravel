@@ -10,6 +10,34 @@
 
   <title>WILTravel - Chỉ cần & đi chuyến nghỉ ngơi</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            jakarta: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            primary: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              300: '#86efac',
+              400: '#4ade80',
+              500: '#22c55e',
+              600: '#16a34a', // original green
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <style>
     .hero-bg {
@@ -123,50 +151,51 @@
   </style>
   </style>
 </head>
-<body class="font-sans">
+<body class="font-jakarta bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-300">
 
   <!-- Navbar -->
-  <nav class="bg-white shadow-md fixed w-full z-50">
+  <nav class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-md fixed w-full z-50 border-b border-gray-100 dark:border-white/10 transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-      <div class="flex items-center gap-3">
-        <img src="images/logo.png" alt="WILTravel" class="h-9 sm:h-11 w-auto">
-      </div>
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="images/logo-transparent.png" alt="WILTravel" class="h-9 sm:h-11 w-auto dark:hidden">
+        <img src="images/logo-footer.png" alt="WILTravel" class="h-9 sm:h-11 w-auto hidden dark:block">
+      </a>
       
       <!-- Desktop Menu -->
-      <div class="hidden md:flex items-center gap-8 text-gray-700 font-medium">
-        <a href="index.html" class="hover:text-green-600 transition">Trang chủ</a>
-        <a href="tours.html" class="hover:text-green-600 transition">Tours</a>
-        <a href="flight.html" class="hover:text-green-600 transition">Máy Bay</a>
-        <a href="blog.html" class="hover:text-green-600 transition">Blog</a>
-        <a href="contact.html" class="hover:text-green-600 transition">Liên Hệ</a>
-        <a href="about.html" class="hover:text-green-600 transition">Về Chúng Tôi</a>
+      <div class="hidden md:flex items-center gap-8 text-gray-700 dark:text-slate-200 font-medium">
+        <a href="index.html" class="hover:text-primary-600 dark:text-primary-400 transition">Trang chủ</a>
+        <a href="tours.html" class="hover:text-primary-600 dark:text-primary-400 transition">Tours</a>
+        <a href="flight.html" class="hover:text-primary-600 dark:text-primary-400 transition">Máy Bay</a>
+        <a href="blog.html" class="hover:text-primary-600 dark:text-primary-400 transition">Blog</a>
+        <a href="contact.html" class="hover:text-primary-600 dark:text-primary-400 transition">Liên Hệ</a>
+        <a href="about.html" class="hover:text-primary-600 dark:text-primary-400 transition">Về Chúng Tôi</a>
       </div>
 
       <div class="flex items-center gap-3">
-        <a href="cart.html" class="text-gray-700 hover:text-green-600 transition text-lg"><i class="fa-solid fa-shopping-cart"></i></a>
-        <a href="profile.html" class="text-gray-700 hover:text-green-600 transition text-lg"><i class="fa-solid fa-user"></i></a>
-        <a href="login.html" class="hidden md:inline-block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-full transition text-sm sm:text-base">Đăng nhập</a>
-        <a href="register.html" class="hidden md:inline-block bg-green-600 text-white px-5 py-2 rounded-full hover:bg-green-700 transition text-sm sm:text-base font-medium">Đăng ký</a>
+        <a href="cart.html" class="text-gray-700 dark:text-slate-200 hover:text-primary-600 dark:text-primary-400 transition text-lg"><i class="fa-solid fa-shopping-cart"></i></a>
+        <a href="profile.html" class="text-gray-700 dark:text-slate-200 hover:text-primary-600 dark:text-primary-400 transition text-lg"><i class="fa-solid fa-user"></i></a>
+        <a href="login.html" class="hidden md:inline-block px-4 py-2 text-gray-700 dark:text-slate-200 hover:bg-gray-100 dark:bg-slate-800 rounded-full transition text-sm sm:text-base">Đăng nhập</a>
+        <a href="register.html" class="hidden md:inline-block bg-primary-600 dark:bg-primary-700 text-white px-5 py-2 rounded-full hover:bg-primary-700 dark:hover:bg-primary-600 transition text-sm sm:text-base font-medium">Đăng ký</a>
       </div>
 
       <!-- Mobile Menu Button -->
-      <button id="mobile-menu-button" class="md:hidden text-3xl text-gray-700">
+      <button id="mobile-menu-button" class="md:hidden text-3xl text-gray-700 dark:text-slate-200">
         <i class="fa-solid fa-bars"></i>
       </button>
     </div>
     <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
-      <div class="px-6 py-6 flex flex-col gap-5 text-gray-700 font-medium">
-        <a href="index.html" class="hover:text-green-600 transition">Trang chủ</a>
-        <a href="tours.html" class="hover:text-green-600 transition">Tours</a>
-        <a href="flight.html" class="hover:text-green-600 transition">Máy Bay</a>
-        <a href="blog.html" class="hover:text-green-600 transition">Blog</a>
-        <a href="contact.html" class="hover:text-green-600 transition">Liên Hệ</a>
-        <a href="about.html" class="hover:text-green-600 transition">Về Chúng Tôi</a>
+      <div class="px-6 py-6 flex flex-col gap-5 text-gray-700 dark:text-slate-200 font-medium">
+        <a href="index.html" class="hover:text-primary-600 dark:text-primary-400 transition">Trang chủ</a>
+        <a href="tours.html" class="hover:text-primary-600 dark:text-primary-400 transition">Tours</a>
+        <a href="flight.html" class="hover:text-primary-600 dark:text-primary-400 transition">Máy Bay</a>
+        <a href="blog.html" class="hover:text-primary-600 dark:text-primary-400 transition">Blog</a>
+        <a href="contact.html" class="hover:text-primary-600 dark:text-primary-400 transition">Liên Hệ</a>
+        <a href="about.html" class="hover:text-primary-600 dark:text-primary-400 transition">Về Chúng Tôi</a>
         <hr>
-        <a href="cart.html" class="hover:text-green-600 transition"><i class="fa-solid fa-shopping-cart mr-2"></i>Giỏ Hàng</a>
-        <a href="profile.html" class="hover:text-green-600 transition"><i class="fa-solid fa-user mr-2"></i>Tài Khoản</a>
-        <a href="login.html" class="hover:text-green-600 transition md:hidden"><i class="fa-solid fa-sign-in-alt mr-2"></i>Đăng nhập</a>
-        <a href="register.html" class="hover:text-green-600 transition md:hidden"><i class="fa-solid fa-user-plus mr-2"></i>Đăng ký</a>
+        <a href="cart.html" class="hover:text-primary-600 dark:text-primary-400 transition"><i class="fa-solid fa-shopping-cart mr-2"></i>Giỏ Hàng</a>
+        <a href="profile.html" class="hover:text-primary-600 dark:text-primary-400 transition"><i class="fa-solid fa-user mr-2"></i>Tài Khoản</a>
+        <a href="login.html" class="hover:text-primary-600 dark:text-primary-400 transition md:hidden"><i class="fa-solid fa-sign-in-alt mr-2"></i>Đăng nhập</a>
+        <a href="register.html" class="hover:text-primary-600 dark:text-primary-400 transition md:hidden"><i class="fa-solid fa-user-plus mr-2"></i>Đăng ký</a>
       </div>
     </div>
   </nav>
@@ -186,26 +215,26 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
       <div class="max-w-2xl">
         <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight mb-6">
-          Chỉ cần &amp; <span class="text-green-400">đi chuyến nghỉ ngơi</span>
+          Chỉ cần &amp; <span class="text-primary-400 dark:text-primary-300">đi chuyến nghỉ ngơi</span>
         </h2>
         <p class="text-lg md:text-xl mb-8 text-gray-200">
           WILTravel mang đến những hành trình tuyệt vời nhất. Khám phá thế giới theo cách riêng của bạn.
         </p>
 
-        <div class="bg-white rounded-3xl p-2 shadow-2xl search-container">
+        <div class="bg-white dark:bg-slate-800 rounded-3xl p-2 shadow-2xl search-container">
           <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
             <div class="md:col-span-2">
-              <label class="block text-xs text-gray-500 ml-4 mt-2">Bạn muốn đi đâu?</label>
+              <label class="block text-xs text-gray-500 dark:text-slate-400 ml-4 mt-2">Bạn muốn đi đâu?</label>
               <input type="text" id="search-input" placeholder="Phú Quốc, Đà Lạt, Bali, Nhật Bản..." 
-                     class="w-full px-6 py-4 bg-transparent focus:outline-none text-gray-800 text-base md:text-lg">
+                     class="w-full px-6 py-4 bg-transparent focus:outline-none text-gray-800 dark:text-slate-100 text-base md:text-lg">
             </div>
             <div class="hidden md:block">
-              <label class="block text-xs text-gray-500 ml-4 mt-2">Ngày đi</label>
-              <input type="date" id="search-date" class="w-full px-6 py-4 bg-transparent focus:outline-none text-gray-800">
+              <label class="block text-xs text-gray-500 dark:text-slate-400 ml-4 mt-2">Ngày đi</label>
+              <input type="date" id="search-date" class="w-full px-6 py-4 bg-transparent focus:outline-none text-gray-800 dark:text-slate-100">
             </div>
             <div class="flex items-end">
               <button onclick="searchTour()" 
-                      class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-4 rounded-2xl transition text-base md:text-lg">
+                      class="w-full bg-primary-600 dark:bg-primary-700 hover:bg-primary-700 dark:hover:bg-primary-600 text-white font-semibold py-4 rounded-2xl transition text-base md:text-lg">
                 Tìm chuyến đi
               </button>
             </div>
@@ -218,10 +247,10 @@
       <div class="max-w-7xl mx-auto px-6">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
           <div>
-            <h3 class="text-2xl font-bold text-gray-800">Kết quả tìm kiếm</h3>
-            <p class="text-gray-500 mt-1" id="search-summary"></p>
+            <h3 class="text-2xl font-bold text-gray-800 dark:text-slate-100">Kết quả tìm kiếm</h3>
+            <p class="text-gray-500 dark:text-slate-400 mt-1" id="search-summary"></p>
           </div>
-          <button onclick="resetSearchResults()" class="text-sm text-gray-600 hover:text-green-600 underline">Xóa kết quả</button>
+          <button onclick="resetSearchResults()" class="text-sm text-gray-600 dark:text-slate-300 hover:text-primary-600 dark:text-primary-400 underline">Xóa kết quả</button>
         </div>
         <div id="search-results-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
       </div>
@@ -241,33 +270,33 @@
   <section class="py-12 bg-white border-b">
     <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
       <div>
-        <div class="text-4xl font-bold text-green-600 stat-number" data-target="12500">0</div>
-        <p class="text-gray-600 mt-2">Khách hàng hài lòng</p>
+        <div class="text-4xl font-bold text-primary-600 dark:text-primary-400 stat-number" data-target="12500">0</div>
+        <p class="text-gray-600 dark:text-slate-300 mt-2">Khách hàng hài lòng</p>
       </div>
       <div>
-        <div class="text-4xl font-bold text-green-600 stat-number" data-target="248">0</div>
-        <p class="text-gray-600 mt-2">Điểm đến</p>
+        <div class="text-4xl font-bold text-primary-600 dark:text-primary-400 stat-number" data-target="248">0</div>
+        <p class="text-gray-600 dark:text-slate-300 mt-2">Điểm đến</p>
       </div>
       <div>
-        <div class="text-4xl font-bold text-green-600 stat-number" data-target="856">0</div>
-        <p class="text-gray-600 mt-2">Tour đã tổ chức</p>
+        <div class="text-4xl font-bold text-primary-600 dark:text-primary-400 stat-number" data-target="856">0</div>
+        <p class="text-gray-600 dark:text-slate-300 mt-2">Tour đã tổ chức</p>
       </div>
       <div>
-        <div class="text-4xl font-bold text-green-600 stat-number" data-target="98">0</div>
-        <p class="text-gray-600 mt-2">% Khách hài lòng</p>
+        <div class="text-4xl font-bold text-primary-600 dark:text-primary-400 stat-number" data-target="98">0</div>
+        <p class="text-gray-600 dark:text-slate-300 mt-2">% Khách hài lòng</p>
       </div>
     </div>
   </section>
 
   <!-- Popular Destinations -->
-  <section id="destinations" class="py-16 md:py-20 bg-gray-50">
+  <section id="destinations" class="py-16 md:py-20 bg-gray-50 dark:bg-slate-800/50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 md:mb-12 gap-4">
         <div>
-          <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Điểm đến nổi bật</h2>
-          <p class="text-gray-600 mt-2">Những chuyến đi được yêu thích nhất</p>
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-slate-100">Điểm đến nổi bật</h2>
+          <p class="text-gray-600 dark:text-slate-300 mt-2">Những chuyến đi được yêu thích nhất</p>
         </div>
-        <a href="#destinations" class="text-green-600 hover:underline font-medium flex items-center gap-2 whitespace-nowrap">
+        <a href="#destinations" class="text-primary-600 dark:text-primary-400 hover:underline font-medium flex items-center gap-2 whitespace-nowrap">
           Xem tất cả <i class="fa-solid fa-arrow-right"></i>
         </a>
       </div>
@@ -320,14 +349,14 @@
     </div>
   </section>
 
-  <section id="featured-tours-section" class="py-16 md:py-20 bg-gray-50">
+  <section id="featured-tours-section" class="py-16 md:py-20 bg-gray-50 dark:bg-slate-800/50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 md:mb-12 gap-4">
         <div>
-          <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Tour Tiêu Biểu</h2>
-          <p class="text-gray-600 mt-2">Những tour chất lượng cao - Giá hợp lý nhất</p>
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-slate-100">Tour Tiêu Biểu</h2>
+          <p class="text-gray-600 dark:text-slate-300 mt-2">Những tour chất lượng cao - Giá hợp lý nhất</p>
         </div>
-        <a href="#featured-tours-section" class="text-green-600 hover:underline font-medium flex items-center gap-2 whitespace-nowrap">
+        <a href="#featured-tours-section" class="text-primary-600 dark:text-primary-400 hover:underline font-medium flex items-center gap-2 whitespace-nowrap">
           Xem tất cả tour <i class="fa-solid fa-arrow-right"></i>
         </a>
       </div>
@@ -337,29 +366,29 @@
   </section>
 
   <!-- Why Choose Us -->
-  <section class="py-16 md:py-20 bg-gray-50">
+  <section class="py-16 md:py-20 bg-gray-50 dark:bg-slate-800/50">
     <div class="max-w-7xl mx-auto px-6 text-center">
       <h2 class="text-3xl md:text-4xl font-bold mb-4">Tại sao chọn WILTravel?</h2>
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mt-12">
         <div class="bg-white p-8 rounded-3xl shadow-sm">
-          <i class="fa-solid fa-shield-alt text-5xl text-green-600 mb-4"></i>
+          <i class="fa-solid fa-shield-alt text-5xl text-primary-600 dark:text-primary-400 mb-4"></i>
           <h3 class="font-semibold text-xl mb-2">An toàn & Tin cậy</h3>
-          <p class="text-gray-600">Bảo hiểm du lịch toàn diện</p>
+          <p class="text-gray-600 dark:text-slate-300">Bảo hiểm du lịch toàn diện</p>
         </div>
         <div class="bg-white p-8 rounded-3xl shadow-sm">
-          <i class="fa-solid fa-headset text-5xl text-green-600 mb-4"></i>
+          <i class="fa-solid fa-headset text-5xl text-primary-600 dark:text-primary-400 mb-4"></i>
           <h3 class="font-semibold text-xl mb-2">Hỗ trợ 24/7</h3>
-          <p class="text-gray-600">Đội ngũ tư vấn chuyên nghiệp</p>
+          <p class="text-gray-600 dark:text-slate-300">Đội ngũ tư vấn chuyên nghiệp</p>
         </div>
         <div class="bg-white p-8 rounded-3xl shadow-sm">
-          <i class="fa-solid fa-medal text-5xl text-green-600 mb-4"></i>
+          <i class="fa-solid fa-medal text-5xl text-primary-600 dark:text-primary-400 mb-4"></i>
           <h3 class="font-semibold text-xl mb-2">Chất lượng cao</h3>
-          <p class="text-gray-600">Đối tác uy tín toàn cầu</p>
+          <p class="text-gray-600 dark:text-slate-300">Đối tác uy tín toàn cầu</p>
         </div>
         <div class="bg-white p-8 rounded-3xl shadow-sm">
-          <i class="fa-solid fa-dollar-sign text-5xl text-green-600 mb-4"></i>
+          <i class="fa-solid fa-dollar-sign text-5xl text-primary-600 dark:text-primary-400 mb-4"></i>
           <h3 class="font-semibold text-xl mb-2">Giá tốt nhất</h3>
-          <p class="text-gray-600">Cam kết giá cạnh tranh</p>
+          <p class="text-gray-600 dark:text-slate-300">Cam kết giá cạnh tranh</p>
         </div>
       </div>
     </div>
@@ -370,16 +399,16 @@
     <div class="max-w-7xl mx-auto px-6 text-center">
       <h2 class="text-3xl md:text-4xl font-bold mb-12">Khách hàng nói gì về chúng tôi</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="bg-gray-50 p-8 rounded-3xl">
-          <p class="italic text-gray-600">"Chuyến đi Phú Quốc quá tuyệt vời. Dịch vụ rất chu đáo!"</p>
+        <div class="bg-gray-50 dark:bg-slate-800/50 p-8 rounded-3xl">
+          <p class="italic text-gray-600 dark:text-slate-300">"Chuyến đi Phú Quốc quá tuyệt vời. Dịch vụ rất chu đáo!"</p>
           <p class="mt-6 font-medium">Chị Lan Anh - Hà Nội</p>
         </div>
-        <div class="bg-gray-50 p-8 rounded-3xl">
-          <p class="italic text-gray-600">"Tour Sapa 5 ngày rất đáng tiền. Hướng dẫn viên nhiệt tình."</p>
+        <div class="bg-gray-50 dark:bg-slate-800/50 p-8 rounded-3xl">
+          <p class="italic text-gray-600 dark:text-slate-300">"Tour Sapa 5 ngày rất đáng tiền. Hướng dẫn viên nhiệt tình."</p>
           <p class="mt-6 font-medium">Anh Minh Quân - TP.HCM</p>
         </div>
-        <div class="bg-gray-50 p-8 rounded-3xl">
-          <p class="italic text-gray-600">"Đặt tour Bali dễ dàng, khách sạn đẹp, ăn ngon."</p>
+        <div class="bg-gray-50 dark:bg-slate-800/50 p-8 rounded-3xl">
+          <p class="italic text-gray-600 dark:text-slate-300">"Đặt tour Bali dễ dàng, khách sạn đẹp, ăn ngon."</p>
           <p class="mt-6 font-medium">Chị Thu Hà - Đà Nẵng</p>
         </div>
       </div>
@@ -392,7 +421,7 @@
       <h2 class="text-3xl md:text-4xl font-bold mb-6">Sẵn sàng cho chuyến đi tiếp theo?</h2>
       <p class="text-lg md:text-xl mb-10">Hàng ngàn du khách đã tin tưởng WILTravel để có những kỳ nghỉ tuyệt vời</p>
       <button onclick="document.getElementById('search-input').focus()" 
-              class="bg-white text-green-600 px-8 md:px-10 py-4 rounded-full text-base md:text-lg font-semibold hover:bg-gray-100 transition">
+              class="bg-white text-primary-600 dark:text-primary-400 px-8 md:px-10 py-4 rounded-full text-base md:text-lg font-semibold hover:bg-gray-100 dark:bg-slate-800 transition">
         Bắt đầu hành trình ngay
       </button>
     </div>
@@ -403,7 +432,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
         <div>
-          <img src="images/logo-footer-colored.png" alt="WILTravel" class="h-12 mb-4 bg-white/10 rounded-xl p-1">
+          <img src="images/logo-footer.png" alt="WILTravel" class="h-12 mb-4">
           <p class="text-sm">Chỉ cần & đi chuyến nghỉ ngơi</p>
         </div>
         
@@ -565,22 +594,22 @@
         searchResultsGrid.innerHTML = '';
         results.forEach(item => {
           const card = document.createElement('div');
-          card.className = 'bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100';
+          card.className = 'bg-white dark:bg-slate-800 rounded-3xl overflow-hidden shadow-sm border border-gray-100';
           card.innerHTML = `
             <img src="${item.image}" class="w-full h-44 object-cover" alt="${item.title}">
             <div class="p-5">
               <div class="flex justify-between items-center mb-3 gap-4">
                 <div>
-                  <p class="text-xs uppercase tracking-[0.2em] text-green-600 font-semibold mb-2">${item.label}</p>
-                  <h4 class="text-xl font-semibold text-gray-800">${item.title}</h4>
-                  <p class="text-gray-500 mt-1">${item.subtitle}</p>
+                  <p class="text-xs uppercase tracking-[0.2em] text-primary-600 dark:text-primary-400 font-semibold mb-2">${item.label}</p>
+                  <h4 class="text-xl font-semibold text-gray-800 dark:text-slate-100">${item.title}</h4>
+                  <p class="text-gray-500 dark:text-slate-400 mt-1">${item.subtitle}</p>
                 </div>
                 <div class="text-right">
-                  <p class="text-xl font-bold text-green-600">${item.price}</p>
+                  <p class="text-xl font-bold text-primary-600 dark:text-primary-400">${item.price}</p>
                   <span class="text-xs text-gray-400">VNĐ</span>
                 </div>
               </div>
-              <button onclick="handleSearchAction('${item.type}', '${item.id || ''}', '${item.title}')" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-2xl transition">Chi tiết</button>
+              <button onclick="handleSearchAction('${item.type}', '${item.id || ''}', '${item.title}')" class="w-full bg-primary-600 dark:bg-primary-700 hover:bg-primary-700 dark:hover:bg-primary-600 text-white py-3 rounded-2xl transition">Chi tiết</button>
             </div>`;
           searchResultsGrid.appendChild(card);
         });
@@ -720,7 +749,7 @@
       grid.innerHTML = '';
       destinations.forEach(dest => {
         const card = document.createElement('div');
-        card.className = "bg-white rounded-3xl overflow-hidden card-hover cursor-pointer";
+        card.className = "bg-white dark:bg-slate-800 rounded-3xl overflow-hidden card-hover cursor-pointer";
         card.onclick = () => { window.location.href = `tours.html?location=${encodeURIComponent(dest.name)}`; };
         card.innerHTML = `
           <img src="${dest.image}" class="w-full h-52 sm:h-64 object-cover" alt="${dest.name}">
@@ -728,10 +757,10 @@
             <div class="flex justify-between items-start">
               <div>
                 <h3 class="text-lg sm:text-xl font-semibold">${dest.name}</h3>
-                <p class="text-gray-500">${dest.location}</p>
+                <p class="text-gray-500 dark:text-slate-400">${dest.location}</p>
               </div>
               <div class="text-right">
-                <span class="text-xl sm:text-2xl font-bold text-green-600">${dest.price}</span>
+                <span class="text-xl sm:text-2xl font-bold text-primary-600 dark:text-primary-400">${dest.price}</span>
                 <p class="text-xs text-gray-400">/người</p>
               </div>
             </div>
@@ -748,10 +777,10 @@
       featured.forEach(tour => {
         const card = document.createElement('div');
         const badgeHtml = tour.badge 
-          ? `<span class="absolute top-4 left-4 bg-green-600 text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-md z-10">${tour.badge}</span>`
+          ? `<span class="absolute top-4 left-4 bg-primary-600 dark:bg-primary-700 text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-md z-10">${tour.badge}</span>`
           : '';
           
-        card.className = "bg-white rounded-3xl overflow-hidden card-hover cursor-pointer border border-gray-100 relative flex flex-col justify-between";
+        card.className = "bg-white dark:bg-slate-800 rounded-3xl overflow-hidden card-hover cursor-pointer border border-gray-100 relative flex flex-col justify-between";
         card.onclick = () => { window.location.href = `tour-detail.html?id=${tour.id}`; };
         card.innerHTML = `
           <div class="relative overflow-hidden">
@@ -765,18 +794,18 @@
                 <span>${tour.rating || 4.8}</span>
                 <span class="text-gray-400">(${tour.reviews || 80} đánh giá)</span>
               </div>
-              <h3 class="font-bold text-base sm:text-lg mb-1 text-gray-800 line-clamp-1 hover:text-green-600 transition">${tour.name}</h3>
-              <div class="flex items-center gap-3 text-xs text-gray-500 mt-2 mb-4">
-                <span><i class="fa-solid fa-map-pin text-green-600 mr-1"></i>${tour.location}</span>
-                <span><i class="fa-solid fa-clock text-green-600 mr-1"></i>${tour.duration}</span>
+              <h3 class="font-bold text-base sm:text-lg mb-1 text-gray-800 dark:text-slate-100 line-clamp-1 hover:text-primary-600 dark:text-primary-400 transition">${tour.name}</h3>
+              <div class="flex items-center gap-3 text-xs text-gray-500 dark:text-slate-400 mt-2 mb-4">
+                <span><i class="fa-solid fa-map-pin text-primary-600 dark:text-primary-400 mr-1"></i>${tour.location}</span>
+                <span><i class="fa-solid fa-clock text-primary-600 dark:text-primary-400 mr-1"></i>${tour.duration}</span>
               </div>
             </div>
             <div class="mt-auto flex justify-between items-center pt-4 border-t border-gray-50">
               <div>
-                <span class="text-xl sm:text-2xl font-black text-green-600">${(tour.price / 1000000).toFixed(2)}tr</span>
+                <span class="text-xl sm:text-2xl font-black text-primary-600 dark:text-primary-400">${(tour.price / 1000000).toFixed(2)}tr</span>
                 <span class="text-xs text-gray-400 font-medium"> VNĐ</span>
               </div>
-              <button onclick="event.stopPropagation(); window.location.href='tour-detail.html?id=${tour.id}'" class="bg-green-600 text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-green-700 transition">Đặt tour</button>
+              <button onclick="event.stopPropagation(); window.location.href='tour-detail.html?id=${tour.id}'" class="bg-primary-600 dark:bg-primary-700 text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-primary-700 dark:hover:bg-primary-600 transition">Đặt tour</button>
             </div>
           </div>
         `;
@@ -830,6 +859,14 @@
       startAutoPlay();
       initCountdown();
     };
+  </script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof AOS !== 'undefined') {
+        AOS.init({ duration: 800, once: true });
+      }
+    });
   </script>
 </body>
 </html>

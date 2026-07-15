@@ -5,19 +5,50 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WILTravel - Tài Khoản Cá Nhân</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            jakarta: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            primary: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              300: '#86efac',
+              400: '#4ade80',
+              500: '#22c55e',
+              600: '#16a34a', // original green
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <style>
     .nav-tab.active { border-bottom: 3px solid #16a34a; color: #16a34a; }
   </style>
 </head>
-<body class="font-sans bg-gray-50">
+<body class="font-jakarta bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-300">
 
-  <nav class="bg-white shadow-md fixed w-full z-50">
+  <nav class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-md fixed w-full z-50 border-b border-gray-100 dark:border-white/10 transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-      <a href="index.html"><img src="images/logo.png" alt="WILTravel" class="h-10 w-auto"></a>
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="images/logo-transparent.png" alt="WILTravel" class="h-9 sm:h-11 w-auto dark:hidden">
+        <img src="images/logo-footer.png" alt="WILTravel" class="h-9 sm:h-11 w-auto hidden dark:block">
+      </a>
       <div class="flex gap-4">
-        <a href="tours.html" class="text-gray-700 hover:text-green-600">Mua Hàng</a>
-        <a href="#" onclick="logout()" class="text-gray-700 hover:text-green-600">Đăng Xuất</a>
+        <a href="tours.html" class="text-gray-700 dark:text-slate-200 hover:text-primary-600 dark:text-primary-400">Mua Hàng</a>
+        <a href="#" onclick="logout()" class="text-gray-700 dark:text-slate-200 hover:text-primary-600 dark:text-primary-400">Đăng Xuất</a>
       </div>
     </div>
   </nav>
@@ -26,23 +57,23 @@
     <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
       <!-- Sidebar -->
       <div class="md:col-span-1">
-        <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="bg-white dark:bg-slate-800 rounded-lg shadow-md p-6">
           <div class="text-center mb-6">
-            <div class="w-20 h-20 mx-auto bg-green-600 rounded-full flex items-center justify-center text-white text-3xl mb-4">
+            <div class="w-20 h-20 mx-auto bg-primary-600 dark:bg-primary-700 rounded-full flex items-center justify-center text-white text-3xl mb-4">
               <i class="fa-solid fa-user"></i>
             </div>
-            <h3 class="font-bold text-gray-800">Nguyễn Văn A</h3>
-            <p class="text-sm text-gray-600">nguyen@email.com</p>
+            <h3 class="font-bold text-gray-800 dark:text-slate-100">Nguyễn Văn A</h3>
+            <p class="text-sm text-gray-600 dark:text-slate-300">nguyen@email.com</p>
           </div>
 
           <div class="space-y-3">
-            <button onclick="switchTab('profile')" class="nav-tab active w-full text-left px-4 py-3 rounded-lg hover:bg-gray-100 transition font-medium text-gray-700">
+            <button onclick="switchTab('profile')" class="nav-tab active w-full text-left px-4 py-3 rounded-lg hover:bg-gray-100 dark:bg-slate-800 transition font-medium text-gray-700 dark:text-slate-200">
               <i class="fa-solid fa-user mr-2"></i>Hồ Sơ
             </button>
-            <button onclick="switchTab('bookings')" class="nav-tab w-full text-left px-4 py-3 rounded-lg hover:bg-gray-100 transition font-medium text-gray-700">
+            <button onclick="switchTab('bookings')" class="nav-tab w-full text-left px-4 py-3 rounded-lg hover:bg-gray-100 dark:bg-slate-800 transition font-medium text-gray-700 dark:text-slate-200">
               <i class="fa-solid fa-bookmark mr-2"></i>Đơn Đặt
             </button>
-            <button onclick="switchTab('settings')" class="nav-tab w-full text-left px-4 py-3 rounded-lg hover:bg-gray-100 transition font-medium text-gray-700">
+            <button onclick="switchTab('settings')" class="nav-tab w-full text-left px-4 py-3 rounded-lg hover:bg-gray-100 dark:bg-slate-800 transition font-medium text-gray-700 dark:text-slate-200">
               <i class="fa-solid fa-gear mr-2"></i>Cài Đặt
             </button>
           </div>
@@ -52,68 +83,75 @@
       <!-- Content -->
       <div class="md:col-span-3">
         <!-- Profile Tab -->
-        <div id="profile-tab" class="bg-white rounded-lg shadow-md p-8">
-          <h2 class="text-2xl font-bold text-gray-800 mb-6">Thông Tin Cá Nhân</h2>
+        <div id="profile-tab" class="bg-white dark:bg-slate-800 rounded-lg shadow-md p-8">
+          <h2 class="text-2xl font-bold text-gray-800 dark:text-slate-100 mb-6">Thông Tin Cá Nhân</h2>
           <form onsubmit="updateProfile(event)" class="space-y-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-2">Họ</label>
+                <label class="block text-sm font-semibold text-gray-700 dark:text-slate-200 mb-2">Họ</label>
                 <input type="text" id="profile-lastname" required class="w-full px-4 py-3 border border-gray-300 rounded-lg">
               </div>
               <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-2">Tên</label>
+                <label class="block text-sm font-semibold text-gray-700 dark:text-slate-200 mb-2">Tên</label>
                 <input type="text" id="profile-firstname" required class="w-full px-4 py-3 border border-gray-300 rounded-lg">
               </div>
             </div>
 
             <div>
-              <label class="block text-sm font-semibold text-gray-700 mb-2">Email (Không thể thay đổi)</label>
-              <input type="email" id="profile-email" readonly class="w-full px-4 py-3 border border-gray-200 rounded-lg bg-gray-50 text-gray-500 cursor-not-allowed">
+              <label class="block text-sm font-semibold text-gray-700 dark:text-slate-200 mb-2">Email (Không thể thay đổi)</label>
+              <input type="email" id="profile-email" readonly class="w-full px-4 py-3 border border-gray-200 rounded-lg bg-gray-50 dark:bg-slate-800/50 text-gray-500 dark:text-slate-400 cursor-not-allowed">
             </div>
 
             <div>
-              <label class="block text-sm font-semibold text-gray-700 mb-2">Số Điện Thoại</label>
+              <label class="block text-sm font-semibold text-gray-700 dark:text-slate-200 mb-2">Số Điện Thoại</label>
               <input type="tel" id="profile-phone" required class="w-full px-4 py-3 border border-gray-300 rounded-lg">
             </div>
 
             <div>
-              <label class="block text-sm font-semibold text-gray-700 mb-2">Địa Chỉ</label>
+              <label class="block text-sm font-semibold text-gray-700 dark:text-slate-200 mb-2">Địa Chỉ</label>
               <input type="text" id="profile-address" required class="w-full px-4 py-3 border border-gray-300 rounded-lg">
             </div>
 
-            <button type="submit" class="bg-green-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-700 transition">
+            <button type="submit" class="bg-primary-600 dark:bg-primary-700 text-white font-bold py-3 px-6 rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition">
               Cập Nhật Thông Tin
             </button>
           </form>
         </div>
 
         <!-- Bookings Tab -->
-        <div id="bookings-tab" class="hidden">
-          <h2 class="text-2xl font-bold text-gray-800 mb-6">Lịch Sử Đặt Tour</h2>
-          <div id="orders-list" class="space-y-4">
-            <!-- Sẽ được tải động -->
+        <div id="bookings-tab" class="hidden bg-white dark:bg-slate-800 rounded-lg shadow-md p-8">
+          <h2 class="text-2xl font-bold text-gray-800 dark:text-slate-100 mb-6">Lịch sử giao dịch</h2>
+          <div class="flex gap-6 border-b border-gray-150 dark:border-white/10 mb-6">
+            <button onclick="switchBookingSubTab('tours')" id="subtab-tours-btn" class="subtab-btn pb-3 text-sm font-semibold border-b-2 border-primary-600 text-primary-600 cursor-pointer">
+              <i class="fa-solid fa-suitcase mr-1.5"></i>Tour du lịch
+            </button>
+            <button onclick="switchBookingSubTab('flights')" id="subtab-flights-btn" class="subtab-btn pb-3 text-sm font-semibold border-b-2 border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-white cursor-pointer">
+              <i class="fa-solid fa-plane mr-1.5"></i>Vé máy bay
+            </button>
           </div>
+          <div id="tours-orders-list" class="space-y-6"></div>
+          <div id="flights-orders-list" class="space-y-6 hidden"></div>
         </div>
 
         <!-- Settings Tab -->
         <div id="settings-tab" class="hidden">
-          <h2 class="text-2xl font-bold text-gray-800 mb-6">Cài Đặt</h2>
+          <h2 class="text-2xl font-bold text-gray-800 dark:text-slate-100 mb-6">Cài Đặt</h2>
           <div class="space-y-6">
-            <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="bg-white dark:bg-slate-800 rounded-lg shadow-md p-6">
               <div class="flex justify-between items-center mb-4">
-                <h3 class="font-bold text-gray-800">Nhận Thông Báo Email</h3>
+                <h3 class="font-bold text-gray-800 dark:text-slate-100">Nhận Thông Báo Email</h3>
                 <input type="checkbox" checked class="w-5 h-5 accent-green-600">
               </div>
-              <p class="text-sm text-gray-600">Nhận email khi có ưu đãi mới</p>
+              <p class="text-sm text-gray-600 dark:text-slate-300">Nhận email khi có ưu đãi mới</p>
             </div>
 
-            <div class="bg-white rounded-lg shadow-md p-6">
-              <h3 class="font-bold text-gray-800 mb-4">Đổi Mật Khẩu</h3>
+            <div class="bg-white dark:bg-slate-800 rounded-lg shadow-md p-6">
+              <h3 class="font-bold text-gray-800 dark:text-slate-100 mb-4">Đổi Mật Khẩu</h3>
               <div class="space-y-4">
                 <input type="password" id="pwd-current" placeholder="Mật khẩu hiện tại" class="w-full px-4 py-3 border border-gray-300 rounded-lg">
                 <input type="password" id="pwd-new" placeholder="Mật khẩu mới" class="w-full px-4 py-3 border border-gray-300 rounded-lg">
                 <input type="password" id="pwd-confirm" placeholder="Xác nhận mật khẩu" class="w-full px-4 py-3 border border-gray-300 rounded-lg">
-                <button type="button" onclick="changePassword()" class="bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700">
+                <button type="button" onclick="changePassword()" class="bg-primary-600 dark:bg-primary-700 text-white font-bold py-2 px-4 rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600">
                   Đổi Mật Khẩu
                 </button>
               </div>
@@ -217,36 +255,175 @@
       document.getElementById('pwd-confirm').value = '';
     }
 
+    let currentBookingSubTab = 'tours';
+    function switchBookingSubTab(sub) {
+      currentBookingSubTab = sub;
+      document.querySelectorAll('.subtab-btn').forEach(btn => {
+        btn.className = "subtab-btn pb-3 text-sm font-semibold border-b-2 border-transparent text-gray-500 hover:text-gray-750 dark:hover:text-white cursor-pointer";
+      });
+      
+      const activeBtn = document.getElementById(`subtab-${sub}-btn`);
+      if (activeBtn) {
+        activeBtn.className = "subtab-btn pb-3 text-sm font-semibold border-b-2 border-primary-600 text-primary-600 cursor-pointer";
+      }
+      
+      if (sub === 'tours') {
+        document.getElementById('tours-orders-list').classList.remove('hidden');
+        document.getElementById('flights-orders-list').classList.add('hidden');
+      } else {
+        document.getElementById('tours-orders-list').classList.add('hidden');
+        document.getElementById('flights-orders-list').classList.remove('hidden');
+      }
+      renderBookings();
+    }
+
+    const airlineLogos = {
+      'Vietnam Airlines': 'images/vietnam-airlines.png',
+      'VietJet Air': 'images/vietjet-air.png',
+      'Bamboo Airways': 'images/bamboo-airways.png',
+      'Pacific Airlines': 'images/pacific-airlines.png',
+      'Vietravel Airlines': 'images/vietravel.png',
+      'AirAsia': 'images/airasia.png',
+      'Thai Airways': 'images/thai-airways.png',
+      'Singapore Airlines': 'images/singapore-airlines.png',
+      'Scoot': 'images/scoot.png',
+      'Emirates': 'images/emirates.png',
+      'Qatar Airways': 'images/qatar-airways.png'
+    };
+
     function renderBookings() {
       const orders = getOrders();
-      const container = document.getElementById('orders-list');
+      const toursContainer = document.getElementById('tours-orders-list');
       
       if (orders.length === 0) {
-        container.innerHTML = `
-          <div class="bg-white rounded-xl p-8 text-center text-gray-500 border border-gray-100 shadow-sm">
+        toursContainer.innerHTML = `
+          <div class="bg-white dark:bg-slate-800 rounded-3xl p-8 text-center text-gray-500 dark:text-slate-400 border border-gray-150 dark:border-white/5 shadow-sm">
             Chưa có đơn đặt tour nào.
           </div>`;
-        return;
+      } else {
+        toursContainer.innerHTML = orders.map(ord => {
+          const tour = tours.find(t => t.id === ord.tourId);
+          const tourName = tour ? tour.name : `Tour #${ord.tourId}`;
+          const image = tour ? tour.image : 'images/hero1.jpg';
+          const location = tour ? tour.location : 'Việt Nam';
+          return `
+            <div class="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-slate-800/40 dark:to-slate-800/80 rounded-3xl border border-green-200 dark:border-emerald-900/60 p-6 shadow-md relative overflow-hidden flex flex-col md:flex-row gap-6 items-center">
+              <div class="absolute left-[-10px] top-1/2 -translate-y-1/2 w-5 h-5 bg-white dark:bg-slate-900 rounded-full border-r border-green-200 dark:border-emerald-900 hidden md:block"></div>
+              <div class="absolute right-[-10px] top-1/2 -translate-y-1/2 w-5 h-5 bg-white dark:bg-slate-900 rounded-full border-l border-green-200 dark:border-emerald-900 hidden md:block"></div>
+              
+              <img src="${image}" class="w-full md:w-32 h-24 object-cover rounded-2xl shadow-sm shrink-0" alt="">
+              <div class="flex-grow w-full md:w-auto">
+                <div class="flex justify-between items-start mb-2">
+                  <div>
+                    <span class="text-[10px] uppercase font-bold tracking-wider text-primary-600 dark:text-primary-400 bg-green-100 dark:bg-green-900/30 px-2 py-0.5 rounded">${location}</span>
+                    <h4 class="font-bold text-gray-800 dark:text-slate-100 mt-1 hover:text-primary-600 transition cursor-pointer" onclick="window.location.href='tour-detail.html?id=${ord.tourId}'">${tourName}</h4>
+                  </div>
+                  <span class="text-xs font-black bg-primary-600 dark:bg-primary-700 text-white px-2 py-0.5 rounded">${ord.orderId}</span>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs text-gray-650 dark:text-slate-350 border-t border-dashed border-green-200 dark:border-emerald-900/60 pt-3 mt-3">
+                  <div>
+                    <p class="text-[9px] uppercase text-gray-400 font-bold">Ngày khởi hành</p>
+                    <p class="font-semibold text-gray-800 dark:text-slate-200">${ord.date}</p>
+                  </div>
+                  <div>
+                    <p class="text-[9px] uppercase text-gray-400 font-bold">Số người</p>
+                    <p class="font-semibold text-gray-800 dark:text-slate-200">${ord.quantity} người</p>
+                  </div>
+                  <div>
+                    <p class="text-[9px] uppercase text-gray-400 font-bold">Tổng thanh toán</p>
+                    <p class="font-bold text-primary-600 dark:text-primary-400 text-sm">${formatPriceGlobal(ord.total)}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="w-full md:w-auto shrink-0 md:border-l md:border-dashed md:border-green-250 md:pl-6 flex flex-row md:flex-col gap-2 items-center justify-between">
+                <span class="px-2.5 py-1 rounded bg-green-150 text-green-750 dark:bg-green-900/30 dark:text-green-300 font-bold text-xs">✓ Đã xác nhận</span>
+                <button onclick="cancelTourBooking('${ord.orderId}')" class="text-xs text-red-500 hover:text-red-750 font-bold underline transition cursor-pointer">Hủy đặt tour</button>
+              </div>
+            </div>
+          `;
+        }).join('');
       }
 
-      container.innerHTML = orders.map(ord => {
-        const tour = tours.find(t => t.id === ord.tourId);
-        const tourName = tour ? tour.name : `Tour #${ord.tourId}`;
-        const statusClass = ord.status === 'Hoàn Tất' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800';
-        return `
-          <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <div>
-              <h3 class="font-bold text-gray-800 hover:text-green-600 cursor-pointer text-base sm:text-lg" onclick="window.location.href='tour-detail.html?id=${ord.tourId}'">${tourName}</h3>
-              <p class="text-xs text-gray-400 mt-1">Mã đơn: ${ord.orderId}</p>
-              <p class="text-xs text-gray-500 mt-1"><i class="fa-solid fa-calendar mr-1"></i>Ngày đi: ${ord.date} • Số lượng: ${ord.quantity}</p>
+      const flightsContainer = document.getElementById('flights-orders-list');
+      const flightsBookings = JSON.parse(localStorage.getItem('userBookings') || '[]');
+      
+      if (flightsBookings.length === 0) {
+        flightsContainer.innerHTML = `
+          <div class="bg-white dark:bg-slate-800 rounded-3xl p-8 text-center text-gray-500 dark:text-slate-400 border border-gray-150 dark:border-white/5 shadow-sm">
+            Chưa có đơn đặt vé máy bay nào.
+          </div>`;
+      } else {
+        flightsContainer.innerHTML = flightsBookings.map(f => {
+          const logoPath = airlineLogos[f.airline] || '';
+          return `
+            <div class="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-slate-800/40 dark:to-slate-800/80 rounded-3xl border border-green-200 dark:border-emerald-900/60 p-6 shadow-md relative overflow-hidden flex flex-col md:flex-row gap-6 items-center">
+              <div class="absolute left-[-10px] top-1/2 -translate-y-1/2 w-5 h-5 bg-white dark:bg-slate-900 rounded-full border-r border-green-200 dark:border-emerald-900 hidden md:block"></div>
+              <div class="absolute right-[-10px] top-1/2 -translate-y-1/2 w-5 h-5 bg-white dark:bg-slate-900 rounded-full border-l border-green-200 dark:border-emerald-900 hidden md:block"></div>
+              
+              <div class="w-20 h-20 bg-white dark:bg-slate-900/60 rounded-2xl flex items-center justify-center p-2 shadow-xs shrink-0 border border-gray-150 dark:border-white/10">
+                ${logoPath 
+                  ? `<img src="${logoPath}" alt="${f.airline}" class="w-full h-full object-contain">`
+                  : `<div class="w-full h-full rounded-full bg-green-100 text-green-700 flex items-center justify-center font-bold text-lg">${f.airline.split(' ').map(w => w[0]).join('')}</div>`
+                }
+              </div>
+              
+              <div class="flex-grow w-full md:w-auto">
+                <div class="flex justify-between items-center mb-2">
+                  <div>
+                    <h4 class="font-bold text-gray-800 dark:text-slate-100 text-base sm:text-lg">${f.from} <i class="fa-solid fa-arrow-right text-xs mx-1"></i> ${f.to}</h4>
+                    <p class="text-[10px] text-gray-450 font-bold">${f.airline}</p>
+                  </div>
+                  <span class="text-xs font-black bg-primary-600 dark:bg-primary-700 text-white px-2 py-0.5 rounded">${f.bookingCode}</span>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs text-gray-650 dark:text-slate-350 border-t border-dashed border-green-200 dark:border-emerald-900/60 pt-3 mt-3">
+                  <div>
+                    <p class="text-[9px] uppercase text-gray-400 font-bold">Khách hàng</p>
+                    <p class="font-semibold text-gray-850 dark:text-slate-200 truncate">${f.passengerName}</p>
+                  </div>
+                  <div>
+                    <p class="text-[9px] uppercase text-gray-400 font-bold">Ghế & Hành lý</p>
+                    <p class="font-semibold text-gray-850 dark:text-slate-200">${f.seat} (${f.baggage})</p>
+                  </div>
+                  <div>
+                    <p class="text-[9px] uppercase text-gray-400 font-bold">Giờ bay</p>
+                    <p class="font-semibold text-gray-850 dark:text-slate-200">${f.departure}</p>
+                  </div>
+                  <div>
+                    <p class="text-[9px] uppercase text-gray-400 font-bold">Tổng tiền</p>
+                    <p class="font-bold text-primary-600 dark:text-primary-400 text-sm">${formatPriceGlobal(f.total)}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="w-full md:w-auto shrink-0 md:border-l md:border-dashed md:border-green-250 md:pl-6 flex flex-row md:flex-col gap-2 items-center justify-between">
+                <span class="px-2.5 py-1 rounded bg-green-150 text-green-750 dark:bg-green-900/30 dark:text-green-300 font-bold text-xs">✓ Đã thanh toán</span>
+                <button onclick="cancelFlightBooking(${f.id})" class="text-xs text-red-500 hover:text-red-750 font-bold underline transition cursor-pointer">Hủy vé bay</button>
+              </div>
             </div>
-            <div class="text-left sm:text-right w-full sm:w-auto border-t sm:border-0 pt-3 sm:pt-0">
-              <p class="text-xl font-bold text-green-600">${ord.total.toLocaleString('vi-VN')}đ</p>
-              <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold ${statusClass} mt-2">${ord.status}</span>
-            </div>
-          </div>
-        `;
-      }).join('');
+          `;
+        }).join('');
+      }
+    }
+
+    function cancelTourBooking(orderId) {
+      if (confirm('Bạn chắc chắn muốn hủy đặt tour này? (WILTravel hỗ trợ hoàn tiền 100% trước ngày đi 7 ngày)')) {
+        const orders = getOrders();
+        const updated = orders.filter(o => o.orderId !== orderId);
+        localStorage.setItem('wil_orders', JSON.stringify(updated));
+        if (typeof syncWithBackend === 'function') syncWithBackend();
+        renderBookings();
+        alert('✅ Đã hủy đặt tour thành công!');
+      }
+    }
+
+    function cancelFlightBooking(id) {
+      if (confirm('Bạn chắc chắn muốn hủy đặt chuyến bay này?')) {
+        const bookings = JSON.parse(localStorage.getItem('userBookings') || '[]');
+        const updated = bookings.filter(b => b.id !== id);
+        localStorage.setItem('userBookings', JSON.stringify(updated));
+        if (typeof syncWithBackend === 'function') syncWithBackend();
+        renderBookings();
+        alert('✅ Đã hủy vé máy bay thành công!');
+      }
     }
 
     function logout() {
@@ -258,6 +435,18 @@
     window.onload = () => {
       initProfile();
     };
+
+    window.addEventListener('currencyChange', () => {
+      renderBookings();
+    });
+  </script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof AOS !== 'undefined') {
+        AOS.init({ duration: 800, once: true });
+      }
+    });
   </script>
 </body>
 </html>

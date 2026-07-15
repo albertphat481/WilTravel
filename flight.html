@@ -10,6 +10,34 @@
 
   <title>WILTravel - Mua Vé Máy Bay</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            jakarta: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            primary: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              300: '#86efac',
+              400: '#4ade80',
+              500: '#22c55e',
+              600: '#16a34a', // original green
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <style>
     html {
@@ -29,42 +57,43 @@
     }
   </style>
 </head>
-<body class="font-sans">
+<body class="font-jakarta bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-300">
 
   <!-- Navbar -->
-  <nav class="bg-white shadow-md fixed w-full z-50">
+  <nav class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-md fixed w-full z-50 border-b border-gray-100 dark:border-white/10 transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-      <div class="flex items-center gap-3">
-        <img src="images/logo.png" alt="WILTravel" class="h-9 sm:h-11 w-auto">
-      </div>
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="images/logo-transparent.png" alt="WILTravel" class="h-9 sm:h-11 w-auto dark:hidden">
+        <img src="images/logo-footer.png" alt="WILTravel" class="h-9 sm:h-11 w-auto hidden dark:block">
+      </a>
       
-      <div class="hidden md:flex items-center gap-8 text-gray-700 font-medium">
-        <a href="index.html" class="hover:text-green-600 transition">Trang chủ</a>
-        <a href="tours.html" class="hover:text-green-600 transition">Tours</a>
-        <a href="flight.html" class="text-green-600 font-semibold">Máy Bay</a>
-        <a href="blog.html" class="hover:text-green-600 transition">Blog</a>
-        <a href="deals.html" class="hover:text-green-600 transition">Ưu Đãi</a>
-        <a href="contact.html" class="hover:text-green-600 transition">Liên Hệ</a>
-        <a href="about.html" class="hover:text-green-600 transition">Về Chúng Tôi</a>
+      <div class="hidden md:flex items-center gap-8 text-gray-700 dark:text-slate-200 font-medium">
+        <a href="index.html" class="hover:text-primary-600 dark:text-primary-400 transition">Trang chủ</a>
+        <a href="tours.html" class="hover:text-primary-600 dark:text-primary-400 transition">Tours</a>
+        <a href="flight.html" class="text-primary-600 dark:text-primary-400 font-semibold">Máy Bay</a>
+        <a href="blog.html" class="hover:text-primary-600 dark:text-primary-400 transition">Blog</a>
+        <a href="deals.html" class="hover:text-primary-600 dark:text-primary-400 transition">Ưu Đãi</a>
+        <a href="contact.html" class="hover:text-primary-600 dark:text-primary-400 transition">Liên Hệ</a>
+        <a href="about.html" class="hover:text-primary-600 dark:text-primary-400 transition">Về Chúng Tôi</a>
       </div>
 
       <div class="flex items-center gap-3">
-        <a href="cart.html" class="text-gray-700 hover:text-green-600 transition text-lg"><i class="fa-solid fa-shopping-cart"></i></a>
-        <a href="login.html" class="hidden md:inline-block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-full transition text-sm sm:text-base">Đăng nhập</a>
-        <a href="register.html" class="hidden md:inline-block bg-green-600 text-white px-5 py-2 rounded-full hover:bg-green-700 transition text-sm sm:text-base font-medium">Đăng ký</a>
+        <a href="cart.html" class="text-gray-700 dark:text-slate-200 hover:text-primary-600 dark:text-primary-400 transition text-lg"><i class="fa-solid fa-shopping-cart"></i></a>
+        <a href="login.html" class="hidden md:inline-block px-4 py-2 text-gray-700 dark:text-slate-200 hover:bg-gray-100 dark:bg-slate-800 rounded-full transition text-sm sm:text-base">Đăng nhập</a>
+        <a href="register.html" class="hidden md:inline-block bg-primary-600 dark:bg-primary-700 text-white px-5 py-2 rounded-full hover:bg-primary-700 dark:hover:bg-primary-600 transition text-sm sm:text-base font-medium">Đăng ký</a>
       </div>
-      <button id="mobile-menu-button" class="md:hidden text-3xl text-gray-700">
+      <button id="mobile-menu-button" class="md:hidden text-3xl text-gray-700 dark:text-slate-200">
         <i class="fa-solid fa-bars"></i>
       </button>
     </div>
     <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
-      <div class="px-6 py-6 flex flex-col gap-5 text-gray-700 font-medium">
-        <a href="index.html" class="hover:text-green-600 transition">Trang chủ</a>
-        <a href="tours.html" class="hover:text-green-600 transition">Tours</a>
-        <a href="flight.html" class="text-green-600 font-semibold transition">Máy Bay</a>
-        <a href="blog.html" class="hover:text-green-600 transition">Blog</a>
-        <a href="contact.html" class="hover:text-green-600 transition">Liên Hệ</a>
-        <a href="about.html" class="hover:text-green-600 transition">Về chúng tôi</a>
+      <div class="px-6 py-6 flex flex-col gap-5 text-gray-700 dark:text-slate-200 font-medium">
+        <a href="index.html" class="hover:text-primary-600 dark:text-primary-400 transition">Trang chủ</a>
+        <a href="tours.html" class="hover:text-primary-600 dark:text-primary-400 transition">Tours</a>
+        <a href="flight.html" class="text-primary-600 dark:text-primary-400 font-semibold transition">Máy Bay</a>
+        <a href="blog.html" class="hover:text-primary-600 dark:text-primary-400 transition">Blog</a>
+        <a href="contact.html" class="hover:text-primary-600 dark:text-primary-400 transition">Liên Hệ</a>
+        <a href="about.html" class="hover:text-primary-600 dark:text-primary-400 transition">Về chúng tôi</a>
       </div>
     </div>
   </nav>
@@ -80,10 +109,10 @@
   <!-- Search Form -->
   <section class="py-12 bg-white shadow-md">
     <div class="max-w-5xl mx-auto px-6">
-      <div class="bg-white rounded-3xl shadow-xl p-8 -mt-16 relative z-10">
+      <div class="bg-white dark:bg-slate-800 rounded-3xl shadow-xl p-8 -mt-16 relative z-10">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
           <div>
-            <label class="block text-sm text-gray-500 mb-2">Từ</label>
+            <label class="block text-sm text-gray-500 dark:text-slate-400 mb-2">Từ</label>
             <select id="from-select" class="w-full px-5 py-4 border border-gray-300 rounded-2xl focus:outline-none focus:border-green-500">
               <option value="SGN">TP. Hồ Chí Minh (SGN)</option>
               <option value="HAN">Hà Nội (HAN)</option>
@@ -96,7 +125,7 @@
             </select>
           </div>
           <div>
-            <label class="block text-sm text-gray-500 mb-2">Đến</label>
+            <label class="block text-sm text-gray-500 dark:text-slate-400 mb-2">Đến</label>
             <select id="to-select" class="w-full px-5 py-4 border border-gray-300 rounded-2xl focus:outline-none focus:border-green-500">
               <option value="HAN">Hà Nội (HAN)</option>
               <option value="DAD">Đà Nẵng (DAD)</option>
@@ -111,16 +140,16 @@
             </select>
           </div>
           <div>
-            <label class="block text-sm text-gray-500 mb-2">Ngày đi</label>
+            <label class="block text-sm text-gray-500 dark:text-slate-400 mb-2">Ngày đi</label>
             <input id="departure-date" type="date" class="w-full px-5 py-4 border border-gray-300 rounded-2xl focus:outline-none focus:border-green-500">
           </div>
           <div>
-            <label class="block text-sm text-gray-500 mb-2">Ngày về</label>
+            <label class="block text-sm text-gray-500 dark:text-slate-400 mb-2">Ngày về</label>
             <input id="return-date" type="date" class="w-full px-5 py-4 border border-gray-300 rounded-2xl focus:outline-none focus:border-green-500">
           </div>
           <div class="flex items-end">
             <button onclick="searchFlights()" 
-                    class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-4 rounded-2xl transition text-lg">
+                    class="w-full bg-primary-600 dark:bg-primary-700 hover:bg-primary-700 dark:hover:bg-primary-600 text-white font-semibold py-4 rounded-2xl transition text-lg">
               Tìm chuyến bay
             </button>
           </div>
@@ -132,65 +161,65 @@
   <!-- Đối tác hãng bay -->
   <section class="py-12 bg-white border-b">
     <div class="max-w-7xl mx-auto px-6">
-      <h2 class="text-2xl font-bold text-gray-800 text-center mb-2">Hãng bay đối tác</h2>
-      <p class="text-gray-500 text-center mb-10">WILTravel hợp tác với các hãng hàng không uy tín trên toàn cầu</p>
+      <h2 class="text-2xl font-bold text-gray-800 dark:text-slate-100 text-center mb-2">Hãng bay đối tác</h2>
+      <p class="text-gray-500 dark:text-slate-400 text-center mb-10">WILTravel hợp tác với các hãng hàng không uy tín trên toàn cầu</p>
       <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-10 gap-5 items-start">
         <!-- Vietnam Airlines -->
         <div class="flex flex-col items-center gap-2 group cursor-pointer">
           <img src="images/vietnam-airlines.png" alt="Vietnam Airlines" class="w-14 h-14 object-contain rounded-2xl bg-white p-1.5 shadow-md group-hover:scale-110 transition-all duration-300 border border-gray-100">
-          <span class="text-[11px] text-gray-600 text-center leading-tight font-medium">Vietnam<br>Airlines</span>
+          <span class="text-[11px] text-gray-600 dark:text-slate-300 text-center leading-tight font-medium">Vietnam<br>Airlines</span>
         </div>
         <!-- VietJet Air -->
         <div class="flex flex-col items-center gap-2 group cursor-pointer">
           <img src="images/vietjet-air.png" alt="VietJet Air" class="w-14 h-14 object-contain rounded-2xl bg-white p-1.5 shadow-md group-hover:scale-110 transition-all duration-300 border border-gray-100">
-          <span class="text-[11px] text-gray-600 text-center leading-tight font-medium">VietJet<br>Air</span>
+          <span class="text-[11px] text-gray-600 dark:text-slate-300 text-center leading-tight font-medium">VietJet<br>Air</span>
         </div>
         <!-- Bamboo Airways -->
         <div class="flex flex-col items-center gap-2 group cursor-pointer">
           <img src="images/bamboo-airways.png" alt="Bamboo Airways" class="w-14 h-14 object-contain rounded-2xl bg-white p-1.5 shadow-md group-hover:scale-110 transition-all duration-300 border border-gray-100">
-          <span class="text-[11px] text-gray-600 text-center leading-tight font-medium">Bamboo<br>Airways</span>
+          <span class="text-[11px] text-gray-600 dark:text-slate-300 text-center leading-tight font-medium">Bamboo<br>Airways</span>
         </div>
         <!-- Pacific Airlines -->
         <div class="flex flex-col items-center gap-2 group cursor-pointer">
           <img src="images/pacific-airlines.png" alt="Pacific Airlines" class="w-14 h-14 object-contain rounded-2xl bg-white p-1.5 shadow-md group-hover:scale-110 transition-all duration-300 border border-gray-100">
-          <span class="text-[11px] text-gray-600 text-center leading-tight font-medium">Pacific<br>Airlines</span>
+          <span class="text-[11px] text-gray-600 dark:text-slate-300 text-center leading-tight font-medium">Pacific<br>Airlines</span>
         </div>
         <!-- Vietravel Airlines -->
         <div class="flex flex-col items-center gap-2 group cursor-pointer">
           <img src="images/vietravel.png" alt="Vietravel" class="w-14 h-14 object-contain rounded-2xl bg-white p-1.5 shadow-md group-hover:scale-110 transition-all duration-300 border border-gray-100">
-          <span class="text-[11px] text-gray-600 text-center leading-tight font-medium">Vietravel<br>Airlines</span>
+          <span class="text-[11px] text-gray-600 dark:text-slate-300 text-center leading-tight font-medium">Vietravel<br>Airlines</span>
         </div>
         <!-- AirAsia -->
         <div class="flex flex-col items-center gap-2 group cursor-pointer">
           <img src="images/airasia.png" alt="AirAsia" class="w-14 h-14 object-contain rounded-2xl bg-white p-1.5 shadow-md group-hover:scale-110 transition-all duration-300 border border-gray-100">
-          <span class="text-[11px] text-gray-600 text-center leading-tight font-medium">AirAsia</span>
+          <span class="text-[11px] text-gray-600 dark:text-slate-300 text-center leading-tight font-medium">AirAsia</span>
         </div>
         <!-- Thai Airways -->
         <div class="flex flex-col items-center gap-2 group cursor-pointer">
           <img src="images/thai-airways.png" alt="Thai Airways" class="w-14 h-14 object-contain rounded-2xl bg-white p-1.5 shadow-md group-hover:scale-110 transition-all duration-300 border border-gray-100">
-          <span class="text-[11px] text-gray-600 text-center leading-tight font-medium">Thai<br>Airways</span>
+          <span class="text-[11px] text-gray-600 dark:text-slate-300 text-center leading-tight font-medium">Thai<br>Airways</span>
         </div>
         <!-- Singapore Airlines -->
         <div class="flex flex-col items-center gap-2 group cursor-pointer">
           <img src="images/singapore-airlines.png" alt="Singapore Airlines" class="w-14 h-14 object-contain rounded-2xl bg-white p-1.5 shadow-md group-hover:scale-110 transition-all duration-300 border border-gray-100">
-          <span class="text-[11px] text-gray-600 text-center leading-tight font-medium">Singapore<br>Airlines</span>
+          <span class="text-[11px] text-gray-600 dark:text-slate-300 text-center leading-tight font-medium">Singapore<br>Airlines</span>
         </div>
         <!-- Scoot -->
         <div class="flex flex-col items-center gap-2 group cursor-pointer">
           <img src="images/scoot.png" alt="Scoot" class="w-14 h-14 object-contain rounded-2xl bg-white p-1.5 shadow-md group-hover:scale-110 transition-all duration-300 border border-gray-100">
-          <span class="text-[11px] text-gray-600 text-center leading-tight font-medium">Scoot</span>
+          <span class="text-[11px] text-gray-600 dark:text-slate-300 text-center leading-tight font-medium">Scoot</span>
         </div>
         <!-- Emirates -->
         <div class="flex flex-col items-center gap-2 group cursor-pointer">
           <img src="images/emirates.png" alt="Emirates" class="w-14 h-14 object-contain rounded-2xl bg-white p-1.5 shadow-md group-hover:scale-110 transition-all duration-300 border border-gray-100">
-          <span class="text-[11px] text-gray-600 text-center leading-tight font-medium">Emirates</span>
+          <span class="text-[11px] text-gray-600 dark:text-slate-300 text-center leading-tight font-medium">Emirates</span>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Danh sách chuyến bay -->
-  <section class="py-16 bg-gray-50">
+  <section class="py-16 bg-gray-50 dark:bg-slate-800/50">
     <div class="max-w-7xl mx-auto px-6">
       <h2 class="text-3xl font-bold mb-8">Chuyến bay gợi ý</h2>
       
@@ -206,7 +235,7 @@
     <div class="max-w-7xl mx-auto px-6">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
         <div>
-          <img src="images/logo-footer-colored.png" alt="WILTravel" class="h-12 mb-4 bg-white/10 rounded-xl p-1">
+          <img src="images/logo-footer.png" alt="WILTravel" class="h-12 mb-4">
           <p class="text-sm">Chỉ cần & đi chuyến nghỉ ngơi</p>
         </div>
         <div>
@@ -298,7 +327,7 @@
         container.innerHTML = `
           <div class="bg-yellow-50 border border-yellow-200 rounded-3xl p-8 text-center text-yellow-900 w-full">
             <p class="text-lg font-semibold">Không tìm thấy chuyến bay phù hợp.</p>
-            <p class="mt-2 text-gray-600">Hãy thử thay đổi hành trình hoặc chọn ngày khác.</p>
+            <p class="mt-2 text-gray-600 dark:text-slate-300">Hãy thử thay đổi hành trình hoặc chọn ngày khác.</p>
           </div>`;
         return;
       }
@@ -311,25 +340,25 @@
         const initials = flight.airline.split(' ').map(w => w[0]).join('');
         const logoPath = airlineLogos[flight.airline];
         const card = document.createElement('div');
-        card.className = "flight-card bg-white rounded-3xl p-6 shadow-sm border border-gray-100";
+        card.className = "flight-card bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-sm border border-gray-100";
         card.innerHTML = `
           <div class="flex flex-col md:flex-row justify-between items-center gap-6">
             <div class="flex items-center gap-6">
               <div class="w-12 h-12 flex items-center justify-center relative shrink-0">
                 ${logoPath 
-                  ? `<img src="${logoPath}" alt="${flight.airline}" class="w-12 h-12 object-contain bg-white rounded-full p-1 border border-gray-100">`
+                  ? `<img src="${logoPath}" alt="${flight.airline}" class="w-12 h-12 object-contain bg-white dark:bg-slate-800 rounded-full p-1 border border-gray-100">`
                   : `<div class="w-12 h-12 rounded-full bg-green-100 text-green-700 flex items-center justify-center font-bold text-sm shadow-sm">${initials}</div>`
                 }
               </div>
               <div>
                 <p class="font-semibold text-lg">${flight.airline}</p>
-                <p class="text-gray-500">${flight.from} → ${flight.to}</p>
+                <p class="text-gray-500 dark:text-slate-400">${flight.from} → ${flight.to}</p>
               </div>
             </div>
             
             <div class="text-center">
               <p class="text-2xl font-bold">${flight.departure}</p>
-              <p class="text-sm text-gray-500">${flight.duration}</p>
+              <p class="text-sm text-gray-500 dark:text-slate-400">${flight.duration}</p>
             </div>
             
             <div class="text-center">
@@ -337,9 +366,9 @@
             </div>
             
             <div class="text-right w-full md:w-auto">
-              <p class="text-3xl font-bold text-green-600">${flight.price}<span class="text-base font-normal">đ</span></p>
+              <p class="text-3xl font-bold text-primary-600 dark:text-primary-400">${formatPriceString(flight.price)}</p>
               <button onclick="bookFlight(${flight.id})" 
-                      class="mt-3 w-full md:w-auto bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-2xl transition">
+                      class="mt-3 w-full md:w-auto bg-primary-600 dark:bg-primary-700 hover:bg-primary-700 dark:hover:bg-primary-600 text-white px-8 py-3 rounded-2xl transition">
                 Chọn chuyến
               </button>
             </div>
@@ -360,7 +389,7 @@
       let html = '<div class="flex justify-center items-center gap-2 mt-8">';
       
       // Prev
-      html += `<button onclick="renderFlights(currentFilteredFlights, ${page - 1})" class="w-10 h-10 rounded-full flex items-center justify-center border border-gray-200 text-gray-600 hover:bg-green-50 hover:text-green-600 transition ${page === 1 ? 'opacity-50 pointer-events-none' : ''}"><i class="fa-solid fa-chevron-left"></i></button>`;
+      html += `<button onclick="renderFlights(currentFilteredFlights, ${page - 1})" class="w-10 h-10 rounded-full flex items-center justify-center border border-gray-200 text-gray-600 dark:text-slate-300 hover:bg-green-50 hover:text-primary-600 dark:text-primary-400 transition ${page === 1 ? 'opacity-50 pointer-events-none' : ''}"><i class="fa-solid fa-chevron-left"></i></button>`;
       
       for (let i = 1; i <= totalPages; i++) {
         if (totalPages > 7) {
@@ -373,22 +402,225 @@
         }
         
         if (i === page) {
-          html += `<button class="w-10 h-10 rounded-full flex items-center justify-center bg-green-600 text-white font-bold shadow-md">${i}</button>`;
+          html += `<button class="w-10 h-10 rounded-full flex items-center justify-center bg-primary-600 dark:bg-primary-700 text-white font-bold shadow-md">${i}</button>`;
         } else {
-          html += `<button onclick="renderFlights(currentFilteredFlights, ${i})" class="w-10 h-10 rounded-full flex items-center justify-center border border-gray-200 text-gray-600 hover:bg-green-50 hover:text-green-600 font-medium transition">${i}</button>`;
+          html += `<button onclick="renderFlights(currentFilteredFlights, ${i})" class="w-10 h-10 rounded-full flex items-center justify-center border border-gray-200 text-gray-600 dark:text-slate-300 hover:bg-green-50 hover:text-primary-600 dark:text-primary-400 font-medium transition">${i}</button>`;
         }
       }
       
       // Next
-      html += `<button onclick="renderFlights(currentFilteredFlights, ${page + 1})" class="w-10 h-10 rounded-full flex items-center justify-center border border-gray-200 text-gray-600 hover:bg-green-50 hover:text-green-600 transition ${page === totalPages ? 'opacity-50 pointer-events-none' : ''}"><i class="fa-solid fa-chevron-right"></i></button>`;
+      html += `<button onclick="renderFlights(currentFilteredFlights, ${page + 1})" class="w-10 h-10 rounded-full flex items-center justify-center border border-gray-200 text-gray-600 dark:text-slate-300 hover:bg-green-50 hover:text-primary-600 dark:text-primary-400 transition ${page === totalPages ? 'opacity-50 pointer-events-none' : ''}"><i class="fa-solid fa-chevron-right"></i></button>`;
       
       html += '</div>';
       container.insertAdjacentHTML('beforeend', html);
     }
 
+    let selectedFlight = null;
+    let selectedSeat = null;
+    const occupiedSeats = ['1B', '2C', '4A', '7F', '10D', '11C', '14B', '15F', '3A', '8D', '12F'];
+
     function bookFlight(id) {
-      const flight = flights.find(f => f.id === id);
-      alert(`✅ Bạn đã chọn chuyến bay của hãng ${flight.airline} từ ${flight.from} đi ${flight.to} (${flight.departure} - ${flight.arrival}).\n\nTính năng đặt vé máy bay riêng biệt đang được nâng cấp!`);
+      selectedFlight = flights.find(f => f.id === id);
+      if (!selectedFlight) return;
+      
+      const user = getCurrentUser();
+      if (user) {
+        document.getElementById('pass-name').value = `${user.lastName} ${user.firstName}`;
+      } else {
+        document.getElementById('pass-name').value = '';
+      }
+      document.getElementById('pass-passport').value = '';
+      document.getElementById('pass-baggage').value = '0';
+      selectedSeat = null;
+      
+      const infoContainer = document.getElementById('modal-flight-info');
+      infoContainer.innerHTML = `
+        <div class="flex justify-between font-semibold">
+          <span>${selectedFlight.airline}</span>
+          <span class="text-primary-600 dark:text-primary-400">${selectedFlight.from} → ${selectedFlight.to}</span>
+        </div>
+        <div class="text-xs text-gray-500 mt-1">
+          Giờ đi: <strong>${selectedFlight.departure}</strong> • Giờ đến: <strong>${selectedFlight.arrival}</strong> (${selectedFlight.duration})
+        </div>
+      `;
+      
+      renderSeatMap();
+      calculateModalPrice();
+      
+      document.getElementById('seat-modal').classList.remove('hidden');
+    }
+
+    function closeSeatModal() {
+      document.getElementById('seat-modal').classList.add('hidden');
+    }
+
+    function renderSeatMap() {
+      const grid = document.getElementById('seats-grid');
+      grid.innerHTML = '';
+      
+      for (let row = 1; row <= 15; row++) {
+        const isBusiness = row <= 3;
+        const rowDiv = document.createElement('div');
+        rowDiv.className = "flex items-center justify-between gap-1.5 w-full";
+        
+        const cols = isBusiness ? ['A', 'C', 'D', 'F'] : ['A', 'B', 'C', 'D', 'E', 'F'];
+        const leftGroup = document.createElement('div');
+        leftGroup.className = "flex gap-1.5";
+        
+        const half = cols.length / 2;
+        for (let i = 0; i < half; i++) {
+          const seatCode = `${row}${cols[i]}`;
+          leftGroup.appendChild(createSeatButton(seatCode, isBusiness));
+        }
+        
+        const aisle = document.createElement('div');
+        aisle.className = "w-6 flex items-center justify-center text-[10px] font-bold text-gray-400";
+        aisle.textContent = row;
+        
+        const rightGroup = document.createElement('div');
+        rightGroup.className = "flex gap-1.5";
+        for (let i = half; i < cols.length; i++) {
+          const seatCode = `${row}${cols[i]}`;
+          rightGroup.appendChild(createSeatButton(seatCode, isBusiness));
+        }
+        
+        rowDiv.appendChild(leftGroup);
+        rowDiv.appendChild(aisle);
+        rowDiv.appendChild(rightGroup);
+        grid.appendChild(rowDiv);
+      }
+    }
+
+    function createSeatButton(seatCode, isBusiness) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = seatCode;
+      
+      const isOccupied = occupiedSeats.includes(seatCode);
+      const isSelected = selectedSeat === seatCode;
+      
+      let baseClass = "w-8 h-8 rounded-lg text-[9px] font-bold transition flex items-center justify-center border cursor-pointer ";
+      if (isOccupied) {
+        btn.disabled = true;
+        baseClass += "bg-gray-300 text-gray-550 dark:bg-slate-800 dark:text-slate-600 border-transparent cursor-not-allowed";
+      } else if (isSelected) {
+        baseClass += "bg-primary-600 text-white border-primary-600 shadow-md shadow-green-500/20";
+      } else if (isBusiness) {
+        baseClass += "bg-amber-50 dark:bg-amber-950/20 text-amber-700 dark:text-amber-400 border-amber-300 dark:border-amber-900 hover:bg-amber-100";
+      } else {
+        baseClass += "bg-white dark:bg-slate-800 text-gray-700 dark:text-slate-350 border-gray-250 dark:border-white/10 hover:border-primary-600 dark:hover:border-primary-400";
+      }
+      
+      btn.className = baseClass;
+      btn.onclick = () => { selectSeat(seatCode); };
+      return btn;
+    }
+
+    function selectSeat(seatCode) {
+      selectedSeat = selectedSeat === seatCode ? null : seatCode;
+      renderSeatMap();
+      calculateModalPrice();
+    }
+
+    function calculateModalPrice() {
+      if (!selectedFlight) return;
+      
+      const rawPrice = parseInt(selectedFlight.price.replace(/\./g, ''));
+      let businessSurcharge = 0;
+      if (selectedSeat) {
+        const rowNum = parseInt(selectedSeat);
+        if (rowNum <= 3) {
+          businessSurcharge = Math.round(rawPrice * 0.5);
+        }
+      }
+      
+      const baggageSurcharge = parseInt(document.getElementById('pass-baggage').value) || 0;
+      const total = rawPrice + businessSurcharge + baggageSurcharge;
+      
+      document.getElementById('modal-base-price').textContent = formatPriceGlobal(rawPrice);
+      
+      const busRow = document.getElementById('modal-business-row');
+      if (businessSurcharge > 0) {
+        busRow.classList.remove('hidden');
+        document.getElementById('modal-business-surcharge').textContent = formatPriceGlobal(businessSurcharge);
+      } else {
+        busRow.classList.add('hidden');
+      }
+      
+      const bagRow = document.getElementById('modal-baggage-row');
+      if (baggageSurcharge > 0) {
+        bagRow.classList.remove('hidden');
+        document.getElementById('modal-baggage-surcharge').textContent = formatPriceGlobal(baggageSurcharge);
+      } else {
+        bagRow.classList.add('hidden');
+      }
+      
+      document.getElementById('modal-total-price').textContent = formatPriceGlobal(total);
+    }
+
+    function confirmFlightBooking(e) {
+      e.preventDefault();
+      
+      if (!selectedSeat) {
+        alert('Vui lòng chọn ghế ngồi của bạn!');
+        return;
+      }
+      
+      const name = document.getElementById('pass-name').value.trim();
+      const passport = document.getElementById('pass-passport').value.trim();
+      const baggageVal = parseInt(document.getElementById('pass-baggage').value);
+      
+      const rawPrice = parseInt(selectedFlight.price.replace(/\./g, ''));
+      let businessSurcharge = 0;
+      const rowNum = parseInt(selectedSeat);
+      if (rowNum <= 3) businessSurcharge = Math.round(rawPrice * 0.5);
+      const total = rawPrice + businessSurcharge + baggageVal;
+      
+      const randNum = Math.floor(1000 + Math.random() * 9000);
+      const generatedCode = `WIL-FL-${randNum}`;
+      
+      const flightBooking = {
+        id: randNum,
+        bookingCode: generatedCode,
+        type: 'flight',
+        airline: selectedFlight.airline,
+        from: selectedFlight.from,
+        to: selectedFlight.to,
+        departure: selectedFlight.departure,
+        arrival: selectedFlight.arrival,
+        duration: selectedFlight.duration,
+        passengerName: name,
+        passport: passport,
+        seat: selectedSeat,
+        baggage: baggageVal === 0 ? "Xách tay 7kg" : (baggageVal === 250000 ? "Ký gửi +20kg" : "Ký gửi +30kg"),
+        total: total,
+        date: new Date().toLocaleDateString('vi-VN'),
+        status: 'Đã thanh toán'
+      };
+      
+      const bookings = JSON.parse(localStorage.getItem('userBookings') || '[]');
+      bookings.push(flightBooking);
+      localStorage.setItem('userBookings', JSON.stringify(bookings));
+      if (typeof syncWithBackend === 'function') syncWithBackend();
+      
+      document.getElementById('ticket-airline').textContent = flightBooking.airline;
+      document.getElementById('ticket-code').textContent = flightBooking.bookingCode;
+      document.getElementById('ticket-from').textContent = flightBooking.from;
+      document.getElementById('ticket-to').textContent = flightBooking.to;
+      document.getElementById('ticket-duration').textContent = flightBooking.duration;
+      document.getElementById('ticket-name').textContent = flightBooking.passengerName;
+      document.getElementById('ticket-seat').textContent = flightBooking.seat;
+      document.getElementById('ticket-departure').textContent = flightBooking.departure + " - Khởi hành";
+      document.getElementById('ticket-baggage').textContent = flightBooking.baggage;
+      document.getElementById('ticket-barcode-num').textContent = `${flightBooking.from}-${flightBooking.to}-${flightBooking.id}`;
+      
+      closeSeatModal();
+      document.getElementById('ticket-modal').classList.remove('hidden');
+    }
+
+    function closeTicketModal() {
+      document.getElementById('ticket-modal').classList.add('hidden');
+      window.location.href = 'profile.html';
     }
 
     function searchFlights() {
@@ -516,6 +748,147 @@
       }
       closeMobileMenuOnLink();
     };
+
+    window.addEventListener('currencyChange', () => {
+      renderFlights(currentFilteredFlights, currentPage);
+    });
   </script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof AOS !== 'undefined') {
+        AOS.init({ duration: 800, once: true });
+      }
+    });
+  </script>
+  <!-- Seat Map Modal -->
+  <div id="seat-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm hidden p-4">
+    <div class="bg-white dark:bg-slate-900 rounded-3xl w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-2xl border border-gray-100 dark:border-white/10 p-6 md:p-8 relative transition-colors duration-300">
+      <button onclick="closeSeatModal()" class="absolute top-5 right-5 text-gray-400 hover:text-gray-600 dark:hover:text-white text-3xl">×</button>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-4">
+        <div class="lg:col-span-7 flex flex-col items-center">
+          <h3 class="text-xl font-bold mb-2 text-gray-800 dark:text-slate-100">Sơ đồ chọn ghế ngồi</h3>
+          <p class="text-xs text-gray-500 mb-6 text-center">Chọn ghế ngồi của bạn trên chuyến bay. Các hàng 1-3 là Khoang Thương Gia.</p>
+          <div class="flex gap-4 mb-6 text-xs font-semibold text-gray-650 dark:text-slate-350">
+            <div class="flex items-center gap-1.5"><span class="w-4 h-4 bg-white border border-gray-300 rounded-sm inline-block"></span>Trống</div>
+            <div class="flex items-center gap-1.5"><span class="w-4 h-4 bg-primary-600 rounded-sm inline-block"></span>Đang chọn</div>
+            <div class="flex items-center gap-1.5"><span class="w-4 h-4 bg-gray-300 dark:bg-slate-700 rounded-sm inline-block"></span>Đã đặt</div>
+            <div class="flex items-center gap-1.5"><span class="w-4 h-4 bg-amber-100 dark:bg-amber-950/40 border border-amber-500 rounded-sm inline-block"></span>Thương gia</div>
+          </div>
+          <div class="w-full max-w-[340px] bg-slate-100/50 dark:bg-slate-950/30 rounded-t-[100px] border-t-8 border-x-4 border-gray-300 dark:border-slate-800 p-6 pt-16 flex flex-col items-center relative">
+            <div class="absolute top-5 text-[10px] uppercase font-bold tracking-widest text-gray-400">Khoang Máy Bay</div>
+            <div id="seats-grid" class="w-full space-y-3"></div>
+          </div>
+        </div>
+        <div class="lg:col-span-5 flex flex-col justify-between">
+          <div>
+            <h3 class="text-xl font-bold mb-4 text-gray-800 dark:text-slate-100">Thông tin hành khách</h3>
+            <div id="modal-flight-info" class="bg-gray-50 dark:bg-slate-800/50 p-4 rounded-2xl border border-gray-150 dark:border-white/5 mb-6 text-sm"></div>
+            <form id="passenger-form" class="space-y-4" onsubmit="confirmFlightBooking(event)">
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-slate-400 mb-1.5">Họ và tên hành khách</label>
+                <input type="text" id="pass-name" required class="w-full px-4 py-3 border border-gray-300 dark:border-white/10 bg-white dark:bg-slate-800 rounded-xl focus:outline-none focus:border-green-500 text-sm text-gray-800 dark:text-slate-100">
+              </div>
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-slate-400 mb-1.5">CCCD / Hộ chiếu</label>
+                  <input type="text" id="pass-passport" required class="w-full px-4 py-3 border border-gray-300 dark:border-white/10 bg-white dark:bg-slate-800 rounded-xl focus:outline-none focus:border-green-500 text-sm text-gray-800 dark:text-slate-100">
+                </div>
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-slate-400 mb-1.5">Hành lý ký gửi</label>
+                  <select id="pass-baggage" onchange="calculateModalPrice()" class="w-full px-4 py-3 border border-gray-300 dark:border-white/10 bg-white dark:bg-slate-800 rounded-xl focus:outline-none focus:border-green-500 text-sm text-gray-800 dark:text-slate-100">
+                    <option value="0">Chỉ xách tay (7kg)</option>
+                    <option value="250000">Ký gửi +20kg (+250k)</option>
+                    <option value="450000">Ký gửi +30kg (+450k)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="pt-4 border-t border-gray-150 dark:border-white/10">
+                <div class="flex justify-between text-sm text-gray-650 dark:text-slate-350 mb-1.5">
+                  <span>Giá vé cơ bản:</span>
+                  <span id="modal-base-price">0đ</span>
+                </div>
+                <div id="modal-business-row" class="flex justify-between text-sm text-gray-650 dark:text-slate-350 mb-1.5 hidden">
+                  <span>Phụ thu Thương gia (+50%):</span>
+                  <span id="modal-business-surcharge">0đ</span>
+                </div>
+                <div id="modal-baggage-row" class="flex justify-between text-sm text-gray-650 dark:text-slate-350 mb-1.5 hidden">
+                  <span>Phụ thu hành lý:</span>
+                  <span id="modal-baggage-surcharge">0đ</span>
+                </div>
+                <div class="flex justify-between items-center text-lg font-bold border-t border-dashed pt-3 mt-3">
+                  <span class="text-gray-800 dark:text-slate-100">Tổng thanh toán:</span>
+                  <span id="modal-total-price" class="text-2xl font-black text-primary-600 dark:text-primary-400">0đ</span>
+                </div>
+              </div>
+              <button type="submit" class="w-full bg-primary-600 dark:bg-primary-700 hover:bg-primary-700 dark:hover:bg-primary-600 text-white font-bold py-4 rounded-xl transition mt-6 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-plane-departure"></i> Xác nhận Đặt Vé
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success E-Ticket Modal -->
+  <div id="ticket-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm hidden p-4">
+    <div class="bg-white dark:bg-slate-900 rounded-3xl w-full max-w-lg p-6 md:p-8 shadow-2xl border border-gray-100 dark:border-white/10 relative text-center">
+      <button onclick="closeTicketModal()" class="absolute top-5 right-5 text-gray-400 hover:text-gray-600 dark:hover:text-white text-3xl">×</button>
+      <div class="w-16 h-16 bg-green-100 text-green-700 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+      <h3 class="text-2xl font-bold text-gray-800 dark:text-slate-150 mb-2">Đặt vé thành công!</h3>
+      <p class="text-sm text-gray-500 mb-6">Mã vé máy bay của bạn đã được xuất và lưu vào Lịch sử đặt vé.</p>
+      <div class="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-slate-800 dark:to-slate-800/80 rounded-2xl border border-green-200 dark:border-emerald-900 text-left p-6 shadow-md relative overflow-hidden mb-6">
+        <div class="absolute left-[-10px] top-1/2 -translate-y-1/2 w-5 h-5 bg-white dark:bg-slate-900 rounded-full border-r border-green-200 dark:border-emerald-900"></div>
+        <div class="absolute right-[-10px] top-1/2 -translate-y-1/2 w-5 h-5 bg-white dark:bg-slate-900 rounded-full border-l border-green-200 dark:border-emerald-900"></div>
+        <div class="flex justify-between items-center border-b border-dashed border-green-200 dark:border-emerald-900/60 pb-3 mb-4">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-plane text-primary-600 dark:text-primary-400"></i>
+            <span id="ticket-airline" class="font-bold text-gray-800 dark:text-slate-150 text-sm">Vietnam Airlines</span>
+          </div>
+          <span id="ticket-code" class="text-xs font-black bg-primary-600 dark:bg-primary-700 text-white px-2 py-0.5 rounded">WIL-FL-1001</span>
+        </div>
+        <div class="grid grid-cols-3 items-center mb-4">
+          <div>
+            <p class="text-[10px] uppercase font-bold text-gray-400">Từ</p>
+            <p id="ticket-from" class="text-2xl font-black text-gray-800 dark:text-slate-100">SGN</p>
+          </div>
+          <div class="text-center text-gray-400 flex flex-col items-center justify-center">
+            <span id="ticket-duration" class="text-[10px] font-semibold">2h 15p</span>
+            <i class="fa-solid fa-arrow-right-long text-xs mt-0.5"></i>
+          </div>
+          <div class="text-right">
+            <p class="text-[10px] uppercase font-bold text-gray-400">Đến</p>
+            <p id="ticket-to" class="text-2xl font-black text-gray-800 dark:text-slate-100">HAN</p>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-y-3 text-xs border-b border-dashed border-green-200 dark:border-emerald-900/60 pb-4 mb-4">
+          <div>
+            <p class="text-[10px] uppercase text-gray-400">Hành khách</p>
+            <p id="ticket-name" class="font-bold text-gray-800 dark:text-slate-100">Nguyen Van A</p>
+          </div>
+          <div>
+            <p class="text-[10px] uppercase text-gray-400">Số ghế</p>
+            <p id="ticket-seat" class="font-bold text-primary-600 dark:text-primary-400 text-sm">12C</p>
+          </div>
+          <div>
+            <p class="text-[10px] uppercase text-gray-400">Khởi hành</p>
+            <p id="ticket-departure" class="font-bold text-gray-800 dark:text-slate-100">07:30 sáng</p>
+          </div>
+          <div>
+            <p class="text-[10px] uppercase text-gray-400">Hành lý</p>
+            <p id="ticket-baggage" class="font-bold text-gray-800 dark:text-slate-100">Xách tay 7kg</p>
+          </div>
+        </div>
+        <div class="flex flex-col items-center justify-center pt-2">
+          <div class="h-10 w-full bg-[repeating-linear-gradient(90deg,#000,#000_2px,#fff_2px,#fff_6px,#000_6px,#000_10px)] opacity-85 dark:invert"></div>
+          <p id="ticket-barcode-num" class="text-[10px] tracking-[0.3em] font-mono text-gray-500 mt-1.5">SGN-HAN-103592</p>
+        </div>
+      </div>
+      <button onclick="closeTicketModal()" class="w-full bg-primary-600 dark:bg-primary-700 hover:bg-primary-700 dark:hover:bg-primary-600 text-white font-bold py-3 rounded-xl transition">Đóng & Xem Lịch sử</button>
+    </div>
+  </div>
 </body>
 </html>

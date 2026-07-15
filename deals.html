@@ -5,6 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WILTravel - Ưu Đãi & Khuyến Mãi</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            jakarta: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            primary: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              300: '#86efac',
+              400: '#4ade80',
+              500: '#22c55e',
+              600: '#16a34a', // original green
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <style>
     html { scroll-behavior: smooth; }
@@ -15,44 +43,45 @@
     .countdown { font-variant-numeric: tabular-nums; }
   </style>
 </head>
-<body class="font-sans bg-gray-50">
+<body class="font-jakarta bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-300">
 
   <!-- Navbar -->
-  <nav class="bg-white shadow-md fixed w-full z-50">
+  <nav class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-md fixed w-full z-50 border-b border-gray-100 dark:border-white/10 transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-      <div class="flex items-center gap-3">
-        <img src="images/logo.png" alt="WILTravel" class="h-9 sm:h-11 w-auto">
-      </div>
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="images/logo-transparent.png" alt="WILTravel" class="h-9 sm:h-11 w-auto dark:hidden">
+        <img src="images/logo-footer.png" alt="WILTravel" class="h-9 sm:h-11 w-auto hidden dark:block">
+      </a>
       
-      <div class="hidden md:flex items-center gap-8 text-gray-700 font-medium">
-        <a href="index.html" class="hover:text-green-600 transition">Trang chủ</a>
-        <a href="tours.html" class="hover:text-green-600 transition">Tours</a>
-        <a href="flight.html" class="hover:text-green-600 transition">Máy Bay</a>
-        <a href="blog.html" class="hover:text-green-600 transition">Blog</a>
-        <a href="contact.html" class="hover:text-green-600 transition">Liên Hệ</a>
-        <a href="about.html" class="hover:text-green-600 transition">Về Chúng Tôi</a>
+      <div class="hidden md:flex items-center gap-8 text-gray-700 dark:text-slate-200 font-medium">
+        <a href="index.html" class="hover:text-primary-600 dark:text-primary-400 transition">Trang chủ</a>
+        <a href="tours.html" class="hover:text-primary-600 dark:text-primary-400 transition">Tours</a>
+        <a href="flight.html" class="hover:text-primary-600 dark:text-primary-400 transition">Máy Bay</a>
+        <a href="blog.html" class="hover:text-primary-600 dark:text-primary-400 transition">Blog</a>
+        <a href="contact.html" class="hover:text-primary-600 dark:text-primary-400 transition">Liên Hệ</a>
+        <a href="about.html" class="hover:text-primary-600 dark:text-primary-400 transition">Về Chúng Tôi</a>
       </div>
 
       <div class="flex items-center gap-3">
-        <a href="cart.html" class="text-gray-700 hover:text-green-600 transition text-lg"><i class="fa-solid fa-shopping-cart"></i></a>
+        <a href="cart.html" class="text-gray-700 dark:text-slate-200 hover:text-primary-600 dark:text-primary-400 transition text-lg"><i class="fa-solid fa-shopping-cart"></i></a>
         <a href="deals.html" class="text-orange-600 hover:text-orange-700 transition text-lg"><i class="fa-solid fa-fire"></i></a>
-        <a href="profile.html" class="text-gray-700 hover:text-green-600 transition text-lg"><i class="fa-solid fa-user"></i></a>
-        <a href="login.html" class="hidden md:inline-block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-full transition text-sm">Đăng nhập</a>
-        <a href="register.html" class="hidden md:inline-block bg-green-600 text-white px-5 py-2 rounded-full hover:bg-green-700 transition text-sm font-medium">Đăng ký</a>
+        <a href="profile.html" class="text-gray-700 dark:text-slate-200 hover:text-primary-600 dark:text-primary-400 transition text-lg"><i class="fa-solid fa-user"></i></a>
+        <a href="login.html" class="hidden md:inline-block px-4 py-2 text-gray-700 dark:text-slate-200 hover:bg-gray-100 dark:bg-slate-800 rounded-full transition text-sm">Đăng nhập</a>
+        <a href="register.html" class="hidden md:inline-block bg-primary-600 dark:bg-primary-700 text-white px-5 py-2 rounded-full hover:bg-primary-700 dark:hover:bg-primary-600 transition text-sm font-medium">Đăng ký</a>
       </div>
 
-      <button id="mobile-menu-button" class="md:hidden text-3xl text-gray-700">
+      <button id="mobile-menu-button" class="md:hidden text-3xl text-gray-700 dark:text-slate-200">
         <i class="fa-solid fa-bars"></i>
       </button>
     </div>
     <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
-      <div class="px-6 py-6 flex flex-col gap-5 text-gray-700 font-medium">
-        <a href="index.html" class="hover:text-green-600 transition">Trang chủ</a>
-        <a href="tours.html" class="hover:text-green-600 transition">Tours</a>
-        <a href="flight.html" class="hover:text-green-600 transition">Máy Bay</a>
-        <a href="blog.html" class="hover:text-green-600 transition">Blog</a>
-        <a href="contact.html" class="hover:text-green-600 transition">Liên Hệ</a>
-        <a href="about.html" class="hover:text-green-600 transition">Về Chúng Tôi</a>
+      <div class="px-6 py-6 flex flex-col gap-5 text-gray-700 dark:text-slate-200 font-medium">
+        <a href="index.html" class="hover:text-primary-600 dark:text-primary-400 transition">Trang chủ</a>
+        <a href="tours.html" class="hover:text-primary-600 dark:text-primary-400 transition">Tours</a>
+        <a href="flight.html" class="hover:text-primary-600 dark:text-primary-400 transition">Máy Bay</a>
+        <a href="blog.html" class="hover:text-primary-600 dark:text-primary-400 transition">Blog</a>
+        <a href="contact.html" class="hover:text-primary-600 dark:text-primary-400 transition">Liên Hệ</a>
+        <a href="about.html" class="hover:text-primary-600 dark:text-primary-400 transition">Về Chúng Tôi</a>
         <hr>
         <a href="deals.html" class="text-orange-600 font-semibold transition"><i class="fa-solid fa-fire mr-2"></i>Ưu Đãi</a>
       </div>
@@ -94,148 +123,148 @@
 
   <!-- All Deals -->
   <section class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-    <h2 class="text-3xl font-bold text-gray-800 mb-8">Tất Cả Ưu Đãi</h2>
+    <h2 class="text-3xl font-bold text-gray-800 dark:text-slate-100 mb-8">Tất Cả Ưu Đãi</h2>
     
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       <!-- Deal 1 -->
-      <div class="deal-card bg-white rounded-2xl shadow-md overflow-hidden relative">
+      <div class="deal-card bg-white dark:bg-slate-800 rounded-2xl shadow-md overflow-hidden relative">
         <div class="relative">
           <img src="images/hero2.jpg" alt="Tour" class="w-full h-48 object-cover">
           <span class="badge-sale absolute top-4 right-4 bg-red-600 text-white px-4 py-2 rounded-full font-bold text-lg">-40%</span>
           <span class="absolute top-4 left-4 bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Flash Sale</span>
         </div>
         <div class="p-6">
-          <h3 class="text-lg font-bold text-gray-800 mb-2">Sapa - Hà Giang 5N4Đ</h3>
-          <p class="text-gray-600 text-sm mb-4">Ruộng bậc thang, văn hóa dân tộc tuyệt đẹp</p>
+          <h3 class="text-lg font-bold text-gray-800 dark:text-slate-100 mb-2">Sapa - Hà Giang 5N4Đ</h3>
+          <p class="text-gray-600 dark:text-slate-300 text-sm mb-4">Ruộng bậc thang, văn hóa dân tộc tuyệt đẹp</p>
           <div class="mb-4">
             <div class="flex items-baseline gap-2">
-              <p class="text-2xl font-bold text-green-600">2.99tr</p>
-              <p class="text-lg text-gray-500 line-through">4.99tr</p>
+              <p class="text-2xl font-bold text-primary-600 dark:text-primary-400">2.99tr</p>
+              <p class="text-lg text-gray-500 dark:text-slate-400 line-through">4.99tr</p>
             </div>
-            <p class="text-xs text-gray-500 mt-1">Tiết kiệm: 2tr</p>
+            <p class="text-xs text-gray-500 dark:text-slate-400 mt-1">Tiết kiệm: 2tr</p>
           </div>
           <p class="text-xs text-orange-600 font-semibold mb-4">⏰ Còn 6 chỗ</p>
-          <a href="tour-detail.html?id=2" class="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition font-semibold text-center">
+          <a href="tour-detail.html?id=2" class="w-full bg-primary-600 dark:bg-primary-700 text-white px-4 py-2 rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition font-semibold text-center">
             Xem Chi Tiết
           </a>
         </div>
       </div>
 
       <!-- Deal 2 -->
-      <div class="deal-card bg-white rounded-2xl shadow-md overflow-hidden relative">
+      <div class="deal-card bg-white dark:bg-slate-800 rounded-2xl shadow-md overflow-hidden relative">
         <div class="relative">
           <img src="images/hero3.jpg" alt="Tour" class="w-full h-48 object-cover">
           <span class="badge-sale absolute top-4 right-4 bg-red-600 text-white px-4 py-2 rounded-full font-bold text-lg">-25%</span>
           <span class="absolute top-4 left-4 bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Super Sale</span>
         </div>
         <div class="p-6">
-          <h3 class="text-lg font-bold text-gray-800 mb-2">Hạ Long 3N2Đ</h3>
-          <p class="text-gray-600 text-sm mb-4">Du thuyền 5 sao qua vịnh kỳ vĩ</p>
+          <h3 class="text-lg font-bold text-gray-800 dark:text-slate-100 mb-2">Hạ Long 3N2Đ</h3>
+          <p class="text-gray-600 dark:text-slate-300 text-sm mb-4">Du thuyền 5 sao qua vịnh kỳ vĩ</p>
           <div class="mb-4">
             <div class="flex items-baseline gap-2">
-              <p class="text-2xl font-bold text-green-600">2.24tr</p>
-              <p class="text-lg text-gray-500 line-through">2.99tr</p>
+              <p class="text-2xl font-bold text-primary-600 dark:text-primary-400">2.24tr</p>
+              <p class="text-lg text-gray-500 dark:text-slate-400 line-through">2.99tr</p>
             </div>
-            <p class="text-xs text-gray-500 mt-1">Tiết kiệm: 750k</p>
+            <p class="text-xs text-gray-500 dark:text-slate-400 mt-1">Tiết kiệm: 750k</p>
           </div>
           <p class="text-xs text-orange-600 font-semibold mb-4">⏰ Còn 12 chỗ</p>
-          <a href="tour-detail.html?id=3" class="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition font-semibold text-center">
+          <a href="tour-detail.html?id=3" class="w-full bg-primary-600 dark:bg-primary-700 text-white px-4 py-2 rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition font-semibold text-center">
             Xem Chi Tiết
           </a>
         </div>
       </div>
 
       <!-- Deal 3 -->
-      <div class="deal-card bg-white rounded-2xl shadow-md overflow-hidden relative">
+      <div class="deal-card bg-white dark:bg-slate-800 rounded-2xl shadow-md overflow-hidden relative">
         <div class="relative">
           <img src="images/phuquoc.jpg" alt="Tour" class="w-full h-48 object-cover">
           <span class="badge-sale absolute top-4 right-4 bg-red-600 text-white px-4 py-2 rounded-full font-bold text-lg">-30%</span>
           <span class="absolute top-4 left-4 bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Combo Deal</span>
         </div>
         <div class="p-6">
-          <h3 class="text-lg font-bold text-gray-800 mb-2">Bali 6N5Đ</h3>
-          <p class="text-gray-600 text-sm mb-4">Đền thờ cổ kính + bãi biển thiên đường</p>
+          <h3 class="text-lg font-bold text-gray-800 dark:text-slate-100 mb-2">Bali 6N5Đ</h3>
+          <p class="text-gray-600 dark:text-slate-300 text-sm mb-4">Đền thờ cổ kính + bãi biển thiên đường</p>
           <div class="mb-4">
             <div class="flex items-baseline gap-2">
-              <p class="text-2xl font-bold text-green-600">4.89tr</p>
-              <p class="text-lg text-gray-500 line-through">6.99tr</p>
+              <p class="text-2xl font-bold text-primary-600 dark:text-primary-400">4.89tr</p>
+              <p class="text-lg text-gray-500 dark:text-slate-400 line-through">6.99tr</p>
             </div>
-            <p class="text-xs text-gray-500 mt-1">Tiết kiệm: 2.1tr</p>
+            <p class="text-xs text-gray-500 dark:text-slate-400 mt-1">Tiết kiệm: 2.1tr</p>
           </div>
           <p class="text-xs text-orange-600 font-semibold mb-4">⏰ Còn 3 chỗ</p>
-          <a href="tour-detail.html?id=4" class="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition font-semibold text-center">
+          <a href="tour-detail.html?id=4" class="w-full bg-primary-600 dark:bg-primary-700 text-white px-4 py-2 rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition font-semibold text-center">
             Xem Chi Tiết
           </a>
         </div>
       </div>
 
       <!-- Deal 4 -->
-      <div class="deal-card bg-white rounded-2xl shadow-md overflow-hidden relative">
+      <div class="deal-card bg-white dark:bg-slate-800 rounded-2xl shadow-md overflow-hidden relative">
         <div class="relative">
           <img src="images/sapa.jpg" alt="Tour" class="w-full h-48 object-cover">
           <span class="badge-sale absolute top-4 right-4 bg-red-600 text-white px-4 py-2 rounded-full font-bold text-lg">-50%</span>
           <span class="absolute top-4 left-4 bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Mega Sale</span>
         </div>
         <div class="p-6">
-          <h3 class="text-lg font-bold text-gray-800 mb-2">Cô Tô 4N3Đ</h3>
-          <p class="text-gray-600 text-sm mb-4">Hòn đảo hoang sơ, cảnh biển tuyệt đẹp</p>
+          <h3 class="text-lg font-bold text-gray-800 dark:text-slate-100 mb-2">Cô Tô 4N3Đ</h3>
+          <p class="text-gray-600 dark:text-slate-300 text-sm mb-4">Hòn đảo hoang sơ, cảnh biển tuyệt đẹp</p>
           <div class="mb-4">
             <div class="flex items-baseline gap-2">
-              <p class="text-2xl font-bold text-green-600">1.25tr</p>
-              <p class="text-lg text-gray-500 line-through">2.49tr</p>
+              <p class="text-2xl font-bold text-primary-600 dark:text-primary-400">1.25tr</p>
+              <p class="text-lg text-gray-500 dark:text-slate-400 line-through">2.49tr</p>
             </div>
-            <p class="text-xs text-gray-500 mt-1">Tiết kiệm: 1.24tr</p>
+            <p class="text-xs text-gray-500 dark:text-slate-400 mt-1">Tiết kiệm: 1.24tr</p>
           </div>
           <p class="text-xs text-orange-600 font-semibold mb-4">⏰ Còn 1 chỗ</p>
-          <a href="tour-detail.html?id=5" class="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition font-semibold text-center">
+          <a href="tour-detail.html?id=5" class="w-full bg-primary-600 dark:bg-primary-700 text-white px-4 py-2 rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition font-semibold text-center">
             Xem Chi Tiết
           </a>
         </div>
       </div>
 
       <!-- Deal 5 -->
-      <div class="deal-card bg-white rounded-2xl shadow-md overflow-hidden relative">
+      <div class="deal-card bg-white dark:bg-slate-800 rounded-2xl shadow-md overflow-hidden relative">
         <div class="relative">
           <img src="images/bali.jpg" alt="Tour" class="w-full h-48 object-cover">
           <span class="badge-sale absolute top-4 right-4 bg-red-600 text-white px-4 py-2 rounded-full font-bold text-lg">-20%</span>
           <span class="absolute top-4 left-4 bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Weekend Sale</span>
         </div>
         <div class="p-6">
-          <h3 class="text-lg font-bold text-gray-800 mb-2">Bangkok - Phuket 6N5Đ</h3>
-          <p class="text-gray-600 text-sm mb-4">Thủ đô sôi động + bãi biển Phuket</p>
+          <h3 class="text-lg font-bold text-gray-800 dark:text-slate-100 mb-2">Bangkok - Phuket 6N5Đ</h3>
+          <p class="text-gray-600 dark:text-slate-300 text-sm mb-4">Thủ đô sôi động + bãi biển Phuket</p>
           <div class="mb-4">
             <div class="flex items-baseline gap-2">
-              <p class="text-2xl font-bold text-green-600">4.79tr</p>
-              <p class="text-lg text-gray-500 line-through">5.99tr</p>
+              <p class="text-2xl font-bold text-primary-600 dark:text-primary-400">4.79tr</p>
+              <p class="text-lg text-gray-500 dark:text-slate-400 line-through">5.99tr</p>
             </div>
-            <p class="text-xs text-gray-500 mt-1">Tiết kiệm: 1.2tr</p>
+            <p class="text-xs text-gray-500 dark:text-slate-400 mt-1">Tiết kiệm: 1.2tr</p>
           </div>
           <p class="text-xs text-orange-600 font-semibold mb-4">⏰ Còn 8 chỗ</p>
-          <a href="tour-detail.html?id=6" class="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition font-semibold text-center">
+          <a href="tour-detail.html?id=6" class="w-full bg-primary-600 dark:bg-primary-700 text-white px-4 py-2 rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition font-semibold text-center">
             Xem Chi Tiết
           </a>
         </div>
       </div>
 
       <!-- Deal 6 -->
-      <div class="deal-card bg-white rounded-2xl shadow-md overflow-hidden relative">
+      <div class="deal-card bg-white dark:bg-slate-800 rounded-2xl shadow-md overflow-hidden relative">
         <div class="relative">
           <img src="images/hero1.jpg" alt="Tour" class="w-full h-48 object-cover">
           <span class="badge-sale absolute top-4 right-4 bg-red-600 text-white px-4 py-2 rounded-full font-bold text-lg">-35%</span>
           <span class="absolute top-4 left-4 bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Member Deal</span>
         </div>
         <div class="p-6">
-          <h3 class="text-lg font-bold text-gray-800 mb-2">Đà Nẵng - Hội An 4N3Đ</h3>
-          <p class="text-gray-600 text-sm mb-4">Bãi biển Mỹ Khê + phố cổ Hội An</p>
+          <h3 class="text-lg font-bold text-gray-800 dark:text-slate-100 mb-2">Đà Nẵng - Hội An 4N3Đ</h3>
+          <p class="text-gray-600 dark:text-slate-300 text-sm mb-4">Bãi biển Mỹ Khê + phố cổ Hội An</p>
           <div class="mb-4">
             <div class="flex items-baseline gap-2">
-              <p class="text-2xl font-bold text-green-600">1.81tr</p>
-              <p class="text-lg text-gray-500 line-through">2.79tr</p>
+              <p class="text-2xl font-bold text-primary-600 dark:text-primary-400">1.81tr</p>
+              <p class="text-lg text-gray-500 dark:text-slate-400 line-through">2.79tr</p>
             </div>
-            <p class="text-xs text-gray-500 mt-1">Tiết kiệm: 980k</p>
+            <p class="text-xs text-gray-500 dark:text-slate-400 mt-1">Tiết kiệm: 980k</p>
           </div>
           <p class="text-xs text-orange-600 font-semibold mb-4">⏰ Còn 15 chỗ</p>
-          <a href="tour-detail.html?id=7" class="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition font-semibold text-center">
+          <a href="tour-detail.html?id=7" class="w-full bg-primary-600 dark:bg-primary-700 text-white px-4 py-2 rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition font-semibold text-center">
             Xem Chi Tiết
           </a>
         </div>
@@ -247,30 +276,30 @@
   <section class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
     <div class="bg-blue-50 rounded-2xl p-8 border-2 border-blue-200">
       <div class="text-center">
-        <h3 class="text-2xl font-bold text-gray-800 mb-4">💳 Mã Khuyến Mãi</h3>
+        <h3 class="text-2xl font-bold text-gray-800 dark:text-slate-100 mb-4">💳 Mã Khuyến Mãi</h3>
         <div class="space-y-3 max-w-2xl mx-auto">
-          <div class="flex items-center justify-between bg-white rounded-lg p-4 border border-blue-200">
+          <div class="flex items-center justify-between bg-white dark:bg-slate-800 rounded-lg p-4 border border-blue-200">
             <div class="text-left">
-              <p class="font-bold text-gray-800">SAVE100</p>
-              <p class="text-sm text-gray-600">Giảm 100k cho hóa đơn trên 2 triệu</p>
+              <p class="font-bold text-gray-800 dark:text-slate-100">SAVE100</p>
+              <p class="text-sm text-gray-600 dark:text-slate-300">Giảm 100k cho hóa đơn trên 2 triệu</p>
             </div>
             <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700" onclick="copyCode('SAVE100')">
               Copy
             </button>
           </div>
-          <div class="flex items-center justify-between bg-white rounded-lg p-4 border border-blue-200">
+          <div class="flex items-center justify-between bg-white dark:bg-slate-800 rounded-lg p-4 border border-blue-200">
             <div class="text-left">
-              <p class="font-bold text-gray-800">SUMMER50</p>
-              <p class="text-sm text-gray-600">Giảm 50k cho tours mùa hè</p>
+              <p class="font-bold text-gray-800 dark:text-slate-100">SUMMER50</p>
+              <p class="text-sm text-gray-600 dark:text-slate-300">Giảm 50k cho tours mùa hè</p>
             </div>
             <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700" onclick="copyCode('SUMMER50')">
               Copy
             </button>
           </div>
-          <div class="flex items-center justify-between bg-white rounded-lg p-4 border border-blue-200">
+          <div class="flex items-center justify-between bg-white dark:bg-slate-800 rounded-lg p-4 border border-blue-200">
             <div class="text-left">
-              <p class="font-bold text-gray-800">FRIEND20</p>
-              <p class="text-sm text-gray-600">Giảm 20% khi giới thiệu bạn</p>
+              <p class="font-bold text-gray-800 dark:text-slate-100">FRIEND20</p>
+              <p class="text-sm text-gray-600 dark:text-slate-300">Giảm 20% khi giới thiệu bạn</p>
             </div>
             <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700" onclick="copyCode('FRIEND20')">
               Copy
@@ -286,7 +315,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
         <div>
-          <img src="images/logo-footer-colored.png" alt="WILTravel" class="h-12 mb-4 bg-white/10 rounded-xl p-1">
+          <img src="images/logo-footer.png" alt="WILTravel" class="h-12 mb-4">
           <p class="text-sm">Chỉ cần & đi chuyến nghỉ ngơi</p>
         </div>
         <div>
@@ -315,6 +344,14 @@
       navigator.clipboard.writeText(code);
       alert(`Đã sao chép mã: ${code}`);
     }
+  </script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof AOS !== 'undefined') {
+        AOS.init({ duration: 800, once: true });
+      }
+    });
   </script>
 </body>
 </html>

@@ -5,6 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Đăng nhập - Tài khoản Google</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            jakarta: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            primary: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              300: '#86efac',
+              400: '#4ade80',
+              500: '#22c55e',
+              600: '#16a34a', // original green
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <style>
     body {
@@ -40,7 +68,7 @@
     }
   </style>
 </head>
-<body class="flex items-center justify-center min-h-screen p-4">
+<body class="font-jakarta flex items-center justify-center min-h-screen p-4 bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-300">
 
   <div class="google-card bg-white w-full max-w-[450px] p-8 sm:p-10 relative overflow-hidden flex flex-col min-h-[500px]">
     
@@ -57,8 +85,8 @@
         <path fill="#FBBC05" d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.62z"/>
         <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
       </svg>
-      <h1 class="text-2xl font-bold text-gray-800" id="title-text">Chọn tài khoản</h1>
-      <p class="text-sm text-gray-500 mt-1" id="sub-text">để tiếp tục đến <span class="font-semibold text-green-600">WILTravel</span></p>
+      <h1 class="text-2xl font-bold text-gray-800 dark:text-slate-100" id="title-text">Chọn tài khoản</h1>
+      <p class="text-sm text-gray-500 dark:text-slate-400 mt-1" id="sub-text">để tiếp tục đến <span class="font-semibold text-primary-600 dark:text-primary-400">WILTravel</span></p>
     </div>
 
     <!-- Main Content Area -->
@@ -67,29 +95,29 @@
       <!-- Account Chooser List -->
       <div id="account-chooser" class="space-y-3">
         <!-- Account 1 -->
-        <button onclick="authenticate('Nguyễn', 'Văn A', 'nguyen@gmail.com')" class="w-full flex items-center gap-3 p-3.5 rounded-2xl hover:bg-gray-50 border border-gray-200 transition text-left group">
+        <button onclick="authenticate('Nguyễn', 'Văn A', 'nguyen@gmail.com')" class="w-full flex items-center gap-3 p-3.5 rounded-2xl hover:bg-gray-50 dark:bg-slate-800/50 border border-gray-200 transition text-left group">
           <div class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-lg">A</div>
           <div class="flex-1">
-            <p class="font-bold text-sm text-gray-800 group-hover:text-blue-600 transition">Nguyễn Văn A</p>
-            <p class="text-xs text-gray-500">nguyen@gmail.com</p>
+            <p class="font-bold text-sm text-gray-800 dark:text-slate-100 group-hover:text-blue-600 transition">Nguyễn Văn A</p>
+            <p class="text-xs text-gray-500 dark:text-slate-400">nguyen@gmail.com</p>
           </div>
-          <span class="text-[10px] text-green-600 font-semibold bg-green-50 px-2.5 py-1 rounded-full border border-green-100">Đã lưu</span>
+          <span class="text-[10px] text-primary-600 dark:text-primary-400 font-semibold bg-green-50 px-2.5 py-1 rounded-full border border-green-100">Đã lưu</span>
         </button>
 
         <!-- Account 2 -->
-        <button onclick="authenticate('Trần', 'Thị B', 'tranb@gmail.com')" class="w-full flex items-center gap-3 p-3.5 rounded-2xl hover:bg-gray-50 border border-gray-200 transition text-left group">
+        <button onclick="authenticate('Trần', 'Thị B', 'tranb@gmail.com')" class="w-full flex items-center gap-3 p-3.5 rounded-2xl hover:bg-gray-50 dark:bg-slate-800/50 border border-gray-200 transition text-left group">
           <div class="w-10 h-10 rounded-full bg-purple-600 text-white flex items-center justify-center font-bold text-lg">B</div>
           <div class="flex-1">
-            <p class="font-bold text-sm text-gray-800 group-hover:text-purple-600 transition">Trần Thị B</p>
-            <p class="text-xs text-gray-500">tranb@gmail.com</p>
+            <p class="font-bold text-sm text-gray-800 dark:text-slate-100 group-hover:text-purple-600 transition">Trần Thị B</p>
+            <p class="text-xs text-gray-500 dark:text-slate-400">tranb@gmail.com</p>
           </div>
         </button>
 
         <!-- Use another account -->
-        <button onclick="showCustomForm()" class="w-full flex items-center gap-3 p-3.5 rounded-2xl hover:bg-gray-50 border border-gray-200 transition text-left group">
-          <div class="w-10 h-10 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center text-lg"><i class="fa-solid fa-user-plus text-sm"></i></div>
+        <button onclick="showCustomForm()" class="w-full flex items-center gap-3 p-3.5 rounded-2xl hover:bg-gray-50 dark:bg-slate-800/50 border border-gray-200 transition text-left group">
+          <div class="w-10 h-10 rounded-full bg-gray-100 dark:bg-slate-800 text-gray-500 dark:text-slate-400 flex items-center justify-center text-lg"><i class="fa-solid fa-user-plus text-sm"></i></div>
           <div class="flex-1">
-            <p class="font-bold text-sm text-gray-800 group-hover:text-green-600 transition">Sử dụng tài khoản khác</p>
+            <p class="font-bold text-sm text-gray-800 dark:text-slate-100 group-hover:text-primary-600 dark:text-primary-400 transition">Sử dụng tài khoản khác</p>
             <p class="text-xs text-gray-400">Đăng nhập bằng email Gmail khác</p>
           </div>
         </button>
@@ -98,20 +126,20 @@
       <!-- Custom Login Form (Initially hidden) -->
       <div id="custom-form" class="hidden space-y-4">
         <div>
-          <label class="block text-xs font-semibold text-gray-600 mb-1.5">Họ và tên đệm</label>
-          <input type="text" id="lastName" placeholder="Ví dụ: Nguyễn" class="w-full px-4 py-3 text-sm border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 bg-gray-50/50">
+          <label class="block text-xs font-semibold text-gray-600 dark:text-slate-300 mb-1.5">Họ và tên đệm</label>
+          <input type="text" id="lastName" placeholder="Ví dụ: Nguyễn" class="w-full px-4 py-3 text-sm border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 bg-gray-50 dark:bg-slate-800/50/50">
         </div>
         <div>
-          <label class="block text-xs font-semibold text-gray-600 mb-1.5">Tên</label>
-          <input type="text" id="firstName" placeholder="Ví dụ: Minh" class="w-full px-4 py-3 text-sm border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 bg-gray-50/50">
+          <label class="block text-xs font-semibold text-gray-600 dark:text-slate-300 mb-1.5">Tên</label>
+          <input type="text" id="firstName" placeholder="Ví dụ: Minh" class="w-full px-4 py-3 text-sm border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 bg-gray-50 dark:bg-slate-800/50/50">
         </div>
         <div>
-          <label class="block text-xs font-semibold text-gray-600 mb-1.5">Địa chỉ Email (Gmail)</label>
-          <input type="email" id="email" placeholder="example@gmail.com" class="w-full px-4 py-3 text-sm border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 bg-gray-50/50">
+          <label class="block text-xs font-semibold text-gray-600 dark:text-slate-300 mb-1.5">Địa chỉ Email (Gmail)</label>
+          <input type="email" id="email" placeholder="example@gmail.com" class="w-full px-4 py-3 text-sm border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 bg-gray-50 dark:bg-slate-800/50/50">
         </div>
 
         <div class="flex gap-3 pt-2">
-          <button onclick="hideCustomForm()" class="flex-1 border border-gray-300 hover:bg-gray-50 text-gray-700 font-semibold py-3 rounded-xl text-sm transition">Quay lại</button>
+          <button onclick="hideCustomForm()" class="flex-1 border border-gray-300 hover:bg-gray-50 dark:bg-slate-800/50 text-gray-700 dark:text-slate-200 font-semibold py-3 rounded-xl text-sm transition">Quay lại</button>
           <button onclick="submitCustom()" class="flex-1 bg-[#1a73e8] hover:bg-blue-700 text-white font-semibold py-3 rounded-xl text-sm transition shadow-sm">Tiếp tục</button>
         </div>
       </div>
@@ -123,8 +151,8 @@
           <div class="absolute inset-0 rounded-full border-4 border-[#1a73e8] border-t-transparent animate-spin"></div>
         </div>
         <div>
-          <h3 class="font-bold text-lg text-gray-800" id="loader-title">Đang xác thực...</h3>
-          <p class="text-xs text-gray-500 mt-1" id="loader-email">Vui lòng chờ trong giây lát</p>
+          <h3 class="font-bold text-lg text-gray-800 dark:text-slate-100" id="loader-title">Đang xác thực...</h3>
+          <p class="text-xs text-gray-500 dark:text-slate-400 mt-1" id="loader-email">Vui lòng chờ trong giây lát</p>
         </div>
       </div>
 
@@ -148,7 +176,7 @@
 
     function hideCustomForm() {
       document.getElementById('title-text').innerText = 'Chọn tài khoản';
-      document.getElementById('sub-text').innerHTML = 'để tiếp tục đến <span class="font-semibold text-green-600">WILTravel</span>';
+      document.getElementById('sub-text').innerHTML = 'để tiếp tục đến <span class="font-semibold text-primary-600 dark:text-primary-400">WILTravel</span>';
       document.getElementById('account-chooser').classList.remove('hidden');
       document.getElementById('custom-form').classList.add('hidden');
     }
@@ -193,6 +221,14 @@
         window.close();
       }, 1500);
     }
+  </script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof AOS !== 'undefined') {
+        AOS.init({ duration: 800, once: true });
+      }
+    });
   </script>
 </body>
 </html>

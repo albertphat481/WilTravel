@@ -5,14 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WILTravel - Đặt Tour</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            jakarta: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            primary: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              300: '#86efac',
+              400: '#4ade80',
+              500: '#22c55e',
+              600: '#16a34a', // original green
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
-<body class="font-sans bg-gray-50">
+<body class="font-jakarta bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-300">
 
-  <nav class="bg-white shadow-md fixed w-full z-50">
+  <nav class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-md fixed w-full z-50 border-b border-gray-100 dark:border-white/10 transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-      <a href="index.html"><img src="images/logo.png" alt="WILTravel" class="h-10 w-auto"></a>
-      <span class="text-gray-700 font-semibold">Quá Trình Đặt Tour</span>
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="images/logo-transparent.png" alt="WILTravel" class="h-9 sm:h-11 w-auto dark:hidden">
+        <img src="images/logo-footer.png" alt="WILTravel" class="h-9 sm:h-11 w-auto hidden dark:block">
+      </a>
+      <span class="text-gray-700 dark:text-slate-200 font-semibold">Quá Trình Đặt Tour</span>
     </div>
   </nav>
 
@@ -20,65 +51,65 @@
     <!-- Step Indicators -->
     <div class="grid grid-cols-3 gap-2 sm:gap-8 mb-12">
       <div class="text-center">
-        <div id="indicator-1" class="inline-block bg-green-600 text-white w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-bold text-base sm:text-lg mb-2 transition-all duration-300">1</div>
-        <p class="font-semibold text-gray-800 text-xs sm:text-sm">Thông Tin</p>
+        <div id="indicator-1" class="inline-block bg-primary-600 dark:bg-primary-700 text-white w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-bold text-base sm:text-lg mb-2 transition-all duration-300">1</div>
+        <p class="font-semibold text-gray-800 dark:text-slate-100 text-xs sm:text-sm">Thông Tin</p>
       </div>
       <div class="text-center">
-        <div id="indicator-2" class="inline-block bg-green-200 text-green-600 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-bold text-base sm:text-lg mb-2 transition-all duration-300">2</div>
-        <p class="font-semibold text-gray-800 text-xs sm:text-sm">Xác Nhận</p>
+        <div id="indicator-2" class="inline-block bg-green-200 text-primary-600 dark:text-primary-400 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-bold text-base sm:text-lg mb-2 transition-all duration-300">2</div>
+        <p class="font-semibold text-gray-800 dark:text-slate-100 text-xs sm:text-sm">Xác Nhận</p>
       </div>
       <div class="text-center">
-        <div id="indicator-3" class="inline-block bg-green-200 text-green-600 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-bold text-base sm:text-lg mb-2 transition-all duration-300">3</div>
-        <p class="font-semibold text-gray-800 text-xs sm:text-sm">Thanh Toán</p>
+        <div id="indicator-3" class="inline-block bg-green-200 text-primary-600 dark:text-primary-400 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-bold text-base sm:text-lg mb-2 transition-all duration-300">3</div>
+        <p class="font-semibold text-gray-800 dark:text-slate-100 text-xs sm:text-sm">Thanh Toán</p>
       </div>
     </div>
 
     <!-- Wizard Steps Containers -->
-    <div class="bg-white rounded-3xl shadow-xl p-6 sm:p-8 border border-gray-100">
+    <div class="bg-white dark:bg-slate-800 rounded-3xl shadow-xl p-6 sm:p-8 border border-gray-100">
       
       <!-- STEP 1: Personal Information -->
       <div id="step-1" class="transition-opacity duration-300">
-        <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 sm:mb-8">Thông Tin Liên Hệ</h1>
+        <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-slate-100 mb-6 sm:mb-8">Thông Tin Liên Hệ</h1>
         <form onsubmit="goToStep2(event)" class="space-y-6">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label class="block text-sm font-semibold text-gray-700 mb-2">Họ</label>
+              <label class="block text-sm font-semibold text-gray-700 dark:text-slate-200 mb-2">Họ</label>
               <input type="text" id="cust-lastname" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-green-500">
             </div>
             <div>
-              <label class="block text-sm font-semibold text-gray-700 mb-2">Tên</label>
+              <label class="block text-sm font-semibold text-gray-700 dark:text-slate-200 mb-2">Tên</label>
               <input type="text" id="cust-firstname" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-green-500">
             </div>
           </div>
 
           <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+            <label class="block text-sm font-semibold text-gray-700 dark:text-slate-200 mb-2">Email</label>
             <input type="email" id="cust-email" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-green-500">
           </div>
 
           <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-2">Số Điện Thoại</label>
+            <label class="block text-sm font-semibold text-gray-700 dark:text-slate-200 mb-2">Số Điện Thoại</label>
             <input type="tel" id="cust-phone" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-green-500">
           </div>
 
           <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-2">Địa Chỉ</label>
+            <label class="block text-sm font-semibold text-gray-700 dark:text-slate-200 mb-2">Địa Chỉ</label>
             <input type="text" id="cust-address" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-green-500">
           </div>
 
-          <div class="bg-gray-50 p-6 rounded-2xl">
-            <label class="block font-bold text-gray-800 mb-3">Yêu Cầu Đặc Biệt (Tùy chọn)</label>
+          <div class="bg-gray-50 dark:bg-slate-800/50 p-6 rounded-2xl">
+            <label class="block font-bold text-gray-800 dark:text-slate-100 mb-3">Yêu Cầu Đặc Biệt (Tùy chọn)</label>
             <textarea id="cust-request" rows="3" placeholder="Ví dụ: Ăn chay, phòng tầng cao, cần xe đẩy trẻ em..." class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-green-500 resize-none"></textarea>
           </div>
 
           <div class="flex items-center gap-3 bg-yellow-50 p-4 rounded-xl">
             <input type="checkbox" id="terms" required class="w-4 h-4 accent-green-600">
-            <label for="terms" class="text-sm text-gray-700">
-              Tôi đã đọc và đồng ý với các <a href="#" class="text-green-600 font-semibold hover:underline">Điều khoản dịch vụ của WILTravel</a>
+            <label for="terms" class="text-sm text-gray-700 dark:text-slate-200">
+              Tôi đã đọc và đồng ý với các <a href="#" class="text-primary-600 dark:text-primary-400 font-semibold hover:underline">Điều khoản dịch vụ của WILTravel</a>
             </label>
           </div>
 
-          <button type="submit" class="w-full bg-green-600 text-white font-bold py-4 rounded-xl hover:bg-green-700 transition shadow-lg shadow-green-600/20">
+          <button type="submit" class="w-full bg-primary-600 dark:bg-primary-700 text-white font-bold py-4 rounded-xl hover:bg-primary-700 dark:hover:bg-primary-600 transition shadow-lg shadow-green-600/20">
             Tiếp Tục Xác Nhận
           </button>
         </form>
@@ -86,29 +117,29 @@
 
       <!-- STEP 2: Order Summary & Discount -->
       <div id="step-2" class="hidden transition-opacity duration-300">
-        <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6">Xác Nhận Đơn Hàng</h1>
+        <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-slate-100 mb-6">Xác Nhận Đơn Hàng</h1>
         
         <div id="checkout-items" class="space-y-4 mb-6">
           <!-- Items to buy will be listed here -->
         </div>
 
         <!-- Promo Code Apply -->
-        <div class="bg-gray-50 p-5 rounded-2xl mb-6 border border-gray-100">
-          <label class="block text-sm font-semibold text-gray-700 mb-2">Mã Giảm Giá (Coupon)</label>
+        <div class="bg-gray-50 dark:bg-slate-800/50 p-5 rounded-2xl mb-6 border border-gray-100">
+          <label class="block text-sm font-semibold text-gray-700 dark:text-slate-200 mb-2">Mã Giảm Giá (Coupon)</label>
           <div class="flex gap-2">
             <input type="text" id="promo-code" placeholder="Ví dụ: SAVE100, SUMMER50, FRIEND20" class="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-green-500 uppercase">
-            <button onclick="applyPromoCode()" class="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded-xl transition">Áp dụng</button>
+            <button onclick="applyPromoCode()" class="bg-primary-600 dark:bg-primary-700 hover:bg-primary-700 dark:hover:bg-primary-600 text-white font-semibold px-6 py-3 rounded-xl transition">Áp dụng</button>
           </div>
           <p id="promo-status" class="text-sm mt-2 font-medium"></p>
         </div>
 
         <!-- Price breakdown -->
         <div class="bg-emerald-50/50 p-6 rounded-2xl mb-8 space-y-3">
-          <div class="flex justify-between text-gray-700">
+          <div class="flex justify-between text-gray-700 dark:text-slate-200">
             <span>Tạm tính:</span>
             <span id="summary-subtotal" class="font-semibold">0đ</span>
           </div>
-          <div class="flex justify-between text-gray-700">
+          <div class="flex justify-between text-gray-700 dark:text-slate-200">
             <span>Phí dịch vụ:</span>
             <span id="summary-fee" class="font-semibold">0đ</span>
           </div>
@@ -117,17 +148,17 @@
             <span id="summary-discount" class="font-semibold">-0đ</span>
           </div>
           <hr class="border-gray-200">
-          <div class="flex justify-between text-xl font-bold text-gray-800">
+          <div class="flex justify-between text-xl font-bold text-gray-800 dark:text-slate-100">
             <span>Tổng thanh toán:</span>
-            <span id="summary-total" class="text-green-600">0đ</span>
+            <span id="summary-total" class="text-primary-600 dark:text-primary-400">0đ</span>
           </div>
         </div>
 
         <div class="flex gap-4">
-          <button onclick="goToStep1()" class="flex-1 border border-gray-300 text-gray-700 font-bold py-4 rounded-xl hover:bg-gray-50 transition">
+          <button onclick="goToStep1()" class="flex-1 border border-gray-300 text-gray-700 dark:text-slate-200 font-bold py-4 rounded-xl hover:bg-gray-50 dark:bg-slate-800/50 transition">
             Quay lại
           </button>
-          <button onclick="goToStep3()" class="flex-1 bg-green-600 text-white font-bold py-4 rounded-xl hover:bg-green-700 transition shadow-lg shadow-green-600/20">
+          <button onclick="goToStep3()" class="flex-1 bg-primary-600 dark:bg-primary-700 text-white font-bold py-4 rounded-xl hover:bg-primary-700 dark:hover:bg-primary-600 transition shadow-lg shadow-green-600/20">
             Thanh Toán
           </button>
         </div>
@@ -135,70 +166,70 @@
 
       <!-- STEP 3: Payment Selection -->
       <div id="step-3" class="hidden transition-opacity duration-300">
-        <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6">Thanh Toán</h1>
+        <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-slate-100 mb-6">Thanh Toán</h1>
         
         <div class="mb-8">
-          <label class="block font-bold text-gray-800 mb-4">Chọn Phương Thức Thanh Toán</label>
+          <label class="block font-bold text-gray-800 dark:text-slate-100 mb-4">Chọn Phương Thức Thanh Toán</label>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <!-- Bank transfer card -->
             <label class="border-2 border-green-600 rounded-2xl p-5 flex items-start gap-3 cursor-pointer bg-green-50/20" id="pay-bank-label">
               <input type="radio" name="pay-method" value="bank" checked onclick="togglePaymentFields('bank')" class="mt-1 accent-green-600">
               <div>
-                <span class="font-bold text-gray-800 block mb-1"><i class="fa-solid fa-building-columns mr-2 text-green-600"></i>Chuyển khoản Ngân hàng</span>
-                <span class="text-xs text-gray-500">Thanh toán qua quét mã QR hoặc chuyển khoản truyền thống.</span>
+                <span class="font-bold text-gray-800 dark:text-slate-100 block mb-1"><i class="fa-solid fa-building-columns mr-2 text-primary-600 dark:text-primary-400"></i>Chuyển khoản Ngân hàng</span>
+                <span class="text-xs text-gray-500 dark:text-slate-400">Thanh toán qua quét mã QR hoặc chuyển khoản truyền thống.</span>
               </div>
             </label>
             <!-- Card card -->
             <label class="border-2 border-gray-200 rounded-2xl p-5 flex items-start gap-3 cursor-pointer hover:border-green-600" id="pay-card-label">
               <input type="radio" name="pay-method" value="card" onclick="togglePaymentFields('card')" class="mt-1 accent-green-600">
               <div>
-                <span class="font-bold text-gray-800 block mb-1"><i class="fa-solid fa-credit-card mr-2 text-green-600"></i>Thẻ tín dụng / Ghi nợ</span>
-                <span class="text-xs text-gray-500">Chấp nhận thẻ Visa, Mastercard, JCB, thẻ nội địa.</span>
+                <span class="font-bold text-gray-800 dark:text-slate-100 block mb-1"><i class="fa-solid fa-credit-card mr-2 text-primary-600 dark:text-primary-400"></i>Thẻ tín dụng / Ghi nợ</span>
+                <span class="text-xs text-gray-500 dark:text-slate-400">Chấp nhận thẻ Visa, Mastercard, JCB, thẻ nội địa.</span>
               </div>
             </label>
           </div>
         </div>
 
         <!-- Payment Details Content -->
-        <div class="bg-gray-50 p-6 rounded-2xl mb-8">
+        <div class="bg-gray-50 dark:bg-slate-800/50 p-6 rounded-2xl mb-8">
           <!-- Bank transfer info -->
           <div id="payment-bank" class="text-center space-y-4">
-            <p class="font-bold text-gray-800">Quét Mã QR MoMo/VietQR Để Thanh Toán</p>
+            <p class="font-bold text-gray-800 dark:text-slate-100">Quét Mã QR MoMo/VietQR Để Thanh Toán</p>
             <div class="flex justify-center">
               <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 w-48 h-48 flex flex-col items-center justify-center">
                 <!-- Mock QR Code representation -->
-                <i class="fa-solid fa-qrcode text-9xl text-gray-800"></i>
+                <i class="fa-solid fa-qrcode text-9xl text-gray-800 dark:text-slate-100"></i>
                 <p class="text-[9px] text-gray-400 font-bold uppercase tracking-wider mt-2">VietQR - NAPAS247</p>
               </div>
             </div>
             <div class="text-left max-w-sm mx-auto text-sm space-y-2 border-t pt-4">
-              <p class="text-gray-600"><strong>Ngân hàng:</strong> MB Bank (Quân Đội)</p>
-              <p class="text-gray-600"><strong>Số tài khoản:</strong> 0905025737</p>
-              <p class="text-gray-600"><strong>Chủ tài khoản:</strong> NGUYEN VAN A</p>
-              <p class="text-gray-600"><strong>Số tiền:</strong> <span class="text-green-600 font-bold" id="bank-total-price">0đ</span></p>
-              <p class="text-gray-600"><strong>Nội dung CK:</strong> <span class="text-green-600 font-bold font-mono" id="bank-desc">WILTRAVEL 12345</span></p>
+              <p class="text-gray-600 dark:text-slate-300"><strong>Ngân hàng:</strong> MB Bank (Quân Đội)</p>
+              <p class="text-gray-600 dark:text-slate-300"><strong>Số tài khoản:</strong> 0905025737</p>
+              <p class="text-gray-600 dark:text-slate-300"><strong>Chủ tài khoản:</strong> NGUYEN VAN A</p>
+              <p class="text-gray-600 dark:text-slate-300"><strong>Số tiền:</strong> <span class="text-primary-600 dark:text-primary-400 font-bold" id="bank-total-price">0đ</span></p>
+              <p class="text-gray-600 dark:text-slate-300"><strong>Nội dung CK:</strong> <span class="text-primary-600 dark:text-primary-400 font-bold font-mono" id="bank-desc">WILTRAVEL 12345</span></p>
             </div>
           </div>
 
           <!-- Credit card form -->
           <div id="payment-card" class="hidden space-y-4">
-            <p class="font-bold text-gray-800 mb-2">Nhập Thông Tin Thẻ</p>
+            <p class="font-bold text-gray-800 dark:text-slate-100 mb-2">Nhập Thông Tin Thẻ</p>
             <div class="space-y-4">
               <div>
-                <label class="block text-xs text-gray-500 mb-1">Tên trên thẻ</label>
+                <label class="block text-xs text-gray-500 dark:text-slate-400 mb-1">Tên trên thẻ</label>
                 <input type="text" placeholder="NGUYEN VAN A" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-green-500 uppercase">
               </div>
               <div>
-                <label class="block text-xs text-gray-500 mb-1">Số thẻ</label>
+                <label class="block text-xs text-gray-500 dark:text-slate-400 mb-1">Số thẻ</label>
                 <input type="text" placeholder="4111 2222 3333 4444" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-green-500">
               </div>
               <div class="grid grid-cols-2 gap-4">
                 <div>
-                  <label class="block text-xs text-gray-500 mb-1">Hạn dùng (MM/YY)</label>
+                  <label class="block text-xs text-gray-500 dark:text-slate-400 mb-1">Hạn dùng (MM/YY)</label>
                   <input type="text" placeholder="12/29" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-green-500">
                 </div>
                 <div>
-                  <label class="block text-xs text-gray-500 mb-1">Mã bảo mật (CVV)</label>
+                  <label class="block text-xs text-gray-500 dark:text-slate-400 mb-1">Mã bảo mật (CVV)</label>
                   <input type="password" placeholder="•••" maxlength="3" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-green-500">
                 </div>
               </div>
@@ -207,10 +238,10 @@
         </div>
 
         <div class="flex gap-4">
-          <button onclick="goToStep2()" class="flex-1 border border-gray-300 text-gray-700 font-bold py-4 rounded-xl hover:bg-gray-50 transition">
+          <button onclick="goToStep2()" class="flex-1 border border-gray-300 text-gray-700 dark:text-slate-200 font-bold py-4 rounded-xl hover:bg-gray-50 dark:bg-slate-800/50 transition">
             Quay lại
           </button>
-          <button onclick="completeCheckout()" class="flex-1 bg-green-600 text-white font-bold py-4 rounded-xl hover:bg-green-700 transition shadow-lg shadow-green-600/20">
+          <button onclick="completeCheckout()" class="flex-1 bg-primary-600 dark:bg-primary-700 text-white font-bold py-4 rounded-xl hover:bg-primary-700 dark:hover:bg-primary-600 transition shadow-lg shadow-green-600/20">
             Xác Nhận Đã Thanh Toán
           </button>
         </div>
@@ -221,18 +252,18 @@
 
   <!-- Success Overlay screen -->
   <div id="success-overlay" class="fixed inset-0 bg-black/70 hidden flex items-center justify-center z-[100] p-4">
-    <div class="bg-white rounded-3xl p-8 max-w-md w-full text-center shadow-2xl space-y-6">
-      <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-4xl mx-auto">
+    <div class="bg-white dark:bg-slate-800 rounded-3xl p-8 max-w-md w-full text-center shadow-2xl space-y-6">
+      <div class="w-20 h-20 bg-green-100 text-primary-600 dark:text-primary-400 rounded-full flex items-center justify-center text-4xl mx-auto">
         <i class="fa-solid fa-circle-check"></i>
       </div>
       <div>
-        <h2 class="text-2xl font-bold text-gray-800">Đặt Tour Thành Công!</h2>
-        <p class="text-gray-500 mt-2">Cảm ơn bạn đã tin tưởng dịch vụ của WILTravel. Đơn hàng của bạn đã được lưu lại thành công.</p>
+        <h2 class="text-2xl font-bold text-gray-800 dark:text-slate-100">Đặt Tour Thành Công!</h2>
+        <p class="text-gray-500 dark:text-slate-400 mt-2">Cảm ơn bạn đã tin tưởng dịch vụ của WILTravel. Đơn hàng của bạn đã được lưu lại thành công.</p>
       </div>
-      <div class="bg-gray-50 p-4 rounded-xl text-sm text-left space-y-1">
-        <p><strong>Mã giao dịch:</strong> <span id="success-ord-id" class="font-mono font-bold text-green-600">ORD1234</span></p>
+      <div class="bg-gray-50 dark:bg-slate-800/50 p-4 rounded-xl text-sm text-left space-y-1">
+        <p><strong>Mã giao dịch:</strong> <span id="success-ord-id" class="font-mono font-bold text-primary-600 dark:text-primary-400">ORD1234</span></p>
         <p><strong>Khách hàng:</strong> <span id="success-ord-name">Nguyễn Văn A</span></p>
-        <p><strong>Tổng cộng:</strong> <span id="success-ord-total" class="font-bold text-green-600">0đ</span></p>
+        <p><strong>Tổng cộng:</strong> <span id="success-ord-total" class="font-bold text-primary-600 dark:text-primary-400">0đ</span></p>
       </div>
       <p class="text-xs text-gray-400">Hệ thống sẽ tự động chuyển hướng về Trang cá nhân để xem lịch sử đơn hàng...</p>
     </div>
@@ -334,9 +365,9 @@
       for (let i = 1; i <= 3; i++) {
         const ind = document.getElementById(`indicator-${i}`);
         if (i === stepNum) {
-          ind.className = 'inline-block bg-green-600 text-white w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-bold text-base sm:text-lg mb-2 transition-all duration-300';
+          ind.className = 'inline-block bg-primary-600 dark:bg-primary-700 text-white w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-bold text-base sm:text-lg mb-2 transition-all duration-300';
         } else {
-          ind.className = 'inline-block bg-green-200 text-green-600 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-bold text-base sm:text-lg mb-2 transition-all duration-300';
+          ind.className = 'inline-block bg-green-200 text-primary-600 dark:text-primary-400 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-bold text-base sm:text-lg mb-2 transition-all duration-300';
         }
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -366,11 +397,11 @@
           <div class="flex items-center gap-3">
             <img src="${item.image}" class="w-16 h-12 object-cover rounded-lg" alt="">
             <div>
-              <p class="font-bold text-gray-800 text-sm sm:text-base">${item.name}</p>
+              <p class="font-bold text-gray-800 dark:text-slate-100 text-sm sm:text-base">${item.name}</p>
               <p class="text-xs text-gray-400">Ngày đi: ${item.date} • Số người: ${item.quantity}</p>
             </div>
           </div>
-          <p class="font-semibold text-gray-800 text-sm sm:text-base shrink-0">${item.total.toLocaleString('vi-VN')}đ</p>
+          <p class="font-semibold text-gray-800 dark:text-slate-100 text-sm sm:text-base shrink-0">${item.total.toLocaleString('vi-VN')}đ</p>
         </div>
       `).join('');
 
@@ -390,7 +421,7 @@
         if (checkoutData.subtotal >= 2000000) {
           checkoutData.discount = 1000000;
           checkoutData.promoCode = code;
-          statusEl.className = 'text-sm mt-2 font-medium text-green-600';
+          statusEl.className = 'text-sm mt-2 font-medium text-primary-600 dark:text-primary-400';
           statusEl.textContent = '✓ Áp dụng mã SAVE100 thành công! Giảm 100.000đ';
         } else {
           statusEl.className = 'text-sm mt-2 font-medium text-red-600';
@@ -399,12 +430,12 @@
       } else if (code === 'SUMMER50') {
         checkoutData.discount = 50000;
         checkoutData.promoCode = code;
-        statusEl.className = 'text-sm mt-2 font-medium text-green-600';
+        statusEl.className = 'text-sm mt-2 font-medium text-primary-600 dark:text-primary-400';
         statusEl.textContent = '✓ Áp dụng mã SUMMER50 thành công! Giảm 50.000đ';
       } else if (code === 'FRIEND20') {
         checkoutData.discount = Math.round(checkoutData.subtotal * 0.20);
         checkoutData.promoCode = code;
-        statusEl.className = 'text-sm mt-2 font-medium text-green-600';
+        statusEl.className = 'text-sm mt-2 font-medium text-primary-600 dark:text-primary-400';
         statusEl.textContent = `✓ Áp dụng mã FRIEND20 thành công! Giảm 20% (${checkoutData.discount.toLocaleString('vi-VN')}đ)`;
       } else {
         checkoutData.discount = 0;
@@ -522,6 +553,14 @@
       loadCheckoutItems();
       prefillUserInfo();
     };
+  </script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof AOS !== 'undefined') {
+        AOS.init({ duration: 800, once: true });
+      }
+    });
   </script>
 </body>
 </html>

@@ -249,6 +249,89 @@ const tours = [
 // 2. LOCAL STORAGE CORE FUNCTIONS
 
 // Auth Management
+async function syncWithBackend() {
+  const user = getCurrentUser();
+  if (!user || window.location.protocol === 'file:') return;
+
+  const email = user.email;
+  const cart = getCart();
+  const wishlist = getWishlist();
+  const orders = getOrders();
+  const flightBookings = JSON.parse(localStorage.getItem('userBookings') || '[]');
+
+  try {
+    await fetch('/api/user/sync', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, cart, orders, wishlist, flightBookings })
+    });
+  } catch (err) {
+    console.warn('Backend sync failed:', err);
+  }
+}
+
+async function loadUserDataFromServer(email) {
+  if (window.location.protocol === 'file:') return;
+
+  const guestCart = getCart();
+  const guestWishlist = getWishlist();
+  const guestOrders = getOrders();
+  const guestFlightBookings = JSON.parse(localStorage.getItem('userBookings') || '[]');
+
+  try {
+    const response = await fetch(`/api/user/data?email=${encodeURIComponent(email)}`);
+    if (response.ok) {
+      const result = await response.json();
+      if (result.success && result.data) {
+        const { cart, wishlist, orders, flightBookings } = result.data;
+        
+        // 1. Merge cart
+        const mergedCart = [...cart];
+        guestCart.forEach(gItem => {
+          const matchIdx = mergedCart.findIndex(item => item.tourId === gItem.tourId && item.date === gItem.date);
+          if (matchIdx > -1) {
+            mergedCart[matchIdx].quantity += gItem.quantity;
+          } else {
+            mergedCart.push(gItem);
+          }
+        });
+
+        // 2. Merge wishlist
+        const mergedWishlist = [...new Set([...wishlist, ...guestWishlist])];
+
+        // 3. Merge orders
+        const mergedOrders = [...orders];
+        guestOrders.forEach(gOrd => {
+          // If ORD1001 or ORD1002 default mock values are there, we skip if already in server database
+          if (!mergedOrders.some(ord => ord.orderId === gOrd.orderId)) {
+            mergedOrders.push(gOrd);
+          }
+        });
+
+        // 4. Merge flight bookings
+        const mergedFlightBookings = [...flightBookings];
+        guestFlightBookings.forEach(gFB => {
+          if (!mergedFlightBookings.some(fb => fb.bookingCode === gFB.bookingCode)) {
+            mergedFlightBookings.push(gFB);
+          }
+        });
+
+        localStorage.setItem('wil_cart', JSON.stringify(mergedCart));
+        localStorage.setItem('wil_wishlist', JSON.stringify(mergedWishlist));
+        localStorage.setItem('wil_orders', JSON.stringify(mergedOrders));
+        localStorage.setItem('userBookings', JSON.stringify(mergedFlightBookings));
+        
+        updateNavbar();
+        
+        // Sync merged data back to server database
+        await syncWithBackend();
+      }
+    }
+  } catch (err) {
+    console.warn('Failed to load user data from backend server:', err);
+  }
+}
+
 function getCurrentUser() {
   const user = localStorage.getItem('wil_current_user');
   return user ? JSON.parse(user) : null;
@@ -257,8 +340,13 @@ function getCurrentUser() {
 function setCurrentUser(user) {
   if (user) {
     localStorage.setItem('wil_current_user', JSON.stringify(user));
+    loadUserDataFromServer(user.email);
   } else {
     localStorage.removeItem('wil_current_user');
+    localStorage.removeItem('wil_cart');
+    localStorage.removeItem('wil_wishlist');
+    localStorage.removeItem('wil_orders');
+    localStorage.removeItem('userBookings');
   }
   updateNavbar();
 }
@@ -345,7 +433,7 @@ async function loginUser(email, password) {
   }
 }
 
-async function googleLogin(lastName, firstName, email) {
+async function googleLogin(lastName, firstName, email, credential = null) {
   const handleLocalGoogle = () => {
     const users = getUsers();
     let user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
@@ -365,7 +453,7 @@ async function googleLogin(lastName, firstName, email) {
       const response = await fetch('/api/google-login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ lastName, firstName, email })
+        body: JSON.stringify({ lastName, firstName, email, credential })
       });
       if (!response.ok && (response.status === 404 || response.status === 502)) {
         console.warn("Backend API not found, falling back to local storage for google login");
@@ -399,6 +487,7 @@ function getCart() {
 function saveCart(cart) {
   localStorage.setItem('wil_cart', JSON.stringify(cart));
   updateNavbar();
+  syncWithBackend();
 }
 
 function addToCart(tourId, quantity = 1, date = '') {
@@ -452,6 +541,7 @@ function getWishlist() {
 function saveWishlist(list) {
   localStorage.setItem('wil_wishlist', JSON.stringify(list));
   updateNavbar();
+  syncWithBackend();
 }
 
 function toggleWishlist(tourId) {
@@ -500,6 +590,7 @@ function addOrder(tourId, date, quantity, total, personalInfo) {
   };
   orders.unshift(newOrder);
   localStorage.setItem('wil_orders', JSON.stringify(orders));
+  syncWithBackend();
   return newOrder;
 }
 
@@ -729,131 +820,11 @@ function generateMoreTours() {
   }
 }
 
-// Injected Dark Mode Styles (Tailwind overrides)
-function injectDarkModeStyles() {
-  const css = `
-    body.dark-mode {
-      background-color: #0f172a !important;
-      color: #f8fafc !important;
-    }
-    body.dark-mode nav {
-      background-color: #1e293b !important;
-      border-color: #334155 !important;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -2px rgba(0, 0, 0, 0.2) !important;
-    }
-    body.dark-mode nav #mobile-menu {
-      background-color: #1e293b !important;
-      border-color: #334155 !important;
-    }
-    body.dark-mode nav a, body.dark-mode nav button, body.dark-mode nav div, body.dark-mode nav span {
-      color: #e2e8f0 !important;
-    }
-    body.dark-mode nav a:hover, body.dark-mode nav button:hover {
-      color: #4ade80 !important;
-    }
-    body.dark-mode nav .bg-green-600 {
-      background-color: #16a34a !important;
-      color: white !important;
-    }
-    body.dark-mode nav .bg-green-600:hover {
-      background-color: #15803d !important;
-    }
-    body.dark-mode .bg-white,
-    body.dark-mode .bg-gray-50,
-    body.dark-mode .bg-gray-100,
-    body.dark-mode .bg-gray-50\\/50 {
-      background-color: #1e293b !important;
-      color: #e2e8f0 !important;
-    }
-    body.dark-mode .shadow-xl,
-    body.dark-mode .shadow-2xl,
-    body.dark-mode .shadow-md {
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3) !important;
-    }
-    body.dark-mode .border,
-    body.dark-mode .border-gray-200,
-    body.dark-mode .border-gray-300,
-    body.dark-mode .border-gray-100,
-    body.dark-mode .border-gray-150 {
-      border-color: #334155 !important;
-    }
-    body.dark-mode .text-gray-800,
-    body.dark-mode .text-gray-700,
-    body.dark-mode .text-gray-600,
-    body.dark-mode .text-gray-500,
-    body.dark-mode .text-gray-400 {
-      color: #cbd5e1 !important;
-    }
-    body.dark-mode .text-black {
-      color: #ffffff !important;
-    }
-    body.dark-mode input,
-    body.dark-mode select,
-    body.dark-mode textarea {
-      background-color: #0f172a !important;
-      color: #ffffff !important;
-      border-color: #334155 !important;
-    }
-    body.dark-mode input::placeholder,
-    body.dark-mode textarea::placeholder {
-      color: #475569 !important;
-    }
-    body.dark-mode .search-container {
-      background-color: #1e293b !important;
-    }
-    body.dark-mode .search-container input {
-      background-color: transparent !important;
-    }
-    body.dark-mode #chatbot-window {
-      background-color: #1e293b !important;
-      border-color: #334155 !important;
-    }
-    body.dark-mode #chatbot-window .bg-white {
-      background-color: #1e293b !important;
-    }
-    body.dark-mode #chat-messages {
-      background-color: #0f172a !important;
-    }
-    body.dark-mode .chat-bubble-tina {
-      background-color: #334155 !important;
-      color: #f8fafc !important;
-    }
-    body.dark-mode .bg-emerald-50, 
-    body.dark-mode .bg-green-50,
-    body.dark-mode .bg-green-100 {
-      background-color: #064e3b !important;
-      color: #a7f3d0 !important;
-    }
-    body.dark-mode .text-green-600,
-    body.dark-mode .text-green-700,
-    body.dark-mode .text-emerald-600,
-    body.dark-mode .text-emerald-700 {
-      color: #4ade80 !important;
-    }
-    body.dark-mode footer,
-    body.dark-mode .bg-gray-900 {
-      background-color: #020617 !important;
-      color: #94a3b8 !important;
-    }
-    body.dark-mode footer a, body.dark-mode footer p {
-      color: #94a3b8 !important;
-    }
-    body.dark-mode footer a:hover {
-      color: #4ade80 !important;
-    }
-    body.dark-mode footer .brightness-0.invert {
-      filter: brightness(0) invert(1) !important;
-    }
-  `;
-  const style = document.createElement('style');
-  style.id = 'dark-mode-injected-styles';
-  style.innerHTML = css;
-  document.head.appendChild(style);
-}
+
 
 // Generate 100 tours on script load
 generateMoreTours();
-injectDarkModeStyles();
+
 
 function toggleDarkMode() {
   applyDarkMode(!isDarkMode());
@@ -1096,8 +1067,6 @@ function initChatbotTina() {
       pointer-events: auto;
     }
     .chat-bubble-tina {
-      background-color: #f3f4f6;
-      color: #1f2937;
       border-radius: 18px 18px 18px 4px;
     }
     .chat-bubble-user {
@@ -1109,9 +1078,9 @@ function initChatbotTina() {
       transition: all 0.2s ease;
     }
     .chat-quick-reply:hover {
-      background-color: #ecfdf5;
-      border-color: #10b981;
-      color: #047857;
+      background-color: #f0fdf4;
+      border-color: #16a34a;
+      color: #15803d;
       transform: translateY(-2px);
     }
     @keyframes pulse-chat {
@@ -1131,7 +1100,7 @@ function initChatbotTina() {
   chatbot.className = 'fixed bottom-6 right-6 z-[999] flex flex-col items-end font-sans';
   chatbot.innerHTML = `
     <!-- Chatbot Window -->
-    <div id="chatbot-window" class="w-[calc(100vw-48px)] sm:w-[380px] h-[500px] max-h-[70vh] bg-white rounded-3xl overflow-hidden border border-gray-100 flex flex-col mb-4">
+    <div id="chatbot-window" class="w-[calc(100vw-48px)] sm:w-[380px] h-[500px] max-h-[70vh] bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-gray-100 dark:border-white/10 flex flex-col mb-4 transition-colors duration-300">
       <!-- Header -->
       <div class="bg-gradient-to-r from-green-600 to-emerald-700 p-4 text-white flex items-center justify-between shadow-sm shrink-0">
         <div class="flex items-center gap-3">
@@ -1140,36 +1109,39 @@ function initChatbotTina() {
             <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-400 border-2 border-green-600 rounded-full"></span>
           </div>
           <div>
-            <h4 class="font-bold text-sm">Trợ lý ảo Tina</h4>
-            <p class="text-[11px] text-green-100 flex items-center gap-1"><i class="fa-solid fa-circle text-[6px] text-emerald-400"></i> Sẵn sàng hỗ trợ 24/7</p>
+            <h4 class="font-bold text-sm text-white">Trợ lý ảo Tina</h4>
+            <p class="text-[11px] text-green-100 flex items-center gap-1"><i class="fa-solid fa-circle text-[6px] text-emerald-400 animate-pulse"></i> Sẵn sàng hỗ trợ 24/7</p>
           </div>
         </div>
         <button onclick="toggleTinaChat()" class="text-white/80 hover:text-white text-2xl px-2">×</button>
       </div>
 
       <!-- Messages Body -->
-      <div id="chat-messages" class="flex-grow p-4 overflow-y-auto space-y-3 bg-gray-50/50 text-sm">
+      <div id="chat-messages" class="flex-grow p-4 overflow-y-auto space-y-3 bg-gray-50/50 dark:bg-slate-950/40 text-sm">
         <!-- Welcome Message -->
         <div class="flex gap-2 items-start">
-          <div class="w-7 h-7 rounded-full bg-green-100 text-green-700 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">T</div>
-          <div class="p-3 chat-bubble-tina max-w-[80%] leading-relaxed shadow-sm">
+          <div class="w-7 h-7 rounded-full bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">T</div>
+          <div class="p-3 chat-bubble-tina bg-gray-100 dark:bg-slate-800 text-gray-800 dark:text-slate-200 max-w-[80%] leading-relaxed shadow-sm">
             Xin chào! Mình là <strong>Tina</strong> - trợ lý ảo của WILTravel. Mình có thể giúp gì cho bạn hôm nay? 😊
           </div>
         </div>
       </div>
 
       <!-- Quick Replies -->
-      <div class="px-4 py-2 bg-white border-t border-gray-100 flex flex-wrap gap-1.5 shrink-0">
-        <button onclick="askTina('Tư vấn Tour du lịch')" class="chat-quick-reply px-3 py-1.5 rounded-full border border-gray-200 text-xs text-gray-600 font-medium bg-white">🗺️ Tư vấn Tour</button>
-        <button onclick="askTina('Hỏi đáp FAQ & Chính sách')" class="chat-quick-reply px-3 py-1.5 rounded-full border border-gray-200 text-xs text-gray-600 font-medium bg-white">❓ Chính sách & FAQ</button>
-        <button onclick="askTina('Giới thiệu WILTravel')" class="chat-quick-reply px-3 py-1.5 rounded-full border border-gray-200 text-xs text-gray-600 font-medium bg-white">🏢 Về công ty</button>
-        <button onclick="askTina('Liên hệ nhân viên hỗ trợ')" class="chat-quick-reply px-3 py-1.5 rounded-full border border-gray-200 text-xs text-gray-600 font-medium bg-white">📞 Gặp hỗ trợ</button>
+      <div class="px-4 py-2 bg-white dark:bg-slate-900 border-t border-gray-100 dark:border-white/10 flex flex-wrap gap-1.5 shrink-0">
+        <button onclick="askTina('Tư vấn Tour du lịch')" class="chat-quick-reply px-3 py-1.5 rounded-full border border-gray-200 dark:border-white/10 text-xs text-gray-600 dark:text-slate-300 font-medium bg-white dark:bg-slate-800">🗺️ Tư vấn Tour</button>
+        <button onclick="askTina('Mã giảm giá')" class="chat-quick-reply px-3 py-1.5 rounded-full border border-gray-200 dark:border-white/10 text-xs text-gray-600 dark:text-slate-300 font-medium bg-white dark:bg-slate-800">💵 Mã giảm giá</button>
+        <button onclick="askTina('Tra cứu đặt chỗ')" class="chat-quick-reply px-3 py-1.5 rounded-full border border-gray-200 dark:border-white/10 text-xs text-gray-600 dark:text-slate-300 font-medium bg-white dark:bg-slate-800">🔍 Tra cứu vé</button>
+        <button onclick="askTina('Gọi hỗ trợ Ms. Phương')" class="chat-quick-reply px-3 py-1.5 rounded-full border border-gray-200 dark:border-white/10 text-xs text-gray-600 dark:text-slate-300 font-medium bg-white dark:bg-slate-800">📞 Gọi Ms. Phương</button>
       </div>
 
       <!-- Input Form -->
-      <form onsubmit="handleTinaSubmit(event)" class="p-3 bg-white border-t border-gray-150 flex gap-2 shrink-0">
-        <input type="text" id="tina-input" placeholder="Nhập câu hỏi của bạn..." class="flex-1 px-4 py-2.5 text-sm border border-gray-300 rounded-2xl focus:outline-none focus:border-green-500 bg-gray-50/50">
-        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white w-10 h-10 rounded-2xl flex items-center justify-center transition shadow-md shadow-green-600/10 shrink-0">
+      <form onsubmit="handleTinaSubmit(event)" class="p-3 bg-white dark:bg-slate-900 border-t border-gray-150 dark:border-white/10 flex gap-2 shrink-0 items-center">
+        <input type="text" id="tina-input" placeholder="Nhập câu hỏi của bạn..." class="flex-1 px-4 py-2.5 text-sm border border-gray-300 dark:border-white/10 rounded-2xl focus:outline-none focus:border-green-500 bg-gray-50/50 dark:bg-slate-800 text-gray-800 dark:text-slate-100">
+        <button type="button" id="tina-mic-btn" onclick="toggleTinaSpeechRecognition()" class="text-gray-500 hover:text-red-500 dark:text-gray-400 dark:hover:text-red-400 w-10 h-10 rounded-2xl flex items-center justify-center transition shrink-0 cursor-pointer" title="Nói câu hỏi của bạn">
+          <i class="fa-solid fa-microphone text-lg"></i>
+        </button>
+        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white w-10 h-10 rounded-2xl flex items-center justify-center transition shadow-md shadow-green-600/10 shrink-0 cursor-pointer">
           <i class="fa-solid fa-paper-plane text-sm"></i>
         </button>
       </form>
@@ -1257,21 +1229,109 @@ function addMessage(text, sender) {
 
   const isTina = sender === 'tina';
   const msgHtml = isTina 
-    ? `<div class="flex gap-2 items-start">
-         <div class="w-7 h-7 rounded-full bg-green-100 text-green-700 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">T</div>
-         <div class="p-3 chat-bubble-tina max-w-[80%] leading-relaxed shadow-sm">${text}</div>
+    ? `<div class="flex gap-2 items-start group">
+         <div class="w-7 h-7 rounded-full bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">T</div>
+         <div class="p-3 chat-bubble-tina bg-gray-100 dark:bg-slate-800 text-gray-800 dark:text-slate-200 max-w-[70%] leading-relaxed shadow-sm rounded-2xl rounded-tl-none relative">${text}</div>
+         <button onclick="speakTinaText(this)" class="opacity-0 group-hover:opacity-100 text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 p-1.5 transition self-center cursor-pointer" title="Đọc thành tiếng">
+           <i class="fa-solid fa-volume-high text-xs"></i>
+         </button>
        </div>`
     : `<div class="flex justify-end">
-         <div class="p-3 chat-bubble-user max-w-[80%] leading-relaxed shadow-sm">${text}</div>
+         <div class="p-3 chat-bubble-user bg-gradient-to-r from-green-600 to-emerald-600 text-white max-w-[80%] leading-relaxed shadow-sm rounded-2xl rounded-tr-none">${text}</div>
        </div>`;
 
   container.insertAdjacentHTML('beforeend', msgHtml);
   container.scrollTop = container.scrollHeight;
 }
 
+window.speakTinaText = function(btn) {
+  if (window.speechSynthesis.speaking) {
+    window.speechSynthesis.cancel();
+    document.querySelectorAll('.fa-volume-xmark').forEach(i => {
+      i.className = 'fa-solid fa-volume-high text-xs';
+    });
+    return;
+  }
+  
+  const bubble = btn.parentElement.querySelector('.chat-bubble-tina');
+  if (!bubble) return;
+  
+  const cleanText = bubble.innerText || bubble.textContent;
+  const utterance = new SpeechSynthesisUtterance(cleanText);
+  utterance.lang = 'vi-VN';
+  
+  const voices = window.speechSynthesis.getVoices();
+  const viVoice = voices.find(voice => voice.lang.includes('vi') || voice.lang.includes('VI'));
+  if (viVoice) utterance.voice = viVoice;
+  
+  const icon = btn.querySelector('i');
+  icon.className = 'fa-solid fa-volume-xmark text-xs text-red-500 animate-pulse';
+  
+  utterance.onend = () => {
+    icon.className = 'fa-solid fa-volume-high text-xs';
+  };
+  utterance.onerror = () => {
+    icon.className = 'fa-solid fa-volume-high text-xs';
+  };
+  
+  window.speechSynthesis.speak(utterance);
+};
+
+let tinaSpeechRecognition = null;
+let isTinaRecognizing = false;
+
+window.toggleTinaSpeechRecognition = function() {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) {
+    alert('Trình duyệt của bạn không hỗ trợ nhận diện giọng nói (STT). Hãy thử dùng trình duyệt Chrome nhé!');
+    return;
+  }
+  
+  const micBtn = document.getElementById('tina-mic-btn');
+  const micIcon = micBtn.querySelector('i');
+  
+  if (isTinaRecognizing) {
+    if (tinaSpeechRecognition) tinaSpeechRecognition.stop();
+    return;
+  }
+  
+  tinaSpeechRecognition = new SpeechRecognition();
+  tinaSpeechRecognition.lang = 'vi-VN';
+  tinaSpeechRecognition.interimResults = false;
+  tinaSpeechRecognition.maxAlternatives = 1;
+  
+  tinaSpeechRecognition.onstart = () => {
+    isTinaRecognizing = true;
+    micIcon.className = 'fa-solid fa-microphone text-lg text-red-500 animate-pulse';
+    micBtn.title = 'Đang lắng nghe... Nhấp để dừng';
+    document.getElementById('tina-input').placeholder = 'Đang lắng nghe giọng nói...';
+  };
+  
+  tinaSpeechRecognition.onresult = (event) => {
+    const speechResult = event.results[0][0].transcript;
+    document.getElementById('tina-input').value = speechResult;
+  };
+  
+  tinaSpeechRecognition.onend = () => {
+    isTinaRecognizing = false;
+    micIcon.className = 'fa-solid fa-microphone text-lg';
+    micBtn.title = 'Nói câu hỏi của bạn';
+    document.getElementById('tina-input').placeholder = 'Nhập câu hỏi của bạn...';
+  };
+  
+  tinaSpeechRecognition.onerror = (event) => {
+    console.error('Speech recognition error', event.error);
+    isTinaRecognizing = false;
+    micIcon.className = 'fa-solid fa-microphone text-lg';
+    document.getElementById('tina-input').placeholder = 'Nhập câu hỏi của bạn...';
+  };
+  
+  tinaSpeechRecognition.start();
+};
+
 // Intelligent response matching engine
 function getTinaResponse(userInput) {
-  const query = userInput.toLowerCase();
+  const query = userInput.toLowerCase().trim();
 
   // 0. Language Detection
   let lang = 'vi';
@@ -1287,15 +1347,238 @@ function getTinaResponse(userInput) {
   if (lang === 'en') return getTinaResponseEN(query);
   if (lang === 'zh') return getTinaResponseZH(query);
 
-  // Smart matching for Huế and Backend Info
+  // 1. Simulated Booking / Order Lookup
+  if (query.includes('tra cứu') || query.includes('đơn hàng') || query.includes('mã đặt') || query.includes('booking') || query.includes('kiểm tra vé') || query.includes('mã vé')) {
+    const codeMatch = query.match(/(?:wil|code|order|mã|vé)?\s*[-:#]?\s*(\d{3,6})/i);
+    if (!codeMatch) {
+      return `🔍 <strong>Hệ thống Tra cứu đặt chỗ của WILTravel:</strong><br>
+        Để kiểm tra trạng thái vé và lịch trình bay/tour, bạn vui lòng nhập mã đơn hàng của mình.<br>
+        👉 Ví dụ: Nhập <strong>"WIL-101"</strong> hoặc <strong>"vé 105"</strong>.`;
+    }
+    
+    const codeNum = parseInt(codeMatch[1]);
+    const mockTours = [
+      { name: "Phú Quốc 4N3Đ All Inclusive", price: "3.29tr VNĐ", duration: "4 ngày 3 đêm" },
+      { name: "Sapa - Hà Giang 5N4Đ", price: "4.19tr VNĐ", duration: "5 ngày 4 đêm" },
+      { name: "Bali Thiên Đường 6N5Đ", price: "18.50tr VNĐ", duration: "6 ngày 5 đêm" },
+      { name: "Vịnh Hạ Long - Lan Hạ 4N3Đ", price: "5.69tr VNĐ", duration: "4 ngày 3 đêm" },
+      { name: "Đà Nẵng - Hội An 4N3Đ", price: "3.89tr VNĐ", duration: "4 ngày 3 đêm" },
+      { name: "Nhật Bản Mùa Hoa Anh Đào", price: "32.90tr VNĐ", duration: "6 ngày 5 đêm" },
+      { name: "Đà Lạt Lãng Mạn 3N2Đ", price: "2.49tr VNĐ", duration: "3 ngày 2 đêm" },
+      { name: "Nha Trang - Ninh Hòa 3N2Đ", price: "2.89tr VNĐ", duration: "3 ngày 2 đêm" },
+      { name: "Singapore - Malaysia 5N4Đ", price: "10.99tr VNĐ", duration: "5 ngày 4 đêm" },
+      { name: "Thái Lan - Bangkok - Pattaya 5N4Đ", price: "6.49tr VNĐ", duration: "5 ngày 4 đêm" }
+    ];
+    
+    const selectedTour = mockTours[codeNum % mockTours.length];
+    
+    return `🎟️ <strong>Thông tin Vé điện tử & Lịch trình (Mã: WIL-${codeNum}):</strong><br>
+      <div class="bg-white dark:bg-slate-800 p-3 rounded-xl border border-gray-150 dark:border-white/10 shadow-xs mt-2 space-y-1 text-xs text-gray-700 dark:text-slate-300">
+        <p><strong>Khách hàng:</strong> Nguyễn Văn Hùng</p>
+        <p><strong>Dịch vụ:</strong> ${selectedTour.name}</p>
+        <p><strong>Thời gian:</strong> ${selectedTour.duration}</p>
+        <p><strong>Ngày khởi hành:</strong> 18/07/2026</p>
+        <p><strong>Giá tiền:</strong> ${selectedTour.price}</p>
+        <p><strong>Trạng thái:</strong> <span class="px-1.5 py-0.5 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300 rounded font-semibold">🟢 Đã xác nhận & Thanh toán</span></p>
+      </div>
+      <p class="mt-2 text-xs">🚗 <strong>Đón khách:</strong> Xe đón bạn lúc 04:30 sáng tại Văn phòng WILTravel (Quận Tân Bình). Hướng dẫn viên: <strong>Mr. Nam (0912 345 678)</strong> sẽ liên hệ bạn trước ngày đi.</p>`;
+  }
+
+  // 2. Weather & Packing Advice
+  if (query.includes('chuần bị') || query.includes('chuẩn bị') || query.includes('mang theo') || query.includes('đồ dùng') || query.includes('thời tiết') || query.includes('mặc gì') || query.includes('packing')) {
+    const isMountain = query.includes('sapa') || query.includes('giang') || query.includes('lạt') || query.includes('núi');
+    const isBeach = query.includes('phú quốc') || query.includes('trang') || query.includes('bali') || query.includes('hạ long') || query.includes('biển');
+    
+    if (isMountain) {
+      return `🏔️ <strong>Tư vấn chuẩn bị đi Tour vùng cao (Sapa, Hà Giang, Đà Lạt):</strong><br>
+        - <strong>Thời tiết:</strong> Sẽ khá lạnh về đêm và sáng sớm (12-18°C), ban ngày mát mẻ.<br>
+        - <strong>Trang phục cần đem:</strong> Áo khoác ấm, khăn choàng cổ, giày đi bộ chống trơn trượt (vì có trekking bản cát cát, đèo dốc).<br>
+        - <strong>Đồ cá nhân:</strong> Thuốc chống say xe (đường đèo dốc), kem chống muỗi, sạc dự phòng.<br>
+        👉 <button onclick="askTina('Tư vấn đi Sapa')" class="mt-1.5 px-2.5 py-1 text-xs font-semibold rounded bg-green-50 dark:bg-slate-800 text-green-700 dark:text-green-400 border border-green-200 dark:border-white/10 hover:bg-green-100 transition mr-2">Tour Sapa</button>
+        <button onclick="askTina('Tư vấn đi Đà Lạt')" class="mt-1.5 px-2.5 py-1 text-xs font-semibold rounded bg-green-50 dark:bg-slate-800 text-green-700 dark:text-green-400 border border-green-200 dark:border-white/10 hover:bg-green-100 transition">Tour Đà Lạt</button>`;
+    }
+    
+    if (isBeach) {
+      return `🏖️ <strong>Tư vấn chuẩn bị đi Tour biển (Phú Quốc, Nha Trang, Bali, Hạ Long):</strong><br>
+        - <strong>Thời tiết:</strong> Nắng đẹp, nhiệt độ dao động 28-34°C, thích hợp tắm biển.<br>
+        - <strong>Đồ dùng cần đem:</strong> Kem chống nắng SPF 50+, kính râm, đồ bơi, túi chống nước cho điện thoại.<br>
+        - <strong>Trang phục phù hợp:</strong> Quần áo mỏng nhẹ, dép lê đi biển, mũ rộng vành.<br>
+        👉 <button onclick="askTina('Tư vấn đi Phú Quốc')" class="mt-1.5 px-2.5 py-1 text-xs font-semibold rounded bg-green-50 dark:bg-slate-800 text-green-700 dark:text-green-400 border border-green-200 dark:border-white/10 hover:bg-green-100 transition mr-2">Tour Phú Quốc</button>
+        <button onclick="askTina('Tư vấn đi Nha Trang')" class="mt-1.5 px-2.5 py-1 text-xs font-semibold rounded bg-green-50 dark:bg-slate-800 text-green-700 dark:text-green-400 border border-green-200 dark:border-white/10 hover:bg-green-100 transition">Tour Nha Trang</button>`;
+    }
+    
+    return `🎒 <strong>Tư vấn chuẩn bị hành lý của Tina:</strong><br>
+      Tùy vào điểm đến của bạn là biển đảo mát mẻ hay vùng cao lộng gió, bạn chọn xem cẩm nang chuẩn bị bên dưới nhé:<br>
+      👉 <button onclick="askTina('chuẩn bị đi biển')" class="mt-2 px-3 py-1 bg-green-50 dark:bg-slate-800 hover:bg-green-100 text-green-700 dark:text-green-400 text-xs font-semibold rounded-lg border border-green-200 dark:border-white/10 transition mr-2">🏖️ Chuẩn bị đi Biển</button>
+      <button onclick="askTina('chuẩn bị đi núi')" class="mt-2 px-3 py-1 bg-green-50 dark:bg-slate-800 hover:bg-green-100 text-green-700 dark:text-green-400 text-xs font-semibold rounded-lg border border-green-200 dark:border-white/10 transition">🏔️ Chuẩn bị đi Núi</button>`;
+  }
+
+  // 3. Specific Tour/Location Information Inquiries
+  if (query.includes('phú quốc')) {
+    if (query.includes('chi tiết') || query.includes('lịch trình')) {
+      return `📋 <strong>Lịch trình Tour Phú Quốc 4N3Đ All Inclusive:</strong><br>
+        - <strong>Ngày 1:</strong> Bay đến Phú Quốc, nhận phòng resort, tự do khám phá chợ đêm Dương Đông.<br>
+        - <strong>Ngày 2:</strong> Đi cano câu cá, lặn ngắm san hô tại hòn Móng Tay, hòn Gầm Ghì, ăn trưa hải sản.<br>
+        - <strong>Ngày 3:</strong> Vui chơi giải trí VinWonders, trải nghiệm cáp treo Hòn Thơm dài nhất thế giới, tối ngắm Grand World.<br>
+        - <strong>Ngày 4:</strong> Check-in mua đặc sản (tiêu, ngọc trai), bay về lại TP.HCM.<br>
+        👉 <a href="tour-detail.html?id=1" class="text-green-600 font-bold hover:underline">Nhấp vào đây để đặt ngay!</a>`;
+    }
+    return `🌊 <strong>Tour Phú Quốc - Đảo Ngọc Thiên Đường:</strong><br>
+      Khám phá Đảo Ngọc với cáp treo Hòn Thơm dài nhất thế giới, Bãi Sao tuyệt đẹp, VinWonders & Grand World sầm uất.<br>
+      👉 <strong>Giá vé cực tốt:</strong> Chỉ từ <strong>3.29tr VNĐ</strong> trọn gói 4N3Đ.<br>
+      👉 <button onclick="askTina('Lịch trình chi tiết Phú Quốc')" class="mt-2 px-2.5 py-1 text-xs font-semibold rounded bg-green-50 dark:bg-slate-800 text-green-700 dark:text-green-400 border border-green-200 dark:border-white/10 hover:bg-green-100 transition">🔍 Xem lịch trình chi tiết Phú Quốc</button>`;
+  }
+
+  if (query.includes('sapa') || query.includes('hà giang')) {
+    if (query.includes('chi tiết') || query.includes('lịch trình')) {
+      return `📋 <strong>Lịch trình Tour Sapa - Hà Giang 5N4Đ:</strong><br>
+        - <strong>Ngày 1:</strong> Xe giường nằm đón lên Sapa, khám phá thị trấn sương mù về đêm.<br>
+        - <strong>Ngày 2:</strong> Chinh phục Fansipan - Nóc nhà Đông Dương, chiều thăm bản Cát Cát của người H'Mông.<br>
+        - <strong>Ngày 3:</strong> Sapa đi Hà Giang, thăm Cột cờ Lũng Cú cực Bắc Tổ Quốc, cao nguyên đá Đồng Văn.<br>
+        - <strong>Ngày 4:</strong> Check-in Đèo Mã Pí Lèng hùng vĩ, chèo thuyền ngắm sông Nho Quế màu xanh ngọc bích.<br>
+        - <strong>Ngày 5:</strong> Trở về Hà Nội, dạo phố cổ ăn bún chả, bay về lại TP.HCM.<br>
+        👉 <a href="tour-detail.html?id=2" class="text-green-600 font-bold hover:underline">Nhấp vào đây để đặt ngay!</a>`;
+    }
+    return `🏔️ <strong>Tour Sapa - Hà Giang hùng vĩ:</strong><br>
+      Trải nghiệm Fansipan tuyết trắng, ngắm Mã Pí Lèng hùng vĩ, du thuyền sông Nho Quế nước xanh ngọc.<br>
+      👉 <strong>Giá tốt:</strong> Chỉ từ <strong>4.19tr VNĐ</strong> cho hành trình 5N4Đ.<br>
+      👉 <button onclick="askTina('Lịch trình chi tiết Sapa')" class="mt-2 px-2.5 py-1 text-xs font-semibold rounded bg-green-50 dark:bg-slate-800 text-green-700 dark:text-green-400 border border-green-200 dark:border-white/10 hover:bg-green-100 transition">🔍 Xem lịch trình chi tiết Sapa</button>`;
+  }
+
+  if (query.includes('bali')) {
+    if (query.includes('chi tiết') || query.includes('lịch trình')) {
+      return `📋 <strong>Lịch trình Tour Bali Thiên Đường 6N5Đ:</strong><br>
+        - <strong>Ngày 1:</strong> Bay thẳng đến Bali, nhận phòng khách sạn, tắm biển Kuta ngắm hoàng hôn.<br>
+        - <strong>Ngày 2:</strong> Đi Ubud, chơi xích đu Bali Swing, tham quan ruộng bậc thang Tegalalang.<br>
+        - <strong>Ngày 3:</strong> Khám phá đền cổ Tanah Lot trên biển, đền Uluwatu, tối xem múa Kecak.<br>
+        - <strong>Ngày 4:</strong> Check-in Cổng Trời Lempuyang, ngắm núi lửa Agung, tắm suối khoáng nóng Batur.<br>
+        - <strong>Ngày 5:</strong> Tắm biển Nusa Dua cát trắng, mua sắm đặc sản thủ công mỹ nghệ Bali.<br>
+        - <strong>Ngày 6:</strong> Ăn buffet chia tay, bay về Việt Nam.<br>
+        👉 <a href="tour-detail.html?id=3" class="text-green-600 font-bold hover:underline">Nhấp vào đây để đặt ngay!</a>`;
+    }
+    return `🏝️ <strong>Tour Bali - Thiên Đường Nghỉ Dưỡng:</strong><br>
+      Check-in cổng trời Lempuyang linh thiêng, ruộng bậc thang Tegalalang, đền Tanah Lot hoang sơ.<br>
+      👉 <strong>Giá siêu tốt:</strong> Chỉ từ <strong>18.50tr VNĐ</strong> 6N5Đ (đã bao gồm vé máy bay khứ hồi & khách sạn 4 sao).<br>
+      👉 <button onclick="askTina('Lịch trình chi tiết Bali')" class="mt-2 px-2.5 py-1 text-xs font-semibold rounded bg-green-50 dark:bg-slate-800 text-green-700 dark:text-green-400 border border-green-200 dark:border-white/10 hover:bg-green-100 transition">🔍 Xem lịch trình chi tiết Bali</button>`;
+  }
+
+  if (query.includes('hạ long') || query.includes('lan hạ')) {
+    if (query.includes('chi tiết') || query.includes('lịch trình')) {
+      return `📋 <strong>Lịch trình Tour Hạ Long - Lan Hạ 4N3Đ:</strong><br>
+        - <strong>Ngày 1:</strong> Xe đưa từ Hà Nội ra Hạ Long. Nhận cabin du thuyền 5 sao sang trọng, chèo kayak thăm hang động.<br>
+        - <strong>Ngày 2:</strong> Leo núi đảo Ti Tốp ngắm toàn cảnh Vịnh, di chuyển sang vịnh Lan Hạ hoang sơ tắm biển.<br>
+        - <strong>Ngày 3:</strong> Về khách sạn Tuần Châu nghỉ ngơi, tham quan làng chài nổi Bái Tử Long.<br>
+        - <strong>Ngày 4:</strong> Khám phá động Thiên Cung, mua chả mực Hạ Long thơm ngon. Về Hà Nội.<br>
+        👉 <a href="tour-detail.html?id=4" class="text-green-600 font-bold hover:underline">Nhấp vào đây để đặt ngay!</a>`;
+    }
+    return `🚢 <strong>Tour Vịnh Hạ Long - Lan Hạ Du Thuyền 5 Sao:</strong><br>
+      Nghỉ dưỡng sang trọng trên du thuyền giữa vịnh, chèo thuyền kayak, ngắm vịnh Lan Hạ nguyên sơ.<br>
+      👉 <strong>Giá trọn gói:</strong> Chỉ từ <strong>5.69tr VNĐ</strong> cho 4N3Đ.<br>
+      👉 <button onclick="askTina('Lịch trình chi tiết Hạ Long')" class="mt-2 px-2.5 py-1 text-xs font-semibold rounded bg-green-50 dark:bg-slate-800 text-green-700 dark:text-green-400 border border-green-200 dark:border-white/10 hover:bg-green-100 transition">🔍 Xem lịch trình chi tiết Hạ Long</button>`;
+  }
+
+  if (query.includes('đà nẵng') || query.includes('hội an')) {
+    if (query.includes('chi tiết') || query.includes('lịch trình')) {
+      return `📋 <strong>Lịch trình Tour Đà Nẵng - Hội An 4N3Đ:</strong><br>
+        - <strong>Ngày 1:</strong> Bay đến Đà Nẵng, cáp treo lên Bà Nà Hills, check-in Cầu Vàng trong mây.<br>
+        - <strong>Ngày 2:</strong> Tham quan Ngũ Hành Sơn, di chuyển Hội An dạo phố cổ rực rỡ đèn lồng, thả hoa đăng.<br>
+        - <strong>Ngày 3:</strong> Thăm Thánh địa Mỹ Sơn cổ kính, chiều tắm biển Mỹ Khê cát mịn sóng êm.<br>
+        - <strong>Ngày 4:</strong> Check-in Bán đảo Sơn Trà Chùa Linh Ứng, mua hải sản, bánh mì Phượng. Bay về.<br>
+        👉 <a href="tour-detail.html?id=5" class="text-green-600 font-bold hover:underline">Nhấp vào đây để đặt ngay!</a>`;
+    }
+    return `🌉 <strong>Tour Đà Nẵng - Hội An - Bà Nà Hills:</strong><br>
+      Khám phá Cầu Vàng Bà Nà Hills, phố cổ Hội An đêm huyền ảo, tắm biển Mỹ Khê Forbes bình chọn.<br>
+      👉 <strong>Giá siêu ưu đãi:</strong> Chỉ từ <strong>3.89tr VNĐ</strong> trọn gói 4N3Đ.<br>
+      👉 <button onclick="askTina('Lịch trình chi tiết Đà Nẵng')" class="mt-2 px-2.5 py-1 text-xs font-semibold rounded bg-green-50 dark:bg-slate-800 text-green-700 dark:text-green-400 border border-green-200 dark:border-white/10 hover:bg-green-100 transition">🔍 Xem lịch trình chi tiết Đà Nẵng</button>`;
+  }
+
+  if (query.includes('nhật bản') || query.includes('japan') || query.includes('tokyo')) {
+    if (query.includes('chi tiết') || query.includes('lịch trình')) {
+      return `📋 <strong>Lịch trình Tour Nhật Bản Mùa Hoa Anh Đào 6N5Đ:</strong><br>
+        - <strong>Ngày 1:</strong> Bay đêm sang Tokyo, nhận phòng tại Shinjuku, dạo phố đêm Shibuya.<br>
+        - <strong>Ngày 2:</strong> Ngắm hoa anh đào công viên Ueno, đền Senso-ji Asakusa, Akihabara.<br>
+        - <strong>Ngày 3:</strong> Đi tàu Shinkansen ngắm núi Phú Sĩ kỳ vĩ, tắm Onsen suối nước nóng.<br>
+        - <strong>Ngày 4:</strong> Đi Kyoto thăm chùa Vàng Kinkaku-ji, Fushimi Inari ngàn cổng torii đỏ.<br>
+        - <strong>Ngày 5:</strong> Di chuyển đi Osaka, thăm lâu đài cổ, dạo phố Dotonbori ăn takoyaki, okonomiyaki.<br>
+        - <strong>Ngày 6:</strong> Tự do mua sắm tại Shinsaibashi. Bay về lại Việt Nam.<br>
+        👉 <a href="tour-detail.html?id=6" class="text-green-600 font-bold hover:underline">Nhấp vào đây để đặt ngay!</a>`;
+    }
+    return `🌸 <strong>Tour Nhật Bản Mùa Hoa Anh Đào Cao Cấp:</strong><br>
+      Ngắm Phú Sĩ tuyết phủ, ngâm Onsen truyền thống, đi tàu điện Shinkansen, khám phá Tokyo, Osaka, Kyoto.<br>
+      👉 <strong>Giá trọn gói:</strong> Chỉ từ <strong>32.90tr VNĐ</strong> (Đã gồm phí Visa & vé máy bay VNA).<br>
+      👉 <button onclick="askTina('Lịch trình chi tiết Nhật Bản')" class="mt-2 px-2.5 py-1 text-xs font-semibold rounded bg-green-50 dark:bg-slate-800 text-green-700 dark:text-green-400 border border-green-200 dark:border-white/10 hover:bg-green-100 transition">🔍 Xem lịch trình chi tiết Nhật Bản</button>`;
+  }
+
+  if (query.includes('đà lạt')) {
+    if (query.includes('chi tiết') || query.includes('lịch trình')) {
+      return `📋 <strong>Lịch trình Tour Đà Lạt 3N2Đ:</strong><br>
+        - <strong>Ngày 1:</strong> Xe limousine đưa từ TP.HCM lên Đà Lạt, trượt thác Datanla hoành tráng, vườn hoa thành phố.<br>
+        - <strong>Ngày 2:</strong> Leo núi Langbiang bằng xe Jeep ngắm mây ngàn, thăm Thung lũng Tình Yêu, chợ đêm Đà Lạt uống sữa đậu nành nóng.<br>
+        - <strong>Ngày 3:</strong> Hái dâu tây trực tiếp tại vườn công nghệ cao, mua mứt dâu rừng, trà atiso. Xe đưa về TP.HCM.<br>
+        👉 <a href="tour-detail.html?id=7" class="text-green-600 font-bold hover:underline">Nhấp vào đây để đặt ngay!</a>`;
+    }
+    return `🍓 <strong>Tour Đà Lạt Sương Mù Lãng Mạn:</strong><br>
+      Check-in đỉnh Langbiang thơ mộng, vườn dâu tây công nghệ cao, thác Datanla hùng vĩ.<br>
+      👉 <strong>Giá siêu tốt:</strong> Chỉ từ <strong>2.49tr VNĐ</strong> cho 3N2Đ limousine cao cấp.<br>
+      👉 <button onclick="askTina('Lịch trình chi tiết Đà Lạt')" class="mt-2 px-2.5 py-1 text-xs font-semibold rounded bg-green-50 dark:bg-slate-800 text-green-700 dark:text-green-400 border border-green-200 dark:border-white/10 hover:bg-green-100 transition">🔍 Xem lịch trình chi tiết Đà Lạt</button>`;
+  }
+
+  if (query.includes('nha trang')) {
+    if (query.includes('chi tiết') || query.includes('lịch trình')) {
+      return `📋 <strong>Lịch trình Tour Nha Trang - Vịnh Đảo 3N2Đ:</strong><br>
+        - <strong>Ngày 1:</strong> Xe đưa đến Nha Trang sáng sớm. Thăm Tháp Bà Ponagar, chiều tự do tắm biển Trần Phú.<br>
+        - <strong>Ngày 2:</strong> Đi cano lặn ngắm san hô tại hòn Mun, tắm bùn khoáng nóng, thưởng thức hải sản lồng bè.<br>
+        - <strong>Ngày 3:</strong> Vui chơi Vinpearl Land hoặc tự do mua yến sào Khánh Hòa, mực một nắng. Tối xe đưa về TP.HCM.<br>
+        👉 <a href="tour-detail.html?id=8" class="text-green-600 font-bold hover:underline">Nhấp vào đây để đặt ngay!</a>`;
+    }
+    return `🏖️ <strong>Tour Nha Trang - Ninh Hòa Biển Xanh Vẫy Gọi:</strong><br>
+      Lặn biển ngắm rạn san hô vịnh Nha Trang, tắm bùn khoáng nóng bồi bổ sức khỏe, check-in Tháp Bà Ponagar.<br>
+      👉 <strong>Giá trọn gói:</strong> Chỉ từ <strong>2.89tr VNĐ</strong> cho 3N2Đ.<br>
+      👉 <button onclick="askTina('Lịch trình chi tiết Nha Trang')" class="mt-2 px-2.5 py-1 text-xs font-semibold rounded bg-green-50 dark:bg-slate-800 text-green-700 dark:text-green-400 border border-green-200 dark:border-white/10 hover:bg-green-100 transition">🔍 Xem lịch trình chi tiết Nha Trang</button>`;
+  }
+
+  if (query.includes('singapore') || query.includes('malaysia')) {
+    if (query.includes('chi tiết') || query.includes('lịch trình')) {
+      return `📋 <strong>Lịch trình Tour liên tuyến Singapore - Malaysia 5N4Đ:</strong><br>
+        - <strong>Ngày 1:</strong> Bay đến phi trường Changi đẹp nhất thế giới, check-in Jewel thác nước. Mua sắm Orchard Road.<br>
+        - <strong>Ngày 2:</strong> Tham quan tượng sư tử Merlion Marina Bay, vườn thực vật Gardens by the Bay với siêu cây lấp lánh.<br>
+        - <strong>Ngày 3:</strong> Khám phá đảo Sentosa, vui chơi chụp hình Universal Studios Singapore.<br>
+        - <strong>Ngày 4:</strong> Xe di chuyển qua biên giới Malaysia, chinh phục Genting Highlands sầm uất, check-in Tháp Đôi Petronas.<br>
+        - <strong>Ngày 5:</strong> Leo động Batu linh thiêng của người Ấn, mua sắm đặc sản Malaysia. Bay về Việt Nam.<br>
+        👉 <a href="tour-detail.html?id=9" class="text-green-600 font-bold hover:underline">Nhấp vào đây để đặt ngay!</a>`;
+    }
+    return `🦁 <strong>Tour liên tuyến Quốc tế Singapore - Malaysia:</strong><br>
+      Khám phá hai quốc gia trong 1 hành trình: Sân bay Jewel Changi, Gardens by the Bay, tháp đôi Petronas, Cao nguyên Genting.<br>
+      👉 <strong>Giá hấp dẫn:</strong> Chỉ từ <strong>10.99tr VNĐ</strong> 5N4Đ trọn gói.<br>
+      👉 <button onclick="askTina('Lịch trình chi tiết Singapore')" class="mt-2 px-2.5 py-1 text-xs font-semibold rounded bg-green-50 dark:bg-slate-800 text-green-700 dark:text-green-400 border border-green-200 dark:border-white/10 hover:bg-green-100 transition">🔍 Xem lịch trình chi tiết Singapore</button>`;
+  }
+
+  if (query.includes('thái lan') || query.includes('bangkok') || query.includes('thái')) {
+    if (query.includes('chi tiết') || query.includes('lịch trình')) {
+      return `📋 <strong>Lịch trình Tour Thái Lan - Bangkok - Pattaya 5N4Đ:</strong><br>
+        - <strong>Ngày 1:</strong> Bay thẳng đến Bangkok, xe đưa xuống thành phố biển Pattaya, dạo phố đèn đỏ Walking Street.<br>
+        - <strong>Ngày 2:</strong> Cano ra đảo san hô Coral tắm biển, chiều thăm Chùa Trân Bảo Phật Sơn đúc vàng vách đá, xem show Alcazar.<br>
+        - <strong>Ngày 3:</strong> Trở về Bangkok, ghé qua Vườn Bướm, xem xiếc rắn độc đáo.<br>
+        - <strong>Ngày 4:</strong> Viếng Chùa Thuyền Wat Yannawa, Chùa Phật Vàng linh thiêng, ăn tối buffet tầng 86 Baiyoke Sky.<br>
+        - <strong>Ngày 5:</strong> Chèo thuyền ngắm cá nổi sông Chaophraya, mua sắm tẹt ga tại Siam Paragon. Bay về nước.<br>
+        👉 <a href="tour-detail.html?id=10" class="text-green-600 font-bold hover:underline">Nhấp vào đây để đặt ngay!</a>`;
+    }
+    return `🐘 <strong>Tour Thái Lan - Bangkok - Pattaya Xứ Chùa Vàng:</strong><br>
+      Khám phá chùa Phật Vàng linh thiêng, xem show trình diễn Alcazar của các vũ công transgender, buffet nhà hàng Baiyoke Sky 86 tầng.<br>
+      👉 <strong>Giá siêu tốt:</strong> Chỉ từ <strong>6.49tr VNĐ</strong> trọn gói 5N4Đ kèm hành lý ký gửi.<br>
+      👉 <button onclick="askTina('Lịch trình chi tiết Thái Lan')" class="mt-2 px-2.5 py-1 text-xs font-semibold rounded bg-green-50 dark:bg-slate-800 text-green-700 dark:text-green-400 border border-green-200 dark:border-white/10 hover:bg-green-100 transition">🔍 Xem lịch trình chi tiết Thái Lan</button>`;
+  }
+
   if (query.includes('huế') || query.includes('hương') || query.includes('kinh thành') || query.includes('cố đô')) {
     return `🏯 <strong>Tour Cố Đô Huế Cổ Kính:</strong><br>
-      Khám phá Kinh Thành Huế (Đại Nội), nghe ca Huế trên Sông Hương, viếng chùa Thiên Mụ cổ kính và thưởng thức tinh hoa ẩm thực Cung đình. WILTravel đang cung cấp các tour Huế giá cực tốt:<br>
+      Khám phá Kinh Thành Huế (Đại Nội), nghe ca Huế trên Sông Hương, viếng chùa Thiên Mụ cổ kính và thưởng thức tinh hoa ẩm thực Cung đình.<br>
+      WILTravel đang cung cấp các tour Huế giá cực tốt:<br>
       - <strong>Hành trình di sản Huế cổ kính 3N2Đ:</strong> Giá chỉ từ 2.49tr VNĐ.<br>
       - <strong>Nghỉ dưỡng Lăng Cô - Huế Premium 4N3Đ:</strong> Resort sát biển Lăng Cô cực sang chảnh.<br>
       👉 <a href="tours.html" class="text-green-600 font-bold hover:underline">Xem danh sách Tour Huế ngay</a>`;
   }
 
+  // 4. Backend & Database explanation
   if (query.includes('backend') || query.includes('cơ sở dữ liệu') || query.includes('lưu') || query.includes('tài khoản')) {
     return `💾 <strong>Hệ thống Backend & Cơ sở dữ liệu:</strong><br>
       - WILTravel đã tích hợp hệ thống backend Node.js & Express thực tế!<br>
@@ -1303,28 +1586,29 @@ function getTinaResponse(userInput) {
       - Nếu bạn chạy ở chế độ file tĩnh (\`file://\`), hệ thống sẽ tự động dùng \`localStorage\` dự phòng tiện lợi.`;
   }
 
-  // 1. Tour consultation & Flight Intent
+  // 5. Flight Intent
   if (query.includes('vé máy bay') || query.includes('chuyến bay') || query.includes('bay đi')) {
     return `✈️ <strong>Dịch vụ Vé máy bay WILTravel:</strong><br>
-      Bên mình hợp tác với hơn 10 hãng hàng không lớn, giá rẻ hơn thị trường từ 10-15%.<br>
+      Bên mình hợp tác với hơn 10 hãng hàng không lớn, giá rẻ hơn thị trường từ 10-15%. Bạn có thể lựa chọn bay của các hãng như Vietnam Airlines, Vietjet Air, Bamboo Airways, Emirates, Qatar Airways...<br>
       👉 Bạn có thể tự tra cứu chuyến bay và đặt vé ngay tại đây: <a href="flight.html" class="text-green-600 font-bold hover:underline">Hệ thống Đặt vé máy bay</a>.`;
   }
   
+  // 6. Buying / Booking a tour
   if (query.includes('đặt tour') || query.includes('mua tour') || query.includes('cách đặt')) {
-    return `🛍️ <strong>Hướng dẫn Đặt Tour:</strong><br>
+    return `🛍️ <strong>Hướng dẫn Đặt Tour chi tiết:</strong><br>
       1. Tìm tour ưng ý trên website.<br>
       2. Bấm "Thêm vào giỏ" hoặc "Đặt tour".<br>
-      3. Vào giỏ hàng điền thông tin và thanh toán (chuyển khoản / MoMo).<br>
-      👉 Xem giỏ hàng của bạn tại: <a href="cart.html" class="text-green-600 font-bold hover:underline">Giỏ hàng</a>.`;
+      3. Vào giỏ hàng điền thông tin và thanh toán (chuyển khoản ngân hàng hoặc ví MoMo).<br>
+      👉 Xem giỏ hàng của bạn tại: <a href="cart.html" class="text-green-600 font-bold hover:underline">Giỏ hàng của tôi</a>.`;
   }
 
+  // 7. General Tour Consultation
   if (query.includes('tour') && !query.includes('tìm') && query.length < 15) {
-    // Basic tour greeting
     if (typeof tours !== 'undefined' && tours.length > 0) {
       const topTours = tours.slice(0, 3);
       let list = `<p class="mb-2">WILTravel hiện có nhiều tour du lịch chất lượng cao. Dưới đây là 3 tour tiêu biểu được yêu thích nhất hiện tại:</p><ul class="space-y-2.5 mt-2">`;
       topTours.forEach(t => {
-        list += `<li class="bg-white p-2.5 rounded-xl border border-gray-100 shadow-xs">
+        list += `<li class="bg-white dark:bg-slate-800 p-2.5 rounded-xl border border-gray-150 dark:border-white/10 shadow-xs">
           <strong>${t.name}</strong> (${t.duration})<br>
           <span class="text-xs text-gray-500"><i class="fa-solid fa-map-pin text-green-600 mr-1"></i>${t.location}</span> • 
           <span class="text-green-600 font-bold text-xs">${(t.price / 1000000).toFixed(2)}tr VNĐ</span><br>
@@ -1337,7 +1621,7 @@ function getTinaResponse(userInput) {
     return "Chúng mình có rất nhiều tour biển đảo, vùng cao trong nước và quốc tế hấp dẫn. Bạn có thể xem danh sách tại <a href='tours.html' class='text-green-600 font-bold hover:underline'>Danh sách Tour</a>.";
   }
 
-  // 2. Advanced NLP Scoring System for Tour Search
+  // 8. Advanced NLP Scoring System for Tour Search
   let scoredTours = tours.map(t => {
     let score = 0;
     const term = query.trim().toLowerCase();
@@ -1348,7 +1632,7 @@ function getTinaResponse(userInput) {
     // Explicit name match
     if (t.name.toLowerCase().includes(term) && term.length > 3) score += 5;
     
-    // Category mapping (e.g. "biển", "núi")
+    // Category mapping
     t.category.forEach(c => {
       if (term.includes(c.toLowerCase())) score += 5;
     });
@@ -1377,12 +1661,11 @@ function getTinaResponse(userInput) {
     .sort((a, b) => b.score - a.score)
     .map(item => item.tour);
 
-  // If there are specific queries but no matches
   if (scoredTours.length > 0) {
     const topTours = scoredTours.slice(0, 3);
     let list = `✨ <strong>Mình tìm thấy ${scoredTours.length} tour phù hợp với yêu cầu của bạn:</strong><br><ul class="space-y-2.5 mt-2">`;
     topTours.forEach(t => {
-      list += `<li class="bg-white p-2.5 rounded-xl border border-gray-100 shadow-xs">
+      list += `<li class="bg-white dark:bg-slate-800 p-2.5 rounded-xl border border-gray-150 dark:border-white/10 shadow-xs">
         <strong>${t.name}</strong> (${t.duration})<br>
         <span class="text-xs text-gray-500"><i class="fa-solid fa-map-pin text-green-600 mr-1"></i>${t.location}</span> • 
         <span class="text-green-600 font-bold text-xs">${(t.price / 1000000).toFixed(2)}tr VNĐ</span><br>
@@ -1396,79 +1679,76 @@ function getTinaResponse(userInput) {
     return list;
   }
 
-  // 3. Price & Discounts
-  if (query.includes('giá') || query.includes('bao nhiêu') || query.includes('tiền') || query.includes('khuyến mãi') || query.includes('mã giảm') || query.includes('rẻ') || query.includes('coupon')) {
+  // 9. Price, Promo Codes & Coupons
+  if (query.includes('giá') || query.includes('bao nhiêu') || query.includes('tiền') || query.includes('khuyến mãi') || query.includes('mã giảm') || query.includes('rẻ') || query.includes('coupon') || query.includes('discount')) {
     return `💵 <strong>Chương trình ưu đãi hiện tại của WILTravel:</strong><br>
-      - Giá tour của chúng mình cam kết cạnh tranh nhất thị trường, chỉ từ 1.79tr VNĐ.<br>
-      - Áp dụng mã <strong class="text-green-600 font-mono">SAVE100</strong> để giảm 100k cho hóa đơn trên 2tr VNĐ.<br>
-      - Áp dụng mã <strong class="text-green-600 font-mono">FRIEND20</strong> giảm ngay 20% khi đặt theo nhóm hoặc giới thiệu bạn bè.<br>
-      👉 Xem thêm các ưu đãi flash sale tại trang <a href="deals.html" class="text-green-600 font-bold hover:underline">Khuyến mãi & Ưu đãi</a>.`;
+      - Giá tour cam kết tốt nhất thị trường, chỉ từ 1.79tr VNĐ.<br>
+      - 🎟️ Mã <strong>"SAVE100"</strong>: Giảm 100k cho hóa đơn từ 2tr VNĐ.<br>
+      - 🎟️ Mã <strong>"FRIEND20"</strong>: Giảm 20% khi đi theo nhóm hoặc giới thiệu bạn bè.<br>
+      - 🎟️ Mã <strong>"TINAGIFT"</strong>: Giảm ngay 5% (Mã độc quyền từ Chatbot Tina!).<br>
+      👉 Đặt mua ngay và nhập mã tại trang <a href="deals.html" class="text-green-600 font-bold hover:underline">Ưu đãi & Khuyến mãi</a>.`;
   }
 
-  // 4. Payment & Billing
+  // 10. Payment & Billing
   if (query.includes('thanh toán') || query.includes('chuyển khoản') || query.includes('ngân hàng') || query.includes('momo') || query.includes('tiền mặt')) {
-    return `💳 <strong>Phương thức thanh toán:</strong><br>
-      WILTravel hỗ trợ đa dạng phương thức thanh toán an toàn:<br>
-      1. Chuyển khoản ngân hàng qua mã VietQR (MB Bank).<br>
-      2. Thanh toán ví điện tử MoMo cực nhanh.<br>
-      3. Thẻ tín dụng/ghi nợ nội địa và quốc tế (Visa, Mastercard, JCB).<br>
-      Hệ thống thanh toán của chúng mình được bảo mật đa tầng, cam kết an toàn tuyệt đối.`;
+    return `💳 <strong>Phương thức thanh toán bảo mật của WILTravel:</strong><br>
+      - <strong>Chuyển khoản Ngân hàng (MB Bank):</strong> Thanh toán tiện lợi qua mã VietQR tự động xuất khi đặt hàng.<br>
+      - <strong>Ví điện tử MoMo:</strong> Liên kết thanh toán nhanh gọn.<br>
+      - <strong>Thẻ Quốc tế:</strong> Hỗ trợ Visa, Mastercard, JCB qua cổng bảo mật đa lớp.`;
   }
 
-  // 5. Cancellation & Refunds
+  // 11. Cancellation & Refunds
   if (query.includes('hủy') || query.includes('hoàn tiền') || query.includes('trả phòng') || query.includes('đổi ngày') || query.includes('chính sách')) {
-    return `🔄 <strong>Chính sách Hủy & Hoàn tiền:</strong><br>
-      Chúng mình cam kết hoàn tiền linh hoạt nếu kế hoạch của bạn thay đổi:<br>
-      - Hủy trước 30 ngày khởi hành: Hoàn tiền <strong>100%</strong>.<br>
-      - Hủy từ 15 đến 30 ngày: Hoàn tiền <strong>80%</strong>.<br>
-      - Hủy từ 7 đến 15 ngày: Hoàn tiền <strong>50%</strong>.<br>
-      - Đổi ngày tour miễn phí trước 7 ngày (nếu còn chỗ trống).<br>
-      👉 Đọc chi tiết tại trang <a href="faq.html" class="text-green-600 font-bold hover:underline">Câu hỏi thường gặp (FAQ)</a>.`;
+    return `🔄 <strong>Chính sách Hủy & Hoàn tiền linh hoạt:</strong><br>
+      - Hủy trước ngày đi 30 ngày: Hoàn tiền <strong>100%</strong>.<br>
+      - Hủy trước từ 15 đến 30 ngày: Hoàn tiền <strong>80%</strong>.<br>
+      - Hủy trước từ 7 đến 15 ngày: Hoàn tiền <strong>50%</strong>.<br>
+      - Đổi ngày khởi hành miễn phí trước 7 ngày (tùy thuộc tình trạng phòng/vé còn trống).<br>
+      👉 Chi tiết thêm tại trang <a href="faq.html" class="text-green-600 font-bold hover:underline">Câu hỏi thường gặp (FAQ)</a>.`;
   }
 
-  // 6. Company profile
+  // 12. Office & Address & Company Info
   if (query.includes('địa chỉ') || query.includes('văn phòng') || query.includes('đâu') || query.includes('thành lập') || query.includes('năm') || query.includes('công ty')) {
     return `🏢 <strong>Về Công ty Du lịch WILTravel:</strong><br>
-      - <strong>Thành lập năm:</strong> 2011.<br>
       - <strong>Tên pháp lý:</strong> Công ty TNHH Thương mại Dịch vụ Du lịch WILTRAVEL.<br>
-      - <strong>Trụ sở chính:</strong> 72/10/6 Văn Chung, Quận Tân Bình, Tp.HCM.<br>
-      - <strong>Sứ mệnh:</strong> Mang đến những hành trình du lịch chất lượng cao, an toàn và mức giá tối ưu nhất cho người Việt.<br>
-      👉 Chi tiết thêm tại trang <a href="about.html" class="text-green-600 font-bold hover:underline">Về chúng tôi</a>.`;
+      - <strong>Thành lập:</strong> Năm 2011 (Hơn 15 năm kinh nghiệm trong ngành du lịch).<br>
+      - <strong>Văn phòng:</strong> 72/10/6 Văn Chung, Quận Tân Bình, Tp.HCM.<br>
+      - <strong>Giấy phép Lữ hành Quốc tế:</strong> Được cấp bởi Cục Du lịch Quốc gia Việt Nam.<br>
+      👉 Xem thêm tại trang <a href="about.html" class="text-green-600 font-bold hover:underline">Về chúng tôi</a>.`;
   }
 
-  // 7. Human Support
+  // 13. Direct Help / Contacts
   if (query.includes('nhân viên') || query.includes('hotline') || query.includes('điện thoại') || query.includes('gặp') || query.includes('phương') || query.includes('sđt') || query.includes('gọi')) {
-    return `📞 <strong>Liên hệ Hỗ trợ Trực tiếp:</strong><br>
-      Bạn muốn gặp nhân viên tư vấn trực tiếp? Vui lòng liên hệ với hotline hoặc zalo:<br>
-      - <strong>Hotline/Zalo:</strong> <a href="tel:0905025737" class="text-green-600 font-bold hover:underline">0905 025 737</a> gặp <strong>Ms. Phương</strong>.<br>
-      - <strong>Email hỗ trợ:</strong> info@wil-travel.com.<br>
-      Chúng mình trực hotline 24/7 để đồng hành cùng chuyến đi của bạn!`;
+    return `📞 <strong>Kết nối với Hỗ trợ Viên trực tiếp:</strong><br>
+      - <strong>Hotline/Zalo hỗ trợ 24/7:</strong> <a href="tel:0905025737" class="text-green-600 font-bold hover:underline">0905 025 737</a> (gặp <strong>Ms. Phương</strong>).<br>
+      - <strong>Email:</strong> info@wil-travel.com.<br>
+      - Bạn cũng có thể dùng nút bong bóng Zalo/Điện thoại ở góc màn hình để gọi nhanh.`;
   }
 
-  // 8. Simple greetings
+  // 14. Basic Greetings & Chit-chat
   if (query.includes('chào') || query.includes('hi') || query.includes('hello') || query.includes('tina') || query.includes('ở đó không')) {
-    return "Xin chào! Mình là Tina đây. Mình có thể hỗ trợ tư vấn các tour du lịch, cung cấp thông tin về công ty, chính sách hoàn tiền hoặc kết nối bạn với nhân viên hỗ trợ. Bạn muốn tìm hiểu về dịch vụ nào? 😊";
+    return "Xin chào! Mình là Tina đây. Mình có thể hỗ trợ tư vấn các tour du lịch, thời tiết/đồ cần mang, tra cứu mã vé đặt chỗ, thông tin công ty, chính sách hoàn tiền hoặc kết nối bạn với Ms. Phương. Bạn cần Tina hỗ trợ gì nào? 😊";
   }
   if (query.includes('cảm ơn') || query.includes('thanks') || query.includes('tốt quá') || query.includes('ok')) {
-    return "Rất vui được giúp ích cho bạn! Chúc bạn có một ngày vui vẻ và những chuyến đi đầy ắp kỷ niệm đẹp cùng WILTravel. Nếu cần gì thêm, cứ nhắn Tina nhé! ❤️";
+    return "Rất vui được đồng hành cùng bạn! Chúc bạn có một ngày tràn ngập niềm vui và có những trải nghiệm đáng nhớ cùng WILTravel. Cần hỗ trợ thêm cứ nhắn Tina nhé! ❤️";
   }
   if (query.includes('tạm biệt') || query.includes('bye')) {
-    return "Tạm biệt bạn! Hẹn gặp lại bạn trong những hành trình khám phá thế giới tuyệt vời sắp tới! 👋🌸";
+    return "Tạm biệt bạn! Hẹn gặp lại bạn trên các cung đường du lịch tuyệt đẹp sắp tới nhé! 👋🌸";
   }
 
-  // 9. Fallback response with AI behavior simulation
+  // 15. Fallback Response
   const greetings = [
-    "Dạ, Tina chưa hiểu rõ ý bạn lắm.",
-    "Bạn có thể nói rõ hơn một chút được không?",
-    "Tina đang học hỏi thêm, bạn có thể diễn đạt lại câu hỏi giúp Tina nhé!"
+    "Dạ, câu hỏi này Tina chưa được học kỹ lắm.",
+    "Bạn có thể chia sẻ cụ thể hơn về yêu cầu của mình được không?",
+    "Tina đang ghi nhận câu hỏi để cải thiện thêm, bạn diễn đạt lại một cách ngắn gọn hơn xem sao nhé!"
   ];
   const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
   
-  return `🤖 ${randomGreeting} Bạn có thể thử các câu hỏi chi tiết hơn như:<br>
-    - <em>"Tôi muốn đi biển 3 ngày 2 đêm giá rẻ"</em><br>
-    - <em>"Có tour nào đi Sapa sang trọng không?"</em><br>
-    - <em>"Tôi muốn mua vé máy bay đi Hà Nội"</em><br>
-    Hoặc liên hệ trực tiếp với <strong>Ms. Phương (Hotline: 0905 025 737)</strong> để nhận hỗ trợ ngay nhé!`;
+  return `🤖 ${randomGreeting} Hãy thử các câu hỏi như:<br>
+    - <em>"Tư vấn đi Phú Quốc"</em> hoặc <em>"Lịch trình đi Sapa"</em><br>
+    - <em>"Đến Sapa thì cần chuẩn bị đồ gì?"</em><br>
+    - <em>"Tra cứu đơn hàng 102"</em><br>
+    Hoặc liên hệ Hotline 24/7 của <strong>Ms. Phương (0905 025 737)</strong> để được hỗ trợ tức thì!`;
 }
 
 // English Chatbot Logic
@@ -1576,12 +1856,69 @@ window.appLogout = function() {
   }
 };
 
+// Centralized Currency & Price Converter System
+window.formatPriceGlobal = function(priceInVnd) {
+  const currency = localStorage.getItem('currency') || 'VND';
+  if (currency === 'USD') {
+    const priceInUsd = priceInVnd / 25000;
+    return '$' + priceInUsd.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 1 });
+  } else if (currency === 'EUR') {
+    const priceInEur = priceInVnd / 27000;
+    return '€' + priceInEur.toLocaleString('de-DE', { minimumFractionDigits: 0, maximumFractionDigits: 1 });
+  } else {
+    return priceInVnd.toLocaleString('vi-VN') + 'đ';
+  }
+};
+
+window.formatPriceString = function(priceStr) {
+  if (typeof priceStr === 'number') {
+    return window.formatPriceGlobal(priceStr);
+  }
+  if (!priceStr) return '';
+  const cleanStr = priceStr.replace(/\./g, '').replace(/,/g, '').replace(/[^0-9.]/g, '');
+  let val = parseFloat(cleanStr);
+  if (isNaN(val)) return priceStr;
+  
+  if (priceStr.includes('tr')) {
+    val = val * 1000000;
+  }
+  
+  return window.formatPriceGlobal(val);
+};
+
+window.injectCurrencySwitcher = function() {
+  const firstCartLink = document.querySelector('a[href*="cart.html"]');
+  if (firstCartLink && firstCartLink.parentElement) {
+    const parent = firstCartLink.parentElement;
+    let selector = parent.querySelector('#global-currency-select');
+    if (!selector) {
+      const currentCurrency = localStorage.getItem('currency') || 'VND';
+      const container = document.createElement('div');
+      container.className = 'relative inline-block';
+      container.innerHTML = `
+        <select id="global-currency-select" onchange="window.changeCurrency(this.value)" class="bg-gray-150 dark:bg-slate-800 border-none rounded-full px-2.5 py-1.5 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-700 dark:text-slate-200 cursor-pointer transition">
+          <option value="VND" ${currentCurrency === 'VND' ? 'selected' : ''}>VNĐ</option>
+          <option value="USD" ${currentCurrency === 'USD' ? 'selected' : ''}>USD ($)</option>
+          <option value="EUR" ${currentCurrency === 'EUR' ? 'selected' : ''}>EUR (€)</option>
+        </select>
+      `;
+      parent.insertBefore(container, firstCartLink);
+    }
+  }
+};
+
+window.changeCurrency = function(val) {
+  localStorage.setItem('currency', val);
+  window.dispatchEvent(new Event('currencyChange'));
+};
+
 // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
   // Apply dark mode immediately
   if (isDarkMode()) applyDarkMode(true);
 
   updateNavbar();
+  injectCurrencySwitcher();
   initBackToTop();
   initFloatingHotline();
   initChatbotTina();
@@ -1598,3 +1935,9 @@ window.changeLanguage = function(langCode, label) {
   // Save preference
   localStorage.setItem('userLang', JSON.stringify({code: langCode, label: label}));
 };
+
+function initAOSDynamically() {
+  // Disabled dynamically injected AOS animations to prevent elements from vanishing/collapsing
+}
+
+document.addEventListener('DOMContentLoaded', () => { setTimeout(() => { initAOSDynamically(); if(typeof AOS !== 'undefined') AOS.refresh(); }, 500); });

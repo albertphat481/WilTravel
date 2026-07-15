@@ -6,6 +6,34 @@
   <title id="seo-title">WILTravel - Chi Tiết Bài Viết</title>
   <meta name="description" id="seo-desc" content="Đọc bài viết du lịch chất lượng cao tại WILTravel.">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            jakarta: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            primary: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              300: '#86efac',
+              400: '#4ade80',
+              500: '#22c55e',
+              600: '#16a34a', // original green
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <style>
     html { scroll-behavior: smooth; }
@@ -15,28 +43,28 @@
     .sidebar-card:hover { transform: translateY(-4px); }
   </style>
 </head>
-<body class="font-sans bg-gray-50">
+<body class="font-jakarta bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-300">
 
   <!-- Navbar -->
-  <nav class="bg-white shadow-md fixed w-full z-50">
+  <nav class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-md fixed w-full z-50 border-b border-gray-100 dark:border-white/10 transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
       <div class="flex items-center gap-3">
         <a href="index.html"><img src="images/logo.png" alt="WILTravel" class="h-9 sm:h-11 w-auto hover:opacity-80 transition"></a>
       </div>
       
-      <div class="hidden md:flex items-center gap-8 text-gray-700 font-medium">
-        <a href="index.html" class="hover:text-green-600 transition">Trang chủ</a>
-        <a href="tours.html" class="hover:text-green-600 transition">Tours</a>
-        <a href="blog.html" class="hover:text-green-600 transition">Blog</a>
-        <a href="contact.html" class="hover:text-green-600 transition">Liên Hệ</a>
-        <a href="about.html" class="hover:text-green-600 transition">Về Chúng Tôi</a>
+      <div class="hidden md:flex items-center gap-8 text-gray-700 dark:text-slate-200 font-medium">
+        <a href="index.html" class="hover:text-primary-600 dark:text-primary-400 transition">Trang chủ</a>
+        <a href="tours.html" class="hover:text-primary-600 dark:text-primary-400 transition">Tours</a>
+        <a href="blog.html" class="hover:text-primary-600 dark:text-primary-400 transition">Blog</a>
+        <a href="contact.html" class="hover:text-primary-600 dark:text-primary-400 transition">Liên Hệ</a>
+        <a href="about.html" class="hover:text-primary-600 dark:text-primary-400 transition">Về Chúng Tôi</a>
       </div>
 
       <div class="flex items-center gap-3">
-        <a href="cart.html" class="text-gray-700 hover:text-green-600 transition text-lg"><i class="fa-solid fa-shopping-cart"></i></a>
-        <a href="profile.html" class="text-gray-700 hover:text-green-600 transition text-lg"><i class="fa-solid fa-user"></i></a>
-        <a href="login.html" class="hidden md:inline-block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-full transition text-sm">Đăng nhập</a>
-        <a href="register.html" class="hidden md:inline-block bg-green-600 text-white px-5 py-2 rounded-full hover:bg-green-700 transition text-sm font-medium">Đăng ký</a>
+        <a href="cart.html" class="text-gray-700 dark:text-slate-200 hover:text-primary-600 dark:text-primary-400 transition text-lg"><i class="fa-solid fa-shopping-cart"></i></a>
+        <a href="profile.html" class="text-gray-700 dark:text-slate-200 hover:text-primary-600 dark:text-primary-400 transition text-lg"><i class="fa-solid fa-user"></i></a>
+        <a href="login.html" class="hidden md:inline-block px-4 py-2 text-gray-700 dark:text-slate-200 hover:bg-gray-100 dark:bg-slate-800 rounded-full transition text-sm">Đăng nhập</a>
+        <a href="register.html" class="hidden md:inline-block bg-primary-600 dark:bg-primary-700 text-white px-5 py-2 rounded-full hover:bg-primary-700 dark:hover:bg-primary-600 transition text-sm font-medium">Đăng ký</a>
       </div>
     </div>
   </nav>
@@ -47,15 +75,15 @@
       
       <!-- Left Column: Article Body -->
       <main class="lg:col-span-2">
-        <div class="bg-white rounded-3xl shadow-sm p-6 sm:p-8 border border-gray-100">
+        <div class="bg-white dark:bg-slate-800 rounded-3xl shadow-sm p-6 sm:p-8 border border-gray-100">
           
           <!-- Category Badge & Date -->
           <div class="flex items-center gap-3 mb-4 text-sm">
             <span id="post-category" class="bg-green-50 text-green-700 font-bold px-3.5 py-1.5 rounded-full text-xs uppercase tracking-wider">Danh mục</span>
             <span class="text-gray-400">•</span>
-            <span id="post-date" class="text-gray-500 font-medium"><i class="fa-solid fa-calendar mr-1.5"></i>01/06/2026</span>
+            <span id="post-date" class="text-gray-500 dark:text-slate-400 font-medium"><i class="fa-solid fa-calendar mr-1.5"></i>01/06/2026</span>
             <span class="text-gray-400">•</span>
-            <span id="post-author" class="text-gray-500 font-medium"><i class="fa-solid fa-user mr-1.5"></i>Tác giả</span>
+            <span id="post-author" class="text-gray-500 dark:text-slate-400 font-medium"><i class="fa-solid fa-user mr-1.5"></i>Tác giả</span>
           </div>
 
           <!-- Title -->
@@ -69,28 +97,28 @@
           </div>
 
           <!-- Article Prose -->
-          <div id="post-content" class="prose max-w-none text-gray-700 leading-relaxed text-base sm:text-lg">
+          <div id="post-content" class="prose max-w-none text-gray-700 dark:text-slate-200 leading-relaxed text-base sm:text-lg">
             <!-- Content will be rendered by JS -->
           </div>
 
           <!-- Tags & Share -->
           <div class="mt-10 pt-6 border-t border-gray-100 flex flex-wrap justify-between items-center gap-4">
             <div class="flex items-center gap-2">
-              <span class="text-sm font-bold text-gray-800"><i class="fa-solid fa-tags mr-1.5 text-gray-400"></i>Thẻ:</span>
+              <span class="text-sm font-bold text-gray-800 dark:text-slate-100"><i class="fa-solid fa-tags mr-1.5 text-gray-400"></i>Thẻ:</span>
               <div id="post-tags" class="flex flex-wrap gap-1.5">
                 <!-- Tags rendered by JS -->
               </div>
             </div>
             
             <div class="flex items-center gap-3">
-              <span class="text-sm font-medium text-gray-500">Chia sẻ:</span>
+              <span class="text-sm font-medium text-gray-500 dark:text-slate-400">Chia sẻ:</span>
               <button onclick="share('facebook')" class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition" aria-label="Share Facebook"><i class="fa-brands fa-facebook-f text-sm"></i></button>
               <button onclick="share('twitter')" class="w-8 h-8 rounded-full bg-sky-100 text-sky-600 flex items-center justify-center hover:bg-sky-600 hover:text-white transition" aria-label="Share Twitter"><i class="fa-brands fa-twitter text-sm"></i></button>
-              <button onclick="share('link')" class="w-8 h-8 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-gray-600 hover:text-white transition" aria-label="Copy Link"><i class="fa-solid fa-link text-sm"></i></button>
+              <button onclick="share('link')" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-300 flex items-center justify-center hover:bg-gray-600 hover:text-white transition" aria-label="Copy Link"><i class="fa-solid fa-link text-sm"></i></button>
             </div>
           </div>
           
-          <a href="blog.html" class="inline-flex items-center gap-2 text-green-600 hover:text-green-700 font-bold mt-10 transition">
+          <a href="blog.html" class="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:text-green-700 font-bold mt-10 transition">
             <i class="fa-solid fa-arrow-left"></i> Quay lại trang Blog
           </a>
         </div>
@@ -99,8 +127,8 @@
       <!-- Right Column: Sidebar (Related Posts) -->
       <aside class="lg:col-span-1 space-y-6">
         <!-- Related Posts Widget -->
-        <div class="bg-white rounded-3xl shadow-sm p-6 border border-gray-100">
-          <h3 class="text-xl font-bold text-gray-800 mb-5 pb-3 border-b border-gray-100"><i class="fa-solid fa-paper-plane mr-2 text-green-600"></i>Bài viết liên quan</h3>
+        <div class="bg-white dark:bg-slate-800 rounded-3xl shadow-sm p-6 border border-gray-100">
+          <h3 class="text-xl font-bold text-gray-800 dark:text-slate-100 mb-5 pb-3 border-b border-gray-100"><i class="fa-solid fa-paper-plane mr-2 text-primary-600 dark:text-primary-400"></i>Bài viết liên quan</h3>
           <div id="related-posts" class="space-y-4">
             <!-- Rendered by JS -->
           </div>
@@ -125,7 +153,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
         <div>
-          <a href="index.html"><img src="images/logo-footer-colored.png" alt="WILTravel" class="h-12 mb-4 bg-white/10 rounded-xl p-1"></a>
+          <a href="index.html"><img src="images/logo-footer.png" alt="WILTravel" class="h-12 mb-4"></a>
           <p class="text-sm">Chỉ cần & đi chuyến nghỉ ngơi</p>
         </div>
         <div>
@@ -161,8 +189,8 @@
         document.getElementById('post-content').innerHTML = `
           <div class="text-center py-10">
             <i class="fa-solid fa-circle-exclamation text-red-500 text-5xl mb-4"></i>
-            <p class="text-lg font-bold text-gray-700">Bài viết bạn tìm kiếm không tồn tại hoặc đã bị gỡ bỏ.</p>
-            <a href="blog.html" class="inline-block mt-6 bg-green-600 text-white px-6 py-2.5 rounded-xl hover:bg-green-700 transition">Quay lại Blog</a>
+            <p class="text-lg font-bold text-gray-700 dark:text-slate-200">Bài viết bạn tìm kiếm không tồn tại hoặc đã bị gỡ bỏ.</p>
+            <a href="blog.html" class="inline-block mt-6 bg-primary-600 dark:bg-primary-700 text-white px-6 py-2.5 rounded-xl hover:bg-primary-700 dark:hover:bg-primary-600 transition">Quay lại Blog</a>
           </div>`;
         document.getElementById('post-image').style.display = 'none';
         return;
@@ -187,7 +215,7 @@
       if (post.tags && post.tags.length) {
         post.tags.forEach(tag => {
           const badge = document.createElement('span');
-          badge.className = "text-xs font-semibold bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full hover:bg-gray-200 transition cursor-pointer";
+          badge.className = "text-xs font-semibold bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-300 px-2.5 py-1 rounded-full hover:bg-gray-200 transition cursor-pointer";
           badge.textContent = `#${tag}`;
           badge.onclick = () => { window.location.href = `blog.html?tag=${encodeURIComponent(tag)}`; };
           tagsContainer.appendChild(badge);
@@ -216,12 +244,12 @@
     function renderRelatedCard(item, container) {
       const card = document.createElement('a');
       card.href = `blog-detail.html?id=${item.id}`;
-      card.className = "sidebar-card flex gap-3 p-2 rounded-xl hover:bg-gray-50 border border-transparent hover:border-gray-150 transition";
+      card.className = "sidebar-card flex gap-3 p-2 rounded-xl hover:bg-gray-50 dark:bg-slate-800/50 border border-transparent hover:border-gray-150 transition";
       card.innerHTML = `
         <img src="${item.image}" alt="" class="w-16 h-16 object-cover rounded-lg shrink-0">
         <div class="flex-grow min-w-0">
-          <p class="text-xs text-green-600 font-semibold uppercase tracking-wider">${item.category}</p>
-          <h4 class="font-bold text-sm text-gray-800 line-clamp-2 mt-0.5">${item.title}</h4>
+          <p class="text-xs text-primary-600 dark:text-primary-400 font-semibold uppercase tracking-wider">${item.category}</p>
+          <h4 class="font-bold text-sm text-gray-800 dark:text-slate-100 line-clamp-2 mt-0.5">${item.title}</h4>
         </div>
       `;
       container.appendChild(card);
@@ -244,6 +272,14 @@
     window.onload = () => {
       initArticle();
     };
+  </script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof AOS !== 'undefined') {
+        AOS.init({ duration: 800, once: true });
+      }
+    });
   </script>
 </body>
 </html>

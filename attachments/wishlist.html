@@ -5,6 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WILTravel - Yêu Thích</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            jakarta: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            primary: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              300: '#86efac',
+              400: '#4ade80',
+              500: '#22c55e',
+              600: '#16a34a', // original green
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <style>
     html { scroll-behavior: smooth; }
@@ -14,44 +42,45 @@
     .heart-btn.active i { color: #dc2626; }
   </style>
 </head>
-<body class="font-sans bg-gray-50">
+<body class="font-jakarta bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-300">
 
   <!-- Navbar -->
-  <nav class="bg-white shadow-md fixed w-full z-50">
+  <nav class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-md fixed w-full z-50 border-b border-gray-100 dark:border-white/10 transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-      <div class="flex items-center gap-3">
-        <img src="images/logo.png" alt="WILTravel" class="h-9 sm:h-11 w-auto">
-      </div>
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="images/logo-transparent.png" alt="WILTravel" class="h-9 sm:h-11 w-auto dark:hidden">
+        <img src="images/logo-footer.png" alt="WILTravel" class="h-9 sm:h-11 w-auto hidden dark:block">
+      </a>
       
-      <div class="hidden md:flex items-center gap-8 text-gray-700 font-medium">
-        <a href="index.html" class="hover:text-green-600 transition">Trang chủ</a>
-        <a href="tours.html" class="hover:text-green-600 transition">Tours</a>
-        <a href="flight.html" class="hover:text-green-600 transition">Máy Bay</a>
-        <a href="blog.html" class="hover:text-green-600 transition">Blog</a>
-        <a href="contact.html" class="hover:text-green-600 transition">Liên Hệ</a>
-        <a href="about.html" class="hover:text-green-600 transition">Về Chúng Tôi</a>
+      <div class="hidden md:flex items-center gap-8 text-gray-700 dark:text-slate-200 font-medium">
+        <a href="index.html" class="hover:text-primary-600 dark:text-primary-400 transition">Trang chủ</a>
+        <a href="tours.html" class="hover:text-primary-600 dark:text-primary-400 transition">Tours</a>
+        <a href="flight.html" class="hover:text-primary-600 dark:text-primary-400 transition">Máy Bay</a>
+        <a href="blog.html" class="hover:text-primary-600 dark:text-primary-400 transition">Blog</a>
+        <a href="contact.html" class="hover:text-primary-600 dark:text-primary-400 transition">Liên Hệ</a>
+        <a href="about.html" class="hover:text-primary-600 dark:text-primary-400 transition">Về Chúng Tôi</a>
       </div>
 
       <div class="flex items-center gap-3">
-        <a href="cart.html" class="text-gray-700 hover:text-green-600 transition text-lg"><i class="fa-solid fa-shopping-cart"></i></a>
+        <a href="cart.html" class="text-gray-700 dark:text-slate-200 hover:text-primary-600 dark:text-primary-400 transition text-lg"><i class="fa-solid fa-shopping-cart"></i></a>
         <a href="wishlist.html" class="text-red-600 hover:text-red-700 transition text-lg"><i class="fa-solid fa-heart"></i></a>
-        <a href="profile.html" class="text-gray-700 hover:text-green-600 transition text-lg"><i class="fa-solid fa-user"></i></a>
-        <a href="login.html" class="hidden md:inline-block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-full transition text-sm">Đăng nhập</a>
-        <a href="register.html" class="hidden md:inline-block bg-green-600 text-white px-5 py-2 rounded-full hover:bg-green-700 transition text-sm font-medium">Đăng ký</a>
+        <a href="profile.html" class="text-gray-700 dark:text-slate-200 hover:text-primary-600 dark:text-primary-400 transition text-lg"><i class="fa-solid fa-user"></i></a>
+        <a href="login.html" class="hidden md:inline-block px-4 py-2 text-gray-700 dark:text-slate-200 hover:bg-gray-100 dark:bg-slate-800 rounded-full transition text-sm">Đăng nhập</a>
+        <a href="register.html" class="hidden md:inline-block bg-primary-600 dark:bg-primary-700 text-white px-5 py-2 rounded-full hover:bg-primary-700 dark:hover:bg-primary-600 transition text-sm font-medium">Đăng ký</a>
       </div>
 
-      <button id="mobile-menu-button" class="md:hidden text-3xl text-gray-700">
+      <button id="mobile-menu-button" class="md:hidden text-3xl text-gray-700 dark:text-slate-200">
         <i class="fa-solid fa-bars"></i>
       </button>
     </div>
     <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
-      <div class="px-6 py-6 flex flex-col gap-5 text-gray-700 font-medium">
-        <a href="index.html" class="hover:text-green-600 transition">Trang chủ</a>
-        <a href="tours.html" class="hover:text-green-600 transition">Tours</a>
-        <a href="flight.html" class="hover:text-green-600 transition">Máy Bay</a>
-        <a href="blog.html" class="hover:text-green-600 transition">Blog</a>
-        <a href="contact.html" class="hover:text-green-600 transition">Liên Hệ</a>
-        <a href="about.html" class="hover:text-green-600 transition">Về Chúng Tôi</a>
+      <div class="px-6 py-6 flex flex-col gap-5 text-gray-700 dark:text-slate-200 font-medium">
+        <a href="index.html" class="hover:text-primary-600 dark:text-primary-400 transition">Trang chủ</a>
+        <a href="tours.html" class="hover:text-primary-600 dark:text-primary-400 transition">Tours</a>
+        <a href="flight.html" class="hover:text-primary-600 dark:text-primary-400 transition">Máy Bay</a>
+        <a href="blog.html" class="hover:text-primary-600 dark:text-primary-400 transition">Blog</a>
+        <a href="contact.html" class="hover:text-primary-600 dark:text-primary-400 transition">Liên Hệ</a>
+        <a href="about.html" class="hover:text-primary-600 dark:text-primary-400 transition">Về Chúng Tôi</a>
         <hr>
         <a href="wishlist.html" class="text-red-600 font-semibold transition"><i class="fa-solid fa-heart mr-2"></i>Yêu Thích</a>
       </div>
@@ -69,8 +98,8 @@
   <!-- Content -->
   <section class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
     <div class="flex justify-between items-center mb-8">
-      <h2 class="text-2xl font-bold text-gray-800">Danh Sách Yêu Thích</h2>
-      <span class="text-gray-600">Tổng cộng: <span id="wishlist-total" class="font-bold text-green-600">0</span> tours</span>
+      <h2 class="text-2xl font-bold text-gray-800 dark:text-slate-100">Danh Sách Yêu Thích</h2>
+      <span class="text-gray-600 dark:text-slate-300">Tổng cộng: <span id="wishlist-total" class="font-bold text-primary-600 dark:text-primary-400">0</span> tours</span>
     </div>
 
     <!-- Tours Grid -->
@@ -81,9 +110,9 @@
     <!-- Empty State -->
     <div id="empty-state" class="hidden text-center py-12">
       <i class="fa-solid fa-heart text-6xl text-gray-300 mb-4"></i>
-      <h3 class="text-2xl font-bold text-gray-600 mb-2">Chưa có tour yêu thích</h3>
-      <p class="text-gray-500 mb-6">Hãy thêm tour vào danh sách yêu thích của bạn</p>
-      <a href="tours.html" class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition font-medium">
+      <h3 class="text-2xl font-bold text-gray-600 dark:text-slate-300 mb-2">Chưa có tour yêu thích</h3>
+      <p class="text-gray-500 dark:text-slate-400 mb-6">Hãy thêm tour vào danh sách yêu thích của bạn</p>
+      <a href="tours.html" class="bg-primary-600 dark:bg-primary-700 text-white px-6 py-3 rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition font-medium">
         Khám Phá Tours
       </a>
     </div>
@@ -94,7 +123,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
         <div>
-          <img src="images/logo-footer-colored.png" alt="WILTravel" class="h-12 mb-4 bg-white/10 rounded-xl p-1">
+          <img src="images/logo-footer.png" alt="WILTravel" class="h-12 mb-4">
           <p class="text-sm">Chỉ cần & đi chuyến nghỉ ngơi</p>
         </div>
         <div>
@@ -141,7 +170,7 @@
       emptyState.classList.add('hidden');
 
       grid.innerHTML = favTours.map(tour => `
-        <div class="tour-card bg-white rounded-2xl shadow-md overflow-hidden relative">
+        <div class="tour-card bg-white dark:bg-slate-800 rounded-2xl shadow-md overflow-hidden relative">
           <div class="relative">
             <img src="${tour.image}" alt="${tour.name}" class="w-full h-48 object-cover">
             <button onclick="removeFav(${tour.id})" class="absolute top-4 right-4 bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition z-10" aria-label="Remove from wishlist">
@@ -150,19 +179,19 @@
             <span class="absolute top-4 left-4 bg-red-600 text-white px-3 py-1 rounded-full text-sm font-semibold">Yêu Thích</span>
           </div>
           <div class="p-6">
-            <h3 class="text-xl font-bold text-gray-800 mb-2 h-14 line-clamp-2">${tour.name}</h3>
+            <h3 class="text-xl font-bold text-gray-800 dark:text-slate-100 mb-2 h-14 line-clamp-2">${tour.name}</h3>
             <div class="flex items-center gap-1 mb-3">
               <i class="fa-solid fa-star text-yellow-400"></i>
-              <span class="font-semibold text-gray-800">${tour.rating}</span>
-              <span class="text-gray-600">(${tour.reviews} đánh giá)</span>
+              <span class="font-semibold text-gray-800 dark:text-slate-100">${tour.rating}</span>
+              <span class="text-gray-600 dark:text-slate-300">(${tour.reviews} đánh giá)</span>
             </div>
-            <p class="text-gray-600 text-sm mb-4 h-12 line-clamp-2">Khám phá phong cảnh đẹp, ẩm thực độc đáo tại ${tour.location}</p>
+            <p class="text-gray-600 dark:text-slate-300 text-sm mb-4 h-12 line-clamp-2">Khám phá phong cảnh đẹp, ẩm thực độc đáo tại ${tour.location}</p>
             <div class="flex justify-between items-center mt-4 pt-4 border-t border-gray-100">
               <div>
-                <p class="text-gray-500 text-sm">Từ</p>
-                <p class="text-2xl font-bold text-green-600">${(tour.price / 1000000).toFixed(1)}tr</p>
+                <p class="text-gray-500 dark:text-slate-400 text-sm">Từ</p>
+                <p class="text-2xl font-bold text-primary-600 dark:text-primary-400">${(tour.price / 1000000).toFixed(1)}tr</p>
               </div>
-              <a href="tour-detail.html?id=${tour.id}" class="bg-green-600 text-white px-5 py-2.5 rounded-xl hover:bg-green-700 transition font-semibold">
+              <a href="tour-detail.html?id=${tour.id}" class="bg-primary-600 dark:bg-primary-700 text-white px-5 py-2.5 rounded-xl hover:bg-primary-700 dark:hover:bg-primary-600 transition font-semibold">
                 Xem Chi Tiết
               </a>
             </div>
@@ -179,6 +208,14 @@
     window.onload = () => {
       renderWishlist();
     };
+  </script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof AOS !== 'undefined') {
+        AOS.init({ duration: 800, once: true });
+      }
+    });
   </script>
 </body>
 </html>
