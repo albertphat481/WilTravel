@@ -1879,18 +1879,7 @@ function getTinaResponse(userInput) {
   }
 
   // 15. Fallback Response
-  const greetings = [
-    "Dạ, câu hỏi này Tina chưa được học kỹ lắm.",
-    "Bạn có thể chia sẻ cụ thể hơn về yêu cầu của mình được không?",
-    "Tina đang ghi nhận câu hỏi để cải thiện thêm, bạn diễn đạt lại một cách ngắn gọn hơn xem sao nhé!"
-  ];
-  const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
-  
-  return `🤖 ${randomGreeting} Hãy thử các câu hỏi như:<br>
-    - <em>"Tư vấn đi Phú Quốc"</em> hoặc <em>"Lịch trình đi Sapa"</em><br>
-    - <em>"Đến Sapa thì cần chuẩn bị đồ gì?"</em><br>
-    - <em>"Tra cứu đơn hàng 102"</em><br>
-    Hoặc liên hệ Hotline 24/7 của <strong>Ms. Phương (0905 025 737)</strong> để được hỗ trợ tức thì!`;
+  return `🤖 Câu hỏi này Tina chưa hiểu rõ lắm. Bạn thử hỏi ngắn gọn như: "Tư vấn đi Phú Quốc", "Lịch trình đi Sapa", hoặc "Tra cứu đơn hàng 102" nhé. Hoặc liên hệ ngay Hotline: <strong>Ms. Phương (0905 025 737)</strong>!`;
 }
 
 // English Chatbot Logic
