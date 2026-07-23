@@ -1105,10 +1105,25 @@ function updateNavbar() {
     }
   }
 
-  // 4. Inject Desktop Dark Mode Toggle Button dynamically next to Cart
+  // 4. Inject Desktop Currency & Dark Mode Toggle Buttons dynamically next to Cart
   const firstCartLink = document.querySelector('a[href="cart.html"]');
   if (firstCartLink && firstCartLink.parentElement) {
     const parent = firstCartLink.parentElement;
+    
+    // Inject Currency Switcher
+    let currBtn = parent.querySelector('#currency-toggle');
+    if (!currBtn) {
+      currBtn = document.createElement('button');
+      currBtn.id = 'currency-toggle';
+      currBtn.onclick = () => { toggleGlobalCurrency(); };
+      currBtn.className = 'text-xs font-bold text-gray-700 dark:text-slate-200 bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 transition px-2.5 py-1.5 rounded-full border border-gray-200 dark:border-white/10 flex items-center gap-1 cursor-pointer';
+      currBtn.title = 'Chuyển đổi tiền tệ hiển thị';
+      parent.insertBefore(currBtn, firstCartLink);
+    }
+    const currentCurrency = localStorage.getItem('wil_currency') || 'VND';
+    currBtn.innerHTML = `<i class="fa-solid fa-coins text-amber-500"></i> <span>${currentCurrency}</span>`;
+
+    // Inject Dark Mode Toggle
     let toggleBtn = parent.querySelector('#dark-mode-toggle');
     if (!toggleBtn) {
       toggleBtn = document.createElement('button');

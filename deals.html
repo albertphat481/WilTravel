@@ -121,152 +121,223 @@
     </div>
   </section>
 
+  <!-- Filter & Categories Section -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-white/10 p-4 md:p-6">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div class="flex flex-wrap items-center gap-2" id="deal-filter-tags">
+          <button onclick="filterDeals('all', this)" class="deal-tag-btn px-4 py-2 rounded-full text-sm font-bold bg-primary-600 text-white shadow-md transition">🔥 Tất Cả Deals</button>
+          <button onclick="filterDeals('flash', this)" class="deal-tag-btn px-4 py-2 rounded-full text-sm font-semibold bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-slate-200 hover:bg-orange-50 hover:text-orange-600 transition">⚡ Flash Sale</button>
+          <button onclick="filterDeals('combo', this)" class="deal-tag-btn px-4 py-2 rounded-full text-sm font-semibold bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-slate-200 hover:bg-orange-50 hover:text-orange-600 transition">🎁 Combo Gia Đình</button>
+          <button onclick="filterDeals('member', this)" class="deal-tag-btn px-4 py-2 rounded-full text-sm font-semibold bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-slate-200 hover:bg-orange-50 hover:text-orange-600 transition">👑 Ưu Đãi Thành Viên</button>
+        </div>
+        <div class="flex items-center gap-2 text-sm font-medium text-gray-500 dark:text-slate-400">
+          <i class="fa-solid fa-tags text-orange-500"></i>
+          <span>Cam kết giá tốt nhất thị trường</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- All Deals -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-    <h2 class="text-3xl font-bold text-gray-800 dark:text-slate-100 mb-8">Tất Cả Ưu Đãi</h2>
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+    <div class="flex items-center justify-between mb-8">
+      <h2 class="text-3xl font-bold text-gray-800 dark:text-slate-100">Tất Cả Ưu Đãi Giờ Vàng</h2>
+      <span class="text-sm font-semibold text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/30 px-3 py-1.5 rounded-full border border-primary-200 dark:border-primary-800">
+        <i class="fa-solid fa-check-double mr-1"></i> Cập nhật liên tục
+      </span>
+    </div>
     
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <!-- Deal 1 -->
-      <div class="deal-card bg-white dark:bg-slate-800 rounded-2xl shadow-md overflow-hidden relative">
-        <div class="relative">
-          <img src="images/hero2.jpg" alt="Tour" class="w-full h-48 object-cover">
-          <span class="badge-sale absolute top-4 right-4 bg-red-600 text-white px-4 py-2 rounded-full font-bold text-lg">-40%</span>
-          <span class="absolute top-4 left-4 bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Flash Sale</span>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="deals-grid">
+      <!-- Deal 1: Phú Quốc -->
+      <div class="deal-card bg-white dark:bg-slate-800 rounded-2xl shadow-md overflow-hidden relative flex flex-col justify-between border border-gray-100 dark:border-white/5" data-category="flash">
+        <div class="relative overflow-hidden group">
+          <img src="images/tour-phuquoc.jpg" alt="Phú Quốc All Inclusive" class="w-full h-52 object-cover group-hover:scale-105 transition duration-500">
+          <span class="badge-sale absolute top-4 right-4 bg-red-600 text-white px-3.5 py-1.5 rounded-full font-black text-base shadow-lg">-35%</span>
+          <span class="absolute top-4 left-4 bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow">⚡ Flash Sale</span>
         </div>
-        <div class="p-6">
-          <h3 class="text-lg font-bold text-gray-800 dark:text-slate-100 mb-2">Sapa - Hà Giang 5N4Đ</h3>
-          <p class="text-gray-600 dark:text-slate-300 text-sm mb-4">Ruộng bậc thang, văn hóa dân tộc tuyệt đẹp</p>
-          <div class="mb-4">
-            <div class="flex items-baseline gap-2">
-              <p class="text-2xl font-bold text-primary-600 dark:text-primary-400">2.99tr</p>
-              <p class="text-lg text-gray-500 dark:text-slate-400 line-through">4.99tr</p>
+        <div class="p-6 flex-grow flex flex-col justify-between">
+          <div>
+            <span class="text-xs font-bold text-orange-600 uppercase tracking-wider">Ưu đãi mùa hè</span>
+            <h3 class="text-lg font-bold text-gray-800 dark:text-slate-100 mt-1 mb-2 hover:text-primary-600 transition">Phú Quốc 4N3Đ All Inclusive</h3>
+            <p class="text-gray-600 dark:text-slate-300 text-sm mb-4 line-clamp-2">Resort 4 sao sát biển + Vé máy bay khứ hồi + Buffet hải sản trọn gói</p>
+            <div class="mb-4 bg-orange-50/60 dark:bg-slate-700/40 p-3 rounded-xl border border-orange-100 dark:border-white/5">
+              <div class="flex items-baseline gap-2">
+                <p class="text-2xl font-black text-red-600 dark:text-red-400">2.59tr</p>
+                <p class="text-base text-gray-400 line-through">3.89tr</p>
+              </div>
+              <p class="text-xs font-semibold text-green-700 dark:text-green-400 mt-1">✨ Tiết kiệm ngay: 1.300.000đ/khách</p>
             </div>
-            <p class="text-xs text-gray-500 dark:text-slate-400 mt-1">Tiết kiệm: 2tr</p>
           </div>
-          <p class="text-xs text-orange-600 font-semibold mb-4">⏰ Còn 6 chỗ</p>
-          <a href="tour-detail.html?id=2" class="w-full bg-primary-600 dark:bg-primary-700 text-white px-4 py-2 rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition font-semibold text-center">
-            Xem Chi Tiết
-          </a>
+          <div>
+            <div class="flex justify-between items-center text-xs font-semibold text-orange-600 mb-4">
+              <span><i class="fa-solid fa-fire mr-1"></i>Đã đặt 85%</span>
+              <span>⏰ Còn 4 chỗ trống</span>
+            </div>
+            <a href="tour-detail.html?id=1" class="w-full bg-primary-600 dark:bg-primary-700 text-white px-4 py-3 rounded-xl hover:bg-primary-700 dark:hover:bg-primary-600 transition font-bold text-center block shadow-md shadow-green-600/20">
+              Săn Deal Ngay
+            </a>
+          </div>
         </div>
       </div>
 
-      <!-- Deal 2 -->
-      <div class="deal-card bg-white dark:bg-slate-800 rounded-2xl shadow-md overflow-hidden relative">
-        <div class="relative">
-          <img src="images/hero3.jpg" alt="Tour" class="w-full h-48 object-cover">
-          <span class="badge-sale absolute top-4 right-4 bg-red-600 text-white px-4 py-2 rounded-full font-bold text-lg">-25%</span>
-          <span class="absolute top-4 left-4 bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Super Sale</span>
+      <!-- Deal 2: Sapa - Hà Giang -->
+      <div class="deal-card bg-white dark:bg-slate-800 rounded-2xl shadow-md overflow-hidden relative flex flex-col justify-between border border-gray-100 dark:border-white/5" data-category="flash">
+        <div class="relative overflow-hidden group">
+          <img src="images/tour-sapa.jpg" alt="Sapa Hà Giang" class="w-full h-52 object-cover group-hover:scale-105 transition duration-500">
+          <span class="badge-sale absolute top-4 right-4 bg-red-600 text-white px-3.5 py-1.5 rounded-full font-black text-base shadow-lg">-30%</span>
+          <span class="absolute top-4 left-4 bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow">⚡ Flash Sale</span>
         </div>
-        <div class="p-6">
-          <h3 class="text-lg font-bold text-gray-800 dark:text-slate-100 mb-2">Hạ Long 3N2Đ</h3>
-          <p class="text-gray-600 dark:text-slate-300 text-sm mb-4">Du thuyền 5 sao qua vịnh kỳ vĩ</p>
-          <div class="mb-4">
-            <div class="flex items-baseline gap-2">
-              <p class="text-2xl font-bold text-primary-600 dark:text-primary-400">2.24tr</p>
-              <p class="text-lg text-gray-500 dark:text-slate-400 line-through">2.99tr</p>
+        <div class="p-6 flex-grow flex flex-col justify-between">
+          <div>
+            <span class="text-xs font-bold text-orange-600 uppercase tracking-wider">Hành trình Tây Bắc</span>
+            <h3 class="text-lg font-bold text-gray-800 dark:text-slate-100 mt-1 mb-2 hover:text-primary-600 transition">Sapa - Hà Giang 5N4Đ</h3>
+            <p class="text-gray-600 dark:text-slate-300 text-sm mb-4 line-clamp-2">Xe cabin VIP khứ hồi + Vé Fansipan + Đi xe Jeep đèo Mã Pí Lèng</p>
+            <div class="mb-4 bg-orange-50/60 dark:bg-slate-700/40 p-3 rounded-xl border border-orange-100 dark:border-white/5">
+              <div class="flex items-baseline gap-2">
+                <p class="text-2xl font-black text-red-600 dark:text-red-400">3.49tr</p>
+                <p class="text-base text-gray-400 line-through">4.99tr</p>
+              </div>
+              <p class="text-xs font-semibold text-green-700 dark:text-green-400 mt-1">✨ Tiết kiệm ngay: 1.500.000đ/khách</p>
             </div>
-            <p class="text-xs text-gray-500 dark:text-slate-400 mt-1">Tiết kiệm: 750k</p>
           </div>
-          <p class="text-xs text-orange-600 font-semibold mb-4">⏰ Còn 12 chỗ</p>
-          <a href="tour-detail.html?id=3" class="w-full bg-primary-600 dark:bg-primary-700 text-white px-4 py-2 rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition font-semibold text-center">
-            Xem Chi Tiết
-          </a>
+          <div>
+            <div class="flex justify-between items-center text-xs font-semibold text-orange-600 mb-4">
+              <span><i class="fa-solid fa-fire mr-1"></i>Bán chạy tuần này</span>
+              <span>⏰ Còn 6 chỗ trống</span>
+            </div>
+            <a href="tour-detail.html?id=2" class="w-full bg-primary-600 dark:bg-primary-700 text-white px-4 py-3 rounded-xl hover:bg-primary-700 dark:hover:bg-primary-600 transition font-bold text-center block shadow-md shadow-green-600/20">
+              Săn Deal Ngay
+            </a>
+          </div>
         </div>
       </div>
 
-      <!-- Deal 3 -->
-      <div class="deal-card bg-white dark:bg-slate-800 rounded-2xl shadow-md overflow-hidden relative">
-        <div class="relative">
-          <img src="images/phuquoc.jpg" alt="Tour" class="w-full h-48 object-cover">
-          <span class="badge-sale absolute top-4 right-4 bg-red-600 text-white px-4 py-2 rounded-full font-bold text-lg">-30%</span>
-          <span class="absolute top-4 left-4 bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Combo Deal</span>
+      <!-- Deal 3: Bali Thiên Đường -->
+      <div class="deal-card bg-white dark:bg-slate-800 rounded-2xl shadow-md overflow-hidden relative flex flex-col justify-between border border-gray-100 dark:border-white/5" data-category="combo">
+        <div class="relative overflow-hidden group">
+          <img src="images/tour-bali.jpg" alt="Bali Thiên Đường" class="w-full h-52 object-cover group-hover:scale-105 transition duration-500">
+          <span class="badge-sale absolute top-4 right-4 bg-red-600 text-white px-3.5 py-1.5 rounded-full font-black text-base shadow-lg">-25%</span>
+          <span class="absolute top-4 left-4 bg-purple-600 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow">🎁 Combo VIP</span>
         </div>
-        <div class="p-6">
-          <h3 class="text-lg font-bold text-gray-800 dark:text-slate-100 mb-2">Bali 6N5Đ</h3>
-          <p class="text-gray-600 dark:text-slate-300 text-sm mb-4">Đền thờ cổ kính + bãi biển thiên đường</p>
-          <div class="mb-4">
-            <div class="flex items-baseline gap-2">
-              <p class="text-2xl font-bold text-primary-600 dark:text-primary-400">4.89tr</p>
-              <p class="text-lg text-gray-500 dark:text-slate-400 line-through">6.99tr</p>
+        <div class="p-6 flex-grow flex flex-col justify-between">
+          <div>
+            <span class="text-xs font-bold text-purple-600 uppercase tracking-wider">Đảo Quốc Indonesia</span>
+            <h3 class="text-lg font-bold text-gray-800 dark:text-slate-100 mt-1 mb-2 hover:text-primary-600 transition">Bali Thiên Đường 6N5Đ</h3>
+            <p class="text-gray-600 dark:text-slate-300 text-sm mb-4 line-clamp-2">Resort 4 sao vô cực + Vé Cổng Trời Lempuyang & Đền Uluwatu + Sim 4G</p>
+            <div class="mb-4 bg-purple-50/60 dark:bg-slate-700/40 p-3 rounded-xl border border-purple-100 dark:border-white/5">
+              <div class="flex items-baseline gap-2">
+                <p class="text-2xl font-black text-red-600 dark:text-red-400">12.69tr</p>
+                <p class="text-base text-gray-400 line-through">16.99tr</p>
+              </div>
+              <p class="text-xs font-semibold text-green-700 dark:text-green-400 mt-1">✨ Tiết kiệm ngay: 4.300.000đ/khách</p>
             </div>
-            <p class="text-xs text-gray-500 dark:text-slate-400 mt-1">Tiết kiệm: 2.1tr</p>
           </div>
-          <p class="text-xs text-orange-600 font-semibold mb-4">⏰ Còn 3 chỗ</p>
-          <a href="tour-detail.html?id=4" class="w-full bg-primary-600 dark:bg-primary-700 text-white px-4 py-2 rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition font-semibold text-center">
-            Xem Chi Tiết
-          </a>
+          <div>
+            <div class="flex justify-between items-center text-xs font-semibold text-purple-600 mb-4">
+              <span><i class="fa-solid fa-gem mr-1"></i>Trọn gói quốc tế</span>
+              <span>⏰ Còn 3 chỗ trống</span>
+            </div>
+            <a href="tour-detail.html?id=3" class="w-full bg-primary-600 dark:bg-primary-700 text-white px-4 py-3 rounded-xl hover:bg-primary-700 dark:hover:bg-primary-600 transition font-bold text-center block shadow-md shadow-green-600/20">
+              Săn Deal Ngay
+            </a>
+          </div>
         </div>
       </div>
 
-      <!-- Deal 4 -->
-      <div class="deal-card bg-white dark:bg-slate-800 rounded-2xl shadow-md overflow-hidden relative">
-        <div class="relative">
-          <img src="images/sapa.jpg" alt="Tour" class="w-full h-48 object-cover">
-          <span class="badge-sale absolute top-4 right-4 bg-red-600 text-white px-4 py-2 rounded-full font-bold text-lg">-50%</span>
-          <span class="absolute top-4 left-4 bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Mega Sale</span>
+      <!-- Deal 4: Hạ Long Lan Hạ -->
+      <div class="deal-card bg-white dark:bg-slate-800 rounded-2xl shadow-md overflow-hidden relative flex flex-col justify-between border border-gray-100 dark:border-white/5" data-category="combo">
+        <div class="relative overflow-hidden group">
+          <img src="images/tour-halong.jpg" alt="Vịnh Hạ Long" class="w-full h-52 object-cover group-hover:scale-105 transition duration-500">
+          <span class="badge-sale absolute top-4 right-4 bg-red-600 text-white px-3.5 py-1.5 rounded-full font-black text-base shadow-lg">-30%</span>
+          <span class="absolute top-4 left-4 bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow">⚓ Du Thuyền 5*</span>
         </div>
-        <div class="p-6">
-          <h3 class="text-lg font-bold text-gray-800 dark:text-slate-100 mb-2">Cô Tô 4N3Đ</h3>
-          <p class="text-gray-600 dark:text-slate-300 text-sm mb-4">Hòn đảo hoang sơ, cảnh biển tuyệt đẹp</p>
-          <div class="mb-4">
-            <div class="flex items-baseline gap-2">
-              <p class="text-2xl font-bold text-primary-600 dark:text-primary-400">1.25tr</p>
-              <p class="text-lg text-gray-500 dark:text-slate-400 line-through">2.49tr</p>
+        <div class="p-6 flex-grow flex flex-col justify-between">
+          <div>
+            <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">Kỳ quan di sản</span>
+            <h3 class="text-lg font-bold text-gray-800 dark:text-slate-100 mt-1 mb-2 hover:text-primary-600 transition">Vịnh Hạ Long - Lan Hạ 4N3Đ</h3>
+            <p class="text-gray-600 dark:text-slate-300 text-sm mb-4 line-clamp-2">1 đêm ngủ du thuyền 5 sao chuẩn quốc tế + Chèo thuyền kayak miễn phí</p>
+            <div class="mb-4 bg-blue-50/60 dark:bg-slate-700/40 p-3 rounded-xl border border-blue-100 dark:border-white/5">
+              <div class="flex items-baseline gap-2">
+                <p class="text-2xl font-black text-red-600 dark:text-red-400">3.69tr</p>
+                <p class="text-base text-gray-400 line-through">5.29tr</p>
+              </div>
+              <p class="text-xs font-semibold text-green-700 dark:text-green-400 mt-1">✨ Tiết kiệm ngay: 1.600.000đ/khách</p>
             </div>
-            <p class="text-xs text-gray-500 dark:text-slate-400 mt-1">Tiết kiệm: 1.24tr</p>
           </div>
-          <p class="text-xs text-orange-600 font-semibold mb-4">⏰ Còn 1 chỗ</p>
-          <a href="tour-detail.html?id=5" class="w-full bg-primary-600 dark:bg-primary-700 text-white px-4 py-2 rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition font-semibold text-center">
-            Xem Chi Tiết
-          </a>
+          <div>
+            <div class="flex justify-between items-center text-xs font-semibold text-blue-600 mb-4">
+              <span><i class="fa-solid fa-ship mr-1"></i>Trải nghiệm sang trọng</span>
+              <span>⏰ Còn 5 chỗ trống</span>
+            </div>
+            <a href="tour-detail.html?id=4" class="w-full bg-primary-600 dark:bg-primary-700 text-white px-4 py-3 rounded-xl hover:bg-primary-700 dark:hover:bg-primary-600 transition font-bold text-center block shadow-md shadow-green-600/20">
+              Săn Deal Ngay
+            </a>
+          </div>
         </div>
       </div>
 
-      <!-- Deal 5 -->
-      <div class="deal-card bg-white dark:bg-slate-800 rounded-2xl shadow-md overflow-hidden relative">
-        <div class="relative">
-          <img src="images/bali.jpg" alt="Tour" class="w-full h-48 object-cover">
-          <span class="badge-sale absolute top-4 right-4 bg-red-600 text-white px-4 py-2 rounded-full font-bold text-lg">-20%</span>
-          <span class="absolute top-4 left-4 bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Weekend Sale</span>
+      <!-- Deal 5: Đà Nẵng Hội An -->
+      <div class="deal-card bg-white dark:bg-slate-800 rounded-2xl shadow-md overflow-hidden relative flex flex-col justify-between border border-gray-100 dark:border-white/5" data-category="member">
+        <div class="relative overflow-hidden group">
+          <img src="images/tour-danang.jpg" alt="Đà Nẵng Hội An" class="w-full h-52 object-cover group-hover:scale-105 transition duration-500">
+          <span class="badge-sale absolute top-4 right-4 bg-red-600 text-white px-3.5 py-1.5 rounded-full font-black text-base shadow-lg">-28%</span>
+          <span class="absolute top-4 left-4 bg-amber-600 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow">👑 Khách Hàng Thân Thiết</span>
         </div>
-        <div class="p-6">
-          <h3 class="text-lg font-bold text-gray-800 dark:text-slate-100 mb-2">Bangkok - Phuket 6N5Đ</h3>
-          <p class="text-gray-600 dark:text-slate-300 text-sm mb-4">Thủ đô sôi động + bãi biển Phuket</p>
-          <div class="mb-4">
-            <div class="flex items-baseline gap-2">
-              <p class="text-2xl font-bold text-primary-600 dark:text-primary-400">4.79tr</p>
-              <p class="text-lg text-gray-500 dark:text-slate-400 line-through">5.99tr</p>
+        <div class="p-6 flex-grow flex flex-col justify-between">
+          <div>
+            <span class="text-xs font-bold text-amber-600 uppercase tracking-wider">Hành trình di sản</span>
+            <h3 class="text-lg font-bold text-gray-800 dark:text-slate-100 mt-1 mb-2 hover:text-primary-600 transition">Đà Nẵng - Hội An 4N3Đ</h3>
+            <p class="text-gray-600 dark:text-slate-300 text-sm mb-4 line-clamp-2">Khách sạn 4 sao sát biển Mỹ Khê + Vé Cáp treo Bà Nà Hills & Buffet trưa</p>
+            <div class="mb-4 bg-amber-50/60 dark:bg-slate-700/40 p-3 rounded-xl border border-amber-100 dark:border-white/5">
+              <div class="flex items-baseline gap-2">
+                <p class="text-2xl font-black text-red-600 dark:text-red-400">3.09tr</p>
+                <p class="text-base text-gray-400 line-through">4.29tr</p>
+              </div>
+              <p class="text-xs font-semibold text-green-700 dark:text-green-400 mt-1">✨ Tiết kiệm ngay: 1.200.000đ/khách</p>
             </div>
-            <p class="text-xs text-gray-500 dark:text-slate-400 mt-1">Tiết kiệm: 1.2tr</p>
           </div>
-          <p class="text-xs text-orange-600 font-semibold mb-4">⏰ Còn 8 chỗ</p>
-          <a href="tour-detail.html?id=6" class="w-full bg-primary-600 dark:bg-primary-700 text-white px-4 py-2 rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition font-semibold text-center">
-            Xem Chi Tiết
-          </a>
+          <div>
+            <div class="flex justify-between items-center text-xs font-semibold text-amber-600 mb-4">
+              <span><i class="fa-solid fa-crown mr-1"></i>Tặng vé du thuyền Sông Hàn</span>
+              <span>⏰ Còn 8 chỗ trống</span>
+            </div>
+            <a href="tour-detail.html?id=5" class="w-full bg-primary-600 dark:bg-primary-700 text-white px-4 py-3 rounded-xl hover:bg-primary-700 dark:hover:bg-primary-600 transition font-bold text-center block shadow-md shadow-green-600/20">
+              Săn Deal Ngay
+            </a>
+          </div>
         </div>
       </div>
 
-      <!-- Deal 6 -->
-      <div class="deal-card bg-white dark:bg-slate-800 rounded-2xl shadow-md overflow-hidden relative">
-        <div class="relative">
-          <img src="images/hero1.jpg" alt="Tour" class="w-full h-48 object-cover">
-          <span class="badge-sale absolute top-4 right-4 bg-red-600 text-white px-4 py-2 rounded-full font-bold text-lg">-35%</span>
-          <span class="absolute top-4 left-4 bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Member Deal</span>
+      <!-- Deal 6: Nhật Bản -->
+      <div class="deal-card bg-white dark:bg-slate-800 rounded-2xl shadow-md overflow-hidden relative flex flex-col justify-between border border-gray-100 dark:border-white/5" data-category="member">
+        <div class="relative overflow-hidden group">
+          <img src="images/tour-japan.jpg" alt="Nhật Bản" class="w-full h-52 object-cover group-hover:scale-105 transition duration-500">
+          <span class="badge-sale absolute top-4 right-4 bg-red-600 text-white px-3.5 py-1.5 rounded-full font-black text-base shadow-lg">-20%</span>
+          <span class="absolute top-4 left-4 bg-rose-600 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow">🌸 Tour Mùa Hoa</span>
         </div>
-        <div class="p-6">
-          <h3 class="text-lg font-bold text-gray-800 dark:text-slate-100 mb-2">Đà Nẵng - Hội An 4N3Đ</h3>
-          <p class="text-gray-600 dark:text-slate-300 text-sm mb-4">Bãi biển Mỹ Khê + phố cổ Hội An</p>
-          <div class="mb-4">
-            <div class="flex items-baseline gap-2">
-              <p class="text-2xl font-bold text-primary-600 dark:text-primary-400">1.81tr</p>
-              <p class="text-lg text-gray-500 dark:text-slate-400 line-through">2.79tr</p>
+        <div class="p-6 flex-grow flex flex-col justify-between">
+          <div>
+            <span class="text-xs font-bold text-rose-600 uppercase tracking-wider">Mặt trời mọc</span>
+            <h3 class="text-lg font-bold text-gray-800 dark:text-slate-100 mt-1 mb-2 hover:text-primary-600 transition">Nhật Bản Mùa Hoa Anh Đào 6N5Đ</h3>
+            <p class="text-gray-600 dark:text-slate-300 text-sm mb-4 line-clamp-2">Visa trọn gói + Bay Vietnam Airlines + Trải nghiệm Onsen & Tàu Shinkansen</p>
+            <div class="mb-4 bg-rose-50/60 dark:bg-slate-700/40 p-3 rounded-xl border border-rose-100 dark:border-white/5">
+              <div class="flex items-baseline gap-2">
+                <p class="text-2xl font-black text-red-600 dark:text-red-400">23.19tr</p>
+                <p class="text-base text-gray-400 line-through">28.99tr</p>
+              </div>
+              <p class="text-xs font-semibold text-green-700 dark:text-green-400 mt-1">✨ Tiết kiệm ngay: 5.800.000đ/khách</p>
             </div>
-            <p class="text-xs text-gray-500 dark:text-slate-400 mt-1">Tiết kiệm: 980k</p>
           </div>
-          <p class="text-xs text-orange-600 font-semibold mb-4">⏰ Còn 15 chỗ</p>
-          <a href="tour-detail.html?id=7" class="w-full bg-primary-600 dark:bg-primary-700 text-white px-4 py-2 rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition font-semibold text-center">
-            Xem Chi Tiết
-          </a>
+          <div>
+            <div class="flex justify-between items-center text-xs font-semibold text-rose-600 mb-4">
+              <span><i class="fa-solid fa-plane mr-1"></i>Bao gồm 46kg hành lý</span>
+              <span>⏰ Còn 2 chỗ trống</span>
+            </div>
+            <a href="tour-detail.html?id=6" class="w-full bg-primary-600 dark:bg-primary-700 text-white px-4 py-3 rounded-xl hover:bg-primary-700 dark:hover:bg-primary-600 transition font-bold text-center block shadow-md shadow-green-600/20">
+              Săn Deal Ngay
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -333,6 +404,7 @@
     </div>
   </footer>
 
+  <script src="js/app.js"></script>
   <script>
     const mobileButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
@@ -342,7 +414,29 @@
 
     function copyCode(code) {
       navigator.clipboard.writeText(code);
-      alert(`Đã sao chép mã: ${code}`);
+      if (typeof showToast === 'function') {
+        showToast(`Đã sao chép mã ưu đãi: ${code}`, 'success');
+      } else {
+        alert(`Đã sao chép mã: ${code}`);
+      }
+    }
+
+    function filterDeals(category, btn) {
+      // Toggle button styles
+      document.querySelectorAll('.deal-tag-btn').forEach(b => {
+        b.className = "deal-tag-btn px-4 py-2 rounded-full text-sm font-semibold bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-slate-200 hover:bg-orange-50 hover:text-orange-600 transition";
+      });
+      btn.className = "deal-tag-btn px-4 py-2 rounded-full text-sm font-bold bg-primary-600 text-white shadow-md transition";
+
+      // Filter cards
+      const cards = document.querySelectorAll('#deals-grid .deal-card');
+      cards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
     }
   </script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
