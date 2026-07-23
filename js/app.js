@@ -1115,12 +1115,12 @@ function updateNavbar() {
     if (!currBtn) {
       currBtn = document.createElement('button');
       currBtn.id = 'currency-toggle';
-      currBtn.onclick = () => { toggleGlobalCurrency(); };
+      currBtn.onclick = () => { if (typeof window.toggleGlobalCurrency === 'function') window.toggleGlobalCurrency(); };
       currBtn.className = 'text-xs font-bold text-gray-700 dark:text-slate-200 bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 transition px-2.5 py-1.5 rounded-full border border-gray-200 dark:border-white/10 flex items-center gap-1 cursor-pointer';
-      currBtn.title = 'Chuyển đổi tiền tệ hiển thị';
+      currBtn.title = 'Chuyển đổi tiền tệ hiển thị (VND / USD / EUR)';
       parent.insertBefore(currBtn, firstCartLink);
     }
-    const currentCurrency = localStorage.getItem('wil_currency') || 'VND';
+    const currentCurrency = localStorage.getItem('currency') || 'VND';
     currBtn.innerHTML = `<i class="fa-solid fa-coins text-amber-500"></i> <span>${currentCurrency}</span>`;
 
     // Inject Dark Mode Toggle
@@ -2055,7 +2055,17 @@ window.injectCurrencySwitcher = function() {
 
 window.changeCurrency = function(val) {
   localStorage.setItem('currency', val);
+  const currBtnSpan = document.querySelector('#currency-toggle span');
+  if (currBtnSpan) currBtnSpan.textContent = val;
+  const select = document.getElementById('global-currency-select');
+  if (select) select.value = val;
   window.dispatchEvent(new Event('currencyChange'));
+};
+
+window.toggleGlobalCurrency = function() {
+  const current = localStorage.getItem('currency') || 'VND';
+  const next = current === 'VND' ? 'USD' : current === 'USD' ? 'EUR' : 'VND';
+  window.changeCurrency(next);
 };
 
 // Initialize on DOM ready
