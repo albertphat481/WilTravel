@@ -107,7 +107,7 @@
           <div class="flex items-center gap-4 mb-6">
             <div>
               <p class="text-sm text-purple-200">Kết thúc trong:</p>
-              <p class="countdown text-2xl font-bold">02:14:45</p>
+              <p id="deal-timer" class="countdown text-2xl font-bold font-mono">02:14:45</p>
             </div>
           </div>
           <a href="tour-detail.html?id=1" class="bg-white text-purple-600 px-8 py-3 rounded-lg font-bold hover:bg-purple-50 transition inline-block">
@@ -438,6 +438,24 @@
         }
       });
     }
+
+    function startDealCountdown() {
+      const timerEl = document.getElementById('deal-timer');
+      if (!timerEl) return;
+      let secondsLeft = 2 * 3600 + 14 * 60 + 45;
+      setInterval(() => {
+        secondsLeft--;
+        if (secondsLeft < 0) secondsLeft = 12 * 3600;
+        const h = String(Math.floor(secondsLeft / 3600)).padStart(2, '0');
+        const m = String(Math.floor((secondsLeft % 3600) / 60)).padStart(2, '0');
+        const s = String(secondsLeft % 60).padStart(2, '0');
+        timerEl.textContent = `${h}:${m}:${s}`;
+      }, 1000);
+    }
+
+    window.onload = () => {
+      startDealCountdown();
+    };
   </script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>

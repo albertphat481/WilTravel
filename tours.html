@@ -341,10 +341,18 @@
 
     window.onload = () => {
       initToursPage();
+      const searchInput = document.getElementById('search-filter');
+      const minInput = document.getElementById('price-min');
+      const maxInput = document.getElementById('price-max');
+      const sortSelect = document.getElementById('sort-by');
+      if (searchInput) searchInput.addEventListener('input', applyFilters);
+      if (minInput) minInput.addEventListener('input', applyFilters);
+      if (maxInput) maxInput.addEventListener('input', applyFilters);
+      if (sortSelect) sortSelect.addEventListener('change', applyFilters);
     };
 
     window.addEventListener('currencyChange', () => {
-      renderTours(currentFilteredTours, 1);
+      renderTours(filteredTours, currentPage);
     });
   </script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>

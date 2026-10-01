@@ -189,7 +189,7 @@
             <div class="flex justify-between items-center mt-4 pt-4 border-t border-gray-100">
               <div>
                 <p class="text-gray-500 dark:text-slate-400 text-sm">Từ</p>
-                <p class="text-2xl font-bold text-primary-600 dark:text-primary-400">${(tour.price / 1000000).toFixed(1)}tr</p>
+                <p class="text-2xl font-bold text-primary-600 dark:text-primary-400">${formatPriceGlobal(tour.price)}</p>
               </div>
               <a href="tour-detail.html?id=${tour.id}" class="bg-primary-600 dark:bg-primary-700 text-white px-5 py-2.5 rounded-xl hover:bg-primary-700 dark:hover:bg-primary-600 transition font-semibold">
                 Xem Chi Tiết
@@ -208,6 +208,10 @@
     window.onload = () => {
       renderWishlist();
     };
+
+    window.addEventListener('currencyChange', () => {
+      renderWishlist();
+    });
   </script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
