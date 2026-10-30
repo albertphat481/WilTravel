@@ -170,7 +170,7 @@
     </div>
   </footer>
 
-  <script src="js/app.js"></script>
+  <script src="js/app.js?v=2.2.0"></script>
   <script>
     const itemsPerPage = 6;
     let currentPage = 1;
@@ -302,6 +302,18 @@
       document.getElementById('pagination').innerHTML = html;
     }
 
+    
+    let currentDepartureFilter = 'all';
+
+    function filterByDeparture(dep, btn) {
+      currentDepartureFilter = dep;
+      document.querySelectorAll('#departure-filter-pills .dep-pill').forEach(b => {
+        b.className = "dep-pill px-3.5 py-1.5 rounded-full text-xs font-semibold bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-slate-200 hover:bg-emerald-50 hover:text-emerald-700 transition";
+      });
+      btn.className = "dep-pill px-3.5 py-1.5 rounded-full text-xs font-bold bg-primary-600 text-white shadow-sm transition";
+      applyFilters();
+    }
+
     function applyFilters() {
       const search = document.getElementById('search-filter').value.toLowerCase();
       const priceMin = parseFloat(document.getElementById('price-min').value) || 0;
@@ -311,7 +323,8 @@
       filteredTours = tours.filter(tour => {
         const matchSearch = tour.name.toLowerCase().includes(search) || tour.location.toLowerCase().includes(search);
         const matchPrice = tour.price >= priceMin && tour.price <= priceMax;
-        return matchSearch && matchPrice;
+        const matchDep = currentDepartureFilter === "all" || (tour.departure && tour.departure.includes(currentDepartureFilter));
+        return matchSearch && matchPrice && matchDep;
       });
 
       if (sortBy === 'price-low') filteredTours.sort((a, b) => a.price - b.price);

@@ -42,23 +42,32 @@
 <body class="font-jakarta bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-300">
 
   <!-- Navbar -->
-  <nav class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-md fixed w-full z-50 border-b border-gray-100 dark:border-white/10 transition-colors duration-300">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-      <div class="flex items-center gap-3">
-        <a href="index.html"><img src="images/logo.png" alt="WILTravel" class="h-9 sm:h-11 w-auto hover:opacity-80 transition"></a>
-      </div>
+  <nav class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm fixed w-full z-50 border-b border-gray-100 dark:border-white/10 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex justify-between items-center">
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="images/logo-transparent.png" alt="WILTravel" class="h-9 sm:h-11 w-auto dark:hidden">
+        <img src="images/logo-footer.png" alt="WILTravel" class="h-9 sm:h-11 w-auto hidden dark:block">
+      </a>
       
-      <div class="hidden md:flex items-center gap-8 text-gray-700 dark:text-slate-200 font-medium">
-        <a href="index.html" class="hover:text-primary-600 dark:text-primary-400 transition">Trang chủ</a>
-        <a href="tours.html" class="hover:text-primary-600 dark:text-primary-400 transition">Tours</a>
-        <a href="flight.html" class="hover:text-primary-600 dark:text-primary-400 transition">Máy Bay</a>
-        <a href="contact.html" class="hover:text-primary-600 dark:text-primary-400 transition">Liên Hệ</a>
+      <div class="hidden lg:flex items-center gap-6 xl:gap-8 text-gray-700 dark:text-slate-200 font-medium text-sm">
+        <a href="index.html" class="hover:text-primary-600 dark:hover:text-primary-400 transition">Trang chủ</a>
+        <a href="tours.html" class="text-primary-600 dark:text-primary-400 font-bold">Tours</a>
+        <a href="hotels.html" class="hover:text-primary-600 dark:hover:text-primary-400 transition">Khách Sạn</a>
+        <a href="car-rental.html" class="hover:text-primary-600 dark:hover:text-primary-400 transition">Thuê Xe</a>
+        <a href="flight.html" class="hover:text-primary-600 dark:hover:text-primary-400 transition">Máy Bay</a>
+        <a href="visa.html" class="hover:text-primary-600 dark:hover:text-primary-400 transition">Visa</a>
+        <a href="deals.html" class="hover:text-primary-600 dark:hover:text-primary-400 transition">Ưu Đãi</a>
+        <a href="blog.html" class="hover:text-primary-600 dark:hover:text-primary-400 transition">Blog</a>
+        <a href="contact.html" class="hover:text-primary-600 dark:hover:text-primary-400 transition">Liên Hệ</a>
       </div>
 
       <div class="flex items-center gap-3">
-        <button onclick="addToCart()" class="bg-primary-600 dark:bg-primary-700 text-white px-6 py-2 rounded-full hover:bg-primary-700 dark:hover:bg-primary-600 transition text-sm font-medium">
-          <i class="fa-solid fa-cart-plus mr-1"></i>Thêm Vào Giỏ
+        <button onclick="window.openCommandPalette()" class="p-2 text-gray-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-primary-400 transition" title="Tìm kiếm (Ctrl+K)">
+          <i class="fa-solid fa-magnifying-glass"></i>
         </button>
+        <a href="cart.html" class="relative p-2 text-gray-700 dark:text-slate-200 hover:text-primary-600 transition text-lg">
+          <i class="fa-solid fa-shopping-cart"></i>
+        </a>
       </div>
     </div>
   </nav>
@@ -241,7 +250,7 @@
     </div>
   </footer>
 
-  <script src="js/app.js"></script>
+  <script src="js/app.js?v=2.2.0"></script>
   <script>
     let quantity = 1;
     const urlParams = new URLSearchParams(window.location.search);

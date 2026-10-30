@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>WILTravel - Dịch Vụ Visa & Hộ Chiếu Chuyên Nghiệp</title>
+  
+  <link rel="icon" href="images/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="images/favicon.png">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            jakarta: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            primary: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              300: '#86efac',
+              400: '#4ade80',
+              500: '#08854e',
+              600: '#06693D',
+              700: '#044d2d',
+              800: '#033b22',
+              900: '#012113',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <style>
+    html { scroll-behavior: smooth; }
+    .visa-card {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .visa-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 30px -10px rgba(6, 105, 61, 0.15);
+    }
+  </style>
+</head>
+<body class="font-jakarta bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300">
+
+  <!-- Navbar -->
+  <nav class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm fixed w-full z-50 border-b border-gray-100 dark:border-white/10 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex justify-between items-center">
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="images/logo-transparent.png" alt="WILTravel" class="h-9 sm:h-11 w-auto dark:hidden">
+        <img src="images/logo-footer.png" alt="WILTravel" class="h-9 sm:h-11 w-auto hidden dark:block">
+      </a>
+      
+      <div class="hidden lg:flex items-center gap-6 xl:gap-8 text-gray-700 dark:text-slate-200 font-medium text-sm">
+        <a href="index.html" class="hover:text-primary-600 dark:hover:text-primary-400 transition">Trang chủ</a>
+        <a href="tours.html" class="hover:text-primary-600 dark:hover:text-primary-400 transition">Tours</a>
+        <a href="hotels.html" class="hover:text-primary-600 dark:hover:text-primary-400 transition">Khách Sạn</a>
+        <a href="car-rental.html" class="hover:text-primary-600 dark:hover:text-primary-400 transition">Thuê Xe</a>
+        <a href="flight.html" class="hover:text-primary-600 dark:hover:text-primary-400 transition">Máy Bay</a>
+        <a href="visa.html" class="text-primary-600 dark:text-primary-400 font-bold">Visa</a>
+        <a href="deals.html" class="hover:text-primary-600 dark:hover:text-primary-400 transition">Ưu Đãi</a>
+        <a href="blog.html" class="hover:text-primary-600 dark:hover:text-primary-400 transition">Blog</a>
+        <a href="contact.html" class="hover:text-primary-600 dark:hover:text-primary-400 transition">Liên Hệ</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button onclick="window.openCommandPalette()" class="p-2 text-gray-600 dark:text-slate-300 hover:text-primary-600 transition" title="Tìm kiếm (Ctrl+K)">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+        <a href="cart.html" class="relative p-2 text-gray-700 dark:text-slate-200 hover:text-primary-600 transition text-lg">
+          <i class="fa-solid fa-shopping-cart"></i>
+        </a>
+        <a href="login.html" class="hidden sm:inline-block px-4 py-2 text-gray-700 dark:text-slate-200 hover:bg-gray-100 dark:bg-slate-800 rounded-full transition text-sm">Đăng nhập</a>
+        <a href="register.html" class="hidden sm:inline-block bg-primary-600 dark:bg-primary-700 text-white px-5 py-2 rounded-full hover:bg-primary-700 transition text-sm font-semibold shadow-md shadow-primary-600/20">Đăng ký</a>
+        <button id="mobile-menu-button" class="lg:hidden text-2xl text-gray-700 dark:text-slate-200 p-1">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-white dark:bg-slate-900 border-t border-gray-100 dark:border-white/10 px-6 py-6 flex flex-col gap-4 text-gray-700 dark:text-slate-200 font-medium">
+      <a href="index.html" class="hover:text-primary-600">Trang chủ</a>
+      <a href="tours.html" class="hover:text-primary-600">Tours du lịch</a>
+      <a href="hotels.html" class="hover:text-primary-600">Khách sạn & Resort</a>
+      <a href="car-rental.html" class="hover:text-primary-600">Thuê xe du lịch</a>
+      <a href="flight.html" class="hover:text-primary-600">Vé máy bay</a>
+      <a href="visa.html" class="text-primary-600 font-bold">Dịch vụ Visa</a>
+      <a href="deals.html" class="hover:text-primary-600">Ưu đãi</a>
+      <a href="contact.html" class="hover:text-primary-600">Liên hệ</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="relative pt-32 pb-20 md:pt-36 md:pb-28 overflow-hidden bg-gradient-to-br from-indigo-950 via-slate-900 to-emerald-950 text-white">
+    <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:24px_24px]"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 text-center">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-emerald-300 text-xs sm:text-sm font-semibold mb-6">
+        <i class="fa-solid fa-passport text-amber-400"></i>
+        <span>Trung Tâm Tư Vấn Visa & Hộ Chiếu Uy Tín • WIL-Travel.com</span>
+      </div>
+      <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4">
+        Dịch Vụ Làm <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-200">Visa Quốc Tế</span> Bao Đậu 99%
+      </h1>
+      <p class="max-w-2xl mx-auto text-slate-300 text-sm sm:text-base md:text-lg mb-10">
+        Chuyên nghiệp - Nhanh chóng - Tiết kiệm. Hỗ trợ trọn gói hồ sơ chứng minh tài chính, công việc, luyện phỏng vấn 1-1 cho Visa Nhật Bản, Hàn Quốc, Đài Loan, Schengen Châu Âu, Mỹ, Úc.
+      </p>
+
+      <div class="flex flex-wrap justify-center gap-4 text-xs sm:text-sm font-semibold">
+        <div class="flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/10">
+          <i class="fa-solid fa-shield-halved text-emerald-400"></i> Tỷ lệ đậu visa 99%
+        </div>
+        <div class="flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/10">
+          <i class="fa-solid fa-bolt text-amber-400"></i> Lấy visa nhanh từ 3-5 ngày
+        </div>
+        <div class="flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/10">
+          <i class="fa-solid fa-file-circle-check text-emerald-400"></i> Không phát sinh chi phí
+        </div>
+        <div class="flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/10">
+          <i class="fa-solid fa-phone text-emerald-400"></i> Hotline 0905 025 737
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Visa List Grid -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-16">
+    <div class="text-center mb-12">
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white">Bảng Giá Dịch Vụ Visa Các Nước</h2>
+      <p class="text-gray-500 dark:text-slate-400 text-sm mt-2">Dịch vụ trọn gói từ dịch thuật công chứng, hoàn thiện hồ sơ đến giao visa tận nhà</p>
+    </div>
+
+    <div id="visa-list-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Populated dynamically -->
+    </div>
+  </main>
+
+  <!-- Visa Consultation Modal -->
+  <div id="visa-consult-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm hidden p-4">
+    <div class="bg-white dark:bg-slate-900 rounded-3xl w-full max-w-lg p-6 sm:p-8 shadow-2xl border border-gray-100 dark:border-white/10 relative">
+      <button onclick="closeVisaModal()" class="absolute top-5 right-5 text-gray-400 hover:text-gray-600 dark:hover:text-white text-2xl">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div class="text-left">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-3xl" id="modal-visa-flag">🇯🇵</span>
+          <div>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white" id="modal-visa-country">Visa Nhật Bản</h3>
+            <span class="text-xs font-semibold text-emerald-600" id="modal-visa-badge">Tỷ lệ đậu 99%</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-500 dark:text-slate-400 mb-6">Chuyên viên Visa WILTravel sẽ thẩm định hồ sơ sơ bộ và liên hệ tư vấn miễn phí trong 15 phút.</p>
+
+        <form id="visa-consult-form" onsubmit="confirmVisaConsult(event)" class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold uppercase text-gray-600 dark:text-slate-400 mb-1">Họ và tên của bạn</label>
+            <input type="text" id="visa-name" required placeholder="Nguyễn Văn A" class="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold uppercase text-gray-600 dark:text-slate-400 mb-1">Số điện thoại / Zalo</label>
+              <input type="tel" id="visa-phone" required placeholder="0905 025 737" class="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase text-gray-600 dark:text-slate-400 mb-1">Thời gian dự kiến đi</label>
+              <input type="date" id="visa-date" required class="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase text-gray-600 dark:text-slate-400 mb-1">Mục đích chuyến đi</label>
+            <select id="visa-purpose" class="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-slate-800 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500">
+              <option value="Du lịch tự túc / Tour">Du lịch tự túc / Tour</option>
+              <option value="Công tác / Thương mại">Công tác / Thương mại / Hội thảo</option>
+              <option value="Thăm thân nhân">Thăm thân nhân / Bạn bè</option>
+            </select>
+          </div>
+
+          <div class="pt-4 border-t border-gray-150 dark:border-white/10 flex justify-between items-center">
+            <div>
+              <span class="text-xs text-gray-400">Phí dịch vụ trọn gói từ:</span>
+              <p class="text-2xl font-black text-rose-600 dark:text-rose-400" id="modal-visa-fee">0đ</p>
+            </div>
+            <button type="submit" class="py-2.5 px-6 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-lg shadow-emerald-600/30 transition">
+              Đăng Ký Tư Vấn
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer with Full Legal Information -->
+  <footer class="bg-slate-950 text-gray-400 py-16 border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+        <div class="md:col-span-1">
+          <img src="images/logo-footer.png" alt="WILTravel" class="h-10 mb-4">
+          <p class="text-sm text-slate-400 leading-relaxed">
+            Chỉ cần & đi chuyến nghỉ ngơi. Cung cấp tour du lịch trong nước, quốc tế, phòng khách sạn, vé máy bay và thuê xe cao cấp.
+          </p>
+        </div>
+        <div>
+          <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-4">Dịch Vụ Nổi Bật</h4>
+          <ul class="space-y-2.5 text-sm">
+            <li><a href="tours.html" class="hover:text-white transition">Tour Du Lịch Trọn Gói</a></li>
+            <li><a href="hotels.html" class="hover:text-white transition">Khách Sạn & Resort</a></li>
+            <li><a href="car-rental.html" class="hover:text-white transition">Thuê Xe Du Lịch 4-45 Chỗ</a></li>
+            <li><a href="flight.html" class="hover:text-white transition">Vé Máy Bay Nội Địa & Quốc Tế</a></li>
+            <li><a href="visa.html" class="text-emerald-400 font-semibold">Dịch Vụ Visa & Hộ Chiếu</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-4">Pháp Lý & Công Ty</h4>
+          <p class="text-xs text-slate-400 leading-relaxed mb-2">
+            <strong class="text-slate-200">CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ DU LỊCH WILTRAVEL</strong>
+          </p>
+          <p class="text-xs text-slate-400 leading-relaxed mb-1">
+            Mã số thuế: <span class="text-slate-200 font-mono">0311373910</span>
+          </p>
+          <p class="text-xs text-slate-400 leading-relaxed mb-1">
+            Trụ sở: 72/10/6 Văn Chung, P.13, Q. Tân Bình, TP.HCM
+          </p>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Hotline 24/7: <a href="tel:0905025737" class="text-emerald-400 font-bold hover:underline">0905 025 737</a> - <a href="tel:0902353648" class="text-emerald-400 font-bold hover:underline">0902 353 648</a>
+          </p>
+        </div>
+        <div>
+          <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-4">Kết Nối Với Chúng Tôi</h4>
+          <div class="flex gap-4 text-xl mb-4">
+            <a href="#" class="w-10 h-10 rounded-full bg-slate-800 hover:bg-emerald-600 text-white flex items-center justify-center transition"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="w-10 h-10 rounded-full bg-slate-800 hover:bg-emerald-600 text-white flex items-center justify-center transition"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="w-10 h-10 rounded-full bg-slate-800 hover:bg-emerald-600 text-white flex items-center justify-center transition"><i class="fa-brands fa-youtube"></i></a>
+          </div>
+          <p class="text-xs text-slate-500">© 2018 - 2026 WIL-Travel.com. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js?v=2.2.0"></script>
+  <script>
+    let selectedVisa = null;
+
+    function renderVisaList() {
+      const container = document.getElementById('visa-list-grid');
+      if (!container) return;
+
+      const visas = window.VISA_SERVICES_DATA || [];
+      container.innerHTML = visas.map(v => {
+        const docsHtml = v.docs.map(d => `<li class="flex items-start gap-2 text-xs text-gray-600 dark:text-slate-300"><i class="fa-solid fa-circle-check text-emerald-500 mt-0.5 shrink-0"></i><span>${d}</span></li>`).join('');
+
+        return `
+          <div class="visa-card bg-white dark:bg-slate-800 rounded-3xl overflow-hidden shadow-sm border border-gray-150 dark:border-white/10 flex flex-col justify-between p-6">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-3">
+                  <span class="text-4xl">${v.flag}</span>
+                  <div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">Visa ${v.country}</h3>
+                    <p class="text-xs text-gray-500">${v.type}</p>
+                  </div>
+                </div>
+                <span class="px-2.5 py-1 rounded-full text-xs font-bold text-emerald-700 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/40">
+                  ${v.badge}
+                </span>
+              </div>
+
+              <div class="grid grid-cols-2 gap-2 text-xs mb-4 p-3 bg-gray-50 dark:bg-slate-700/40 rounded-2xl border border-gray-150 dark:border-white/5">
+                <div>
+                  <span class="text-gray-400">Thời hạn:</span>
+                  <p class="font-bold text-gray-800 dark:text-slate-200">${v.duration}</p>
+                </div>
+                <div>
+                  <span class="text-gray-400">Thời gian làm:</span>
+                  <p class="font-bold text-gray-800 dark:text-slate-200">${v.processingTime}</p>
+                </div>
+              </div>
+
+              <div class="mb-6">
+                <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Hồ sơ cơ bản bao gồm:</p>
+                <ul class="space-y-1.5">
+                  ${docsHtml}
+                </ul>
+              </div>
+            </div>
+
+            <div class="pt-4 border-t border-gray-100 dark:border-white/10 flex items-center justify-between mt-auto">
+              <div>
+                <span class="text-xs text-gray-400">Chi phí trọn gói</span>
+                <p class="text-xl font-black text-rose-600 dark:text-rose-400">${window.formatPriceGlobal(v.fee)}</p>
+              </div>
+              <button onclick="openVisaModal(${v.id})" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md shadow-emerald-600/20 transition flex items-center gap-1.5">
+                <i class="fa-solid fa-paper-plane"></i> Nhận Tư Vấn
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function openVisaModal(visaId) {
+      const v = (window.VISA_SERVICES_DATA || []).find(x => x.id === visaId);
+      if (!v) return;
+      selectedVisa = v;
+
+      document.getElementById('modal-visa-flag').textContent = v.flag;
+      document.getElementById('modal-visa-country').textContent = `Visa ${v.country} - ${v.type}`;
+      document.getElementById('modal-visa-badge').textContent = `Tỷ lệ đậu ${v.passRate} • Xử lý: ${v.processingTime}`;
+      document.getElementById('modal-visa-fee').textContent = window.formatPriceGlobal(v.fee);
+
+      document.getElementById('visa-consult-modal').classList.remove('hidden');
+    }
+
+    function closeVisaModal() {
+      document.getElementById('visa-consult-modal').classList.add('hidden');
+    }
+
+    function confirmVisaConsult(e) {
+      e.preventDefault();
+      const name = document.getElementById('visa-name').value;
+      const phone = document.getElementById('visa-phone').value;
+
+      closeVisaModal();
+      if (typeof showToast === 'function') {
+        showToast(`Cảm ơn ${name}! Chuyên viên Visa ${selectedVisa.country} của WILTravel sẽ liên hệ hỗ trợ bạn qua SĐT/Zalo ${phone}.`, 'success', 6000);
+      } else {
+        alert(`Chúc mừng ${name}! Đã gửi yêu cầu tư vấn Visa ${selectedVisa.country}.`);
+      }
+    }
+
+    window.onload = () => {
+      renderVisaList();
+      const mobileBtn = document.getElementById('mobile-menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (mobileBtn && mobileMenu) {
+        mobileBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+      }
+    };
+
+    window.addEventListener('currencyChange', () => {
+      renderVisaList();
+    });
+  </script>
+</body>
+</html>

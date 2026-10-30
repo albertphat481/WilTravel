@@ -1,334 +1,764 @@
 // WILTravel - Central Shared State and Database Script v2.0
+// Global currency functions hoisted
+var toggleGlobalCurrency, changeCurrency, formatPriceGlobal, formatPriceString;
 
-// 1. TOUR DATABASE (12 Tours với đầy đủ thông tin)
+// ========================================================
+// WIL-TRAVEL OFFICIAL COMPANY INFORMATION
+// ========================================================
+const WIL_COMPANY_INFO = {
+  name: "CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ DU LỊCH WILTRAVEL",
+  shortName: "WIL-Travel",
+  brand: "WILTravel - Chỉ cần & đi chuyến nghỉ ngơi",
+  taxCode: "0311373910",
+  address: "72/10/6 Văn Chung, Phường 13, Quận Tân Bình, TP. Hồ Chí Minh",
+  hotline1: "0905 025 737",
+  hotline2: "0902 353 648",
+  hotlineFormatted: "0905 025 737 - 0902 353 648",
+  email: "info@wil-travel.com",
+  bookingEmail: "booking@wil-travel.com",
+  website: "https://wil-travel.com",
+  workingHours: "Thứ 2 - Thứ 7: 08:00 - 18:00 (Hotline hỗ trợ 24/7)",
+  license: "Giấy phép Lữ Hành Quốc Tế & Nội Địa số: 79-888/2018/TCDL-GP LHQT",
+  insurancePartner: "Bảo hiểm Du lịch Bảo Minh (Bồi thường đến 1.000.000.000đ)"
+};
+window.WIL_COMPANY_INFO = WIL_COMPANY_INFO;
+
+// ========================================================
+// 1. TOUR DATABASE CHÍNH THỨC TỪ WIL-TRAVEL.COM
+// ========================================================
 const tours = [
   {
     id: 1,
-    name: "Phú Quốc 4N3Đ All Inclusive",
+    code: "WLE-PQ-10",
+    name: "Du Lịch Phú Quốc - Vương Quốc Ngọc Trai & VinWonders",
     location: "Phú Quốc",
-    category: ["Biển", "Trong nước"],
+    category: ["Biển", "Trong nước", "Nghỉ dưỡng"],
+    departure: "TP.HCM",
+    departureDates: ["Thứ 5 & Thứ 7 hàng tuần", "15/11", "22/11", "29/11", "Dịp Tết"],
+    originalPrice: 4890000,
     price: 3890000,
     image: "images/tour-phuquoc.jpg",
-    rating: 4.8,
-    reviews: 120,
+    rating: 4.9,
+    reviews: 142,
     duration: "4 ngày 3 đêm",
     badge: "Bán chạy",
+    hotelStandard: "Resort 4 sao sát biển",
+    transport: "Vé máy bay khứ hồi (Vietnam Airlines / Vietjet Air)",
+    highlights: ["Cáp treo Hòn Thơm vượt biển dài nhất thế giới", "Thành phố không ngủ Grand World", "Trải nghiệm lặn ngắm san hô Hòn Móng Tay", "Thưởng thức tiệc hải sản tươi sống"],
     includes: [
       "Vé máy bay khứ hồi (đã gồm 7kg xách tay & 20kg ký gửi)",
-      "Resort 4 sao sát biển (2 người/phòng)",
-      "Ăn sáng buffet & 3 bữa chính đặc sản đảo",
-      "Bảo hiểm du lịch mức bồi thường tới 100.000.000đ",
+      "Resort 4 sao sát biển tiêu chuẩn 2 người/phòng cao cấp",
+      "Ăn sáng buffet chuẩn 4 sao & các bữa chính hải sản đặc sản đảo",
+      "Vé cáp treo Hòn Thơm & vé tham quan Grand World",
+      "Bảo hiểm du lịch Bảo Minh bồi thường tối đa 100.000.000đ",
       "Nước suối & khăn lạnh phục vụ suốt tuyến (2 chai/ngày)",
-      "Quà tặng độc quyền từ WILTravel (mũ du lịch, gối chữ U)"
+      "Quà tặng độc quyền WILTravel: Nón du lịch cao cấp, gối chữ U"
     ],
-    notes: ["Cần mang theo CMND/CCCD", "Đăng ký trước tối thiểu 7 ngày", "Trẻ em dưới 2 tuổi miễn phí vé"],
+    notes: ["Cần mang theo CMND/CCCD hoặc Hộ chiếu bản gốc", "Trẻ em dưới 2 tuổi miễn phí vé", "Đăng ký trước tối thiểu 5 ngày để giữ chỗ đẹp"],
     itinerary: [
-      { day: "Ngày 1", title: "TP.HCM → Phú Quốc - Khám phá thị trấn Dương Đông", desc: "Tập trung tại sân bay Tân Sơn Nhất, bay ra Phú Quốc. Nhận phòng resort, nghỉ ngơi. Buổi tối khám phá chợ đêm Phú Quốc, thưởng thức hải sản tươi sống." },
-      { day: "Ngày 2", title: "Tour Đảo - Câu Cá - Lặn Ngắm San Hô", desc: "Sáng ra khơi trên tàu gỗ, tham quan hòn Móng Tay, hòn Gầm Ghì. Câu cá, lặn ngắm san hô, nghe nhạc trên tàu. Ăn trưa hải sản tươi ngoài biển khơi." },
-      { day: "Ngày 3", title: "VinWonders - Lễ hội ánh sáng", desc: "Tham quan VinWonders Phú Quốc, cáp treo vượt biển Hòn Thơm dài nhất thế giới. Tối tham quan khu Grand World, ngắm nhạc nước." },
-      { day: "Ngày 4", title: "Mua sắm & Trở về", desc: "Sáng tự do mua sắm tại chợ Dương Đông. Đặc sản mang về: hồ tiêu Phú Quốc, nước mắm, ngọc trai. Bay về TP.HCM, kết thúc hành trình." }
+      { day: "Ngày 1", title: "TP.HCM → Phú Quốc - Khám phá Dương Đông & Dinh Cậu", desc: "Tập trung tại sân bay Tân Sơn Nhất, làm thủ tục bay đi Phú Quốc. Xe và HDV đón đoàn về resort nhận phòng nghỉ ngơi. Chiều viếng Dinh Cậu ngắm hoàng hôn rực rỡ, tối dạo chợ đêm thưởng thức hải sản." },
+      { day: "Ngày 2", title: "Khám Phá Quần Đảo An Thới - Câu Cá & Lặn Ngắm San Hô", desc: "Lên tàu du lịch chuyên dụng tham quan Hòn Móng Tay, Hòn Gầm Ghì, Hòn Mây Rút. Trải nghiệm câu cá giữa biển, lặn ngắm rạn san hô tự nhiên đa sắc màu. Dùng bữa trưa hải sản trên tàu." },
+      { day: "Ngày 3", title: "Cáp Treo Hòn Thơm - Siêu Quần Thể Grand World", desc: "Trải nghiệm cáp treo 3 dây vượt biển dài nhất thế giới sang Sun World Hòn Thơm. Chiều check-in Grand World - 'Thành phố không ngủ', ngắm show Tinh Hoa Việt Nam và biểu diễn nhạc nước sắc màu Venice." },
+      { day: "Ngày 4", title: "Cơ Sở Nuôi Cấy Ngọc Trai - Mua Sắm Đặc Sản - TP.HCM", desc: "Thăm trung tâm ngọc trai Long Beach, vườn tiêu Suối Đá, nhà thùng nước mắm truyền thống Phú Quốc. Mua đặc sản rượu sim, hải sản khô. Xe đưa ra sân bay Phú Quốc về lại TP.HCM." }
     ]
   },
   {
     id: 2,
-    name: "Sapa - Hà Giang 5N4Đ",
-    location: "Sapa",
-    category: ["Núi", "Trong nước"],
+    code: "WLE-HG-15",
+    name: "Hà Giang: Cao Nguyên Đá Đồng Văn - Mã Pí Lèng - Sapa",
+    location: "Hà Giang - Sapa",
+    category: ["Núi", "Trong nước", "Văn hóa"],
+    departure: "Hà Nội",
+    departureDates: ["Thứ 6 hàng tuần", "18/11", "25/11", "02/12", "09/12"],
+    originalPrice: 5990000,
     price: 4990000,
     image: "images/tour-sapa.jpg",
-    rating: 4.7,
-    reviews: 95,
+    rating: 4.8,
+    reviews: 118,
     duration: "5 ngày 4 đêm",
     badge: "Mới",
+    hotelStandard: "Khách sạn 3-4 sao trung tâm view thung lũng",
+    transport: "Xe giường nằm Cabin VIP đời mới & Xe Jeep leo đèo",
+    highlights: ["Chinh phục đèo Mã Pí Lèng - Đệ nhất hùng quan", "Đi thuyền trên sông Nho Quế xuyên hẻm Tu Sản", "Chạm tay vào Cột cờ Lũng Cú cực Bắc Tổ quốc", "Đỉnh Fansipan 3.143m nóc nhà Đông Dương"],
     includes: [
-      "Xe giường nằm Cabin VIP khứ hồi",
-      "Khách sạn 3-4 sao trung tâm view thung lũng",
-      "Trải nghiệm xe Jeep leo đèo Mã Pí Lèng",
-      "Vé cáp treo Fansipan khứ hồi",
-      "Bảo hiểm du lịch mức bồi thường tới 100.000.000đ",
+      "Xe giường nằm Cabin VIP khứ hồi từ Hà Nội",
+      "Khách sạn 3-4 sao tiện nghi tiêu chuẩn view thung lũng Mường Hoa & Đồng Văn",
+      "Trải nghiệm xe Jeep leo đèo Mã Pí Lèng & thuyền sông Nho Quế",
+      "Vé cáp treo Fansipan Sun World khứ hồi",
+      "Ăn uống trọn gói các bữa đặc sản vùng cao: thắng cố, lợn bản, gà đồi, rượu ngô",
+      "Bảo hiểm du lịch Bảo Minh mức bồi thường tới 100.000.000đ",
       "Nước suối & khăn lạnh phục vụ suốt hành trình"
     ],
-    notes: ["Nên mang theo giày thể thao đi bộ", "Mang theo áo ấm vì nhiệt độ vùng cao thấp", "Lịch trình có thể thay đổi nhẹ tùy thời tiết"],
+    notes: ["Nên mang theo giày thể thao êm chân và áo ấm", "Chuẩn bị thuốc say xe cho đoạn đèo quanh co", "Tôn trọng phong tục tập quán đồng bào dân tộc"],
     itinerary: [
-      { day: "Ngày 1", title: "TP.HCM → Hà Nội → Sapa", desc: "Bay đến Hà Nội, đón xe lên Sapa. Nhận phòng khách sạn view núi. Tối đi bộ tham quan thị trấn Sapa về đêm, thưởng thức thắng cố và rượu táo mèo." },
-      { day: "Ngày 2", title: "Fansipan - Bản Cát Cát", desc: "Sáng lên cáp treo Fansipan - Nóc nhà Đông Dương 3.143m. Chiều khám phá bản Cát Cát của người H'Mông, xem múa khèn, mặc thử trang phục dân tộc." },
-      { day: "Ngày 3", title: "Sapa → Hà Giang", desc: "Di chuyển lên Hà Giang, ghé thăm cột cờ Lũng Cú - điểm cực Bắc của Tổ quốc. Ngắm cao nguyên đá Đồng Văn - Di sản địa chất toàn cầu UNESCO." },
-      { day: "Ngày 4", title: "Đèo Mã Pí Lèng - Sông Nho Quế", desc: "Chinh phục đèo Mã Pí Lèng hùng vĩ, ngắm sông Nho Quế uốn lượn xanh ngọc dưới vực thẳm. Check-in vách đá Tu Sản nổi tiếng." },
-      { day: "Ngày 5", title: "Hà Giang → Hà Nội → Về", desc: "Di chuyển về Hà Nội, ghé thăm phố cổ Hà Nội, ăn bún chả, phở Hà Nội. Bay về TP.HCM, kết thúc hành trình." }
+      { day: "Ngày 1", title: "Hà Nội → Sapa - Bản Cát Cát mộng mơ", desc: "Đón đoàn tại Hà Nội, di chuyển theo cao tốc Nội Bài - Lào Cai lên Sapa. Nhận phòng khách sạn view núi. Chiều tham quan bản Cát Cát, ngắm thác Tiên Sa, mặc trang phục H'Mông chụp ảnh." },
+      { day: "Ngày 2", title: "Chinh Phục Đỉnh Fansipan 3.143m - Di chuyển Hà Giang", desc: "Sáng đi cáp treo Fansipan ngắm toàn cảnh thung lũng Mường Hoa, bái tượng Phật A Di Đà khổng lồ giữa biển mây. Chiều khởi hành sang Hà Giang, nhận phòng nghỉ ngơi." },
+      { day: "Ngày 3", title: "Cổng Trời Quản Bạ - Rừng Thông Yên Minh - Cột Cờ Lũng Cú", desc: "Check-in dốc Bắc Sum, Cổng trời Quản Bạ, núi đôi Cô Tiên. Đến Lũng Cú - điểm cực Bắc thiêng liêng của Tổ quốc. Chiều thăm Dinh thự Vua Mèo Vương Chính Đức." },
+      { day: "Ngày 4", title: "Đèo Mã Pí Lèng - Du Thuyền Sông Nho Quế - Hẻm Tu Sản", desc: "Chinh phục đỉnh đèo Mã Pí Lèng, một trong tứ đại đỉnh đèo Việt Nam. Xuống bến thuyền, du ngoạn sông Nho Quế màu ngọc bích, chụp ảnh hẻm Tu Sản sâu nhất Đông Nam Á." },
+      { day: "Ngày 5", title: "Đồng Văn → TP Hà Giang → Hà Nội", desc: "Dạo chợ phiên phố cổ Đồng Văn, thưởng thức bánh tam giác mạch và cà phê Phố Cổ. Khởi hành về Hà Nội, kết thúc chuyến hành trình hùng vĩ." }
     ]
   },
   {
     id: 3,
-    name: "Bali Thiên Đường 6N5Đ",
-    location: "Bali",
-    category: ["Biển", "Quốc tế"],
-    price: 16990000,
-    image: "images/tour-bali.jpg",
+    code: "WLE-MY-01",
+    name: "Tour Du Lịch: Malaysia - Legoland - Sunway Lagoon",
+    location: "Malaysia",
+    category: ["Quốc tế", "Gia đình", "Giải trí"],
+    departure: "TP.HCM",
+    departureDates: ["Thứ 5 hàng tuần", "16/11", "23/11", "30/11", "07/12"],
+    originalPrice: 10990000,
+    price: 8990000,
+    image: "images/hero3.jpg",
     rating: 4.9,
-    reviews: 200,
-    duration: "6 ngày 5 đêm",
-    badge: "Hot",
+    reviews: 165,
+    duration: "4 ngày 3 đêm",
+    badge: "Hot Deal",
+    hotelStandard: "Khách sạn 3-4 sao quốc tế",
+    transport: "Vé máy bay khứ hồi AirAsia / Malaysia Airlines",
+    highlights: ["Công viên Legoland Malaysia với 7 chủ đề kỳ thú", "Khu vui chơi Sunway Lagoon đẳng cấp", "Thành phố mới Putrajaya hiện đại", "Tháp Đôi Petronas KLCC biểu tượng Malaysia"],
     includes: [
-      "Vé máy bay khứ hồi quốc tế (Vietnam Airlines/Vietjet)",
-      "Resort 4 sao có hồ bơi vô cực chuẩn Bali",
-      "Sim 4G tốc độ cao không giới hạn dung lượng",
-      "Vé vào cổng Cổng Trời Lempuyang & Đền Uluwatu",
-      "Bảo hiểm du lịch quốc tế mức bồi thường tới 1 tỷ đồng",
-      "Quà tặng từ WILTravel: bao da hộ chiếu, mũ du lịch"
+      "Vé máy bay khứ hồi và thuế phí hàng không AirAsia / Vietnam Airlines",
+      "Khách sạn 3-4* tiêu chuẩn 2 khách/phòng tiện nghi",
+      "Xe máy lạnh chất lượng cao đưa đón tham quan theo chương trình",
+      "Ăn uống buffet sáng & các bữa chính nhà hàng địa phương",
+      "Vé vào cổng Legoland Malaysia & Sunway Lagoon",
+      "Hướng dẫn viên tiếng Việt nhiệt tình suốt tuyến",
+      "Bảo hiểm du lịch quốc tế Bảo Minh bồi thường đến 210.000.000đ",
+      "Quà tặng: Nón du lịch WILTravel cao cấp & bao da hộ chiếu"
     ],
-    notes: ["Hộ chiếu còn hạn trên 6 tháng", "Đổi tiền USD hoặc IDR trước khi đi", "Trang phục lịch sự khi vào đền thờ"],
+    notes: ["Hộ chiếu còn hạn trên 6 tháng tính đến ngày về", "Trẻ em cần mang theo giấy khai sinh", "Tiền tip hướng dẫn viên & tài xế 3-5 USD/ngày"],
     itinerary: [
-      { day: "Ngày 1", title: "Bay đến Bali - Kuta - Legian Beach", desc: "Đáp xuống sân bay quốc tế Ngurah Rai. Nhận phòng resort. Tắm biển Kuta, ngắm hoàng hôn tuyệt đẹp từ bờ biển Legian." },
-      { day: "Ngày 2", title: "Ubud - Rừng Khỉ - Ruộng Bậc Thang Tegalalang", desc: "Khám phá Ubud - trung tâm nghệ thuật. Tham quan Monkey Forest, cầu treo Bali Swing, check-in ruộng bậc thang Tegalalang nổi tiếng." },
-      { day: "Ngày 3", title: "Đền Tanah Lot & Đền Uluwatu", desc: "Thăm đền Tanah Lot trên đá biển lúc hoàng hôn. Tối xem múa Kecak truyền thống tại đền Uluwatu." },
-      { day: "Ngày 4", title: "Cổng Trời Lempuyang - Núi Lửa Agung", desc: "Check-in cổng trời Lempuyang huyền bí với view núi lửa Agung. Ngắm hồ Batur, tắm suối nước nóng tự nhiên." },
-      { day: "Ngày 5", title: "Nusa Dua - Mua sắm", desc: "Tắm biển cát trắng Nusa Dua. Mua sắm đặc sản Bali: batik, đồ thủ công mỹ nghệ, cà phê Luwak, dầu dừa." },
-      { day: "Ngày 6", title: "Tự do & Bay về", desc: "Sáng tự do. Dùng bữa buffet chia tay. Ra sân bay, bay về Việt Nam với hành trang kỷ niệm." }
+      { day: "Ngày 1", title: "TP.HCM → Johor Bahru → Legoland Malaysia", desc: "Đáp chuyến bay đi sân bay Senai Johor Bahru. Xe đón đoàn đi công viên chủ đề Legoland Malaysia - khám phá Miniland mô phỏng kỳ quan thế giới, Lego Studio 4D. Tối thưởng thức ẩm thực Mã Lai." },
+      { day: "Ngày 2", title: "Malacca Cổ Kính → Thủ Đô Kuala Lumpur", desc: "Di chuyển đến thành phố cổ Malacca, thăm Đình Thanh Vân cổ nhất, Quảng trường Hà Lan, Pháo đài Bồ Đào Nha. Chiều về Kuala Lumpur, ghé thành phố thông minh Putrajaya và Thánh đường Hồi giáo Hồng." },
+      { day: "Ngày 3", title: "Động Batu Huyền Bí - Tháp Đôi Petronas - KLCC", desc: "Chinh phục 272 bậc thang rực rỡ sắc màu tại Động Batu linh thiêng. Thăm Cung Điện Hoàng Gia, Quảng Trường Độc Lập Merdeka. Chụp ảnh lưu niệm tại Tháp đôi Petronas Twin Towers kỳ vĩ." },
+      { day: "Ngày 4", title: "Mua Sắm Socola Đặc Sản → TP.HCM", desc: "Thăm xưởng socola Beryl's nổi tiếng, cửa hàng đặc sản địa phương. Xe đưa đoàn ra sân bay Kuala Lumpur đáp chuyến bay về TP.HCM." }
     ]
   },
   {
     id: 4,
-    name: "Vịnh Hạ Long - Lan Hạ 4N3Đ",
-    location: "Hạ Long",
-    category: ["Biển", "Trong nước"],
-    price: 5290000,
-    image: "images/tour-halong.jpg",
-    rating: 4.6,
-    reviews: 110,
-    duration: "4 ngày 3 đêm",
-    badge: "",
+    code: "WLE-JP-02",
+    name: "Du Lịch Nhật Bản Cung Đường Vàng: Osaka - Kyoto - Phú Sĩ - Tokyo",
+    location: "Nhật Bản",
+    category: ["Quốc tế", "Văn hóa", "Nghỉ dưỡng"],
+    departure: "TP.HCM",
+    departureDates: ["Thứ 3 & Thứ 6 hàng tuần", "14/11", "21/11", "28/11", "05/12"],
+    originalPrice: 34990000,
+    price: 28990000,
+    image: "images/tour-japan.jpg",
+    rating: 5.0,
+    reviews: 210,
+    duration: "6 ngày 5 đêm",
+    badge: "VIP Luxury",
+    hotelStandard: "Khách sạn 4 sao chuẩn Nhật + 1 đêm tắm Onsen truyền thống",
+    transport: "Hàng không 4* Vietnam Airlines / ANA & Trải nghiệm tàu Shinkansen",
+    highlights: ["Núi Phú Sĩ linh thiêng - Trạm số 5", "Tắm suối khoáng nóng Onsen phong cách Ryokan", "Trải nghiệm tàu cao tốc Shinkansen 300km/h", "Chùa Vàng Kinkaku-ji & Lâu đài Osaka cổ kính"],
     includes: [
-      "Du thuyền 5 sao chuẩn quốc tế ngủ đêm trên vịnh",
-      "Khách sạn 4 sao tại Bãi Cháy (2 đêm)",
-      "Chèo thuyền kayak & tắm biển tự do",
-      "Vé trọn gói tham quan Động Thiên Cung & hang Sửng Sốt",
-      "Bảo hiểm du lịch trọn gói suốt tuyến",
-      "Nước suối & khăn lạnh phục vụ hàng ngày"
+      "Vé máy bay khứ hồi Vietnam Airlines / All Nippon Airways (gồm 46kg hành lý)",
+      "Visa nhập cảnh Nhật Bản trọn gói, tỷ lệ đậu 99%",
+      "Khách sạn 4 sao tiêu chuẩn Nhật Bản + 1 đêm trải nghiệm Onsen & tiệc Kaiseki",
+      "Trải nghiệm đi tàu siêu tốc Shinkansen",
+      "Ăn uống các món đặc sắc: Bò Kobe/Wagyu thượng hạng, Cua tuyết, Sashimi tươi sống",
+      "Bảo hiểm du lịch quốc tế Bảo Minh mức bồi thường tới 1.050.000.000đ",
+      "Bộ quà tặng du lịch cao cấp: Nón du lịch, bao hộ chiếu, sim 4G Nhật Bản"
     ],
-    notes: ["Mang theo đồ bơi & kem chống nắng", "Đăng ký quốc tịch trước khi lên tàu", "Nước uống miễn phí 2 chai/phòng/ngày"],
+    notes: ["Hộ chiếu còn hạn trên 6 tháng", "WILTravel hỗ trợ toàn diện hồ sơ chứng minh tài chính visa", "Thời gian làm visa từ 7-10 ngày làm việc"],
     itinerary: [
-      { day: "Ngày 1", title: "Hà Nội → Hạ Long - Lên Du Thuyền", desc: "Xe đón tại Hà Nội, di chuyển đến Hạ Long. Lên du thuyền 5 sao, làm thủ tục nhận phòng. Tham quan hang Sửng Sốt, chèo kayak qua các hòn đảo đá vôi." },
-      { day: "Ngày 2", title: "Thăm Đảo Ti Tốp - Lan Hạ Bay", desc: "Sáng sớm ngắm bình minh trên vịnh. Thăm đảo Ti Tốp, leo 400 bậc thang ngắm toàn cảnh Hạ Long. Di chuyển sang Lan Hạ Bay còn nguyên sơ." },
-      { day: "Ngày 3", title: "Tuần Châu - Vịnh Bái Tử Long", desc: "Rời du thuyền, nhận phòng khách sạn Tuần Châu. Tham quan Bái Tử Long, thăm làng chài nổi của ngư dân, tìm hiểu cuộc sống trên biển." },
-      { day: "Ngày 4", title: "Tham Quan & Về Hà Nội", desc: "Thăm động Thiên Cung lộng lẫy với nhũ đá muôn màu. Mua hải sản khô, đặc sản vùng biển. Xe đưa về Hà Nội, kết thúc tour." }
+      { day: "Ngày 1", title: "TP.HCM → Osaka (Sân Bay Kansai)", desc: "Tập trung tại Tân Sơn Nhất, đáp chuyến bay đêm đến sân bay quốc tế Kansai Osaka. Nghỉ đêm trên máy bay đầy đủ tiện nghi." },
+      { day: "Ngày 2", title: "Lâu Đài Osaka - Cố Đô Kyoto - Chùa Vàng Kinkakuji", desc: "Tham quan Lâu đài Osaka uy nghiêm. Di chuyển đến Cố đô Kyoto, viếng Chùa Vàng Kinkaku-ji dát vàng soi bóng hồ nước. Dạo rừng tre Sagano Arashiyama thanh tịnh." },
+      { day: "Ngày 3", title: "Trải Nghiệm Tàu Shinkansen → Núi Phú Sĩ - Tắm Onsen", desc: "Trải nghiệm vận tốc 300km/h của tàu Shinkansen. Lên Trạm 5 Núi Phú Sĩ ngắm biển mây. Thăm làng cổ Oshino Hakkai thanh bình. Tối thưởng thức bữa tối Kaiseki và ngâm suối khoáng nóng Onsen." },
+      { day: "Ngày 4", title: "Vịnh Odaiba - Tượng Nữ Thần Tự Do - Phố Ginza", desc: "Khởi hành về thủ đô Tokyo hiện đại. Tham quan Vịnh Odaiba, cầu Rainbow Bridge, tượng Nữ thần Tự do. Tự do mua sắm tại thiên đường hàng hiệu Ginza sầm uất." },
+      { day: "Ngày 5", title: "Chùa Cổ Asakusa Kannon - Tháp Tokyo Skytree - Shinjuku", desc: "Viếng Chùa Senso-ji (Asakusa) cổ nhất Tokyo với lồng đèn đỏ khổng lồ. Chụp ảnh Tháp truyền hình Tokyo Skytree. Dạo ngã tư Shibuya và phố náo nhiệt Shinjuku." },
+      { day: "Ngày 6", title: "Cung Điện Hoàng Gia Tokyo (Imperial Palace) → TP.HCM", desc: "Chụp ảnh tại Cung điện Hoàng Gia Tokyo với cầu Nijubashi nổi tiếng. Mua sắm bánh kẹo Tokyo Banana, Royce làm quà. Xe đưa ra sân bay Narita bay về TP.HCM." }
     ]
   },
   {
     id: 5,
-    name: "Đà Nẵng - Hội An 4N3Đ",
-    location: "Đà Nẵng",
-    category: ["Biển", "Trong nước"],
-    price: 4290000,
-    image: "images/tour-danang.jpg",
-    rating: 4.7,
-    reviews: 140,
-    duration: "4 ngày 3 đêm",
+    code: "WLE-KR-03",
+    name: "Du Lịch Hàn Quốc: Seoul - Đảo Nami - Everland - Tháp Namsan",
+    location: "Hàn Quốc",
+    category: ["Quốc tế", "Văn hóa", "Nghỉ dưỡng"],
+    departure: "TP.HCM",
+    departureDates: ["Thứ 4 & Thứ 7 hàng tuần", "15/11", "22/11", "29/11", "06/12"],
+    originalPrice: 19990000,
+    price: 15990000,
+    image: "images/hero4.jpg",
+    rating: 4.9,
+    reviews: 182,
+    duration: "5 ngày 4 đêm",
     badge: "Bán chạy",
+    hotelStandard: "Khách sạn 4 sao trung tâm Seoul",
+    transport: "Vé máy bay khứ hồi Vietnam Airlines / Korean Air",
+    highlights: ["Đảo Nami lãng mạn - Phim trường Bản Tình Ca Mùa Đông", "Công viên giải trí Everland top 10 thế giới", "Cung điện Gyeongbokgung cổ kính & Mặc Hanbok", "Tháp truyền hình Namsan với ổ khóa tình yêu"],
     includes: [
-      "Vé máy bay khứ hồi (đầy đủ hành lý)",
-      "Khách sạn 4 sao sát bãi biển Mỹ Khê",
-      "Vé cáp treo khứ hồi & buffet trưa tại Bà Nà Hills",
-      "Vé du thuyền sông Hàn ngắm cầu Rồng phun lửa",
-      "Bảo hiểm du lịch mức bồi thường tới 100.000.000đ",
-      "Mũ du lịch & gối chữ U từ WILTravel"
+      "Vé máy bay khứ hồi (đầy đủ 23kg ký gửi & 10kg xách tay)",
+      "Visa nhập cảnh Hàn Quốc trọn gói",
+      "Khách sạn 4 sao trung tâm Seoul tiện nghi",
+      "Vé tham quan Đảo Nami, vé vui chơi trọn gói Everland",
+      "Thưởng thức gà hầm sâm Samgyetang, thịt nướng BBQ Hàn Quốc, lẩu nấm",
+      "Bảo hiểm du lịch quốc tế Bảo Minh mức bồi thường tới 500.000.000đ",
+      "Quà tặng: Nón du lịch, bao hộ chiếu, sim 4G Hàn Quốc"
     ],
-    notes: ["Bà Nà Hills thường có sương mù vào chiều", "Chuẩn bị mũ nón cho các điểm ngoài trời", "Hỗ trợ xe điện di chuyển trong phố cổ"],
+    notes: ["Hộ chiếu còn hạn trên 6 tháng", "WILTravel hoàn tất thủ tục visa từ A-Z"],
     itinerary: [
-      { day: "Ngày 1", title: "Bay đến Đà Nẵng - Bà Nà Hills", desc: "Bay đến Đà Nẵng. Trực chỉ Bà Nà Hills - leo cáp treo dài nhất thế giới, thăm Cầu Vàng trong mây, vườn hoa Le Jardin d'Amour." },
-      { day: "Ngày 2", title: "Hội An - Phố Cổ Đêm", desc: "Di chuyển sang Hội An. Khám phá Phố cổ Hội An - Di sản Văn hóa Thế giới UNESCO. Tham quan Chùa Cầu, phố Đèn lồng. Thả đèn hoa đăng trên sông Hoài." },
-      { day: "Ngày 3", title: "Mỹ Sơn - Biển Mỹ Khê", desc: "Thăm Thánh địa Mỹ Sơn của người Chăm. Chiều về tắm biển Mỹ Khê - một trong những bãi biển đẹp nhất hành tinh theo Forbes." },
-      { day: "Ngày 4", title: "Ngũ Hành Sơn - Bay về", desc: "Tham quan núi đá cẩm thạch Ngũ Hành Sơn, mua đặc sản: bánh mì Phượng, mì Quảng, cao lầu Hội An. Bay về TP.HCM." }
+      { day: "Ngày 1", title: "TP.HCM → Incheon (Seoul)", desc: "Bay đêm từ Tân Sơn Nhất sang Seoul trên chuyến bay chất lượng cao. Nghỉ ngơi trên máy bay." },
+      { day: "Ngày 2", title: "Đảo Nami Thơ Mộng - Tháp Namsan Seoul", desc: "Đến Incheon, xe đón đoàn đi ăn sáng canh sườn bò. Tham quan Đảo Nami với những hàng cây ngân hạnh và thông cổ thụ thẳng tắp. Chiều lên Tháp Namsan ngắm toàn cảnh Seoul." },
+      { day: "Ngày 3", title: "Công Viên Giải Trí Everland - Trải Nghiệm Mặc Hanbok", desc: "Thỏa sức trải nghiệm tàu lượn siêu tốc T-Express, vườn thú hoang dã Safari tại Everland. Chiều trải nghiệm làm kim chi truyền thống và mặc trang phục Hanbok truyền thống." },
+      { day: "Ngày 4", title: "Cung Điện Gyeongbokgung - Nhà Xanh - Chợ Myeongdong", desc: "Thăm Cung điện Hoàng Gia Gyeongbok tráng lệ, Nhà Xanh Phủ Tổng Thống (Blue House). Thăm Bảo tàng Dân tộc Quốc gia. Tối tự do mua sắm mỹ phẩm tại thiên đường Myeongdong." },
+      { day: "Ngày 5", title: "Suối Cheonggyecheon - Quảng Trường Gwanghwamun → TP.HCM", desc: "Dạo bước bên dòng suối Cheonggyecheon trong vắt giữa lòng thủ đô, chụp ảnh cùng tượng Tướng quân Yi Sun-sin. Xe đưa ra sân bay Incheon bay về TP.HCM." }
     ]
   },
   {
     id: 6,
-    name: "Nhật Bản Mùa Hoa Anh Đào",
-    location: "Tokyo - Osaka",
-    category: ["Thành phố", "Quốc tế"],
-    price: 28990000,
-    image: "images/tour-japan.jpg",
-    rating: 5.0,
-    reviews: 250,
-    duration: "6 ngày 5 đêm",
-    badge: "Premium",
+    code: "WLE-TH-05",
+    name: "Tour Thái Lan: Bangkok - Pattaya - Muang Boran - Đảo San Hô",
+    location: "Thái Lan",
+    category: ["Quốc tế", "Biển", "Giải trí"],
+    departure: "TP.HCM",
+    departureDates: ["Thứ 3, 5, 7 hàng tuần", "14/11", "16/11", "21/11", "28/11"],
+    originalPrice: 8490000,
+    price: 6690000,
+    image: "images/hero5.jpg",
+    rating: 4.7,
+    reviews: 195,
+    duration: "5 ngày 4 đêm",
+    badge: "Giá Cực Tốt",
+    hotelStandard: "Khách sạn 4 sao tại Pattaya & Bangkok",
+    transport: "Vé máy bay khứ hồi Vietnam Airlines / Vietjet Air",
+    highlights: ["Thành phố cổ Muang Boran - Bảo tàng ngoài trời lớn nhất thế giới", "Tắm biển & cano cao tốc ra Đảo Coral Island", "Buffet tầng 86 tòa nhà chọc trời Baiyoke Sky", "Du thuyền ngắm hoàng hôn trên dòng sông Chao Phraya"],
     includes: [
-      "Vé máy bay khứ hồi Vietnam Airlines (gồm 46kg hành lý ký gửi)",
-      "Thủ tục trọn gói Visa du lịch Nhật Bản",
-      "Khách sạn 3-4 sao trung tâm Tokyo & Osaka",
-      "Trải nghiệm tắm Onsen truyền thống & đi tàu siêu tốc Shinkansen",
-      "Bảo hiểm du lịch quốc tế mức bồi thường 1 tỷ đồng",
-      "Sim 4G tốc độ cao & bộ phát wifi suốt hành trình"
+      "Vé máy bay khứ hồi (đã gồm 20kg ký gửi & 7kg xách tay)",
+      "Khách sạn 4 sao tiêu chuẩn quốc tế 2 người/phòng",
+      "Bữa ăn buffet hải sản nướng không giới hạn & buffet 86 tầng Baiyoke Sky",
+      "Vé cano ra đảo Coral & vé tham quan thành phố cổ Muang Boran",
+      "Bảo hiểm du lịch quốc tế Bảo Minh bồi thường đến 210.000.000đ",
+      "Tặng 1 suất massage Thái cổ truyền 60 phút thư giãn",
+      "Quà tặng: Nón du lịch cao cấp WILTravel"
     ],
-    notes: ["Hồ sơ visa nộp trước tối thiểu 1 tháng", "Thời tiết mùa xuân lạnh (10-15°C)", "Cần tuân thủ quy định hướng dẫn viên"],
+    notes: ["Miễn visa du lịch cho công dân Việt Nam", "Đổi tiền Baht Thái trước chuyến bay"],
     itinerary: [
-      { day: "Ngày 1", title: "TP.HCM → Tokyo - Narita", desc: "Bay đêm đến Tokyo. Nhận phòng khách sạn tại Shinjuku. Tối dạo phố Shibuya, ngắm Crossing nổi tiếng nhất thế giới." },
-      { day: "Ngày 2", title: "Tokyo - Công viên Ueno - Asakusa", desc: "Thăm đền Senso-ji cổ kính tại Asakusa. Ngắm hoa anh đào tại công viên Ueno. Tham quan Akihabara - thiên đường điện tử." },
-      { day: "Ngày 3", title: "Hakone - Núi Phú Sĩ", desc: "Lên tàu Shinkansen đến Hakone. Ngắm Phú Sĩ từ hồ Ashi. Tắm Onsen suối nước nóng truyền thống Nhật Bản, mặc Yukata." },
-      { day: "Ngày 4", title: "Kyoto - Chùa Kinkaku-ji", desc: "Di chuyển Shinkansen đến Kyoto. Thăm chùa Vàng Kinkaku-ji. Dạo con đường Triết học ngắm hoa anh đào. Tham quan Fushimi Inari - ngàn cổng torii đỏ." },
-      { day: "Ngày 5", title: "Osaka - Mua sắm", desc: "Thăm lâu đài Osaka, phố Dotonbori ẩm thực sầm uất. Mua sắm tại Shinsaibashi. Thưởng thức takoyaki, okonomiyaki, ramen Osaka chính gốc." },
-      { day: "Ngày 6", title: "Bay về Việt Nam", desc: "Sáng tự do mua sắm. Đến sân bay Kansai, bay về TP.HCM. Kết thúc hành trình đáng nhớ tại đất nước mặt trời mọc." }
+      { day: "Ngày 1", title: "TP.HCM → Bangkok → Pattaya", desc: "Đáp chuyến bay sang Bangkok. Xe và HDV đón đoàn khởi hành đi Pattaya. Tối tự do khám phá phố đi bộ Walking Street náo nhiệt ven biển." },
+      { day: "Ngày 2", title: "Cano Đảo Coral San Hô - Trân Bảo Phật Sơn - Show Alcazar", desc: "Đi cano cao tốc ra đảo San Hô Coral Island tắm biển trong vắt. Thăm Trân Bảo Phật Sơn (Khao Chee Chan) khắc nổi 999kg vàng 24k. Tối xem chương trình đại nhạc hội Alcazar Show hoành tráng." },
+      { day: "Ngày 3", title: "Vườn Nhiệt Đới Nong Nooch → Thành Phố Cổ Muang Boran", desc: "Khám phá công viên khủng long Nong Nooch. Khởi hành về Bangkok, tham quan Muang Boran với các công trình cung điện, đền đài được phục dựng nguy nga tráng lệ." },
+      { day: "Ngày 4", title: "Chùa Thuyền Wat Yannawa - Dạo Thuyền Sông Chao Phraya", desc: "Thăm Chùa Thuyền linh thiêng, viếng Phật Bốn Mặt Erawan. Dạo thuyền trên dòng sông mẹ Chao Phraya huyền thoại xem cá nổi. Ăn tối buffet tại tòa tháp Baiyoke Sky." },
+      { day: "Ngày 5", title: "Chùa Wat Traimit (Phật Vàng) - Mua Sắm IconSiam → TP.HCM", desc: "Chiêm bái tượng Phật Vàng nguyên khối 5.5 tấn tại Chùa Wat Traimit. Mua sắm thả ga tại siêu trung tâm thương mại IconSiam bên bờ sông. Xe tiễn ra sân bay về lại TP.HCM." }
     ]
   },
   {
     id: 7,
-    name: "Đà Lạt Lãng Mạn 3N2Đ",
-    location: "Đà Lạt",
-    category: ["Núi", "Trong nước"],
-    price: 2890000,
-    image: "images/tour-dalat.jpg",
-    rating: 4.5,
-    reviews: 80,
-    duration: "3 ngày 2 đêm",
-    badge: "",
+    code: "WLE-TW-04",
+    name: "Du Lịch Đài Loan: Cao Hùng - Đài Trung - Đài Bắc - Hồ Nhật Nguyệt",
+    location: "Đài Loan",
+    category: ["Quốc tế", "Văn hóa", "Ẩm thực"],
+    departure: "TP.HCM",
+    departureDates: ["Thứ 5 hàng tuần", "16/11", "23/11", "30/11", "07/12"],
+    originalPrice: 15890000,
+    price: 12990000,
+    image: "images/hero6.jpg",
+    rating: 4.8,
+    reviews: 135,
+    duration: "5 ngày 4 đêm",
+    badge: "Hot",
+    hotelStandard: "Khách sạn 4 sao cao cấp",
+    transport: "Vé máy bay khứ hồi China Airlines / Eva Air",
+    highlights: ["Du thuyền ngoạn cảnh Hồ Nhật Nguyệt (Sun Moon Lake)", "Thả đèn trời cầu may mắn tại Làng Cổ Thập Phần", "Check-in Tòa tháp biểu tượng Taipei 101", "Trải nghiệm văn hóa chợ đêm Tây Môn Đình (Ximending)"],
     includes: [
-      "Xe Limousine D-Car đưa đón đời mới khứ hồi",
-      "Khách sạn view rừng thông gần hồ Xuân Hương",
-      "Vé tham quan trọn gói các điểm: Langbiang, Thác Datanla",
-      "Trải nghiệm hái dâu tây trực tiếp tại vườn công nghệ cao",
-      "Bảo hiểm du lịch trọn gói",
-      "Khăn lạnh & nước suối phục vụ suốt tuyến"
+      "Vé máy bay khứ hồi hàng không quốc tế tiêu chuẩn 4 sao",
+      "Visa Quan Hồng điện tử nhanh chóng, tiện lợi",
+      "Khách sạn 4 sao trung tâm các thành phố lớn",
+      "Vé du thuyền Hồ Nhật Nguyệt & đèn trời Thập Phần (4 khách/đèn)",
+      "Bữa ăn lẩu Shabu Shabu Đài Loan & xào hải sản nấm nổi tiếng",
+      "Bảo hiểm du lịch quốc tế Bảo Minh bồi thường tới 500.000.000đ",
+      "Quà tặng: Nón du lịch WILTravel & bao hộ chiếu"
     ],
-    notes: ["Đà Lạt se lạnh về đêm và sáng sớm", "Nên chuẩn bị trang phục giữ ấm nhẹ", "Có thời gian tự do khám phá chợ đêm"],
+    notes: ["Hộ chiếu còn hạn trên 6 tháng", "Thủ tục visa chỉ cần hình chụp hộ chiếu và thông tin công việc"],
     itinerary: [
-      { day: "Ngày 1", title: "TP.HCM → Đà Lạt - Thác Datanla", desc: "Xe limousine khởi hành sáng sớm. Đến Đà Lạt, tham quan Thác Datanla, trượt ray máng hào hứng. Chiều khám phá Vườn hoa Đà Lạt rực rỡ." },
-      { day: "Ngày 2", title: "Langbiang - Thung Lũng Tình Yêu", desc: "Leo núi Langbiang bằng xe jeep, ngắm Đà Lạt từ độ cao 2.167m. Tham quan Thung lũng Tình Yêu thơ mộng. Tối chợ đêm Đà Lạt, thử bánh tráng nướng, sữa đậu nành nóng." },
-      { day: "Ngày 3", title: "Vườn Dâu - Làng Cù Lần - Về TP.HCM", desc: "Hái dâu tại vườn nông nghiệp. Ghé Làng Cù Lần nguyên sơ. Mua đặc sản mang về: mứt, rượu vang Đà Lạt, hoa khô, cà phê weasel. Xe về TP.HCM." }
+      { day: "Ngày 1", title: "TP.HCM → Cao Hùng - Phật Quang Sơn Tự", desc: "Bay sang thành phố cảng Cao Hùng. Tham quan Phật Quang Sơn Tự - Kinh đô Phật giáo Đài Loan với tượng Đại Phật vàng uy nghiêm. Chiều dạo chợ đêm Lục Hợp thưởng thức trà sữa trân châu chính gốc." },
+      { day: "Ngày 2", title: "Đầm Liên Trì - Tháp Long Hổ → Đài Trung", desc: "Thăm Tháp Long Hổ với quan niệm vào miệng Rồng ra miệng Hổ xua tan xui xẻo. Di chuyển đến Đài Trung, ghé làng Cầu Vồng Rainbow Village rực rỡ sắc màu." },
+      { day: "Ngày 3", title: "Hồ Nhật Nguyệt Thơ Mộng → Cố Đô Đài Bắc", desc: "Du thuyền trên Hồ Nhật Nguyệt phẳng lặng như gương. Viếng Đền Văn Võ linh thiêng. Di chuyển về Đài Bắc, khám phá chợ đêm Tây Môn Đình (Ximending) sầm uất." },
+      { day: "Ngày 4", title: "Làng Cổ Thập Phần Thả Đèn Trời - Thác Nước Thập Phần - Tháp Taipei 101", desc: "Trải nghiệm thả đèn trời viết điều ước trên đường ray xe lửa cổ Thập Phần. Chiêm ngưỡng Thác nước Thập Phần hùng vĩ. Chiều ngắm hoàng hôn tại Tòa tháp Taipei 101 lừng danh." },
+      { day: "Ngày 5", title: "Đài Tưởng Niệm Tưởng Giới Thạch → TP.HCM", desc: "Thăm Nhà tưởng niệm Tưởng Giới Thạch uy nghi, xem nghi thức đổi gác trang trọng. Mua bánh dứa Phụng Lê đặc sản Đài Loan làm quà. Xe đưa ra sân bay Đào Viên về TP.HCM." }
     ]
   },
   {
     id: 8,
-    name: "Nha Trang - Ninh Hòa 3N2Đ",
-    location: "Nha Trang",
-    category: ["Biển", "Trong nước"],
-    price: 3190000,
-    image: "images/tour-nhatrang.jpg",
-    rating: 4.6,
-    reviews: 105,
-    duration: "3 ngày 2 đêm",
-    badge: "",
+    code: "WLE-KH-06",
+    name: "Tour Campuchia: Siem Reap - Phnom Penh - Quần Thể Angkor Wat",
+    location: "Campuchia",
+    category: ["Quốc tế", "Văn hóa", "Di sản"],
+    departure: "TP.HCM",
+    departureDates: ["Thứ 5 hàng tuần", "16/11", "23/11", "30/11"],
+    originalPrice: 5890000,
+    price: 4690000,
+    image: "images/hero7.jpg",
+    rating: 4.7,
+    reviews: 104,
+    duration: "4 ngày 3 đêm",
+    badge: "Tiết Kiệm",
+    hotelStandard: "Khách sạn 4 sao chuẩn quốc tế có hồ bơi",
+    transport: "Xe Limousine ghế ngả VIP cao cấp",
+    highlights: ["Kỳ quan thế giới Đền Angkor Wat vĩ đại", "Đền Ta Prohm với những bộ rễ cây cổ thụ khổng lồ", "Cung điện Hoàng Gia Campuchia & Chùa Vàng Chùa Bạc", "Thưởng thức tiệc buffet lẩu băng chuyền & xem múa Apsara"],
     includes: [
-      "Xe giường nằm cao cấp đưa đón từ Tp.HCM",
-      "Khách sạn 3-4 sao view biển Trần Phú",
-      "Cano cao tốc đi tour 3 đảo VIP",
-      "Vé tắm bùn khoáng nóng chăm sóc sức khỏe",
-      "Bảo hiểm du lịch mức bồi thường tới 100.000.000đ",
-      "Quà tặng độc quyền từ WILTravel (mũ du lịch, túi đựng đồ ướt)"
+      "Xe du lịch máy lạnh đời mới chất lượng cao đưa đón suốt tuyến từ TP.HCM",
+      "Khách sạn 4 sao quốc tế tiêu chuẩn 2 khách/phòng",
+      "Vé tham quan trọn gói toàn bộ quần thể di sản Angkor",
+      "Ăn uống buffet quốc tế và tiệc đặc sản có biểu diễn múa Apsara cung đình",
+      "Hướng dẫn viên tiếng Việt chuyên nghiệp phục vụ chu đáo",
+      "Bảo hiểm du lịch quốc tế Bảo Minh bồi thường tới 210.000.000đ",
+      "Quà tặng: Khăn rằn truyền thống Krama & nón du lịch WILTravel"
     ],
-    notes: ["Nên mang theo túi chống nước điện thoại", "Uống đủ nước khi đi tour đảo", "Có dịch vụ chụp hình dưới nước có phí"],
+    notes: ["Miễn visa cho người mang hộ chiếu Việt Nam", "Trang phục nghiêm túc che vai và đầu gối khi vào đền đài"],
     itinerary: [
-      { day: "Ngày 1", title: "TP.HCM → Nha Trang - Tháp Chàm", desc: "Xe giường nằm khởi hành tối. Đến Nha Trang sáng sớm, nhận phòng, nghỉ ngơi. Chiều thăm Tháp Bà Ponagar, tắm biển Trần Phú." },
-      { day: "Ngày 2", title: "Tour 4 Đảo - Lặn Ngắm San Hô", desc: "Lên tàu đi tour 4 đảo: Hòn Tằm, Hòn Miễu, Hòn Mun. Lặn ngắm san hô đẹp nhất Đông Nam Á. Ăn trưa hải sản tươi ngoài biển. Chiều tắm bùn khoáng Nha Trang." },
-      { day: "Ngày 3", title: "Vinpearl - Mua sắm - Về TP.HCM", desc: "Tham quan Vinpearl Land hoặc tự do. Mua đặc sản: yến sào Khánh Hòa, mực khô, bánh căn. Tối xe về TP.HCM." }
+      { day: "Ngày 1", title: "TP.HCM → Cửa Khẩu Mộc Bài → Siem Reap", desc: "Khởi hành từ TP.HCM qua cửa khẩu Mộc Bài sang Campuchia. Dừng chân tại Kompong Kdei chiêm ngưỡng cây cầu đá ong cổ nhất Đông Nam Á gần 1.000 năm tuổi. Đến Siem Reap nhận phòng khách sạn 4 sao." },
+      { day: "Ngày 2", title: "Khám Phá Angkor Wat - Đền Bayon 4 Mặt - Đền Ta Prohm", desc: "Chiêm bái Angkor Thom với nụ cười bí ẩn của tượng thần Bayon 4 mặt. Thăm đền Ta Prohm nơi quay phim Bí Mật Ngôi Mộ Cổ (Tomb Raider). Chiều ngắm hoàng hôn rực rỡ trên đỉnh núi Bakheng." },
+      { day: "Ngày 3", title: "Siem Reap → Thủ Đô Phnom Penh - Chùa Vàng Chùa Bạc", desc: "Khởi hành về thủ đô Phnom Penh. Thăm Hoàng Cung Campuchia tráng lệ, Chùa Vàng Chùa Bạc với tượng Phật ngọc bích và nền lát hơn 5.000 viên gạch bạc. Thử vận may tại Naga World 5 sao." },
+      { day: "Ngày 4", title: "Chợ Lớn Mới Phsar Thmey → Mộc Bài → TP.HCM", desc: "Mua sắm lạp xưởng Siem Reap, cá khô Biển Hồ tại Chợ Lớn Mới Phsar Thmey. Khởi hành về lại cửa khẩu Mộc Bài, làm thủ tục nhập cảnh Việt Nam, về đến TP.HCM." }
     ]
   },
   {
     id: 9,
-    name: "Singapore - Malaysia 5N4Đ",
-    location: "Singapore",
-    category: ["Thành phố", "Quốc tế"],
-    price: 12490000,
-    image: "images/hero3.jpg",
+    code: "WLE-DL-07",
+    name: "Tour Đà Lạt - Thác Prenn - Cao Nguyên Đại Ngàn Mộng Mơ",
+    location: "Đà Lạt",
+    category: ["Núi", "Trong nước", "Nghỉ dưỡng"],
+    departure: "TP.HCM",
+    departureDates: ["Tối Thứ 5 & Thứ 6 hàng tuần", "17/11", "24/11", "01/12", "08/12"],
+    originalPrice: 3290000,
+    price: 2490000,
+    image: "images/tour-dalat.jpg",
     rating: 4.8,
-    reviews: 165,
-    duration: "5 ngày 4 đêm",
-    badge: "Hot",
+    reviews: 145,
+    duration: "3 ngày 3 đêm",
+    badge: "Giá Tốt",
+    hotelStandard: "Khách sạn 3-4 sao trung tâm gần Hồ Xuân Hương",
+    transport: "Xe giường nằm Limousine cao cấp",
+    highlights: ["Khu du lịch Thác Prenn kỳ vĩ với đồi hoa rực rỡ", "Đồi Chè Cầu Đất săn mây đón bình minh tuyệt đẹp", "Ga xe lửa Đà Lạt cổ kính bậc nhất Đông Dương", "Quảng trường Lâm Viên & chợ đêm Đà Lạt se lạnh"],
     includes: [
-      "Vé máy bay khứ hồi quốc tế (đầy đủ hành lý)",
-      "Khách sạn 3-4 sao trung tâm Singapore & Kuala Lumpur",
-      "Vé tham quan Gardens by the Bay & cáp treo Genting",
-      "Sim 4G sử dụng tại cả 2 nước",
-      "Bảo hiểm du lịch quốc tế mức 1 tỷ đồng",
-      "Nước suối, khăn lạnh phục vụ suốt tuyến"
+      "Xe giường nằm Limousine đời mới êm ái khứ hồi TP.HCM - Đà Lạt",
+      "Khách sạn 3-4 sao tiện nghi view đẹp trung tâm",
+      "Ăn uống buffet sáng & các bữa chính lẩu gà lá é, lẩu bò Ba Toa nức tiếng",
+      "Vé tham quan Thác Prenn, Nông trại Cầu Đất, Vườn Cẩm Tú Cầu",
+      "Bảo hiểm du lịch Bảo Minh bồi thường tối đa 100.000.000đ",
+      "Nước suối & khăn lạnh phục vụ suốt tuyến",
+      "Quà tặng nón du lịch độc quyền từ WILTravel"
     ],
-    notes: ["Hộ chiếu hạn trên 6 tháng", "Không mang kẹo cao su vào Singapore", "Múi giờ đi nhanh hơn Việt Nam 1 tiếng"],
+    notes: ["Nhiệt độ Đà Lạt se lạnh về đêm (14-17°C), hãy mang theo áo ấm", "Nên chuẩn bị trang phục vintage để có những bức ảnh đẹp"],
     itinerary: [
-      { day: "Ngày 1", title: "Bay đến Singapore - Orchard Road", desc: "Bay đến Changi Airport - sân bay đẹp nhất thế giới 8 năm liền. Khám phá Jewel Changi với thác nước trong nhà cao nhất thế giới. Dạo phố mua sắm Orchard Road." },
-      { day: "Ngày 2", title: "Marina Bay - Gardens by the Bay", desc: "Tham quan Merlion - biểu tượng Singapore. Marina Bay Sands Sky Park. Gardens by the Bay với siêu cây phát sáng. Tối xem Light & Sound Show." },
-      { day: "Ngày 3", title: "Đảo Sentosa - Universal Studios", desc: "Qua eo biển đến đảo Sentosa. Trải nghiệm Universal Studios Singapore hoặc tắm biển Palawan. Cáp treo Cable Car." },
-      { day: "Ngày 4", title: "Malaysia - Cao nguyên Genting - KL", desc: "Xe di chuyển sang Malaysia. Lên Genting Highlands - Las Vegas của Châu Á. Thành phố Kuala Lumpur, Tháp Đôi Petronas, Central Market." },
-      { day: "Ngày 5", title: "KL - Bay về Việt Nam", desc: "Khám phá Batu Caves nổi tiếng. Mua sắm tại Bukit Bintang. Bay về Việt Nam, kết thúc hành trình." }
+      { day: "Đêm 1", title: "TP.HCM → Đà Lạt Xứ Ngàn Hoa", desc: "Xe Limousine đón khách tại TP.HCM, khởi hành đi Đà Lạt theo cung đường cao tốc Dầu Giây - Liên Khương. Quý khách nghỉ đêm êm ái trên xe." },
+      { day: "Ngày 1", title: "Thác Prenn Hùng Vĩ - Dinh Bảo Đại - Quảng Trường Lâm Viên", desc: "Đến Đà Lạt dùng điểm tâm sáng. Thăm khu du lịch Thác Prenn huyền thoại, trải nghiệm chèo thuyền, ngắm thác nước đổ bọt trắng xóa. Chiều thăm Dinh 3 Vua Bảo Đại, check-in Nụ hoa Atiso khổng lồ tại Quảng trường Lâm Viên." },
+      { day: "Ngày 2", title: "Đồi Chè Cầu Đất Săn Mây - Ga Cổ Đà Lạt - Chợ Đêm", desc: "Sáng sớm xe đưa đoàn lên Đồi chè Cầu Đất đón bình minh trên thảm gỗ săn mây bồng bềnh. Ghé Ga xe lửa Đà Lạt cổ kính với đầu tàu hơi nước. Tối tự do dạo chợ đêm thưởng thức sữa đậu nành nóng và bánh tráng nướng." },
+      { day: "Ngày 3", title: "Thiền Viện Trúc Lâm - Hồ Tuyền Lâm → TP.HCM", desc: "Viếng Thiền Viện Trúc Lâm thanh tịnh giữa rừng thông ngắm cảnh Hồ Tuyền Lâm phẳng lặng. Ghé cơ sở mứt Đà Lạt nếm thử dâu tây, atiso miễn phí. Khởi hành về lại TP.HCM." }
     ]
   },
   {
     id: 10,
-    name: "Thái Lan - Bangkok - Pattaya 5N4Đ",
-    location: "Thái Lan",
-    category: ["Biển", "Quốc tế"],
-    price: 6990000,
-    image: "images/bali.jpg",
+    code: "WLE-PT-08",
+    name: "Tour Lagi - Phan Thiết - Mũi Né: Biển Xanh & Đồi Cát Bay",
+    location: "Phan Thiết",
+    category: ["Biển", "Trong nước", "Nghỉ dưỡng"],
+    departure: "TP.HCM",
+    departureDates: ["Thứ 7 hàng tuần", "18/11", "25/11", "02/12", "09/12"],
+    originalPrice: 2890000,
+    price: 1990000,
+    image: "images/hero8.jpg",
     rating: 4.7,
-    reviews: 180,
-    duration: "5 ngày 4 đêm",
-    badge: "Bán chạy",
+    reviews: 98,
+    duration: "2 ngày 1 đêm",
+    badge: "Ưu Đãi Lễ",
+    hotelStandard: "Resort 3-4 sao có bãi biển riêng & hồ bơi",
+    transport: "Xe du lịch Universe 29-45 chỗ đời mới",
+    highlights: ["Nghỉ dưỡng resort sát bãi biển Hàm Tiến Mũi Né", "Chinh phục Đồi Cát Bay & ngắm hoàng hôn rực lửa", "Ngọn Hải Đăng Kê Gà cổ nhất Việt Nam", "Thưởng thức hải sản nướng tươi sống ven biển"],
     includes: [
-      "Vé máy bay khứ hồi (đã gồm hành lý)",
-      "Khách sạn 4 sao có hồ bơi tại Bangkok & Pattaya",
-      "Vé xem Alcazar Show / Tiffany Show ghế VIP",
-      "Thưởng thức Buffet trưa tại tòa nhà Baiyoke Sky 86 tầng",
-      "Bảo hiểm du lịch quốc tế mức bồi thường tới 500.000.000đ",
-      "Sim 4G Thái Lan không giới hạn dung lượng"
+      "Xe du lịch máy lạnh đời mới đưa đón suốt hành trình",
+      "Resort 3-4 sao sát biển có hồ bơi vô cực, 2 người/phòng",
+      "Ăn sáng buffet resort & các bữa chính hải sản nướng phong phú",
+      "Vé cano vượt biển ngắm Hải Đăng Kê Gà cổ kính",
+      "Bảo hiểm du lịch Bảo Minh mức bồi thường tới 100.000.000đ",
+      "Quà tặng: Nón du lịch WILTravel cao cấp"
     ],
-    notes: ["Chuẩn bị tiền Baht Thái tiêu dùng", "Mặc quần áo dài qua gối khi thăm Chùa Bình Minh", "Nên thử massage Thái truyền thống"],
+    notes: ["Chuẩn bị đồ bơi, kem chống nắng, kính mát", "Có dịch vụ xe môtô địa hình ATV lượn trên đồi cát"],
     itinerary: [
-      { day: "Ngày 1", title: "Bay đến Bangkok - Wat Arun", desc: "Bay đến Suvarnabhumi. Tham quan chùa Wat Arun - Chùa Bình Minh rực rỡ. Tối du thuyền sông Chao Phraya, ngắm Bangkok về đêm." },
-      { day: "Ngày 2", title: "Cung điện Hoàng Gia - Wat Pho", desc: "Tham quan Grand Palace tráng lệ, chùa Wat Pho với tượng Phật Nằm khổng lồ. Tối buffet tầng 86 nhà hàng xoay Baiyoke Sky." },
-      { day: "Ngày 3", title: "Bangkok → Pattaya", desc: "Di chuyển xuống Pattaya. Thăm chùa Phật sườn đồi. Tối xem show Alcazar / Tiffany nổi tiếng thế giới." },
-      { day: "Ngày 4", title: "Đảo Coral - Lặn Biển", desc: "Tàu ra đảo Coral Island. Tham gia các hoạt động: Parasailing, Jet Ski, lặn ống thở. Ăn trưa hải sản tươi. Tối walking street Pattaya." },
-      { day: "Ngày 5", title: "Pattaya → Bangkok - Về VN", desc: "Mua sắm tại Pattaya, gems gallery. Xe về Bangkok. Bay về Việt Nam." }
+      { day: "Ngày 1", title: "TP.HCM → Lagi → Hải Đăng Kê Gà → Mũi Né", desc: "Xe đón khách tại TP.HCM, di chuyển qua cao tốc Long Thành - Dầu Giây - Phan Thiết chỉ 2 tiếng rưỡi. Đến Kê Gà lên cano ra thăm ngọn hải đăng bằng đá cổ nhất Đông Nam Á. Chiều về nhận phòng resort Mũi Né, tắm biển và hồ bơi." },
+      { day: "Ngày 2", title: "Đồi Cát Bay - Làng Chài Mũi Né - Lâu Đài Rượu Vang → TP.HCM", desc: "Sáng sớm xe đưa đi ngắm bình minh trên Đồi Cát Bay, chơi trượt cát kỳ thú. Thăm làng chài Mũi Né xem cảnh tấp nập thuyền cá về. Tham quan Lâu đài rượu vang RD độc đáo. Chiều khởi hành về lại TP.HCM." }
     ]
   },
   {
     id: 11,
-    name: "Miền Tây Sông Nước Cần Thơ - Bến Tre 2N1Đ",
-    location: "Mekong",
-    category: ["Trong nước"],
-    price: 1990000,
+    code: "WLE-MT-09",
+    name: "Tour Miền Tây: Mỹ Tho - Cần Thơ - Bạc Liêu - Đất Mũi Cà Mau",
+    location: "Miền Tây",
+    category: ["Sông nước", "Trong nước", "Văn hóa"],
+    departure: "TP.HCM",
+    departureDates: ["Thứ 5 hàng tuần", "16/11", "23/11", "30/11", "07/12"],
+    originalPrice: 4890000,
+    price: 3690000,
     image: "images/hero2.jpg",
-    rating: 4.5,
-    reviews: 74,
-    duration: "2 ngày 1 đêm",
-    badge: "",
+    rating: 4.8,
+    reviews: 132,
+    duration: "4 ngày 3 đêm",
+    badge: "Đậm Chất Nam Bộ",
+    hotelStandard: "Khách sạn 3-4 sao trung tâm thành phố Cần Thơ & Cà Mau",
+    transport: "Xe du lịch đời mới & Tàu cao tốc đi Đất Mũi",
+    highlights: ["Chợ nổi Cái Răng - Nét văn hóa giao thương độc đáo trên sông", "Chạm tay vào Mốc tọa độ Quốc gia GPS 0001 tại Đất Mũi Cà Mau", "Thăm Dinh Thự Công Tử Bạc Liêu & Cánh Đồng Điện Gió", "Đi xuồng ba lá len lỏi rừng đước ngập mặn"],
     includes: [
-      "Xe du lịch máy lạnh đưa đón suốt hành trình",
-      "Khách sạn 3 sao có hồ bơi view sông Cần Thơ",
-      "Tàu tham quan chợ nổi Cái Răng & Xuồng chèo ba lá",
-      "Ăn uống trọn gói các món đặc sản miền Tây",
-      "Bảo hiểm du lịch trong nước",
-      "Trái cây ăn thỏa thích tại nhà vườn"
+      "Xe du lịch máy lạnh tiện nghi đưa đón suốt chặng đường",
+      "Khách sạn 3-4 sao tiện nghi trung tâm các tỉnh",
+      "Tàu du lịch chợ nổi Cái Răng & cano cao tốc tham quan Đất Mũi",
+      "Các bữa ăn đậm đà vị miền Tây: Cá tai tượng chiên xù, lẩu mắm, cua Cà Mau",
+      "Bảo hiểm du lịch Bảo Minh bồi thường tới 100.000.000đ",
+      "Nón du lịch & nước suối suốt tuyến"
     ],
-    notes: ["Nên mang theo thuốc chống muỗi", "Chuẩn bị nón lá và áo khoác mỏng", "Mua trái cây tại vườn giá rất rẻ"],
+    notes: ["Nên mang theo nón rộng vành, quần áo thoải mái, chống muỗi", "Có thể mua tôm khô Rạch Gốc, mắm cá linh, mật ong hoa tràm làm quà"],
     itinerary: [
-      { day: "Ngày 1", title: "TP.HCM → Bến Tre → Cần Thơ", desc: "Khởi hành sáng sớm. Đến Bến Tre, đi xuồng len lỏi rạch dừa nước xanh mướt. Thăm làng nghề kẹo dừa, làm kẹo dừa thủ công. Chiều di chuyển về Cần Thơ, nhận phòng." },
-      { day: "Ngày 2", title: "Chợ Nổi Cái Răng - Về TP.HCM", desc: "4h30 sáng ra thuyền đến chợ nổi Cái Răng độc đáo. Thưởng thức bún cá, bánh cống Cần Thơ. Tham quan vườn trái cây, tự tay hái và thưởng thức. Xe về TP.HCM." }
+      { day: "Ngày 1", title: "TP.HCM → Mỹ Tho → Bến Tre → Cần Thơ", desc: "Khởi hành về miền Tây sông nước. Đến Mỹ Tho, đi thuyền trên sông Tiền ngắm Tứ linh Long - Lân - Quy - Phụng. Ngồi xuồng chèo ba lá len lỏi rạch dừa rợp bóng, nghe đờn ca tài tử Nam Bộ. Chiều về Tây Đô Cần Thơ nhận phòng." },
+      { day: "Ngày 2", title: "Chợ Nổi Cái Răng → Sóc Trăng → Bạc Liêu → Cà Mau", desc: "4h30 sáng lên thuyền trải nghiệm Chợ nổi Cái Răng rực rỡ sắc màu nông sản. Khởi hành qua Sóc Trăng viếng Chùa Chén Kiểu. Đến Bạc Liêu thăm Nhà Công Tử Bạc Liêu, ngắm cánh đồng điện gió bên bờ biển. Tối đến Cà Mau nghỉ ngơi." },
+      { day: "Ngày 3", title: "Chinh Phục Đất Mũi Cà Mau Cực Nam Tổ Quốc", desc: "Lên cano vượt rừng đước Năm Căn đến Đất Mũi. Chụp ảnh lưu niệm tại Mốc tọa độ Quốc gia GPS 0001 và biểu tượng Mũi Cà Mau hình con tàu rẽ sóng ra biển khơi. Ăn trưa đặc sản cua Cà Mau tại nhà hàng sinh thái." },
+      { day: "Ngày 4", title: "Cà Mau → Thiền Viện Trúc Lâm Phương Nam → TP.HCM", desc: "Trở về Cần Thơ viếng Thiền viện Trúc Lâm Phương Nam lớn nhất miền Tây. Ghé Lò hủ tiếu truyền thống và mua đặc sản trái cây bốn mùa. Xe đưa đoàn về lại TP.HCM." }
     ]
   },
   {
     id: 12,
-    name: "Hà Nội - Tràng An - Bái Đính 3N2Đ",
-    location: "Ninh Bình",
-    category: ["Núi", "Trong nước"],
-    price: 3490000,
-    image: "images/hero1.jpg",
-    rating: 4.6,
-    reviews: 90,
-    duration: "3 ngày 2 đêm",
-    badge: "Mới",
+    code: "WLE-MT-12",
+    name: "Du Lịch Di Sản Miền Trung: Đà Nẵng - Bà Nà Hills - Hội An - Huế",
+    location: "Đà Nẵng - Huế",
+    category: ["Biển", "Di sản", "Trong nước"],
+    departure: "TP.HCM / Hà Nội",
+    departureDates: ["Thứ 5 & Thứ 7 hàng tuần", "16/11", "18/11", "23/11", "30/11"],
+    originalPrice: 5490000,
+    price: 4290000,
+    image: "images/tour-danang.jpg",
+    rating: 4.9,
+    reviews: 176,
+    duration: "4 ngày 3 đêm",
+    badge: "Bán chạy",
+    hotelStandard: "Khách sạn 4 sao sát biển Mỹ Khê & 4 sao trung tâm Huế",
+    transport: "Vé máy bay khứ hồi (Vietnam Airlines / Bamboo Airways)",
+    highlights: ["Chiêm ngưỡng Cầu Vàng Bàn Tay Khổng Lồ tại Bà Nà Hills", "Phố cổ Hội An lung linh đèn lồng bên sông Hoài", "Đại Nội Cố Đô Huế & Lăng Khải Định kiến trúc tinh xảo", "Nghe ca Huế trên thuyền rồng ngắm sông Hương thơ mộng"],
     includes: [
-      "Xe du lịch đưa đón đời mới khứ hồi từ Hà Nội",
-      "Khách sạn tại phố cổ Hà Nội tiện nghi",
-      "Vé thuyền đò Tràng An & vé xe điện chùa Bái Đính",
-      "Bữa ăn đặc sản dê núi & cơm cháy Ninh Bình",
-      "Bảo hiểm du lịch trọn gói suốt tuyến",
-      "Nước suối & khăn lạnh phục vụ hàng ngày"
+      "Vé máy bay khứ hồi (bao gồm hành lý xách tay & ký gửi)",
+      "Khách sạn 4 sao sát biển Mỹ Khê Đà Nẵng và 4 sao sông Hương Huế",
+      "Vé cáp treo Bà Nà Hills & buffet trưa quốc tế tại đỉnh núi",
+      "Thuyền rồng sông Hương ca Huế & vé du thuyền ngắm Cầu Rồng phun lửa",
+      "Bảo hiểm du lịch Bảo Minh bồi thường mức 100.000.000đ",
+      "Quà tặng nón du lịch WILTravel & gối ngủ chữ U"
     ],
-    notes: ["Đường đi chùa Bái Đính đi bộ khá nhiều", "Nên mặc trang phục trang nghiêm khi viếng chùa", "Nên thử bánh mì và cafe trứng Hà Nội"],
+    notes: ["Cần mang theo CMND/CCCD bản gốc khi làm thủ tục bay", "Trang phục lịch sự khi viếng lăng tẩm và chùa Thiên Mụ"],
     itinerary: [
-      { day: "Ngày 1", title: "Bay đến Hà Nội - Phố Cổ", desc: "Bay đến Nội Bài. Khám phá phố cổ Hà Nội 36 phố phường. Thăm Hồ Gươm, đền Ngọc Sơn, cầu Thê Húc. Tối thưởng thức bún chả, cafe trứng huyền thoại." },
-      { day: "Ngày 2", title: "Ninh Bình - Tràng An - Bái Đính", desc: "Di chuyển đến Ninh Bình. Đi đò thuyền Tràng An qua các hang động kỳ bí. Thăm chùa Bái Đính - ngôi chùa lớn nhất Đông Nam Á. Ăn thịt dê núi đặc sản." },
-      { day: "Ngày 3", title: "Hà Nội - Mua sắm - Bay về", desc: "Thăm Văn Miếu Quốc Tử Giám. Mua đặc sản: bánh cốm, ô mai, trà sen. Bay về TP.HCM, kết thúc hành trình đất Bắc." }
+      { day: "Ngày 1", title: "Bay đến Đà Nẵng - Bán Đảo Sơn Trà - Biển Mỹ Khê", desc: "Đáp chuyến bay đến Đà Nẵng. Xe đón đoàn viếng Chùa Linh Ứng Sơn Trà chiêm bái tượng Phật Bà Quan Âm cao 67m nhìn ra biển lớn. Chiều tắm biển Mỹ Khê cát trắng mịn màng. Tối du thuyền sông Hàn ngắm Cầu Rồng phun lửa phun nước." },
+      { day: "Ngày 2", title: "Tiên Cảnh Bà Nà Hills - Cầu Vàng - Phố Cổ Hội An", desc: "Lên cáp treo Bà Nà ngắm rừng nguyên sinh hùng vĩ, check-in Cầu Vàng nâng đỡ bởi bàn tay khổng lồ. Vui chơi Fantasy Park. Chiều di chuyển sang Hội An, dạo phố cổ đèn lồng, Chùa Cầu Nhật Bản, thả đèn hoa đăng trên sông Hoài." },
+      { day: "Ngày 3", title: "Đèo Hải Vân Hùng Vĩ → Cố Đô Huế - Đại Nội - Chùa Thiên Mụ", desc: "Vượt Đèo Hải Vân - 'Đệ nhất hùng quan' sang Cố Đô Huế. Thăm Đại Nội kinh thành vàng son của 13 vị vua triều Nguyễn. Viếng Chùa Thiên Mụ cổ kính bên bờ sông Hương. Tối thưởng thức ca Huế trên thuyền rồng bồng bềnh." },
+      { day: "Ngày 4", title: "Lăng Khải Định Tinh Xảo - Mua Sắm Chợ Đông Ba → TP.HCM", desc: "Thăm Lăng Khải Định - đỉnh cao nghệ thuật khảm sành sứ Á-Âu. Mua đặc sản mè xửng, tôm chua, trà cung đình tại Chợ Đông Ba. Xe đưa ra sân bay Phú Bài (Huế) hoặc Đà Nẵng bay về lại TP.HCM." }
     ]
   }
 ];
+window.tours = tours;
+
+// ========================================================
+// 2. KHÁCH SẠN & RESORT DATA (HOTELS & RESORTS TỪ WIL-TRAVEL)
+// ========================================================
+const HOTELS_DATA = [
+  {
+    id: 1,
+    name: "Vinpearl Resort & Spa Phú Quốc",
+    category: "Luxury",
+    city: "Phú Quốc",
+    address: "Bãi Dài, Gành Dầu, Phú Quốc, Kiên Giang",
+    stars: 5,
+    price: 2450000,
+    image: "images/tour-phuquoc.jpg",
+    amenities: ["Bãi biển riêng", "Hồ bơi vô cực 5.000m²", "Buffet sáng 5 sao", "Spa & Gym", "Đưa đón sân bay"],
+    rating: 4.9,
+    reviews: 320,
+    badge: "5 Sao Đẳng Cấp"
+  },
+  {
+    id: 2,
+    name: "The Myst Đồng Khởi Sài Gòn",
+    category: "Luxury",
+    city: "Sài Gòn",
+    address: "6-8 Hồ Huấn Nghiệp, Bến Nghé, Quận 1, TP.HCM",
+    stars: 5,
+    price: 2850000,
+    image: "images/hero1.jpg",
+    amenities: ["Hồ bơi tầng thượng", "View sông Sài Gòn", "Trung tâm Quận 1", "Trà chiều miễn phí", "Bồn tắm lộ thiên"],
+    rating: 4.8,
+    reviews: 215,
+    badge: "Kiến Trúc Độc Đáo"
+  },
+  {
+    id: 3,
+    name: "Centara Mirage Resort Mũi Né",
+    category: "Deluxe",
+    city: "Phan Thiết",
+    address: "Huỳnh Thúc Kháng, Mũi Né, Phan Thiết, Bình Thuận",
+    stars: 4,
+    price: 1890000,
+    image: "images/hero8.jpg",
+    amenities: ["Công viên nước trẻ em", "Hồ bơi giật cấp", "Biệt thự view biển", "Sân bowling", "Buffet hải sản"],
+    rating: 4.7,
+    reviews: 180,
+    badge: "Gia Đình Yêu Thích"
+  },
+  {
+    id: 4,
+    name: "Colline Hotel Đà Lạt",
+    category: "Deluxe",
+    city: "Đà Lạt",
+    address: "10 Phan Bội Châu, Phường 1, Đà Lạt (Cạnh Chợ Mới)",
+    stars: 4,
+    price: 1350000,
+    image: "images/tour-dalat.jpg",
+    amenities: ["Cạnh chợ đêm Đà Lạt", "Thiết kế chuẩn Châu Âu", "Nhà hàng Á - Âu", "Phòng gym & sauna", "Buffet sáng"],
+    rating: 4.8,
+    reviews: 290,
+    badge: "Check-in Hot"
+  },
+  {
+    id: 5,
+    name: "The Secret Côn Đảo Resort",
+    category: "Luxury",
+    city: "Côn Đảo",
+    address: "Số 08 Tôn Đức Thắng, Côn Đảo, Bà Rịa - Vũng Tàu",
+    stars: 5,
+    price: 2650000,
+    image: "images/hero7.jpg",
+    amenities: ["Hồ bơi tràn biển", "Kiến trúc Pháp cổ kính", "Nhà hàng ẩm thực", "Tour viếng nghĩa trang Hàng Dương", "Xe đưa đón"],
+    rating: 4.9,
+    reviews: 140,
+    badge: "Nghỉ Dưỡng Linh Thiêng"
+  },
+  {
+    id: 6,
+    name: "Marina Bay Vũng Tàu Resort & Spa",
+    category: "Superior",
+    city: "Vũng Tàu",
+    address: "115 Trần Phú, Phường 5, TP. Vũng Tàu",
+    stars: 4,
+    price: 1550000,
+    image: "images/tour-nhatrang.jpg",
+    amenities: ["View hoàng hôn Bãi Dâu", "Hồ bơi nước mặn", "Phòng view biển 100%", "Spa thảo dược", "Buffet sáng"],
+    rating: 4.6,
+    reviews: 160,
+    badge: "View Hoàng Hôn Đẹp Nhất"
+  },
+  {
+    id: 7,
+    name: "Havana Nha Trang Hotel",
+    category: "Deluxe",
+    city: "Nha Trang",
+    address: "38 Trần Phú, Lộc Thọ, Nha Trang, Khánh Hòa",
+    stars: 5,
+    price: 1290000,
+    image: "images/tour-nhatrang.jpg",
+    amenities: ["Đường hầm riêng ra biển", "Skylight Rooftop Bar 360°", "Hồ bơi vô cực", "Bãi biển riêng Trần Phú", "Buffet hải sản"],
+    rating: 4.8,
+    reviews: 410,
+    badge: "Trung Tâm Sôi Động"
+  },
+  {
+    id: 8,
+    name: "Muong Thanh Grand Sài Gòn Hotel",
+    category: "Standard",
+    city: "Sài Gòn",
+    address: "8A Mạc Đĩnh Chi, Bến Nghé, Quận 1, TP.HCM",
+    stars: 4,
+    price: 990000,
+    image: "images/hero2.jpg",
+    amenities: ["Trung tâm Quận 1", "Hồ bơi trong nhà", "Buffet sáng đặc sản vùng miền", "Phòng họp hội nghị MICE"],
+    rating: 4.5,
+    reviews: 185,
+    badge: "Giá Tốt Công Tác"
+  }
+];
+window.HOTELS_DATA = HOTELS_DATA;
+
+// ========================================================
+// 3. DỊCH VỤ THUÊ XE DU LỊCH (CAR RENTAL TỪ WIL-TRAVEL)
+// ========================================================
+const CAR_RENTAL_DATA = [
+  {
+    id: 1,
+    name: "Xe Du Lịch 4 Chỗ (Toyota Vios / Honda City / Mazda 3)",
+    seats: 4,
+    luggage: "2 vali lớn + 2 túi xách",
+    image: "images/hero1.jpg",
+    pricePerDay: 850000,
+    routes: [
+      { route: "Đón / Tiễn Sân Bay Tân Sơn Nhất - Trung Tâm Q1, Q3", price: 300000 },
+      { route: "TP.HCM - Vũng Tàu (1 ngày / 2 chiều)", price: 1500000 },
+      { route: "TP.HCM - Phan Thiết / Mũi Né (2 ngày 1 đêm)", price: 2800000 },
+      { route: "TP.HCM - Đà Lạt (3 ngày 2 đêm)", price: 4200000 }
+    ],
+    features: ["Xe đời mới 2022-2024", "Tài xế lịch sự, rành đường", "Bảo hiểm hành khách đầy đủ", "Nước suối & khăn lạnh miễn phí"]
+  },
+  {
+    id: 2,
+    name: "Xe Du Lịch 7 Chỗ (Toyota Innova / Fortuner / Mitsubishi Xpander)",
+    seats: 7,
+    luggage: "4 vali lớn + 3 túi xách",
+    image: "images/hero2.jpg",
+    pricePerDay: 1100000,
+    routes: [
+      { route: "Đón / Tiễn Sân Bay Tân Sơn Nhất", price: 380000 },
+      { route: "TP.HCM - Vũng Tàu (1 ngày)", price: 1750000 },
+      { route: "TP.HCM - Hồ Tràm / Bình Châu (2 ngày 1 đêm)", price: 2900000 },
+      { route: "TP.HCM - Cần Thơ / Miền Tây (2 ngày 1 đêm)", price: 3200000 }
+    ],
+    features: ["Khoang hành lý rộng rãi", "Nội thất da êm ái", "Máy lạnh 2 dàn độc lập", "Hỗ trợ ghế trẻ em"]
+  },
+  {
+    id: 3,
+    name: "Xe 16 Chỗ Cao Cấp (Ford Transit / Hyundai Solati)",
+    seats: 16,
+    luggage: "8-10 vali",
+    image: "images/hero3.jpg",
+    pricePerDay: 1650000,
+    routes: [
+      { route: "Đón / Tiễn Sân Bay Tân Sơn Nhất", price: 700000 },
+      { route: "TP.HCM - Vũng Tàu (1 ngày)", price: 2400000 },
+      { route: "TP.HCM - Phan Thiết / Mũi Né (2 ngày 1 đêm)", price: 4300000 },
+      { route: "TP.HCM - Đà Lạt (3 ngày 2 đêm)", price: 6500000 }
+    ],
+    features: ["Trần cao đứng thẳng người", "Ghế ngả góc rộng", "Wifi 4G tốc độ cao", "Phù hợp đoàn gia đình & công ty"]
+  },
+  {
+    id: 4,
+    name: "Xe Limousine VIP 9 Chỗ (DCar President / Auto Kingdom)",
+    seats: 9,
+    luggage: "6 vali lớn",
+    image: "images/hero4.jpg",
+    pricePerDay: 2350000,
+    routes: [
+      { route: "Đón / Tiễn Sân Bay VIP", price: 1200000 },
+      { route: "TP.HCM - Vũng Tàu VIP", price: 3200000 },
+      { route: "TP.HCM - Phan Thiết / Hồ Tràm 2N1Đ", price: 5800000 },
+      { route: "City Tour TP.HCM Tiếp Khách VIP (8 tiếng)", price: 2800000 }
+    ],
+    features: ["Ghế massage đa điểm hạng thương gia", "Màn hình TV Smart + Âm thanh vòm", "Cổng sạc Type-C từng ghế", "Tủ lạnh mini trên xe"]
+  },
+  {
+    id: 5,
+    name: "Xe Du Lịch 29 Chỗ (Thaco Town / Isuzu Samco)",
+    seats: 29,
+    luggage: "20 vali lớn hầm xe",
+    image: "images/hero5.jpg",
+    pricePerDay: 2500000,
+    routes: [
+      { route: "Đón Tiễn Sân Bay / City Tour", price: 1800000 },
+      { route: "TP.HCM - Vũng Tàu 1 Ngày", price: 3500000 },
+      { route: "TP.HCM - Đà Lạt 3 Ngày 2 Đêm", price: 8500000 },
+      { route: "TP.HCM - Miền Tây 2 Ngày 1 Đêm", price: 6200000 }
+    ],
+    features: ["Hệ thống bầu hơi êm ái", "Micro & âm thanh karaoke", "Hầm hành lý siêu rộng", "Tài xế chuyên tour du lịch"]
+  },
+  {
+    id: 6,
+    name: "Xe Du Lịch 45 Chỗ (Hyundai Universe Prime)",
+    seats: 45,
+    luggage: "Toàn bộ hành lý đoàn lớn",
+    image: "images/hero6.jpg",
+    pricePerDay: 3600000,
+    routes: [
+      { route: "City Tour / Teambuilding Công Ty", price: 2600000 },
+      { route: "TP.HCM - Phan Thiết 2N1Đ Teambuilding", price: 8900000 },
+      { route: "TP.HCM - Nha Trang 3N3Đ", price: 14500000 },
+      { route: "TP.HCM - Đà Lạt 3N3Đ", price: 13200000 }
+    ],
+    features: ["Đỉnh cao dòng xe du lịch cỡ lớn", "Giảm xóc khí nén êm ái tuyệt đối", "Đầy đủ màn hình TV, micro, đèn led sân khấu", "Bảo dưỡng định kỳ an toàn tuyệt đối"]
+  }
+];
+window.CAR_RENTAL_DATA = CAR_RENTAL_DATA;
+
+// ========================================================
+// 4. DỊCH VỤ VISA & HỘ CHIẾU (VISA PASSPORT TỪ WIL-TRAVEL)
+// ========================================================
+const VISA_SERVICES_DATA = [
+  {
+    id: 1,
+    country: "Nhật Bản",
+    flag: "🇯🇵",
+    type: "Du lịch tự túc / Tour",
+    duration: "15 ngày - 3 tháng",
+    processingTime: "7 - 10 ngày làm việc",
+    fee: 1490000,
+    passRate: "99%",
+    docs: ["Hộ chiếu gốc còn hạn trên 6 tháng", "2 ảnh 4.5x4.5 nền trắng chuẩn Nhật", "Chứng minh tài chính (Sổ tiết kiệm/Sao kê 3 tháng)", "Chứng minh công việc (Hợp đồng/Đơn xin nghỉ phép)"],
+    badge: "Bao Đậu 99%"
+  },
+  {
+    id: 2,
+    country: "Hàn Quốc",
+    flag: "🇰🇷",
+    type: "Du lịch (C-3-9) / Công tác",
+    duration: "15 - 30 ngày (Single/Multi 5 năm)",
+    processingTime: "8 - 12 ngày làm việc",
+    fee: 1590000,
+    passRate: "98%",
+    docs: ["Hộ chiếu gốc + Căn cước công dân", "Ảnh 3.5x4.5 nền trắng chụp mới", "Sao kê tài khoản ngân hàng", "Bảo hiểm xã hội VssID / Hợp đồng lao động"],
+    badge: "Hỗ Trợ Multi 5 Năm"
+  },
+  {
+    id: 3,
+    country: "Đài Loan",
+    flag: "🇹🇼",
+    type: "Visa Quan Hồng / E-visa",
+    duration: "14 ngày",
+    processingTime: "3 - 5 ngày làm việc",
+    fee: 650000,
+    passRate: "99.5%",
+    docs: ["Hộ chiếu còn hạn trên 6 tháng", "Hình chụp trang thông tin hộ chiếu", "Thông tin vé máy bay khứ hồi (WILTravel hỗ trợ)"],
+    badge: "Lấy Nhanh 3 Ngày"
+  },
+  {
+    id: 4,
+    country: "Châu Âu (Khối Schengen)",
+    flag: "🇪🇺",
+    type: "Du lịch 27 nước Schengen (Pháp, Ý, Đức, Thụy Sĩ...)",
+    duration: "Tối đa 90 ngày",
+    processingTime: "15 - 20 ngày làm việc",
+    fee: 4500000,
+    passRate: "96%",
+    docs: ["Hộ chiếu gốc còn ít nhất 2 trang trống", "Ảnh sinh trắc học 3.5x4.5", "Sao kê tài khoản ngân hàng 6 tháng", "Sổ đỏ/Giấy tờ sở hữu tài sản (nếu có)", "Lịch trình tour chi tiết (WILTravel thiết lập)"],
+    badge: "Tự Do 27 Nước"
+  },
+  {
+    id: 5,
+    country: "Hoa Kỳ (Mỹ - B1/B2)",
+    flag: "🇺🇸",
+    type: "Du lịch / Thăm thân / Công tác",
+    duration: "1 năm (Nhiều lần)",
+    processingTime: "Luyện phỏng vấn & Hẹn 5-10 ngày",
+    fee: 6200000,
+    passRate: "95%",
+    docs: ["Điền form DS-160 chuẩn xác", "Hộ chiếu còn hạn trên 6 tháng", "File ảnh 5x5 chuẩn Mỹ", "Buổi luyện phỏng vấn 1-1 cùng chuyên gia visa WILTravel"],
+    badge: "Luyện Phỏng Vấn 1-1"
+  },
+  {
+    id: 6,
+    country: "Úc (Australia - Subclass 600)",
+    flag: "🇦🇺",
+    type: "Visa du lịch điện tử (E-visa)",
+    duration: "1 - 3 năm (Nhiều lần)",
+    processingTime: "10 - 15 ngày làm việc",
+    fee: 4200000,
+    passRate: "97%",
+    docs: ["Hộ chiếu scan màu toàn bộ trang", "Giấy tờ chứng minh công việc & tài chính", "Căn cước công dân & giấy khai sinh"],
+    badge: "Không Cần Phỏng Vấn"
+  },
+  {
+    id: 7,
+    country: "Trung Quốc",
+    flag: "🇨🇳",
+    type: "Du lịch L / Thương mại M",
+    duration: "30 ngày (Single/Double)",
+    processingTime: "5 - 7 ngày làm việc",
+    fee: 2850000,
+    passRate: "99%",
+    docs: ["Hộ chiếu gốc", "Ảnh 3.3x4.8 phông trắng", "Căn cước công dân", "Hồ sơ công việc"],
+    badge: "Lấy Visa Nhanh"
+  }
+];
+window.VISA_SERVICES_DATA = VISA_SERVICES_DATA;
+
 
 // 2. LOCAL STORAGE CORE FUNCTIONS
 
@@ -1115,7 +1545,7 @@ function updateNavbar() {
     if (!currBtn) {
       currBtn = document.createElement('button');
       currBtn.id = 'currency-toggle';
-      currBtn.onclick = () => { if (typeof window.toggleGlobalCurrency === 'function') window.toggleGlobalCurrency(); };
+      currBtn.onclick = () => { if (typeof toggleGlobalCurrency === "function") toggleGlobalCurrency(); else if (typeof window.toggleGlobalCurrency === "function") window.toggleGlobalCurrency(); };
       currBtn.className = 'text-xs font-bold text-gray-700 dark:text-slate-200 bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 transition px-2.5 py-1.5 rounded-full border border-gray-200 dark:border-white/10 flex items-center gap-1 cursor-pointer';
       currBtn.title = 'Chuyển đổi tiền tệ hiển thị (VND / USD / EUR)';
       parent.insertBefore(currBtn, firstCartLink);
@@ -2003,70 +2433,56 @@ window.appLogout = function() {
 };
 
 // Centralized Currency & Price Converter System
-window.formatPriceGlobal = function(priceInVnd) {
-  const currency = localStorage.getItem('currency') || 'VND';
+formatPriceGlobal = function(priceInVnd) {
+  const currency = (typeof localStorage !== 'undefined' && localStorage.getItem('currency')) || 'VND';
+  const num = typeof priceInVnd === 'number' ? priceInVnd : parseFloat(String(priceInVnd).replace(/[^0-9.-]+/g, '')) || 0;
   if (currency === 'USD') {
-    const priceInUsd = priceInVnd / 25000;
+    const priceInUsd = num / 25000;
     return '$' + priceInUsd.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 1 });
   } else if (currency === 'EUR') {
-    const priceInEur = priceInVnd / 27000;
+    const priceInEur = num / 27000;
     return '€' + priceInEur.toLocaleString('de-DE', { minimumFractionDigits: 0, maximumFractionDigits: 1 });
   } else {
-    return priceInVnd.toLocaleString('vi-VN') + 'đ';
+    return num.toLocaleString('vi-VN') + 'đ';
   }
 };
+window.formatPriceGlobal = formatPriceGlobal;
 
-window.formatPriceString = function(priceStr) {
+formatPriceString = function(priceStr) {
   if (typeof priceStr === 'number') {
-    return window.formatPriceGlobal(priceStr);
+    return formatPriceGlobal(priceStr);
   }
   if (!priceStr) return '';
-  const cleanStr = priceStr.replace(/\./g, '').replace(/,/g, '').replace(/[^0-9.]/g, '');
+  const cleanStr = String(priceStr).replace(/\./g, '').replace(/,/g, '').replace(/[^0-9.]/g, '');
   let val = parseFloat(cleanStr);
   if (isNaN(val)) return priceStr;
   
-  if (priceStr.includes('tr')) {
+  if (String(priceStr).includes('tr')) {
     val = val * 1000000;
   }
   
-  return window.formatPriceGlobal(val);
+  return formatPriceGlobal(val);
 };
+window.formatPriceString = formatPriceString;
 
-window.injectCurrencySwitcher = function() {
-  const firstCartLink = document.querySelector('a[href*="cart.html"]');
-  if (firstCartLink && firstCartLink.parentElement) {
-    const parent = firstCartLink.parentElement;
-    let selector = parent.querySelector('#global-currency-select');
-    if (!selector) {
-      const currentCurrency = localStorage.getItem('currency') || 'VND';
-      const container = document.createElement('div');
-      container.className = 'relative inline-block';
-      container.innerHTML = `
-        <select id="global-currency-select" onchange="window.changeCurrency(this.value)" class="bg-gray-150 dark:bg-slate-800 border-none rounded-full px-2.5 py-1.5 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-700 dark:text-slate-200 cursor-pointer transition">
-          <option value="VND" ${currentCurrency === 'VND' ? 'selected' : ''}>VNĐ</option>
-          <option value="USD" ${currentCurrency === 'USD' ? 'selected' : ''}>USD ($)</option>
-          <option value="EUR" ${currentCurrency === 'EUR' ? 'selected' : ''}>EUR (€)</option>
-        </select>
-      `;
-      parent.insertBefore(container, firstCartLink);
-    }
+changeCurrency = function(val) {
+  if (typeof localStorage !== 'undefined') {
+    localStorage.setItem('currency', val);
   }
-};
-
-window.changeCurrency = function(val) {
-  localStorage.setItem('currency', val);
   const currBtnSpan = document.querySelector('#currency-toggle span');
   if (currBtnSpan) currBtnSpan.textContent = val;
   const select = document.getElementById('global-currency-select');
   if (select) select.value = val;
-  window.dispatchEvent(new Event('currencyChange'));
+  if (typeof window !== 'undefined' && typeof window.dispatchEvent === 'function') window.dispatchEvent(new Event('currencyChange'));
 };
+window.changeCurrency = changeCurrency;
 
-window.toggleGlobalCurrency = function() {
-  const current = localStorage.getItem('currency') || 'VND';
+toggleGlobalCurrency = function() {
+  const current = (typeof localStorage !== 'undefined' && localStorage.getItem('currency')) || 'VND';
   const next = current === 'VND' ? 'USD' : current === 'USD' ? 'EUR' : 'VND';
-  window.changeCurrency(next);
+  changeCurrency(next);
 };
+window.toggleGlobalCurrency = toggleGlobalCurrency;
 
 // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
@@ -2097,3 +2513,304 @@ function initAOSDynamically() {
 }
 
 document.addEventListener('DOMContentLoaded', () => { setTimeout(() => { initAOSDynamically(); if(typeof AOS !== 'undefined') AOS.refresh(); }, 500); });
+
+
+
+// ========================================================
+// 5. ULTRA-MODERN UI FEATURES: QUICK VIEW & COMMAND PALETTE
+// ========================================================
+
+// Open Quick View Modal for Tours
+window.openQuickView = function(tourId) {
+  const tour = tours.find(t => t.id === Number(tourId));
+  if (!tour) return;
+
+  let modal = document.getElementById('wil-quickview-modal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'wil-quickview-modal';
+    modal.className = 'fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-md p-4 transition-opacity duration-300 opacity-0 pointer-events-none';
+    modal.onclick = (e) => {
+      if (e.target === modal) window.closeQuickView();
+    };
+    document.body.appendChild(modal);
+  }
+
+  const discountPercent = tour.originalPrice ? Math.round((1 - tour.price / tour.originalPrice) * 100) : 0;
+  const departureDateList = (tour.departureDates || ["Hàng tuần"]).map(d => `<span class="px-2.5 py-1 text-xs rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 font-semibold border border-emerald-200 dark:border-emerald-800/40">${d}</span>`).join(' ');
+
+  const highlightsHtml = (tour.highlights || []).map(h => `<li class="flex items-center gap-2 text-sm text-gray-700 dark:text-slate-300"><i class="fa-solid fa-circle-check text-emerald-600 text-xs"></i><span>${h}</span></li>`).join('');
+
+  modal.innerHTML = `
+    <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-gray-100 dark:border-white/10 relative transition-transform duration-300 scale-95 flex flex-col md:flex-row overflow-hidden">
+      <button onclick="window.closeQuickView()" class="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center transition">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <div class="md:w-5/12 relative min-h-[240px] md:min-h-full">
+        <img src="${tour.image}" alt="${tour.name}" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+        <div class="absolute top-4 left-4 flex flex-col gap-1.5">
+          <span class="px-3 py-1 bg-emerald-600 text-white text-xs font-bold rounded-full shadow-lg">${tour.badge || 'Nổi bật'}</span>
+          ${discountPercent > 0 ? `<span class="px-3 py-1 bg-rose-600 text-white text-xs font-black rounded-full shadow-lg">-${discountPercent}%</span>` : ''}
+        </div>
+        <div class="absolute bottom-4 left-4 right-4 text-white">
+          <p class="text-xs uppercase tracking-wider text-emerald-300 font-bold">${tour.code || 'MÃ: WLE'}</p>
+          <div class="flex items-center gap-2 text-xs mt-1">
+            <span><i class="fa-solid fa-location-dot text-emerald-400 mr-1"></i>${tour.location}</span>
+            <span>•</span>
+            <span><i class="fa-regular fa-clock text-emerald-400 mr-1"></i>${tour.duration}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="md:w-7/12 p-6 md:p-8 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-semibold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2.5 py-1 rounded-full">
+              Khởi hành: ${tour.departure || 'TP.HCM'}
+            </span>
+            <div class="flex items-center gap-1 text-amber-500 text-xs font-bold">
+              <i class="fa-solid fa-star"></i> ${tour.rating || 4.9} (${tour.reviews || 100} đánh giá)
+            </div>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white leading-snug mb-3">${tour.name}</h3>
+
+          <div class="mb-4 p-3.5 bg-gray-50 dark:bg-slate-800/60 rounded-2xl border border-gray-150 dark:border-white/5">
+            <div class="flex items-baseline gap-3">
+              <span class="text-2xl font-black text-rose-600 dark:text-rose-400">${window.formatPriceGlobal(tour.price)}</span>
+              ${tour.originalPrice ? `<span class="text-sm text-gray-400 line-through">${window.formatPriceGlobal(tour.originalPrice)}</span>` : ''}
+            </div>
+            <p class="text-xs text-emerald-600 font-medium mt-1">✨ Đã gồm vé máy bay, resort 4* & bảo hiểm Bảo Minh 100tr</p>
+          </div>
+
+          <div class="mb-4">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Điểm nhấn chuyến đi:</p>
+            <ul class="space-y-1.5">
+              ${highlightsHtml}
+            </ul>
+          </div>
+
+          <div class="mb-6">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Lịch khởi hành sắp tới:</p>
+            <div class="flex flex-wrap gap-1.5">
+              ${departureDateList}
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3 pt-4 border-t border-gray-150 dark:border-white/10">
+          <a href="tour-detail.html?id=${tour.id}" class="flex-1 text-center py-3 px-4 rounded-xl bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 text-gray-800 dark:text-white text-sm font-bold transition">
+            Xem Chi Tiết Lịch Trình
+          </a>
+          <button onclick="addToCart(${tour.id}); window.closeQuickView();" class="flex-1 py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold shadow-lg shadow-emerald-600/30 transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-cart-plus"></i> Đặt Tour Ngay
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  modal.classList.remove('opacity-0', 'pointer-events-none');
+  modal.firstElementChild.classList.remove('scale-95');
+  modal.firstElementChild.classList.add('scale-100');
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeQuickView = function() {
+  const modal = document.getElementById('wil-quickview-modal');
+  if (modal) {
+    modal.classList.add('opacity-0', 'pointer-events-none');
+    if (modal.firstElementChild) {
+      modal.firstElementChild.classList.remove('scale-100');
+      modal.firstElementChild.classList.add('scale-95');
+    }
+  }
+  document.body.style.overflow = '';
+};
+
+// ========================================================
+// 6. GLOBAL COMMAND PALETTE (CTRL + K / SEARCH POPUP)
+// ========================================================
+window.openCommandPalette = function() {
+  let palette = document.getElementById('wil-command-palette');
+  if (!palette) {
+    palette = document.createElement('div');
+    palette.id = 'wil-command-palette';
+    palette.className = 'fixed inset-0 z-[120] flex items-start justify-center pt-20 px-4 bg-black/60 backdrop-blur-md transition-opacity duration-200 opacity-0 pointer-events-none';
+    palette.onclick = (e) => { if (e.target === palette) window.closeCommandPalette(); };
+    palette.innerHTML = `
+      <div class="bg-white dark:bg-slate-900 rounded-3xl w-full max-w-2xl shadow-2xl border border-gray-200 dark:border-white/10 overflow-hidden transform transition-transform duration-200 scale-95">
+        <div class="p-4 border-b border-gray-150 dark:border-white/10 flex items-center gap-3">
+          <i class="fa-solid fa-magnifying-glass text-emerald-600 text-lg"></i>
+          <input type="text" id="palette-search-input" placeholder="Tìm tour, khách sạn, vé máy bay, thuê xe, visa, địa danh... (Ấn Esc để đóng)" class="w-full bg-transparent text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none text-base">
+          <span class="text-xs bg-gray-100 dark:bg-slate-800 text-gray-500 px-2 py-1 rounded-md font-mono">ESC</span>
+        </div>
+        <div id="palette-results" class="max-h-[60vh] overflow-y-auto p-4 space-y-2">
+          <p class="text-xs uppercase font-bold text-gray-400 px-3 py-1">Gợi ý tìm kiếm nhanh:</p>
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <button onclick="paletteSearchQuick('Phú Quốc')" class="p-2.5 rounded-xl bg-gray-50 dark:bg-slate-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 text-left font-medium transition flex items-center gap-2">
+              <span>🏝️ Tour Phú Quốc</span>
+            </button>
+            <button onclick="paletteSearchQuick('Nhật Bản')" class="p-2.5 rounded-xl bg-gray-50 dark:bg-slate-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 text-left font-medium transition flex items-center gap-2">
+              <span>🌸 Tour Nhật Bản</span>
+            </button>
+            <button onclick="paletteSearchQuick('Hàn Quốc')" class="p-2.5 rounded-xl bg-gray-50 dark:bg-slate-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 text-left font-medium transition flex items-center gap-2">
+              <span>🍁 Tour Hàn Quốc</span>
+            </button>
+            <button onclick="paletteSearchQuick('Khách sạn')" class="p-2.5 rounded-xl bg-gray-50 dark:bg-slate-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 text-left font-medium transition flex items-center gap-2">
+              <span>🏨 Đặt Khách Sạn</span>
+            </button>
+            <button onclick="paletteSearchQuick('Thuê xe')" class="p-2.5 rounded-xl bg-gray-50 dark:bg-slate-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 text-left font-medium transition flex items-center gap-2">
+              <span>🚗 Thuê Xe Du Lịch</span>
+            </button>
+            <button onclick="paletteSearchQuick('Visa')" class="p-2.5 rounded-xl bg-gray-50 dark:bg-slate-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 text-left font-medium transition flex items-center gap-2">
+              <span>🛂 Dịch Vụ Visa</span>
+            </button>
+          </div>
+        </div>
+        <div class="p-3 bg-gray-50 dark:bg-slate-800/60 border-t border-gray-150 dark:border-white/10 flex justify-between items-center text-xs text-gray-500">
+          <span>Hotline hỗ trợ: <strong class="text-emerald-600">0905 025 737</strong></span>
+          <span>WIL-Travel.com</span>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(palette);
+
+    const input = document.getElementById('palette-search-input');
+    input.addEventListener('input', (e) => handlePaletteSearch(e.target.value));
+  }
+
+  palette.classList.remove('opacity-0', 'pointer-events-none');
+  const inner = palette.firstElementChild;
+  inner.classList.remove('scale-95');
+  inner.classList.add('scale-100');
+  const input = document.getElementById('palette-search-input');
+  setTimeout(() => input.focus(), 100);
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeCommandPalette = function() {
+  const palette = document.getElementById('wil-command-palette');
+  if (palette) {
+    palette.classList.add('opacity-0', 'pointer-events-none');
+    if (palette.firstElementChild) {
+      palette.firstElementChild.classList.remove('scale-100');
+      palette.firstElementChild.classList.add('scale-95');
+    }
+  }
+  document.body.style.overflow = '';
+};
+
+window.paletteSearchQuick = function(term) {
+  const input = document.getElementById('palette-search-input');
+  if (input) {
+    input.value = term;
+    handlePaletteSearch(term);
+  }
+};
+
+function handlePaletteSearch(keyword) {
+  const q = keyword.trim().toLowerCase();
+  const resultsContainer = document.getElementById('palette-results');
+  if (!resultsContainer) return;
+
+  if (!q) {
+    resultsContainer.innerHTML = `
+      <p class="text-xs uppercase font-bold text-gray-400 px-3 py-1">Gợi ý tìm kiếm nhanh:</p>
+      <div class="grid grid-cols-2 gap-2 text-xs">
+        <button onclick="paletteSearchQuick('Phú Quốc')" class="p-2.5 rounded-xl bg-gray-50 dark:bg-slate-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 text-left font-medium transition flex items-center gap-2">
+          <span>🏝️ Tour Phú Quốc</span>
+        </button>
+        <button onclick="paletteSearchQuick('Nhật Bản')" class="p-2.5 rounded-xl bg-gray-50 dark:bg-slate-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 text-left font-medium transition flex items-center gap-2">
+          <span>🌸 Tour Nhật Bản</span>
+        </button>
+        <button onclick="paletteSearchQuick('Khách sạn')" class="p-2.5 rounded-xl bg-gray-50 dark:bg-slate-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 text-left font-medium transition flex items-center gap-2">
+          <span>🏨 Đặt Khách Sạn</span>
+        </button>
+        <button onclick="paletteSearchQuick('Thuê xe')" class="p-2.5 rounded-xl bg-gray-50 dark:bg-slate-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 text-left font-medium transition flex items-center gap-2">
+          <span>🚗 Thuê Xe Du Lịch</span>
+        </button>
+      </div>
+    `;
+    return;
+  }
+
+  // Search across tours, hotels, cars, visas
+  const tourMatches = tours.filter(t => t.name.toLowerCase().includes(q) || t.location.toLowerCase().includes(q) || (t.code && t.code.toLowerCase().includes(q)));
+  const hotelMatches = (window.HOTELS_DATA || []).filter(h => h.name.toLowerCase().includes(q) || h.city.toLowerCase().includes(q));
+  const carMatches = (window.CAR_RENTAL_DATA || []).filter(c => c.name.toLowerCase().includes(q));
+  const visaMatches = (window.VISA_SERVICES_DATA || []).filter(v => v.country.toLowerCase().includes(q));
+
+  let html = '';
+
+  if (tourMatches.length > 0) {
+    html += `<p class="text-xs uppercase font-bold text-emerald-600 px-3 mt-2">Tour du lịch (${tourMatches.length}):</p>`;
+    html += tourMatches.slice(0, 5).map(t => `
+      <div onclick="window.closeCommandPalette(); window.location.href='tour-detail.html?id=${t.id}'" class="p-3 rounded-2xl hover:bg-gray-100 dark:hover:bg-slate-800 cursor-pointer flex items-center justify-between gap-3 transition">
+        <div class="flex items-center gap-3">
+          <img src="${t.image}" class="w-12 h-12 rounded-xl object-cover">
+          <div>
+            <h4 class="text-sm font-bold text-gray-900 dark:text-white line-clamp-1">${t.name}</h4>
+            <p class="text-xs text-gray-500">${t.duration} • Khởi hành ${t.departure || 'TP.HCM'}</p>
+          </div>
+        </div>
+        <span class="text-sm font-black text-rose-600">${window.formatPriceGlobal(t.price)}</span>
+      </div>
+    `).join('');
+  }
+
+  if (hotelMatches.length > 0) {
+    html += `<p class="text-xs uppercase font-bold text-blue-600 px-3 mt-3">Khách sạn & Resort (${hotelMatches.length}):</p>`;
+    html += hotelMatches.slice(0, 3).map(h => `
+      <div onclick="window.closeCommandPalette(); window.location.href='hotels.html?city=${encodeURIComponent(h.city)}'" class="p-3 rounded-2xl hover:bg-gray-100 dark:hover:bg-slate-800 cursor-pointer flex items-center justify-between gap-3 transition">
+        <div class="flex items-center gap-3">
+          <img src="${h.image}" class="w-12 h-12 rounded-xl object-cover">
+          <div>
+            <h4 class="text-sm font-bold text-gray-900 dark:text-white">${h.name}</h4>
+            <p class="text-xs text-gray-500">${h.stars} sao • ${h.city}</p>
+          </div>
+        </div>
+        <span class="text-sm font-bold text-primary-600">${window.formatPriceGlobal(h.price)}/đêm</span>
+      </div>
+    `).join('');
+  }
+
+  if (visaMatches.length > 0) {
+    html += `<p class="text-xs uppercase font-bold text-purple-600 px-3 mt-3">Dịch vụ Visa (${visaMatches.length}):</p>`;
+    html += visaMatches.map(v => `
+      <div onclick="window.closeCommandPalette(); window.location.href='visa.html'" class="p-3 rounded-2xl hover:bg-gray-100 dark:hover:bg-slate-800 cursor-pointer flex items-center justify-between gap-3 transition">
+        <div class="flex items-center gap-3">
+          <span class="text-2xl">${v.flag}</span>
+          <div>
+            <h4 class="text-sm font-bold text-gray-900 dark:text-white">Visa ${v.country} - ${v.type}</h4>
+            <p class="text-xs text-gray-500">Xử lý: ${v.processingTime} • Tỷ lệ đậu ${v.passRate}</p>
+          </div>
+        </div>
+        <span class="text-xs font-bold bg-purple-100 text-purple-700 px-2.5 py-1 rounded-full">${window.formatPriceGlobal(v.fee)}</span>
+      </div>
+    `).join('');
+  }
+
+  if (!html) {
+    html = `<div class="p-6 text-center text-gray-400 text-sm">Không tìm thấy kết quả phù hợp cho "${keyword}". Vui lòng thử từ khóa khác hoặc liên hệ Hotline <strong>0905 025 737</strong>.</div>`;
+  }
+
+  resultsContainer.innerHTML = html;
+}
+
+// Global Keyboard Shortcut: Ctrl + K / Cmd + K to open Command Palette
+if (typeof window !== 'undefined' && typeof window.addEventListener === 'function') window.addEventListener('keydown', (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+    e.preventDefault();
+    const palette = document.getElementById('wil-command-palette');
+    if (palette && !palette.classList.contains('pointer-events-none')) {
+      window.closeCommandPalette();
+    } else {
+      window.openCommandPalette();
+    }
+  } else if (e.key === 'Escape') {
+    window.closeCommandPalette();
+    window.closeQuickView();
+  }
+});

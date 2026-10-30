@@ -8,7 +8,7 @@
   <link rel="icon" href="images/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="images/favicon.png">
 
-  <title>WILTravel - Chỉ cần & đi chuyến nghỉ ngơi</title>
+  <title>WILTravel - Chỉ cần & đi chuyến nghỉ ngơi | Du Lịch & Nghỉ Dưỡng Hàng Đầu</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -26,7 +26,7 @@
               300: '#86efac',
               400: '#4ade80',
               500: '#08854e',
-              600: '#06693D', // Match original forest green logo color
+              600: '#06693D', // Official forest green brand
               700: '#044d2d',
               800: '#033b22',
               900: '#012113',
@@ -36,10 +36,13 @@
       }
     }
   </script>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <style>
+    html {
+      scroll-behavior: smooth;
+    }
     .hero-bg-layer {
       position: absolute;
       top: 0;
@@ -58,395 +61,660 @@
       transform: scale(1);
     }
     .card-hover {
-      transition: transform 0.4s ease, box-shadow 0.4s ease !important;
-      opacity: 1 !important;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
     }
     .card-hover:hover {
-      transform: translateY(-12px) !important;
-      box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25) !important;
-    }
-    /* Prevent AOS from hiding home page card-hover components */
-    [data-aos].card-hover {
-      opacity: 1 !important;
-      transform: none !important;
-    }
-    [data-aos].card-hover:hover {
-      transform: translateY(-12px) !important;
-    }
-    html {
-      scroll-behavior: smooth;
-    }
-
-    /* Advanced Carousel Animations */
-    .carousel-slide {
-      opacity: 0;
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background-size: cover;
-      background-position: center;
-      transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .carousel-slide.active {
-      opacity: 1;
-      position: relative;
-      z-index: 5;
-    }
-    .carousel-indicators {
-      position: absolute;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 12px;
-      z-index: 20;
+      transform: translateY(-8px) !important;
+      box-shadow: 0 20px 30px -10px rgba(6, 105, 61, 0.18) !important;
     }
     .carousel-indicator {
-      width: 12px;
-      height: 12px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
-      background-color: rgba(255,255,255,0.5);
+      background-color: rgba(255,255,255,0.4);
       cursor: pointer;
       transition: all 0.4s ease;
-      border: 2px solid transparent;
-    }
-    .carousel-indicator:hover {
-      background-color: rgba(255,255,255,0.8);
-      transform: scale(1.2);
     }
     .carousel-indicator.active {
-      background-color: #fff;
-      width: 32px;
+      background-color: #10b981;
+      width: 30px;
       border-radius: 6px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
-    .carousel-nav-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 20;
-      background-color: rgba(255,255,255,0.15);
-      border: 2px solid rgba(255,255,255,0.6);
-      color: white;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 20px;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      backdrop-filter: blur(4px);
-    }
-    .carousel-nav-btn:hover {
-      background-color: rgba(255,255,255,0.3);
-      border-color: white;
-      transform: translateY(-50%) scale(1.1);
-      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-    }
-    .carousel-nav-btn.prev { left: 20px; }
-    .carousel-nav-btn.next { right: 20px; }
-    .hero-section:hover .carousel-nav-btn { opacity: 1; }
-
-    /* Mobile Optimization */
-    @media (max-width: 768px) {
-
-      h2 {
-        font-size: 2.25rem !important;
-        line-height: 1.1 !important;
-      }
-      .search-container {
-        padding: 12px !important;
-      }
-      .carousel-nav-btn { width: 40px; height: 40px; font-size: 16px; }
-      .carousel-nav-btn.prev { left: 12px; }
-      .carousel-nav-btn.next { right: 12px; }
-      .carousel-indicators { bottom: 20px; gap: 8px; }
-      .carousel-indicator { width: 10px; height: 10px; }
-      .carousel-indicator.active { width: 28px; }
+    .service-pill-tab.active {
+      background-color: #06693D;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(6, 105, 61, 0.3);
     }
   </style>
 </head>
-<body class="font-jakarta bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-300">
+<body class="font-jakarta bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300">
 
   <!-- Navbar -->
-  <nav class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-md fixed w-full z-50 border-b border-gray-100 dark:border-white/10 transition-colors duration-300">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+  <nav class="bg-white/85 dark:bg-slate-900/85 backdrop-blur-md shadow-sm fixed w-full z-50 border-b border-gray-100 dark:border-white/10 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex justify-between items-center">
       <a href="index.html" class="flex items-center gap-3">
         <img src="images/logo-transparent.png?v=1.0.1" alt="WILTravel" class="h-9 sm:h-11 w-auto dark:hidden">
         <img src="images/logo-footer.png" alt="WILTravel" class="h-9 sm:h-11 w-auto hidden dark:block">
       </a>
       
       <!-- Desktop Menu -->
-      <div class="hidden md:flex items-center gap-8 text-gray-700 dark:text-slate-200 font-medium">
-        <a href="index.html" class="hover:text-primary-600 dark:text-primary-400 transition">Trang chủ</a>
-        <a href="tours.html" class="hover:text-primary-600 dark:text-primary-400 transition">Tours</a>
-        <a href="flight.html" class="hover:text-primary-600 dark:text-primary-400 transition">Máy Bay</a>
-        <a href="blog.html" class="hover:text-primary-600 dark:text-primary-400 transition">Blog</a>
-        <a href="contact.html" class="hover:text-primary-600 dark:text-primary-400 transition">Liên Hệ</a>
-        <a href="about.html" class="hover:text-primary-600 dark:text-primary-400 transition">Về Chúng Tôi</a>
+      <div class="hidden lg:flex items-center gap-6 xl:gap-7 text-gray-700 dark:text-slate-200 font-semibold text-sm">
+        <a href="index.html" class="text-primary-600 dark:text-primary-400 font-bold transition">Trang chủ</a>
+        <a href="tours.html" class="hover:text-primary-600 dark:hover:text-primary-400 transition">Tours</a>
+        <a href="hotels.html" class="hover:text-primary-600 dark:hover:text-primary-400 transition">Khách Sạn</a>
+        <a href="car-rental.html" class="hover:text-primary-600 dark:hover:text-primary-400 transition">Thuê Xe</a>
+        <a href="flight.html" class="hover:text-primary-600 dark:hover:text-primary-400 transition">Máy Bay</a>
+        <a href="visa.html" class="hover:text-primary-600 dark:hover:text-primary-400 transition">Visa</a>
+        <a href="deals.html" class="hover:text-primary-600 dark:hover:text-primary-400 transition">Ưu Đãi</a>
+        <a href="blog.html" class="hover:text-primary-600 dark:hover:text-primary-400 transition">Blog</a>
+        <a href="contact.html" class="hover:text-primary-600 dark:hover:text-primary-400 transition">Liên Hệ</a>
       </div>
 
-      <div class="flex items-center gap-3">
-        <a href="cart.html" class="text-gray-700 dark:text-slate-200 hover:text-primary-600 dark:text-primary-400 transition text-lg"><i class="fa-solid fa-shopping-cart"></i></a>
-        <a href="profile.html" class="text-gray-700 dark:text-slate-200 hover:text-primary-600 dark:text-primary-400 transition text-lg"><i class="fa-solid fa-user"></i></a>
-        <a href="login.html" class="hidden md:inline-block px-4 py-2 text-gray-700 dark:text-slate-200 hover:bg-gray-100 dark:bg-slate-800 rounded-full transition text-sm sm:text-base">Đăng nhập</a>
-        <a href="register.html" class="hidden md:inline-block bg-primary-600 dark:bg-primary-700 text-white px-5 py-2 rounded-full hover:bg-primary-700 dark:hover:bg-primary-600 transition text-sm sm:text-base font-medium">Đăng ký</a>
-      </div>
+      <div class="flex items-center gap-2.5 sm:gap-3">
+        <!-- Quick Search Command Palette Trigger -->
+        <button onclick="window.openCommandPalette()" class="p-2 rounded-full text-gray-600 dark:text-slate-300 hover:text-primary-600 hover:bg-gray-100 dark:hover:bg-slate-800 transition flex items-center gap-1.5 text-xs font-semibold" title="Tìm nhanh (Ctrl + K)">
+          <i class="fa-solid fa-magnifying-glass text-sm"></i>
+          <span class="hidden xl:inline text-xs text-gray-400 bg-gray-100 dark:bg-slate-800 px-1.5 py-0.5 rounded border border-gray-200 dark:border-white/10 font-mono">Ctrl K</span>
+        </button>
 
-      <!-- Mobile Menu Button -->
-      <button id="mobile-menu-button" class="md:hidden text-3xl text-gray-700 dark:text-slate-200">
-        <i class="fa-solid fa-bars"></i>
-      </button>
+        <a href="cart.html" class="relative p-2 text-gray-700 dark:text-slate-200 hover:text-primary-600 transition text-base">
+          <i class="fa-solid fa-shopping-cart"></i>
+        </a>
+        <a href="profile.html" class="p-2 text-gray-700 dark:text-slate-200 hover:text-primary-600 transition text-base">
+          <i class="fa-solid fa-user"></i>
+        </a>
+        <a href="login.html" class="hidden sm:inline-block px-4 py-2 text-gray-700 dark:text-slate-200 hover:bg-gray-100 dark:bg-slate-800 rounded-full transition text-sm font-medium">Đăng nhập</a>
+        <a href="register.html" class="hidden sm:inline-block bg-primary-600 dark:bg-primary-700 text-white px-5 py-2 rounded-full hover:bg-primary-700 transition text-sm font-semibold shadow-md shadow-primary-600/20">Đăng ký</a>
+        
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-button" class="lg:hidden text-2xl text-gray-700 dark:text-slate-200 p-1">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
     </div>
-    <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
-      <div class="px-6 py-6 flex flex-col gap-5 text-gray-700 dark:text-slate-200 font-medium">
-        <a href="index.html" class="hover:text-primary-600 dark:text-primary-400 transition">Trang chủ</a>
-        <a href="tours.html" class="hover:text-primary-600 dark:text-primary-400 transition">Tours</a>
-        <a href="flight.html" class="hover:text-primary-600 dark:text-primary-400 transition">Máy Bay</a>
-        <a href="blog.html" class="hover:text-primary-600 dark:text-primary-400 transition">Blog</a>
-        <a href="contact.html" class="hover:text-primary-600 dark:text-primary-400 transition">Liên Hệ</a>
-        <a href="about.html" class="hover:text-primary-600 dark:text-primary-400 transition">Về Chúng Tôi</a>
-        <hr>
-        <a href="cart.html" class="hover:text-primary-600 dark:text-primary-400 transition"><i class="fa-solid fa-shopping-cart mr-2"></i>Giỏ Hàng</a>
-        <a href="profile.html" class="hover:text-primary-600 dark:text-primary-400 transition"><i class="fa-solid fa-user mr-2"></i>Tài Khoản</a>
-        <a href="login.html" class="hover:text-primary-600 dark:text-primary-400 transition md:hidden"><i class="fa-solid fa-sign-in-alt mr-2"></i>Đăng nhập</a>
-        <a href="register.html" class="hover:text-primary-600 dark:text-primary-400 transition md:hidden"><i class="fa-solid fa-user-plus mr-2"></i>Đăng ký</a>
-      </div>
+
+    <!-- Mobile Menu Drawer -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-white dark:bg-slate-900 border-t border-gray-100 dark:border-white/10 px-6 py-6 flex flex-col gap-4 text-gray-700 dark:text-slate-200 font-medium">
+      <a href="index.html" class="text-primary-600 font-bold">Trang chủ</a>
+      <a href="tours.html" class="hover:text-primary-600">Tours du lịch</a>
+      <a href="hotels.html" class="hover:text-primary-600">Khách sạn & Resort</a>
+      <a href="car-rental.html" class="hover:text-primary-600">Thuê xe du lịch</a>
+      <a href="flight.html" class="hover:text-primary-600">Vé máy bay</a>
+      <a href="visa.html" class="hover:text-primary-600">Dịch vụ Visa</a>
+      <a href="deals.html" class="hover:text-primary-600">Ưu đãi giờ vàng</a>
+      <a href="blog.html" class="hover:text-primary-600">Cẩm nang du lịch</a>
+      <a href="contact.html" class="hover:text-primary-600">Liên hệ & Hotline</a>
     </div>
   </nav>
 
-  <!-- Hero Carousel -->
-  <section id="hero" class="h-screen min-h-[640px] flex items-center text-white pt-16 md:pt-20 relative overflow-hidden" style="height: 100vh; min-height: 640px;">
+  <!-- Hero Section with Ultra-Modern Multi-Service Tabbed Card -->
+  <header id="hero" class="relative min-h-[720px] md:min-h-[780px] flex items-center text-white pt-24 pb-16 overflow-hidden">
     <!-- Background Layers for Cross-fade transition -->
     <div id="hero-bg-1" class="hero-bg-layer active" style="background-image: url('images/hero1.jpg');"></div>
     <div id="hero-bg-2" class="hero-bg-layer"></div>
-    <div class="absolute inset-0 bg-gradient-to-r from-black/65 via-black/45 to-transparent z-10"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/35 z-10"></div>
     
     <!-- Slide Caption Badge (top right) -->
-    <div class="absolute top-24 right-6 z-20 text-right hidden md:block">
-      <div id="slide-badge" style="transition: opacity 0.5s ease;" class="inline-block bg-white/10 backdrop-blur-md border border-white/20 px-5 py-3 rounded-2xl">
-        <p id="slide-caption" class="text-white font-bold text-lg">Việt Nam tươi đẹp</p>
-        <p id="slide-sub" class="text-white/70 text-sm mt-0.5">Khám phá những điểm đến tuyệt vời ngay trong nước</p>
+    <div class="absolute top-28 right-6 z-20 text-right hidden lg:block">
+      <div id="slide-badge" style="transition: opacity 0.5s ease;" class="inline-block bg-white/10 backdrop-blur-md border border-white/20 px-5 py-3 rounded-2xl shadow-xl">
+        <p id="slide-caption" class="text-white font-extrabold text-base">Việt Nam tươi đẹp</p>
+        <p id="slide-sub" class="text-emerald-300 text-xs mt-0.5">Khám phá những điểm đến tuyệt vời ngay trong nước</p>
       </div>
     </div>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-20">
-      <div class="max-w-2xl">
-        <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight mb-6">
-          Chỉ cần &amp; <span class="text-primary-400 dark:text-primary-300">đi chuyến nghỉ ngơi</span>
-        </h2>
-        <p class="text-lg md:text-xl mb-8 text-gray-200">
-          WILTravel mang đến những hành trình tuyệt vời nhất. Khám phá thế giới theo cách riêng của bạn.
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-20 w-full">
+      <div class="max-w-3xl mb-8">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-emerald-300 text-xs sm:text-sm font-semibold mb-4">
+          <i class="fa-solid fa-award text-amber-400"></i>
+          <span>Thương hiệu lữ hành uy tín 15+ năm • WIL-Travel.com</span>
+        </div>
+        <h1 class="text-3xl sm:text-5xl md:text-6xl font-black leading-tight mb-4 tracking-tight">
+          Hành Trình Trong Mơ<br>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-green-200">Trải Nghiệm Đẳng Cấp</span>
+        </h1>
+        <p class="text-sm sm:text-base md:text-lg text-slate-200 max-w-2xl leading-relaxed">
+          Đồng hành cùng hàng vạn du khách trên các cung đường biển đảo, vùng cao, tour quốc tế, phòng resort sang trọng và dịch vụ visa trọn gói tận tâm.
         </p>
+      </div>
 
-        <div class="bg-white dark:bg-slate-800 rounded-3xl p-2 shadow-2xl search-container">
-          <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
-            <div class="md:col-span-2">
-              <label class="block text-xs text-gray-500 dark:text-slate-400 ml-4 mt-2">Bạn muốn đi đâu?</label>
-              <input type="text" id="search-input" placeholder="Phú Quốc, Đà Lạt, Bali, Nhật Bản..." 
-                     onkeyup="if(event.key === 'Enter') searchTour()"
-                     class="w-full px-6 py-4 bg-transparent focus:outline-none text-gray-800 dark:text-slate-100 text-base md:text-lg">
+      <!-- Modern Multi-Service Tabbed Card (Glassmorphism) -->
+      <div class="max-w-5xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl rounded-3xl p-4 sm:p-6 shadow-2xl border border-white/30 text-gray-800 dark:text-slate-100">
+        <!-- Service Tabs -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-3 mb-4 border-b border-gray-150 dark:border-white/10 scrollbar-none" id="hero-service-tabs">
+          <button onclick="switchHeroTab('tour')" id="tab-btn-tour" class="service-pill-tab active px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition flex items-center gap-2 whitespace-nowrap">
+            <i class="fa-solid fa-compass"></i> Tour Du Lịch
+          </button>
+          <button onclick="switchHeroTab('hotel')" id="tab-btn-hotel" class="service-pill-tab px-4 py-2 rounded-full text-xs sm:text-sm font-semibold text-gray-600 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800 transition flex items-center gap-2 whitespace-nowrap">
+            <i class="fa-solid fa-hotel"></i> Khách Sạn & Resort
+          </button>
+          <button onclick="switchHeroTab('car')" id="tab-btn-car" class="service-pill-tab px-4 py-2 rounded-full text-xs sm:text-sm font-semibold text-gray-600 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800 transition flex items-center gap-2 whitespace-nowrap">
+            <i class="fa-solid fa-car-side"></i> Thuê Xe Du Lịch
+          </button>
+          <button onclick="switchHeroTab('flight')" id="tab-btn-flight" class="service-pill-tab px-4 py-2 rounded-full text-xs sm:text-sm font-semibold text-gray-600 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800 transition flex items-center gap-2 whitespace-nowrap">
+            <i class="fa-solid fa-plane-departure"></i> Vé Máy Bay
+          </button>
+          <button onclick="switchHeroTab('visa')" id="tab-btn-visa" class="service-pill-tab px-4 py-2 rounded-full text-xs sm:text-sm font-semibold text-gray-600 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800 transition flex items-center gap-2 whitespace-nowrap">
+            <i class="fa-solid fa-passport"></i> Dịch Vụ Visa
+          </button>
+        </div>
+
+        <!-- Tab 1: Tour Search Form -->
+        <div id="hero-tab-tour" class="tab-content block">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-slate-400 mb-1">Điểm khởi hành</label>
+              <div class="relative">
+                <i class="fa-solid fa-location-arrow absolute left-3 top-3 text-emerald-600"></i>
+                <select id="hero-departure-select" class="w-full pl-8 pr-3 py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-white/10 rounded-xl text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                  <option value="TP.HCM">Từ TP. Hồ Chí Minh</option>
+                  <option value="Hà Nội">Từ Hà Nội</option>
+                  <option value="Đà Nẵng">Từ Đà Nẵng</option>
+                  <option value="Cần Thơ">Từ Cần Thơ</option>
+                </select>
+              </div>
             </div>
-            <div class="hidden md:block">
-              <label class="block text-xs text-gray-500 dark:text-slate-400 ml-4 mt-2">Ngày đi</label>
-              <input type="date" id="search-date" class="w-full px-6 py-4 bg-transparent focus:outline-none text-gray-800 dark:text-slate-100">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-slate-400 mb-1">Bạn muốn đi đâu?</label>
+              <div class="relative">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-emerald-600"></i>
+                <input type="text" id="search-input" placeholder="Phú Quốc, Sapa, Nhật Bản, Bali..." onkeyup="if(event.key === 'Enter') searchTour()" class="w-full pl-8 pr-3 py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-white/10 rounded-xl text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500">
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-slate-400 mb-1">Ngày khởi hành</label>
+              <div class="relative">
+                <i class="fa-regular fa-calendar absolute left-3 top-3 text-emerald-600"></i>
+                <input type="date" id="search-date" class="w-full pl-8 pr-3 py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-white/10 rounded-xl text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500">
+              </div>
             </div>
             <div class="flex items-end">
-              <button onclick="searchTour()" 
-                      class="w-full bg-primary-600 dark:bg-primary-700 hover:bg-primary-700 dark:hover:bg-primary-600 text-white font-semibold py-4 rounded-2xl transition text-base md:text-lg">
-                Tìm chuyến đi
+              <button onclick="searchTour()" class="w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-lg shadow-emerald-600/30 transition flex items-center justify-center gap-2 text-sm">
+                <i class="fa-solid fa-compass"></i> Tìm Chuyến Đi
               </button>
             </div>
           </div>
         </div>
+
+        <!-- Tab 2: Hotel Search Form -->
+        <div id="hero-tab-hotel" class="tab-content hidden">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-slate-400 mb-1">Thành phố đến</label>
+              <select id="hero-hotel-city" class="w-full px-3 py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-white/10 rounded-xl text-xs sm:text-sm font-semibold">
+                <option value="Phú Quốc">Phú Quốc (Kiên Giang)</option>
+                <option value="Sài Gòn">Sài Gòn (TP.HCM)</option>
+                <option value="Phan Thiết">Phan Thiết (Mũi Né)</option>
+                <option value="Đà Lạt">Đà Lạt (Lâm Đồng)</option>
+                <option value="Nha Trang">Nha Trang (Khánh Hòa)</option>
+                <option value="Vũng Tàu">Vũng Tàu</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-slate-400 mb-1">Phân khúc phòng</label>
+              <select id="hero-hotel-cat" class="w-full px-3 py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-white/10 rounded-xl text-xs sm:text-sm font-semibold">
+                <option value="all">Tất cả (3* - 5*)</option>
+                <option value="Luxury">Luxury 5 Sao</option>
+                <option value="Deluxe">Deluxe 4-5 Sao</option>
+                <option value="Superior">Superior</option>
+                <option value="Standard">Standard Giá Tốt</option>
+              </select>
+            </div>
+            <div class="flex items-end">
+              <button onclick="navigateToHotelSearch()" class="w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-sm">
+                <i class="fa-solid fa-hotel"></i> Xem Phòng & Đặt Ngay
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 3: Car Rental Search Form -->
+        <div id="hero-tab-car" class="tab-content hidden">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-slate-400 mb-1">Loại xe cần thuê</label>
+              <select id="hero-car-type" class="w-full px-3 py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-white/10 rounded-xl text-xs sm:text-sm font-semibold">
+                <option value="4">Xe 4 Chỗ (Vios, City, Mazda 3)</option>
+                <option value="7">Xe 7 Chỗ (Innova, Fortuner, Xpander)</option>
+                <option value="16">Xe 16 Chỗ (Transit, Solati)</option>
+                <option value="9">Xe Limousine VIP 9 Chỗ</option>
+                <option value="29">Xe 29 Chỗ (Thaco Town)</option>
+                <option value="45">Xe 45 Chỗ (Universe Prime)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-slate-400 mb-1">Tuyến đường dự kiến</label>
+              <select id="hero-car-route" class="w-full px-3 py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-white/10 rounded-xl text-xs sm:text-sm font-semibold">
+                <option value="airport">Đón Tiễn Sân Bay Tân Sơn Nhất</option>
+                <option value="vungtau">TP.HCM - Vũng Tàu / Hồ Tràm</option>
+                <option value="phanthiet">TP.HCM - Phan Thiết / Mũi Né</option>
+                <option value="dalat">TP.HCM - Đà Lạt</option>
+                <option value="mientay">TP.HCM - Cần Thơ / Miền Tây</option>
+              </select>
+            </div>
+            <div class="flex items-end">
+              <a href="car-rental.html" class="w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-sm text-center">
+                <i class="fa-solid fa-car"></i> Bảng Giá & Đặt Xe
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 4: Flight Search Form -->
+        <div id="hero-tab-flight" class="tab-content hidden">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-slate-400 mb-1">Hành trình bay</label>
+              <select class="w-full px-3 py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-white/10 rounded-xl text-xs sm:text-sm font-semibold">
+                <option value="SGN-HAN">TP.HCM (SGN) ➔ Hà Nội (HAN)</option>
+                <option value="SGN-DAD">TP.HCM (SGN) ➔ Đà Nẵng (DAD)</option>
+                <option value="SGN-PQC">TP.HCM (SGN) ➔ Phú Quốc (PQC)</option>
+                <option value="HAN-DAD">Hà Nội (HAN) ➔ Đà Nẵng (DAD)</option>
+                <option value="SGN-BKK">TP.HCM (SGN) ➔ Bangkok (BKK)</option>
+                <option value="SGN-SIN">TP.HCM (SGN) ➔ Singapore (SIN)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-slate-400 mb-1">Loại vé</label>
+              <select class="w-full px-3 py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-white/10 rounded-xl text-xs sm:text-sm font-semibold">
+                <option value="round">Khứ Hồi (Đã gồm hành lý)</option>
+                <option value="oneway">Một Chiều</option>
+              </select>
+            </div>
+            <div class="flex items-end">
+              <a href="flight.html" class="w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-sm text-center">
+                <i class="fa-solid fa-plane"></i> Tra Cứu Vé Máy Bay
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 5: Visa Consultation -->
+        <div id="hero-tab-visa" class="tab-content hidden">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-slate-400 mb-1">Quốc gia xin visa</label>
+              <select class="w-full px-3 py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-white/10 rounded-xl text-xs sm:text-sm font-semibold">
+                <option value="Japan">🇯🇵 Visa Nhật Bản (Bao đậu 99%)</option>
+                <option value="Korea">🇰🇷 Visa Hàn Quốc (Multi 5 năm)</option>
+                <option value="Taiwan">🇹🇼 Visa Đài Loan (Lấy trong 3 ngày)</option>
+                <option value="Schengen">🇪🇺 Visa Khối Schengen Châu Âu 27 nước</option>
+                <option value="US">🇺🇸 Visa Mỹ (Luyện phỏng vấn 1-1)</option>
+                <option value="Australia">🇦🇺 Visa Úc (E-visa 1-3 năm)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-slate-400 mb-1">Mục đích chuyến đi</label>
+              <select class="w-full px-3 py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-white/10 rounded-xl text-xs sm:text-sm font-semibold">
+                <option value="tour">Du lịch tự túc / Tour</option>
+                <option value="biz">Công tác / Thương mại</option>
+                <option value="visit">Thăm thân nhân</option>
+              </select>
+            </div>
+            <div class="flex items-end">
+              <a href="visa.html" class="w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-sm text-center">
+                <i class="fa-solid fa-passport"></i> Bảng Phí & Đăng Ký
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Counters -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 max-w-5xl">
+        <div class="bg-black/30 backdrop-blur-md p-3.5 rounded-2xl border border-white/10 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg font-bold">
+            <i class="fa-solid fa-medal"></i>
+          </div>
+          <div>
+            <p class="text-xl font-black text-white">15+ Năm</p>
+            <p class="text-[11px] text-slate-300">Kinh nghiệm lữ hành</p>
+          </div>
+        </div>
+        <div class="bg-black/30 backdrop-blur-md p-3.5 rounded-2xl border border-white/10 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg font-bold">
+            <i class="fa-solid fa-map-location-dot"></i>
+          </div>
+          <div>
+            <p class="text-xl font-black text-white">100+ Điểm Đến</p>
+            <p class="text-[11px] text-slate-300">Trong & Quốc tế</p>
+          </div>
+        </div>
+        <div class="bg-black/30 backdrop-blur-md p-3.5 rounded-2xl border border-white/10 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg font-bold">
+            <i class="fa-solid fa-shield-heart"></i>
+          </div>
+          <div>
+            <p class="text-xl font-black text-white">100% Bảo Hiểm</p>
+            <p class="text-[11px] text-slate-300">Bảo Minh tới 1 Tỷ</p>
+          </div>
+        </div>
+        <div class="bg-black/30 backdrop-blur-md p-3.5 rounded-2xl border border-white/10 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg font-bold">
+            <i class="fa-solid fa-headset"></i>
+          </div>
+          <div>
+            <p class="text-xl font-black text-white">24/7 Hotline</p>
+            <p class="text-[11px] text-slate-300">0905 025 737</p>
+          </div>
+        </div>
       </div>
     </div>
 
-    <section id="search-results" class="hidden bg-white py-10">
-      <div class="max-w-7xl mx-auto px-6">
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-          <div>
-            <h3 class="text-2xl font-bold text-gray-800 dark:text-slate-100">Kết quả tìm kiếm</h3>
-            <p class="text-gray-500 dark:text-slate-400 mt-1" id="search-summary"></p>
-          </div>
-          <button onclick="resetSearchResults()" class="text-sm text-gray-600 dark:text-slate-300 hover:text-primary-600 dark:text-primary-400 underline">Xóa kết quả</button>
-        </div>
-        <div id="search-results-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-      </div>
-    </section>
-
-    <button onclick="prevSlide()" class="carousel-nav-btn prev" aria-label="Previous slide">
+    <!-- Carousel Nav Buttons -->
+    <button onclick="prevSlide()" class="carousel-nav-btn prev hidden md:flex" aria-label="Slide trước">
       <i class="fa-solid fa-chevron-left"></i>
     </button>
-    <button onclick="nextSlide()" class="carousel-nav-btn next" aria-label="Next slide">
+    <button onclick="nextSlide()" class="carousel-nav-btn next hidden md:flex" aria-label="Slide tiếp">
       <i class="fa-solid fa-chevron-right"></i>
     </button>
+    <div id="indicators" class="carousel-indicators"></div>
+  </header>
 
-    <div class="carousel-indicators" id="indicators"></div>
-  </section>
-
-  <!-- Statistics -->
-  <section class="py-12 bg-white border-b">
-    <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-      <div>
-        <div class="text-4xl font-bold text-primary-600 dark:text-primary-400 stat-number" data-target="12500">0</div>
-        <p class="text-gray-600 dark:text-slate-300 mt-2">Khách hàng hài lòng</p>
+  <!-- Search Results Dropdown/Anchor -->
+  <section id="search-results" class="hidden bg-white dark:bg-slate-800 py-12 border-b border-gray-150 dark:border-white/10">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Kết quả tìm kiếm</h3>
+          <p id="search-summary" class="text-xs text-emerald-600 font-semibold mt-1"></p>
+        </div>
+        <button onclick="resetSearchResults()" class="text-xs font-semibold text-gray-500 hover:text-rose-600 transition">
+          <i class="fa-solid fa-xmark mr-1"></i> Đóng kết quả
+        </button>
       </div>
-      <div>
-        <div class="text-4xl font-bold text-primary-600 dark:text-primary-400 stat-number" data-target="248">0</div>
-        <p class="text-gray-600 dark:text-slate-300 mt-2">Điểm đến</p>
-      </div>
-      <div>
-        <div class="text-4xl font-bold text-primary-600 dark:text-primary-400 stat-number" data-target="856">0</div>
-        <p class="text-gray-600 dark:text-slate-300 mt-2">Tour đã tổ chức</p>
-      </div>
-      <div>
-        <div class="text-4xl font-bold text-primary-600 dark:text-primary-400 stat-number" data-target="98">0</div>
-        <p class="text-gray-600 dark:text-slate-300 mt-2">% Khách hài lòng</p>
-      </div>
+      <div id="search-results-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
     </div>
   </section>
 
-  <!-- Popular Destinations -->
-  <section id="destinations" class="py-16 md:py-20 bg-gray-50 dark:bg-slate-800/50">
+  <!-- Section 1: HỆ SINH THÁI DỊCH VỤ TOÀN DIỆN CỦA WIL-TRAVEL -->
+  <section class="py-16 md:py-20 bg-gray-50 dark:bg-slate-800/40 border-b border-gray-100 dark:border-white/5">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
-      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 md:mb-12 gap-4">
-        <div>
-          <h2 class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-slate-100">Điểm đến nổi bật</h2>
-          <p class="text-gray-600 dark:text-slate-300 mt-2">Những chuyến đi được yêu thích nhất</p>
-        </div>
-        <a href="#destinations" class="text-primary-600 dark:text-primary-400 hover:underline font-medium flex items-center gap-2 whitespace-nowrap">
-          Xem tất cả <i class="fa-solid fa-arrow-right"></i>
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider bg-emerald-50 dark:bg-emerald-950/40 px-3 py-1 rounded-full">Dịch Vụ Cốt Lõi</span>
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white mt-2">Hệ Sinh Thái Du Lịch Đa Dạng</h2>
+        <p class="text-gray-500 dark:text-slate-400 text-sm mt-2">WIL-Travel.com cung cấp trọn gói từ tour lữ hành, phòng khách sạn, xe du lịch đến visa quốc tế.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- 1. Tour Trong Nước -->
+        <a href="tours.html?cat=domestic" class="card-hover bg-white dark:bg-slate-800 p-6 rounded-3xl border border-gray-150 dark:border-white/5 block group">
+          <div class="w-14 h-14 rounded-2xl bg-emerald-100 dark:bg-emerald-950/50 text-emerald-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
+            <i class="fa-solid fa-map-location-dot"></i>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-emerald-600 transition">Tour Du Lịch Trong Nước</h3>
+          <p class="text-xs text-gray-500 dark:text-slate-400 mb-4 leading-relaxed">Khám phá biển Phú Quốc, Nha Trang, Đà Nẵng, cao nguyên Đà Lạt, mùa lúa Sapa - Hà Giang và miền Tây sông nước trọn gói.</p>
+          <span class="text-xs font-bold text-emerald-600 flex items-center gap-1 group-hover:translate-x-1 transition">Khám phá tour <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
+        </a>
+
+        <!-- 2. Tour Nước Ngoài -->
+        <a href="tours.html?cat=intl" class="card-hover bg-white dark:bg-slate-800 p-6 rounded-3xl border border-gray-150 dark:border-white/5 block group">
+          <div class="w-14 h-14 rounded-2xl bg-blue-100 dark:bg-blue-950/50 text-blue-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
+            <i class="fa-solid fa-earth-asia"></i>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 transition">Tour Du Lịch Quốc Tế</h3>
+          <p class="text-xs text-gray-500 dark:text-slate-400 mb-4 leading-relaxed">Cung đường vàng Nhật Bản, Hàn Quốc mùa hoa, Thái Lan shopping, Đài Loan lãng mạn, Malaysia Legoland trọn gói visa.</p>
+          <span class="text-xs font-bold text-blue-600 flex items-center gap-1 group-hover:translate-x-1 transition">Khám phá tour <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
+        </a>
+
+        <!-- 3. Khách Sạn & Resort -->
+        <a href="hotels.html" class="card-hover bg-white dark:bg-slate-800 p-6 rounded-3xl border border-gray-150 dark:border-white/5 block group">
+          <div class="w-14 h-14 rounded-2xl bg-amber-100 dark:bg-amber-950/50 text-amber-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
+            <i class="fa-solid fa-hotel"></i>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-amber-600 transition">Khách Sạn & Resort 5 Sao</h3>
+          <p class="text-xs text-gray-500 dark:text-slate-400 mb-4 leading-relaxed">Phân khúc Standard, Superior, Deluxe và Luxury tại các trung tâm du lịch lớn với giá đại lý tốt nhất thị trường.</p>
+          <span class="text-xs font-bold text-amber-600 flex items-center gap-1 group-hover:translate-x-1 transition">Đặt phòng ngay <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
+        </a>
+
+        <!-- 4. Cho Thuê Xe Du Lịch -->
+        <a href="car-rental.html" class="card-hover bg-white dark:bg-slate-800 p-6 rounded-3xl border border-gray-150 dark:border-white/5 block group">
+          <div class="w-14 h-14 rounded-2xl bg-purple-100 dark:bg-purple-950/50 text-purple-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
+            <i class="fa-solid fa-car-side"></i>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-purple-600 transition">Cho Thuê Xe Du Lịch</h3>
+          <p class="text-xs text-gray-500 dark:text-slate-400 mb-4 leading-relaxed">Đội xe đời mới từ 4 chỗ, 7 chỗ, 16 chỗ Limousine, 29 đến 45 chỗ Universe. Đón tiễn sân bay Tân Sơn Nhất và liên tỉnh.</p>
+          <span class="text-xs font-bold text-purple-600 flex items-center gap-1 group-hover:translate-x-1 transition">Bảng giá xe <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
+        </a>
+
+        <!-- 5. Vé Máy Bay -->
+        <a href="flight.html" class="card-hover bg-white dark:bg-slate-800 p-6 rounded-3xl border border-gray-150 dark:border-white/5 block group">
+          <div class="w-14 h-14 rounded-2xl bg-cyan-100 dark:bg-cyan-950/50 text-cyan-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
+            <i class="fa-solid fa-plane-departure"></i>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-cyan-600 transition">Vé Máy Bay Giá Đại Lý</h3>
+          <p class="text-xs text-gray-500 dark:text-slate-400 mb-4 leading-relaxed">Đại lý vé máy bay cấp 1 chính hãng Vietnam Airlines, Vietjet Air, Bamboo Airways, Emirates, Singapore Airlines.</p>
+          <span class="text-xs font-bold text-cyan-600 flex items-center gap-1 group-hover:translate-x-1 transition">Săn vé giá rẻ <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
+        </a>
+
+        <!-- 6. Dịch Vụ Visa & Hộ Chiếu -->
+        <a href="visa.html" class="card-hover bg-white dark:bg-slate-800 p-6 rounded-3xl border border-gray-150 dark:border-white/5 block group">
+          <div class="w-14 h-14 rounded-2xl bg-rose-100 dark:bg-rose-950/50 text-rose-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
+            <i class="fa-solid fa-passport"></i>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-rose-600 transition">Dịch Vụ Visa & Hộ Chiếu</h3>
+          <p class="text-xs text-gray-500 dark:text-slate-400 mb-4 leading-relaxed">Tư vấn visa du lịch, công tác Nhật Bản, Hàn Quốc, Đài Loan, Châu Âu Schengen, Mỹ, Úc với tỷ lệ đậu lên đến 99%.</p>
+          <span class="text-xs font-bold text-rose-600 flex items-center gap-1 group-hover:translate-x-1 transition">Tư vấn Visa <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
         </a>
       </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8" id="destinations-grid"></div>
     </div>
   </section>
 
-  <!-- Interactive Tour Quiz Section -->
-  <section class="py-16 bg-gray-50 dark:bg-slate-900 border-t border-b border-gray-100 dark:border-white/10">
-    <div class="max-w-4xl mx-auto px-6 text-center animate-fade-in">
-      <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-800 dark:text-slate-100">Tìm Hành Trình Hoàn Hảo Của Bạn 🗺️</h2>
-      <p class="text-gray-600 dark:text-slate-350 mb-10 max-w-lg mx-auto">Chỉ với 3 câu hỏi nhanh, trợ lý ảo Tina sẽ đề xuất cho bạn tour du lịch lý tưởng nhất kèm mã giảm giá đặc quyền!</p>
-      
-      <div class="bg-white dark:bg-slate-800 rounded-3xl p-8 md:p-12 shadow-xl border border-gray-100 dark:border-white/5 relative min-h-[350px] flex flex-col justify-center items-center overflow-hidden">
+  <!-- Section 2: TOUR NỔI BẬT THEO ĐIỂM KHỞI HÀNH (TP.HCM, Hà Nội, Đà Nẵng, Cần Thơ) -->
+  <section id="featured-tours-section" class="py-16 md:py-20 bg-white dark:bg-slate-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
+        <div>
+          <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider bg-emerald-50 dark:bg-emerald-950/40 px-3 py-1 rounded-full">Tour Chọn Lọc</span>
+          <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white mt-2">Các Tour Du Lịch Tiêu Biểu</h2>
+          <p class="text-gray-500 dark:text-slate-400 text-sm mt-1">Lịch khởi hành đều đặn hàng tuần với cam kết chất lượng chuẩn 4 sao</p>
+        </div>
         
-        <!-- Step 1: Style -->
-        <div id="quiz-step-1" class="quiz-step w-full flex flex-col items-center transition-all duration-300">
-          <span class="text-xs font-semibold text-primary-600 dark:text-primary-400 bg-green-50 dark:bg-green-900/30 px-3 py-1 rounded-full mb-3">Bước 1 / 3</span>
-          <h3 class="text-xl md:text-2xl font-bold mb-6 text-gray-800 dark:text-slate-100">Bạn thích trải nghiệm phong cách nào nhất?</h3>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-2xl">
-            <button onclick="selectQuizAnswer('style', 'Biển')" class="p-6 border-2 border-gray-150 dark:border-white/10 rounded-2xl hover:border-primary-600 dark:hover:border-primary-400 hover:bg-green-50/20 text-center font-bold text-gray-800 dark:text-slate-200 transition">
-              <span class="text-3xl block mb-2">🏖️</span> Biển đảo mát mẻ
-            </button>
-            <button onclick="selectQuizAnswer('style', 'Núi')" class="p-6 border-2 border-gray-150 dark:border-white/10 rounded-2xl hover:border-primary-600 dark:hover:border-primary-400 hover:bg-green-50/20 text-center font-bold text-gray-800 dark:text-slate-200 transition">
-              <span class="text-3xl block mb-2">🏔️</span> Núi cao kỳ vĩ
-            </button>
-            <button onclick="selectQuizAnswer('style', 'Thành phố')" class="p-6 border-2 border-gray-150 dark:border-white/10 rounded-2xl hover:border-primary-600 dark:hover:border-primary-400 hover:bg-green-50/20 text-center font-bold text-gray-800 dark:text-slate-200 transition">
-              <span class="text-3xl block mb-2">🏙️</span> Văn hóa & Thành phố
+        <!-- Filter Hub Tabs -->
+        <div class="flex flex-wrap gap-2">
+          <button onclick="filterFeaturedByDeparture('all', this)" class="hub-pill-btn px-4 py-2 rounded-full text-xs font-bold bg-primary-600 text-white shadow transition">Tất Cả</button>
+          <button onclick="filterFeaturedByDeparture('TP.HCM', this)" class="hub-pill-btn px-4 py-2 rounded-full text-xs font-semibold bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 hover:bg-emerald-50 hover:text-emerald-700 transition">Từ TP.HCM</button>
+          <button onclick="filterFeaturedByDeparture('Hà Nội', this)" class="hub-pill-btn px-4 py-2 rounded-full text-xs font-semibold bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 hover:bg-emerald-50 hover:text-emerald-700 transition">Từ Hà Nội</button>
+          <a href="tours.html" class="px-4 py-2 rounded-full text-xs font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/30 hover:bg-emerald-100 transition flex items-center gap-1.5">
+            Xem 100+ tour <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8" id="featured-tours">
+        <!-- Rendered via JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Flash Sale Countdown Giờ Vàng -->
+  <section class="py-16 md:py-20 bg-gray-50 dark:bg-slate-800/50 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="bg-gradient-to-r from-emerald-800 via-teal-900 to-slate-900 rounded-3xl p-8 md:p-12 text-white relative shadow-2xl flex flex-col lg:flex-row items-center justify-between border border-white/10">
+        <div class="relative z-10 lg:w-1/2 mb-8 lg:mb-0 text-center lg:text-left">
+          <span class="bg-amber-400 text-slate-950 text-xs font-black px-3.5 py-1 rounded-full uppercase tracking-wider mb-4 inline-block shadow">⚡ Giờ Vàng Săn Deal</span>
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 leading-tight">Ưu Đãi Mùa Du Lịch<br><span class="text-emerald-300">Tiết Kiệm Lên Đến 35%</span></h2>
+          <p class="text-slate-300 text-sm sm:text-base mb-6 leading-relaxed">Áp dụng cho các tour Phú Quốc 4N3Đ, Sapa - Hà Giang 5N4Đ, Malaysia Legoland và Bali. Số lượng chỗ ưu đãi có hạn trong tuần này!</p>
+          <div class="flex flex-wrap gap-3 justify-center lg:justify-start">
+            <a href="deals.html" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 px-8 py-3.5 rounded-full font-bold text-sm transition shadow-lg flex items-center gap-2">
+              <i class="fa-solid fa-fire text-rose-600"></i> Xem Tất Cả Deals Giờ Vàng
+            </a>
+            <button onclick="window.openCommandPalette()" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-6 py-3.5 rounded-full font-semibold text-sm transition">
+              Tìm Tour Nhanh (Ctrl+K)
             </button>
           </div>
         </div>
 
-        <!-- Step 2: Budget -->
-        <div id="quiz-step-2" class="quiz-step hidden w-full flex flex-col items-center transition-all duration-300">
-          <span class="text-xs font-semibold text-primary-600 dark:text-primary-400 bg-green-50 dark:bg-green-900/30 px-3 py-1 rounded-full mb-3">Bước 2 / 3</span>
-          <h3 class="text-xl md:text-2xl font-bold mb-6 text-gray-800 dark:text-slate-100">Ngân sách dự kiến của bạn cho mỗi người?</h3>
+        <div class="relative z-10 flex flex-col items-center bg-black/40 backdrop-blur-md p-6 sm:p-8 rounded-3xl border border-white/15 w-full sm:w-auto shadow-2xl">
+          <p class="text-xs uppercase tracking-widest text-emerald-300 font-bold mb-4">Thời gian ưu đãi còn lại</p>
+          <div class="flex justify-center gap-2 sm:gap-3 text-center" id="countdown-timer">
+            <div class="flex flex-col">
+              <span class="text-2xl sm:text-4xl font-black bg-white/20 px-3.5 py-2.5 rounded-2xl mb-1 min-w-[55px] sm:min-w-[70px] shadow-inner font-mono" id="cd-days">02</span>
+              <span class="text-[10px] uppercase text-emerald-300 font-bold">Ngày</span>
+            </div>
+            <span class="text-2xl sm:text-4xl font-black text-white/40 mt-1">:</span>
+            <div class="flex flex-col">
+              <span class="text-2xl sm:text-4xl font-black bg-white/20 px-3.5 py-2.5 rounded-2xl mb-1 min-w-[55px] sm:min-w-[70px] shadow-inner font-mono" id="cd-hours">14</span>
+              <span class="text-[10px] uppercase text-emerald-300 font-bold">Giờ</span>
+            </div>
+            <span class="text-2xl sm:text-4xl font-black text-white/40 mt-1">:</span>
+            <div class="flex flex-col">
+              <span class="text-2xl sm:text-4xl font-black bg-white/20 px-3.5 py-2.5 rounded-2xl mb-1 min-w-[55px] sm:min-w-[70px] shadow-inner font-mono" id="cd-minutes">45</span>
+              <span class="text-[10px] uppercase text-emerald-300 font-bold">Phút</span>
+            </div>
+            <span class="text-2xl sm:text-4xl font-black text-white/40 mt-1">:</span>
+            <div class="flex flex-col">
+              <span class="text-2xl sm:text-4xl font-black bg-white/20 px-3.5 py-2.5 rounded-2xl mb-1 min-w-[55px] sm:min-w-[70px] shadow-inner font-mono" id="cd-seconds">30</span>
+              <span class="text-[10px] uppercase text-emerald-300 font-bold">Giây</span>
+            </div>
+          </div>
+          <div class="mt-4 pt-4 border-t border-white/10 w-full text-center text-xs text-slate-300 flex items-center justify-center gap-2">
+            <i class="fa-solid fa-gift text-amber-400"></i>
+            <span>Tặng nón du lịch & bao hộ chiếu độc quyền</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Interactive Tour Quiz AI -->
+  <section class="py-16 md:py-20 bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-white/5">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider bg-emerald-50 dark:bg-emerald-950/40 px-3 py-1 rounded-full">Trắc Nghiệm Khám Phá</span>
+      <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white mt-2 mb-3">Bạn Chưa Biết Nên Đi Đâu? 🗺️</h2>
+      <p class="text-gray-500 dark:text-slate-400 text-sm max-w-lg mx-auto mb-10">Chỉ 3 câu hỏi nhanh, trợ lý thông minh WILTravel sẽ gợi ý hành trình lý tưởng và tặng bạn voucher giảm 10%!</p>
+      
+      <div class="bg-gray-50 dark:bg-slate-800 rounded-3xl p-6 sm:p-10 shadow-lg border border-gray-150 dark:border-white/5 relative min-h-[320px] flex flex-col justify-center items-center">
+        <!-- Step 1 -->
+        <div id="quiz-step-1" class="quiz-step w-full flex flex-col items-center">
+          <span class="text-xs font-semibold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/40 px-3 py-1 rounded-full mb-3">Câu hỏi 1 / 3</span>
+          <h3 class="text-xl font-bold mb-6 text-gray-900 dark:text-white">Bạn thích trải nghiệm phong cách chuyến đi nào nhất?</h3>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-2xl">
-            <button onclick="selectQuizAnswer('budget', 'low')" class="p-6 border-2 border-gray-150 dark:border-white/10 rounded-2xl hover:border-primary-600 dark:hover:border-primary-400 hover:bg-green-50/20 text-center font-bold text-gray-800 dark:text-slate-200 transition">
+            <button onclick="selectQuizAnswer('style', 'Biển')" class="p-5 bg-white dark:bg-slate-700/60 border border-gray-200 dark:border-white/10 rounded-2xl hover:border-emerald-500 hover:shadow-md text-center font-bold text-gray-800 dark:text-slate-100 transition">
+              <span class="text-3xl block mb-2">🏖️</span> Biển đảo cát trắng
+            </button>
+            <button onclick="selectQuizAnswer('style', 'Núi')" class="p-5 bg-white dark:bg-slate-700/60 border border-gray-200 dark:border-white/10 rounded-2xl hover:border-emerald-500 hover:shadow-md text-center font-bold text-gray-800 dark:text-slate-100 transition">
+              <span class="text-3xl block mb-2">🏔️</span> Núi cao & Săn mây
+            </button>
+            <button onclick="selectQuizAnswer('style', 'Thành phố')" class="p-5 bg-white dark:bg-slate-700/60 border border-gray-200 dark:border-white/10 rounded-2xl hover:border-emerald-500 hover:shadow-md text-center font-bold text-gray-800 dark:text-slate-100 transition">
+              <span class="text-3xl block mb-2">🌸</span> Văn hóa & Quốc tế
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div id="quiz-step-2" class="quiz-step hidden w-full flex flex-col items-center">
+          <span class="text-xs font-semibold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/40 px-3 py-1 rounded-full mb-3">Câu hỏi 2 / 3</span>
+          <h3 class="text-xl font-bold mb-6 text-gray-900 dark:text-white">Ngân sách dự kiến của bạn cho mỗi người?</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-2xl">
+            <button onclick="selectQuizAnswer('budget', 'low')" class="p-5 bg-white dark:bg-slate-700/60 border border-gray-200 dark:border-white/10 rounded-2xl hover:border-emerald-500 hover:shadow-md text-center font-bold text-gray-800 dark:text-slate-100 transition">
               <span class="text-3xl block mb-2">💵</span> Tiết kiệm (&lt; 4 triệu)
             </button>
-            <button onclick="selectQuizAnswer('budget', 'mid')" class="p-6 border-2 border-gray-150 dark:border-white/10 rounded-2xl hover:border-primary-600 dark:hover:border-primary-400 hover:bg-green-50/20 text-center font-bold text-gray-800 dark:text-slate-200 transition">
-              <span class="text-3xl block mb-2">💳</span> Vừa vặn (4tr - 10tr)
+            <button onclick="selectQuizAnswer('budget', 'mid')" class="p-5 bg-white dark:bg-slate-700/60 border border-gray-200 dark:border-white/10 rounded-2xl hover:border-emerald-500 hover:shadow-md text-center font-bold text-gray-800 dark:text-slate-100 transition">
+              <span class="text-3xl block mb-2">💳</span> Vừa vặn (4 - 12 triệu)
             </button>
-            <button onclick="selectQuizAnswer('budget', 'high')" class="p-6 border-2 border-gray-150 dark:border-white/10 rounded-2xl hover:border-primary-600 dark:hover:border-primary-400 hover:bg-green-50/20 text-center font-bold text-gray-800 dark:text-slate-200 transition">
-              <span class="text-3xl block mb-2">💎</span> Cao cấp (&gt; 10 triệu)
+            <button onclick="selectQuizAnswer('budget', 'high')" class="p-5 bg-white dark:bg-slate-700/60 border border-gray-200 dark:border-white/10 rounded-2xl hover:border-emerald-500 hover:shadow-md text-center font-bold text-gray-800 dark:text-slate-100 transition">
+              <span class="text-3xl block mb-2">💎</span> Cao cấp (&gt; 12 triệu)
             </button>
           </div>
         </div>
 
-        <!-- Step 3: Companions -->
-        <div id="quiz-step-3" class="quiz-step hidden w-full flex flex-col items-center transition-all duration-300">
-          <span class="text-xs font-semibold text-primary-600 dark:text-primary-400 bg-green-50 dark:bg-green-900/30 px-3 py-1 rounded-full mb-3">Bước 3 / 3</span>
-          <h3 class="text-xl md:text-2xl font-bold mb-6 text-gray-800 dark:text-slate-100">Bạn sẽ đi cùng ai trong chuyến hành trình này?</h3>
+        <!-- Step 3 -->
+        <div id="quiz-step-3" class="quiz-step hidden w-full flex flex-col items-center">
+          <span class="text-xs font-semibold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/40 px-3 py-1 rounded-full mb-3">Câu hỏi 3 / 3</span>
+          <h3 class="text-xl font-bold mb-6 text-gray-900 dark:text-white">Bạn sẽ đi cùng ai trong chuyến đi này?</h3>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-2xl">
-            <button onclick="selectQuizAnswer('companion', 'solo')" class="p-6 border-2 border-gray-150 dark:border-white/10 rounded-2xl hover:border-primary-600 dark:hover:border-primary-400 hover:bg-green-50/20 text-center font-bold text-gray-800 dark:text-slate-200 transition">
-              <span class="text-3xl block mb-2">🎒</span> Một mình (Solo)
+            <button onclick="selectQuizAnswer('companion', 'solo')" class="p-5 bg-white dark:bg-slate-700/60 border border-gray-200 dark:border-white/10 rounded-2xl hover:border-emerald-500 hover:shadow-md text-center font-bold text-gray-800 dark:text-slate-100 transition">
+              <span class="text-3xl block mb-2">🎒</span> Tự do (Một mình)
             </button>
-            <button onclick="selectQuizAnswer('companion', 'couple')" class="p-6 border-2 border-gray-150 dark:border-white/10 rounded-2xl hover:border-primary-600 dark:hover:border-primary-400 hover:bg-green-50/20 text-center font-bold text-gray-800 dark:text-slate-200 transition">
-              <span class="text-3xl block mb-2">👩‍❤️‍👨</span> Cặp đôi / Bạn thân
+            <button onclick="selectQuizAnswer('companion', 'couple')" class="p-5 bg-white dark:bg-slate-700/60 border border-gray-200 dark:border-white/10 rounded-2xl hover:border-emerald-500 hover:shadow-md text-center font-bold text-gray-800 dark:text-slate-100 transition">
+              <span class="text-3xl block mb-2">👩‍❤️‍👨</span> Cặp đôi / Bạn bè
             </button>
-            <button onclick="selectQuizAnswer('companion', 'family')" class="p-6 border-2 border-gray-150 dark:border-white/10 rounded-2xl hover:border-primary-600 dark:hover:border-primary-400 hover:bg-green-50/20 text-center font-bold text-gray-800 dark:text-slate-200 transition">
-              <span class="text-3xl block mb-2">👨‍👩‍👧‍👦</span> Gia đình / Nhóm lớn
+            <button onclick="selectQuizAnswer('companion', 'family')" class="p-5 bg-white dark:bg-slate-700/60 border border-gray-200 dark:border-white/10 rounded-2xl hover:border-emerald-500 hover:shadow-md text-center font-bold text-gray-800 dark:text-slate-100 transition">
+              <span class="text-3xl block mb-2">👨‍👩‍👧‍👦</span> Gia đình / Công ty
             </button>
           </div>
         </div>
 
         <!-- Result -->
-        <div id="quiz-result" class="quiz-step hidden w-full flex flex-col items-center transition-all duration-300">
-          <h3 class="text-2xl font-bold mb-6 text-gray-800 dark:text-slate-100">Hành trình hoàn hảo dành cho bạn! 🎉</h3>
+        <div id="quiz-result" class="quiz-step hidden w-full flex flex-col items-center">
+          <h3 class="text-2xl font-black mb-4 text-gray-900 dark:text-white">Gợi ý tour hoàn hảo cho bạn! 🎉</h3>
+          <div id="quiz-result-card" class="w-full max-w-md bg-white dark:bg-slate-700 p-5 rounded-2xl border border-gray-200 dark:border-white/10 mb-4 text-left"></div>
           
-          <div id="quiz-result-card" class="w-full max-w-md bg-slate-50 dark:bg-slate-700/30 rounded-3xl p-6 border border-gray-200 dark:border-white/10 text-left flex flex-col sm:flex-row gap-5 items-center mb-6">
-            <!-- Dynamic content injected here -->
-          </div>
-
-          <!-- Coupon area -->
-          <div class="bg-green-50 dark:bg-green-950/40 border border-green-200 dark:border-green-900 rounded-2xl px-6 py-4 flex flex-col sm:flex-row items-center gap-4 justify-between w-full max-w-md">
-            <div class="text-left w-full sm:w-auto">
-              <p class="text-xs text-green-700 dark:text-green-300 font-semibold uppercase tracking-wider">Mã giảm giá độc quyền</p>
-              <p class="text-xl font-black text-primary-600 dark:text-primary-400">WILPREMIUM10</p>
+          <div class="bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800 rounded-2xl p-4 flex items-center justify-between w-full max-w-md">
+            <div>
+              <p class="text-xs text-emerald-800 dark:text-emerald-300 font-semibold uppercase">Mã giảm giá độc quyền</p>
+              <p class="text-xl font-black text-emerald-600 dark:text-emerald-400">WILPREMIUM10</p>
             </div>
-            <button onclick="copyQuizCoupon(this)" class="bg-primary-600 hover:bg-primary-700 text-white font-bold py-2.5 px-4 rounded-xl transition text-sm flex items-center gap-2 w-full sm:w-auto justify-center">
-              <i class="fa-solid fa-copy"></i> Sao chép
+            <button onclick="copyQuizCoupon(this)" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded-xl text-xs transition">
+              Sao chép mã
             </button>
           </div>
-          
-          <button onclick="resetQuiz()" class="mt-6 text-sm text-gray-500 hover:text-primary-600 transition underline font-medium">Làm lại bài trắc nghiệm</button>
+          <button onclick="resetQuiz()" class="mt-4 text-xs text-gray-400 hover:text-emerald-600 underline">Làm lại bài trắc nghiệm</button>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- Special Offers -->
-  <section class="py-16 md:py-20 bg-white overflow-hidden">
+  <!-- Section 5: ĐÁNH GIÁ THỰC TẾ TỪ DU KHÁCH -->
+  <section class="py-16 md:py-20 bg-gray-50 dark:bg-slate-800/40">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
-      <div class="bg-gradient-to-r from-emerald-600 to-teal-800 rounded-3xl p-8 md:p-12 text-white relative flex flex-col lg:flex-row items-center justify-between shadow-2xl">
-        <div class="absolute inset-0 bg-[url('images/hero1.jpg')] opacity-20 bg-cover bg-center rounded-3xl mix-blend-overlay"></div>
-        
-        <div class="relative z-10 lg:w-1/2 mb-8 lg:mb-0 text-center lg:text-left">
-          <span class="bg-yellow-400 text-yellow-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-4 inline-block shadow-md">Flash Sale</span>
-          <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 leading-tight">Ưu Đãi Đặc Biệt<br>Mùa Hè Sôi Động</h2>
-          <p class="text-emerald-100 text-base md:text-lg mb-6">Giảm giá lên đến 40% cho các tour nội địa và quốc tế. Số lượng có hạn, đặt ngay kẻo lỡ!</p>
-          <button onclick="document.getElementById('search-input').focus()" class="bg-white text-emerald-700 hover:bg-emerald-50 px-8 py-3.5 rounded-full font-bold transition shadow-lg flex items-center justify-center gap-2 mx-auto lg:mx-0 w-full sm:w-auto">
-            Khám Phá Ngay <i class="fa-solid fa-arrow-right"></i>
-          </button>
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider bg-emerald-50 dark:bg-emerald-950/40 px-3 py-1 rounded-full">Trải Nghiệm Thực Tế</span>
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white mt-2">Du Khách Nói Gì Về WILTravel?</h2>
+        <p class="text-gray-500 dark:text-slate-400 text-sm mt-2">Hơn 50,000+ du khách đã đồng hành và gửi gắm niềm tin trọn vẹn</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-3xl border border-gray-150 dark:border-white/5 shadow-xs flex flex-col justify-between">
+          <div>
+            <div class="flex text-amber-400 gap-1 text-sm mb-3">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            </div>
+            <p class="text-sm text-gray-700 dark:text-slate-300 leading-relaxed italic mb-6">
+              "Công ty mình vừa tổ chức tour MICE cho 80 người đi Phú Quốc qua WILTravel. Khâu tổ chức rất chu đáo, xe đưa đón đúng giờ, resort 5 sao bãi biển đẹp và gala dinner cực kỳ hoành tráng. Rất hài lòng!"
+            </p>
+          </div>
+          <div class="flex items-center gap-3 pt-4 border-t border-gray-100 dark:border-white/5">
+            <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-sm">H</div>
+            <div>
+              <p class="text-sm font-bold text-gray-900 dark:text-white">Anh Hoàng Long</p>
+              <p class="text-xs text-gray-400">Giám đốc Nhân sự • Công ty Tech SG</p>
+            </div>
+          </div>
         </div>
 
-        <div class="relative z-10 flex flex-col items-center bg-black/30 backdrop-blur-md p-6 rounded-2xl border border-white/20 w-full sm:w-auto shadow-xl">
-          <p class="text-sm uppercase tracking-widest text-emerald-200 font-semibold mb-4">Thời gian ưu đãi còn lại</p>
-          <div class="flex justify-center gap-2 sm:gap-4 text-center w-full" id="countdown-timer">
-            <div class="flex flex-col">
-              <span class="text-2xl sm:text-3xl md:text-4xl font-black bg-white/20 px-3 sm:px-4 py-3 rounded-xl mb-1 min-w-[60px] sm:min-w-[70px] shadow-inner" id="cd-days">00</span>
-              <span class="text-[10px] sm:text-xs uppercase text-emerald-200 font-medium">Ngày</span>
+        <div class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-3xl border border-gray-150 dark:border-white/5 shadow-xs flex flex-col justify-between">
+          <div>
+            <div class="flex text-amber-400 gap-1 text-sm mb-3">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
             </div>
-            <span class="text-2xl sm:text-3xl md:text-4xl font-black mt-2 text-white/50">:</span>
-            <div class="flex flex-col">
-              <span class="text-2xl sm:text-3xl md:text-4xl font-black bg-white/20 px-3 sm:px-4 py-3 rounded-xl mb-1 min-w-[60px] sm:min-w-[70px] shadow-inner" id="cd-hours">00</span>
-              <span class="text-[10px] sm:text-xs uppercase text-emerald-200 font-medium">Giờ</span>
+            <p class="text-sm text-gray-700 dark:text-slate-300 leading-relaxed italic mb-6">
+              "Gia đình mình chọn tour Nhật Bản cung đường vàng của WILTravel. Hướng dẫn viên am hiểu văn hóa sâu sắc, bữa ăn có cả bò Kobe và cua tuyết rất ngon. Khâu làm visa rất nhanh chóng chỉ 6 ngày là có."
+            </p>
+          </div>
+          <div class="flex items-center gap-3 pt-4 border-t border-gray-100 dark:border-white/5">
+            <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-sm">M</div>
+            <div>
+              <p class="text-sm font-bold text-gray-900 dark:text-white">Chị Mai Phương</p>
+              <p class="text-xs text-gray-400">Du khách TP. Hà Nội</p>
             </div>
-            <span class="text-2xl sm:text-3xl md:text-4xl font-black mt-2 text-white/50">:</span>
-            <div class="flex flex-col">
-              <span class="text-2xl sm:text-3xl md:text-4xl font-black bg-white/20 px-3 sm:px-4 py-3 rounded-xl mb-1 min-w-[60px] sm:min-w-[70px] shadow-inner" id="cd-minutes">00</span>
-              <span class="text-[10px] sm:text-xs uppercase text-emerald-200 font-medium">Phút</span>
+          </div>
+        </div>
+
+        <div class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-3xl border border-gray-150 dark:border-white/5 shadow-xs flex flex-col justify-between">
+          <div>
+            <div class="flex text-amber-400 gap-1 text-sm mb-3">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
             </div>
-            <span class="text-2xl sm:text-3xl md:text-4xl font-black mt-2 text-white/50">:</span>
-            <div class="flex flex-col">
-              <span class="text-2xl sm:text-3xl md:text-4xl font-black bg-white/20 px-3 sm:px-4 py-3 rounded-xl mb-1 min-w-[60px] sm:min-w-[70px] shadow-inner" id="cd-seconds">00</span>
-              <span class="text-[10px] sm:text-xs uppercase text-emerald-200 font-medium">Giây</span>
+            <p class="text-sm text-gray-700 dark:text-slate-300 leading-relaxed italic mb-6">
+              "Mình thuê xe 16 chỗ Limousine đi Vũng Tàu cuối tuần. Xe mới tinh, ghế massage êm ái, bác tài vui tính và nhiệt tình chỉ những quán ăn ngon địa phương. Giá cả hợp lý và không phát sinh bất kỳ phí nào."
+            </p>
+          </div>
+          <div class="flex items-center gap-3 pt-4 border-t border-gray-100 dark:border-white/5">
+            <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-sm">T</div>
+            <div>
+              <p class="text-sm font-bold text-gray-900 dark:text-white">Anh Tuấn Kiệt</p>
+              <p class="text-xs text-gray-400">Du khách Quận 7, TP.HCM</p>
             </div>
           </div>
         </div>
@@ -454,500 +722,199 @@
     </div>
   </section>
 
-  <section id="featured-tours-section" class="py-16 md:py-20 bg-gray-50 dark:bg-slate-800/50">
+  <!-- Footer with Full Legal Information from wil-travel.com -->
+  <footer id="footer" class="bg-slate-950 text-gray-400 py-16 border-t border-white/5">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
-      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 md:mb-12 gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
         <div>
-          <h2 class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-slate-100">Tour Tiêu Biểu</h2>
-          <p class="text-gray-600 dark:text-slate-300 mt-2">Những tour chất lượng cao - Giá hợp lý nhất</p>
-        </div>
-        <a href="#featured-tours-section" class="text-primary-600 dark:text-primary-400 hover:underline font-medium flex items-center gap-2 whitespace-nowrap">
-          Xem tất cả tour <i class="fa-solid fa-arrow-right"></i>
-        </a>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8" id="featured-tours"></div>
-    </div>
-  </section>
-
-  <!-- Why Choose Us -->
-  <section class="py-16 md:py-20 bg-gray-50 dark:bg-slate-800/50">
-    <div class="max-w-7xl mx-auto px-6 text-center">
-      <h2 class="text-3xl md:text-4xl font-bold mb-4">Tại sao chọn WILTravel?</h2>
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mt-12">
-        <div class="bg-white p-8 rounded-3xl shadow-sm">
-          <i class="fa-solid fa-shield-alt text-5xl text-primary-600 dark:text-primary-400 mb-4"></i>
-          <h3 class="font-semibold text-xl mb-2">An toàn & Tin cậy</h3>
-          <p class="text-gray-600 dark:text-slate-300">Bảo hiểm du lịch toàn diện</p>
-        </div>
-        <div class="bg-white p-8 rounded-3xl shadow-sm">
-          <i class="fa-solid fa-headset text-5xl text-primary-600 dark:text-primary-400 mb-4"></i>
-          <h3 class="font-semibold text-xl mb-2">Hỗ trợ 24/7</h3>
-          <p class="text-gray-600 dark:text-slate-300">Đội ngũ tư vấn chuyên nghiệp</p>
-        </div>
-        <div class="bg-white p-8 rounded-3xl shadow-sm">
-          <i class="fa-solid fa-medal text-5xl text-primary-600 dark:text-primary-400 mb-4"></i>
-          <h3 class="font-semibold text-xl mb-2">Chất lượng cao</h3>
-          <p class="text-gray-600 dark:text-slate-300">Đối tác uy tín toàn cầu</p>
-        </div>
-        <div class="bg-white p-8 rounded-3xl shadow-sm">
-          <i class="fa-solid fa-dollar-sign text-5xl text-primary-600 dark:text-primary-400 mb-4"></i>
-          <h3 class="font-semibold text-xl mb-2">Giá tốt nhất</h3>
-          <p class="text-gray-600 dark:text-slate-300">Cam kết giá cạnh tranh</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Testimonials -->
-  <section class="py-16 md:py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-6 text-center">
-      <h2 class="text-3xl md:text-4xl font-bold mb-12">Khách hàng nói gì về chúng tôi</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="bg-gray-50 dark:bg-slate-800/50 p-8 rounded-3xl">
-          <p class="italic text-gray-600 dark:text-slate-300">"Chuyến đi Phú Quốc quá tuyệt vời. Dịch vụ rất chu đáo!"</p>
-          <p class="mt-6 font-medium">Chị Lan Anh - Hà Nội</p>
-        </div>
-        <div class="bg-gray-50 dark:bg-slate-800/50 p-8 rounded-3xl">
-          <p class="italic text-gray-600 dark:text-slate-300">"Tour Sapa 5 ngày rất đáng tiền. Hướng dẫn viên nhiệt tình."</p>
-          <p class="mt-6 font-medium">Anh Minh Quân - TP.HCM</p>
-        </div>
-        <div class="bg-gray-50 dark:bg-slate-800/50 p-8 rounded-3xl">
-          <p class="italic text-gray-600 dark:text-slate-300">"Đặt tour Bali dễ dàng, khách sạn đẹp, ăn ngon."</p>
-          <p class="mt-6 font-medium">Chị Thu Hà - Đà Nẵng</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Call to Action -->
-  <section class="bg-gradient-to-r from-green-600 to-emerald-700 py-16 md:py-20 text-white">
-    <div class="max-w-4xl mx-auto text-center px-6">
-      <h2 class="text-3xl md:text-4xl font-bold mb-6">Sẵn sàng cho chuyến đi tiếp theo?</h2>
-      <p class="text-lg md:text-xl mb-10">Hàng ngàn du khách đã tin tưởng WILTravel để có những kỳ nghỉ tuyệt vời</p>
-      <button onclick="document.getElementById('search-input').focus()" 
-              class="bg-white text-primary-600 dark:text-primary-400 px-8 md:px-10 py-4 rounded-full text-base md:text-lg font-semibold hover:bg-gray-100 dark:bg-slate-800 transition">
-        Bắt đầu hành trình ngay
-      </button>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer id="footer" class="bg-gray-900 text-gray-400 py-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-        <div>
-          <img src="images/logo-footer.png" alt="WILTravel" class="h-12 mb-4">
-          <p class="text-sm">Chỉ cần & đi chuyến nghỉ ngơi</p>
-        </div>
-        
-        <div>
-          <h3 class="text-white font-semibold mb-4">Liên hệ</h3>
-          <p class="text-sm leading-relaxed">
-            CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ DU LỊCH WILTRAVEL<br>
-            72/10/6 Văn Chung, Quận Tân Bình, Tp.HCM<br><br>
-            Điện thoại: (84) 8 38122159<br>
-            Fax: (84) 8 38106577<br>
-            Email: info@wil-travel.com<br>
-            Hotline: 0905 025737 (Ms Phương)
+          <img src="images/logo-footer.png" alt="WILTravel" class="h-10 mb-4">
+          <p class="text-sm text-slate-400 leading-relaxed mb-4">
+            Chỉ cần &amp; đi chuyến nghỉ ngơi. Cung cấp tour du lịch trọn gói trong nước và quốc tế, phòng khách sạn, vé máy bay và cho thuê xe cao cấp.
           </p>
+          <div class="flex items-center gap-2 text-xs text-emerald-400 font-semibold">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span>Bảo hiểm Bảo Minh bồi thường đến 1 Tỷ</span>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-4">Dịch Vụ Cốt Lõi</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="tours.html" class="hover:text-emerald-400 transition">Tour Du Lịch Trọn Gói</a></li>
+            <li><a href="hotels.html" class="hover:text-emerald-400 transition">Khách Sạn & Resort 5*</a></li>
+            <li><a href="car-rental.html" class="hover:text-emerald-400 transition">Thuê Xe Du Lịch 4-45 Chỗ</a></li>
+            <li><a href="flight.html" class="hover:text-emerald-400 transition">Vé Máy Bay Nội Địa & Quốc Tế</a></li>
+            <li><a href="visa.html" class="hover:text-emerald-400 transition">Dịch Vụ Visa & Hộ Chiếu</a></li>
+            <li><a href="deals.html" class="hover:text-emerald-400 transition">Ưu Đãi Flash Sale</a></li>
+          </ul>
         </div>
 
         <div>
-          <h3 class="text-white font-semibold mb-4">Hỗ Trợ</h3>
-          <div class="flex flex-col gap-2 text-sm">
-            <a href="faq.html" class="hover:text-white transition">Câu hỏi thường gặp</a>
-            <a href="wishlist.html" class="hover:text-white transition">Danh sách yêu thích</a>
-            <a href="deals.html" class="hover:text-white transition">Ưu đãi & khuyến mãi</a>
-          </div>
+          <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-4">Thông Tin Doanh Nghiệp</h4>
+          <p class="text-xs text-slate-300 font-bold mb-2">CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ DU LỊCH WILTRAVEL</p>
+          <p class="text-xs text-slate-400 mb-1">Mã số thuế: <span class="font-mono text-slate-200">0311373910</span></p>
+          <p class="text-xs text-slate-400 mb-1">Trụ sở: 72/10/6 Văn Chung, Phường 13, Quận Tân Bình, TP.HCM</p>
+          <p class="text-xs text-slate-400 mb-1">Email: <a href="mailto:info@wil-travel.com" class="text-emerald-400">info@wil-travel.com</a></p>
+          <p class="text-xs text-slate-400">Hotline 24/7: <a href="tel:0905025737" class="text-emerald-400 font-bold">0905 025 737</a> - <a href="tel:0902353648" class="text-emerald-400 font-bold">0902 353 648</a></p>
         </div>
+
         <div>
-          <h3 class="text-white font-semibold mb-4">Kết nối với chúng tôi</h3>
-          <div class="flex gap-6 text-3xl">
-            <i class="fa-brands fa-facebook hover:text-white cursor-pointer"></i>
-            <i class="fa-brands fa-instagram hover:text-white cursor-pointer"></i>
-            <i class="fa-brands fa-youtube hover:text-white cursor-pointer"></i>
+          <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-4">Kết Nối Mạng Xã Hội</h4>
+          <div class="flex gap-4 text-xl mb-4">
+            <a href="https://facebook.com" class="w-10 h-10 rounded-full bg-slate-800 hover:bg-emerald-600 text-white flex items-center justify-center transition"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://instagram.com" class="w-10 h-10 rounded-full bg-slate-800 hover:bg-emerald-600 text-white flex items-center justify-center transition"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://youtube.com" class="w-10 h-10 rounded-full bg-slate-800 hover:bg-emerald-600 text-white flex items-center justify-center transition"><i class="fa-brands fa-youtube"></i></a>
           </div>
+          <p class="text-xs text-slate-500">Giấy phép Lữ Hành Quốc Tế & Nội Địa số 79-888/2018/TCDL-GP LHQT</p>
         </div>
       </div>
 
-      <div class="text-center text-xs mt-12 pt-8 border-t border-gray-800">
-        © 2026 WILTravel - Công ty TNHH Thương mại Dịch vụ Du lịch WILTRAVEL
+      <div class="text-center text-xs text-slate-600 pt-8 border-t border-slate-900">
+        © 2018 - 2026 WIL-Travel.com. Bản quyền thuộc về Công ty TNHH Thương mại Dịch vụ Du lịch WILTRAVEL.
       </div>
     </div>
   </footer>
 
-  <script src="js/app.js?v=1.0.2"></script>
+  <script src="js/app.js?v=2.2.0"></script>
   <script>
-    // Global error listener for visual debugging
-    window.onerror = function(message, source, lineno, colno, error) {
-      const div = document.createElement('div');
-      div.style.position = 'fixed';
-      div.style.top = '0';
-      div.style.left = '0';
-      div.style.width = '100%';
-      div.style.backgroundColor = '#ef4444';
-      div.style.color = '#ffffff';
-      div.style.padding = '15px';
-      div.style.zIndex = '99999';
-      div.style.fontSize = '14px';
-      div.style.fontFamily = 'monospace';
-      div.style.whiteSpace = 'pre-wrap';
-      div.textContent = 'JS Error: ' + message + '\nAt: ' + source + ':' + lineno + ':' + colno + '\nStack: ' + (error ? error.stack : 'N/A');
-      document.body.appendChild(div);
-      return false;
-    };
-
-    // Script menu mobile
-    const mobileButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-
-    if (mobileButton && mobileMenu) {
-      mobileButton.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
+    // Tab switcher on hero
+    function switchHeroTab(tabName) {
+      document.querySelectorAll('#hero-service-tabs .service-pill-tab').forEach(b => {
+        b.className = "service-pill-tab px-4 py-2 rounded-full text-xs sm:text-sm font-semibold text-gray-600 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800 transition flex items-center gap-2 whitespace-nowrap";
       });
+      const activeBtn = document.getElementById('tab-btn-' + tabName);
+      if (activeBtn) activeBtn.className = "service-pill-tab active px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition flex items-center gap-2 whitespace-nowrap";
+
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+      const activeContent = document.getElementById('hero-tab-' + tabName);
+      if (activeContent) activeContent.classList.remove('hidden');
     }
 
-    // Carousel & DOM Element Variables
+    function navigateToHotelSearch() {
+      const city = document.getElementById('hero-hotel-city').value;
+      window.location.href = `hotels.html?city=${encodeURIComponent(city)}`;
+    }
+
+    // Hero Carousel
     let currentSlide = 0;
     let autoPlayInterval;
-    let isAutoPlaying = true;
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    const heroSection = document.getElementById('hero');
-    const indicatorsContainer = document.getElementById('indicators');
-    const searchResultsSection = document.getElementById('search-results');
-    const searchResultsGrid = document.getElementById('search-results-grid');
-    const searchSummary = document.getElementById('search-summary');
-    const statNumbers = document.querySelectorAll('.stat-number');
-    const mobileLinks = document.querySelectorAll('#mobile-menu a');
-
     const heroSlides = [
-      { image: "images/hero1.jpg",    gradient: "linear-gradient(135deg, #0f4c75 0%, #1b6ca8 100%)",  caption: "Việt Nam tươi đẹp",   sub: "Khám phá những điểm đến tuyệt vời ngay trong nước" },
-      { image: "images/hero2.jpg",    gradient: "linear-gradient(135deg, #134e5e 0%, #71b280 100%)",  caption: "Miền quê thanh bình",  sub: "Trải nghiệm thiên nhiên hoang sơ và văn hóa bản địa" },
-      { image: "images/hero3.jpg",    gradient: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",  caption: "Châu Á huyền bí",     sub: "Hành trình khám phá các quốc gia châu Á đặc sắc" },
-      { image: "images/hero4.jpg",    gradient: "linear-gradient(135deg, #16a085 0%, #f4d03f 100%)",  caption: "Vịnh Hạ Long",       sub: "Di sản thiên nhiên thế giới UNESCO - Kỳ quan của Việt Nam" },
-      { image: "images/hero5.jpg",    gradient: "linear-gradient(135deg, #c0392b 0%, #e74c3c 100%)",  caption: "Bali thiên đường",   sub: "Đảo của những vị thần - điểm đến mơ ước của mọi du khách" },
-      { image: "images/hero6.jpg",    gradient: "linear-gradient(135deg, #c0392b 0%, #8e44ad 100%)",  caption: "Nhật Bản hoa anh đào", sub: "Mùa xuân Nhật Bản rực rỡ với triệu triệu bông hoa anh đào" },
-      { image: "images/hero7.jpg",    gradient: "linear-gradient(135deg, #2980b9 0%, #6dd5fa 100%)",  caption: "Đà Nẵng - Hội An",   sub: "Thành phố đáng sống nhất Việt Nam với bãi biển và phố cổ" },
-      { image: "images/hero8.jpg",    gradient: "linear-gradient(135deg, #0f2027 0%, #2c5364 100%)",  caption: "Sapa mù sương",      sub: "Thị trấn trong mây với những thửa ruộng bậc thang vàng óng" }
+      { image: "images/hero1.jpg", caption: "Phú Quốc Đảo Ngọc", sub: "Khám phá bãi sao cát trắng mịn màng và resort ven biển" },
+      { image: "images/hero2.jpg", caption: "Miền Tây Sông Nước", sub: "Trải nghiệm chợ nổi Cái Răng & văn hóa miệt vườn" },
+      { image: "images/hero3.jpg", caption: "Malaysia & Singapore", sub: "Tháp Đôi Petronas, Legoland và công viên giải trí hàng đầu" },
+      { image: "images/hero4.jpg", caption: "Sapa & Đỉnh Fansipan", sub: "Chinh phục nóc nhà Đông Dương và thung lũng Mường Hoa" },
+      { image: "images/hero5.jpg", caption: "Thái Lan Rực Rỡ", sub: "Bangkok sôi động & đảo san hô Pattaya hoang sơ" },
+      { image: "images/tour-japan.jpg", caption: "Nhật Bản Mùa Hoa", sub: "Cung đường vàng Osaka - Kyoto - Phú Sĩ - Tokyo" },
+      { image: "images/tour-danang.jpg", caption: "Đà Nẵng & Hội An", sub: "Check-in Cầu Vàng Bà Nà Hills và phố cổ hoa đăng" }
     ];
 
-    const destinations = [
-      { name: "Phú Quốc", location: "Việt Nam", price: "3.29tr", image: "images/phuquoc.jpg" },
-      { name: "Sapa", location: "Việt Nam", price: "2.19tr", image: "images/sapa.jpg" },
-      { name: "Huế", location: "Việt Nam", price: "2.49tr", image: "images/tour-danang.jpg" },
-      { name: "Đà Nẵng", location: "Việt Nam", price: "3.89tr", image: "images/tour-danang.jpg" },
-      { name: "Hạ Long", location: "Việt Nam", price: "5.69tr", image: "images/tour-halong.jpg" },
-      { name: "Nha Trang", location: "Việt Nam", price: "2.99tr", image: "images/tour-nhatrang.jpg" },
-      { name: "Bali", location: "Indonesia", price: "18.5tr", image: "images/bali.jpg" },
-      { name: "Paris", location: "Pháp", price: "45tr", image: "images/paris.jpg" }
-    ];
-
-    let searchableItems = [];
-
-    function initSearchableItems() {
-      searchableItems = [
-        ...destinations.map(dest => ({
-          type: 'destination',
-          id: null,
-          title: dest.name,
-          subtitle: dest.location,
-          price: dest.price,
-          image: dest.image,
-          label: 'Điểm đến'
-        })),
-        ...tours.map(tour => ({
-          type: 'tour',
-          id: tour.id,
-          title: tour.name,
-          subtitle: tour.location,
-          price: (tour.price / 1000000).toFixed(1) + 'tr',
-          image: tour.image,
-          label: 'Tour'
-        }))
-      ];
-    }
-
-    function animateStatValue(element, target) {
-      const duration = 1400;
-      const stepTime = Math.abs(Math.floor(duration / target));
-      let current = 0;
-      const timer = setInterval(() => {
-        current += Math.max(1, Math.floor(target / 25));
-        element.textContent = current > target ? target : current;
-        if (current >= target) clearInterval(timer);
-      }, stepTime);
-    }
-
-    function observeStats() {
-      if (!statNumbers) return;
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const el = entry.target;
-            const target = Number(el.dataset.target) || 0;
-            animateStatValue(el, target);
-            observer.unobserve(el);
-          }
-        });
-      }, { threshold: 0.5 });
-      statNumbers.forEach(el => observer.observe(el));
-    }
-
-    function closeMobileMenuOnLink() {
-      mobileLinks.forEach(link => {
-        link.addEventListener('click', () => {
-          if (!mobileMenu.classList.contains('hidden')) {
-            mobileMenu.classList.add('hidden');
-          }
-        });
-      });
-    }
-
-    function displaySearchResults(results, query) {
-      if (!results.length) {
-        searchSummary.textContent = `Không tìm thấy kết quả cho "${query}". Hãy thử từ khác.`;
-        searchResultsGrid.innerHTML = `
-          <div class="col-span-full bg-yellow-50 border border-yellow-200 rounded-3xl p-8 text-center text-yellow-900 w-full">
-            Không có kết quả phù hợp. Hãy thử tìm kiếm lại với điểm đến khác.
-          </div>`;
-      } else {
-        searchSummary.textContent = `Tìm thấy ${results.length} kết quả cho "${query}".`;
-        searchResultsGrid.innerHTML = '';
-        results.forEach(item => {
-          const card = document.createElement('div');
-          card.className = 'bg-white dark:bg-slate-800 rounded-3xl overflow-hidden shadow-sm border border-gray-100';
-          card.innerHTML = `
-            <img src="${item.image}" class="w-full h-44 object-cover" alt="${item.title}">
-            <div class="p-5">
-              <div class="flex justify-between items-center mb-3 gap-4">
-                <div>
-                  <p class="text-xs uppercase tracking-[0.2em] text-primary-600 dark:text-primary-400 font-semibold mb-2">${item.label}</p>
-                  <h4 class="text-xl font-semibold text-gray-800 dark:text-slate-100">${item.title}</h4>
-                  <p class="text-gray-500 dark:text-slate-400 mt-1">${item.subtitle}</p>
-                </div>
-                <div class="text-right">
-                  <p class="text-xl font-bold text-primary-600 dark:text-primary-400">${formatPriceString(item.price)}</p>
-                </div>
-              </div>
-              <button onclick="handleSearchAction('${item.type}', '${item.id || ''}', '${item.title}')" class="w-full bg-primary-600 dark:bg-primary-700 hover:bg-primary-700 dark:hover:bg-primary-600 text-white py-3 rounded-2xl transition">Chi tiết</button>
-            </div>`;
-          searchResultsGrid.appendChild(card);
-        });
-      }
-
-      searchResultsSection.classList.remove('hidden');
-      searchResultsSection.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function handleSearchAction(type, id, title) {
-      if (type === 'tour') {
-        window.location.href = `tour-detail.html?id=${id}`;
-      } else {
-        window.location.href = `tours.html?location=${encodeURIComponent(title)}`;
-      }
-    }
-
-    function resetSearchResults() {
-      searchResultsSection.classList.add('hidden');
-      searchResultsGrid.innerHTML = '';
-      searchSummary.textContent = '';
-      document.getElementById('search-input').value = '';
-      document.getElementById('search-date').value = '';
-    }
-
-    function searchTour() {
-      const input = document.getElementById('search-input').value.trim();
-      const date = document.getElementById('search-date').value;
-      if (!input) {
-        return alert('Vui lòng nhập điểm đến bạn muốn đi!');
-      }
-      const query = input.toLowerCase();
-      const results = searchableItems.filter(item =>
-        item.title.toLowerCase().includes(query) || item.subtitle.toLowerCase().includes(query)
-      );
-      displaySearchResults(results, input + (date ? ` - ${date}` : ''));
-    }
-
-
-    let activeBgLayer = 1;
     function updateHero() {
       const slide = heroSlides[currentSlide];
       const bgUrl = `url('${slide.image}')`;
-      
       const layer1 = document.getElementById('hero-bg-1');
       const layer2 = document.getElementById('hero-bg-2');
       
-      if (activeBgLayer === 1) {
+      if (!layer1 || !layer2) return;
+
+      if (layer1.classList.contains('active')) {
         layer2.style.backgroundImage = bgUrl;
         layer2.classList.add('active');
         layer1.classList.remove('active');
-        activeBgLayer = 2;
       } else {
         layer1.style.backgroundImage = bgUrl;
         layer1.classList.add('active');
         layer2.classList.remove('active');
-        activeBgLayer = 1;
       }
 
-      // Update slide caption badge with fade animation
-      const badge = document.getElementById('slide-badge');
       const captionEl = document.getElementById('slide-caption');
       const subEl = document.getElementById('slide-sub');
-      if (badge && captionEl && slide.caption) {
-        badge.style.opacity = '0';
-        setTimeout(() => {
-          captionEl.textContent = slide.caption;
-          if (subEl) subEl.textContent = slide.sub || '';
-          badge.style.opacity = '1';
-        }, 300);
-      }
+      if (captionEl) captionEl.textContent = slide.caption;
+      if (subEl) subEl.textContent = slide.sub;
 
       createIndicators();
     }
 
     function createIndicators() {
+      const indicatorsContainer = document.getElementById('indicators');
+      if (!indicatorsContainer) return;
       indicatorsContainer.innerHTML = '';
-      heroSlides.forEach((_, index) => {
+      heroSlides.forEach((_, idx) => {
         const dot = document.createElement('button');
-        dot.className = `carousel-indicator ${index === currentSlide ? 'active' : ''}`;
-        dot.onclick = () => goToSlide(index);
-        dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
+        dot.className = `carousel-indicator ${idx === currentSlide ? 'active' : ''}`;
+        dot.onclick = () => { currentSlide = idx; updateHero(); };
         indicatorsContainer.appendChild(dot);
       });
-    }
-
-    function goToSlide(index) {
-      currentSlide = index;
-      updateHero();
-      resetAutoPlay();
     }
 
     function nextSlide() {
       currentSlide = (currentSlide + 1) % heroSlides.length;
       updateHero();
-      resetAutoPlay();
     }
 
     function prevSlide() {
       currentSlide = (currentSlide - 1 + heroSlides.length) % heroSlides.length;
       updateHero();
-      resetAutoPlay();
     }
 
-    function startAutoPlay() {
-      if (!isAutoPlaying) return;
-      autoPlayInterval = setInterval(() => {
-        nextSlide();
-      }, 4000);
-    }
-
-    function stopAutoPlay() {
-      clearInterval(autoPlayInterval);
-    }
-
-    function resetAutoPlay() {
-      stopAutoPlay();
-      if (isAutoPlaying) startAutoPlay();
-    }
-
-    // Pause on hover
-    heroSection.addEventListener('mouseenter', stopAutoPlay);
-    heroSection.addEventListener('mouseleave', resetAutoPlay);
-
-    // Touch swipe support
-    heroSection.addEventListener('touchstart', (e) => {
-      touchStartX = e.changedTouches[0].screenX;
-    }, false);
-
-    heroSection.addEventListener('touchend', (e) => {
-      touchEndX = e.changedTouches[0].screenX;
-      handleSwipe();
-    }, false);
-
-    function handleSwipe() {
-      const swipeThreshold = 50;
-      const diff = touchStartX - touchEndX;
-      if (Math.abs(diff) > swipeThreshold) {
-        if (diff > 0) {
-          nextSlide();
-        } else {
-          prevSlide();
-        }
-      }
-    }
-
-    function renderDestinations() {
-      const grid = document.getElementById('destinations-grid');
-      grid.innerHTML = '';
-      const h2 = document.querySelector('#destinations h2');
-      if (h2) {
-        h2.textContent = `Điểm đến nổi bật (${destinations.length})`;
-      }
-      destinations.forEach(dest => {
-        const card = document.createElement('div');
-        card.className = "bg-white dark:bg-slate-800 rounded-3xl overflow-hidden card-hover cursor-pointer";
-        card.onclick = () => { window.location.href = `tours.html?location=${encodeURIComponent(dest.name)}`; };
-        card.innerHTML = `
-          <img src="${dest.image}" class="w-full h-52 sm:h-64 object-cover" alt="${dest.name}">
-          <div class="p-5 sm:p-6">
-            <div class="flex justify-between items-start">
-              <div>
-                <h3 class="text-lg sm:text-xl font-semibold">${dest.name}</h3>
-                <p class="text-gray-500 dark:text-slate-400">${dest.location}</p>
-              </div>
-              <div class="text-right">
-                <span class="text-xl sm:text-2xl font-bold text-primary-600 dark:text-primary-400">${formatPriceString(dest.price)}</span>
-                <p class="text-xs text-gray-400">/người</p>
-              </div>
-            </div>
-          </div>
-        `;
-        grid.appendChild(card);
-      });
-    }
-
-    function renderFeaturedTours() {
+    // Render Featured Tours
+    function renderFeaturedTours(customList) {
       const grid = document.getElementById('featured-tours');
+      if (!grid) return;
       grid.innerHTML = '';
-      const featured = tours.slice(0, 6); // Load from central tours database
-      const h2 = document.querySelector('#featured-tours-section h2');
-      if (h2) {
-        h2.textContent = `Tour Tiêu Biểu (${featured.length})`;
-      }
-      featured.forEach(tour => {
+      const list = customList || tours.slice(0, 6);
+
+      list.forEach(tour => {
         const card = document.createElement('div');
-        const badgeHtml = tour.badge 
-          ? `<span class="absolute top-4 left-4 bg-primary-600 dark:bg-primary-700 text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-md z-10">${tour.badge}</span>`
-          : '';
-          
-        card.className = "bg-white dark:bg-slate-800 rounded-3xl overflow-hidden card-hover cursor-pointer border border-gray-100 relative flex flex-col justify-between";
-        card.onclick = () => { window.location.href = `tour-detail.html?id=${tour.id}`; };
+        const discountPercent = tour.originalPrice ? Math.round((1 - tour.price / tour.originalPrice) * 100) : 0;
+        
+        card.className = "card-hover bg-white dark:bg-slate-800 rounded-3xl overflow-hidden shadow-sm border border-gray-150 dark:border-white/5 flex flex-col justify-between";
         card.innerHTML = `
-          <div class="relative overflow-hidden">
-            ${badgeHtml}
-            <img src="${tour.image}" class="w-full h-48 sm:h-56 object-cover hover:scale-105 transition duration-500" alt="${tour.name}">
+          <div class="relative overflow-hidden group">
+            <img src="${tour.image}" class="w-full h-52 object-cover group-hover:scale-105 transition duration-500" alt="${tour.name}">
+            <div class="absolute top-3.5 left-3.5 flex flex-col gap-1 z-10">
+              <span class="px-3 py-1 bg-emerald-600 text-white text-xs font-bold rounded-full shadow-md">${tour.badge || 'Tour Hot'}</span>
+              ${discountPercent > 0 ? `<span class="px-2.5 py-0.5 bg-rose-600 text-white text-[11px] font-black rounded-full shadow-md">-${discountPercent}%</span>` : ''}
+            </div>
+            <span class="absolute top-3.5 right-3.5 px-2.5 py-1 rounded-full text-xs font-bold bg-black/60 backdrop-blur-md text-white z-10">
+              ${tour.code || 'MÃ: WLE'}
+            </span>
           </div>
+
           <div class="p-5 sm:p-6 flex-grow flex flex-col justify-between">
             <div>
-              <div class="flex items-center gap-1.5 text-xs text-yellow-500 font-semibold mb-2">
-                <i class="fa-solid fa-star"></i>
-                <span>${tour.rating || 4.8}</span>
-                <span class="text-gray-400">(${tour.reviews || 80} đánh giá)</span>
+              <div class="flex items-center justify-between text-xs mb-2">
+                <span class="text-emerald-700 dark:text-emerald-400 font-semibold bg-emerald-50 dark:bg-emerald-950/40 px-2.5 py-0.5 rounded-full">
+                  Khởi hành: ${tour.departure || 'TP.HCM'}
+                </span>
+                <div class="flex items-center gap-1 text-amber-500 font-bold">
+                  <i class="fa-solid fa-star"></i> ${tour.rating || 4.9} (${tour.reviews || 80})
+                </div>
               </div>
-              <h3 class="font-bold text-base sm:text-lg mb-1 text-gray-800 dark:text-slate-100 line-clamp-1 hover:text-primary-600 dark:text-primary-400 transition">${tour.name}</h3>
-              <div class="flex items-center gap-3 text-xs text-gray-500 dark:text-slate-400 mt-2 mb-4">
-                <span><i class="fa-solid fa-map-pin text-primary-600 dark:text-primary-400 mr-1"></i>${tour.location}</span>
-                <span><i class="fa-solid fa-clock text-primary-600 dark:text-primary-400 mr-1"></i>${tour.duration}</span>
+
+              <h3 class="font-bold text-base sm:text-lg mb-2 text-gray-900 dark:text-white line-clamp-2 hover:text-emerald-600 transition leading-snug">
+                ${tour.name}
+              </h3>
+
+              <div class="flex items-center gap-3 text-xs text-gray-500 dark:text-slate-400 mb-4">
+                <span><i class="fa-solid fa-location-dot text-emerald-600 mr-1"></i>${tour.location}</span>
+                <span>•</span>
+                <span><i class="fa-regular fa-clock text-emerald-600 mr-1"></i>${tour.duration}</span>
               </div>
             </div>
-            <div class="mt-auto flex justify-between items-center pt-4 border-t border-gray-50">
+
+            <div class="pt-4 border-t border-gray-100 dark:border-white/5 flex items-center justify-between mt-auto">
               <div>
-                <span class="text-xl sm:text-2xl font-black text-primary-600 dark:text-primary-400">${formatPriceGlobal(tour.price)}</span>
+                <span class="text-[11px] text-gray-400">Trọn gói từ</span>
+                <p class="text-xl font-black text-rose-600 dark:text-rose-400">${window.formatPriceGlobal(tour.price)}</p>
               </div>
-              <button onclick="event.stopPropagation(); window.location.href='tour-detail.html?id=${tour.id}'" class="bg-primary-600 dark:bg-primary-700 text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-primary-700 dark:hover:bg-primary-600 transition">Đặt tour</button>
+              <div class="flex items-center gap-2">
+                <button onclick="window.openQuickView(${tour.id})" class="p-2.5 rounded-xl bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 text-gray-700 dark:text-white text-xs font-bold transition" title="Xem nhanh thông tin">
+                  <i class="fa-regular fa-eye"></i>
+                </button>
+                <a href="tour-detail.html?id=${tour.id}" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-md shadow-emerald-600/20 transition">
+                  Đặt Tour
+                </a>
+              </div>
             </div>
           </div>
         `;
@@ -955,167 +922,120 @@
       });
     }
 
-    window.addEventListener('currencyChange', () => {
-      renderDestinations();
-      renderFeaturedTours();
-      const searchGrid = document.getElementById('search-results-grid');
-      if (searchGrid && searchGrid.innerHTML !== '') {
-        searchTour();
+    function filterFeaturedByDeparture(dep, btn) {
+      document.querySelectorAll('.hub-pill-btn').forEach(b => {
+        b.className = "hub-pill-btn px-4 py-2 rounded-full text-xs font-semibold bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 hover:bg-emerald-50 hover:text-emerald-700 transition";
+      });
+      btn.className = "hub-pill-btn px-4 py-2 rounded-full text-xs font-bold bg-primary-600 text-white shadow transition";
+
+      if (dep === 'all') {
+        renderFeaturedTours(tours.slice(0, 6));
+      } else {
+        const filtered = tours.filter(t => t.departure && t.departure.includes(dep));
+        renderFeaturedTours(filtered.length ? filtered.slice(0, 6) : tours.slice(0, 6));
       }
-    });
-
-    function scrollToFooter(e) {
-      e.preventDefault();
-      document.getElementById('footer').scrollIntoView({ behavior: "smooth" });
     }
 
-    function initCountdown() {
-      // Set end date to 3 days from now
-      const countDownDate = new Date().getTime() + (3 * 24 * 60 * 60 * 1000) + (8 * 60 * 60 * 1000) + (45 * 60 * 1000);
+    // Search function
+    function searchTour() {
+      const input = document.getElementById('search-input').value.trim().toLowerCase();
+      const dep = document.getElementById('hero-departure-select').value;
+      if (!input) return window.openCommandPalette();
 
-      const updateTimer = () => {
-        const now = new Date().getTime();
-        const distance = countDownDate - now;
+      const results = tours.filter(t => 
+        t.name.toLowerCase().includes(input) || 
+        t.location.toLowerCase().includes(input) ||
+        (t.category && t.category.some(c => c.toLowerCase().includes(input)))
+      );
 
-        if (distance < 0) return; // Stop if expired
+      const section = document.getElementById('search-results');
+      const grid = document.getElementById('search-results-grid');
+      const summary = document.getElementById('search-summary');
 
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      summary.textContent = `Tìm thấy ${results.length} chuyến đi phù hợp với "${input}"`;
+      grid.innerHTML = results.slice(0, 8).map(t => `
+        <div onclick="window.location.href='tour-detail.html?id=${t.id}'" class="card-hover bg-white dark:bg-slate-800 rounded-2xl overflow-hidden shadow-sm border border-gray-150 dark:border-white/5 cursor-pointer">
+          <img src="${t.image}" class="w-full h-40 object-cover">
+          <div class="p-4">
+            <span class="text-[10px] text-emerald-600 font-bold uppercase">${t.duration} • ${t.departure || 'TP.HCM'}</span>
+            <h4 class="text-sm font-bold text-gray-900 dark:text-white line-clamp-1 mt-1 mb-2">${t.name}</h4>
+            <p class="text-base font-black text-rose-600">${window.formatPriceGlobal(t.price)}</p>
+          </div>
+        </div>
+      `).join('');
 
-        const elDays = document.getElementById("cd-days");
-        const elHours = document.getElementById("cd-hours");
-        const elMinutes = document.getElementById("cd-minutes");
-        const elSeconds = document.getElementById("cd-seconds");
-        
-        if(elDays) elDays.innerText = String(days).padStart(2, '0');
-        if(elHours) elHours.innerText = String(hours).padStart(2, '0');
-        if(elMinutes) elMinutes.innerText = String(minutes).padStart(2, '0');
-        if(elSeconds) elSeconds.innerText = String(seconds).padStart(2, '0');
-      };
-
-      updateTimer();
-      setInterval(updateTimer, 1000);
+      section.classList.remove('hidden');
+      section.scrollIntoView({ behavior: 'smooth' });
     }
 
-    const quizAnswers = {
-      style: '',
-      budget: '',
-      companion: ''
-    };
+    function resetSearchResults() {
+      document.getElementById('search-results').classList.add('hidden');
+      document.getElementById('search-input').value = '';
+    }
 
-    function selectQuizAnswer(key, value) {
-      quizAnswers[key] = value;
-      if (key === 'style') {
+    // Quiz functions
+    const quizAnswers = { style: '', budget: '', companion: '' };
+    function selectQuizAnswer(k, val) {
+      quizAnswers[k] = val;
+      if (k === 'style') {
         document.getElementById('quiz-step-1').classList.add('hidden');
         document.getElementById('quiz-step-2').classList.remove('hidden');
-      } else if (key === 'budget') {
+      } else if (k === 'budget') {
         document.getElementById('quiz-step-2').classList.add('hidden');
         document.getElementById('quiz-step-3').classList.remove('hidden');
-      } else if (key === 'companion') {
+      } else if (k === 'companion') {
         document.getElementById('quiz-step-3').classList.add('hidden');
         showQuizResult();
       }
     }
 
     function showQuizResult() {
-      let matchedTour = null;
-      let candidates = tours.filter(t => t.category.includes(quizAnswers.style));
-      if (candidates.length === 0) candidates = tours;
-      
-      let filteredByBudget = [];
-      if (quizAnswers.budget === 'low') {
-        filteredByBudget = candidates.filter(t => t.price <= 4000000);
-      } else if (quizAnswers.budget === 'mid') {
-        filteredByBudget = candidates.filter(t => t.price > 4000000 && t.price <= 10000000);
-      } else {
-        filteredByBudget = candidates.filter(t => t.price > 10000000);
-      }
-      
-      if (filteredByBudget.length > 0) {
-        matchedTour = filteredByBudget[Math.floor(Math.random() * filteredByBudget.length)];
-      } else {
-        matchedTour = candidates[Math.floor(Math.random() * candidates.length)];
-      }
-      
-      const resultCard = document.getElementById('quiz-result-card');
-      resultCard.innerHTML = `
-        <img src="${matchedTour.image}" class="w-full sm:w-28 h-28 object-cover rounded-2xl shadow-sm shrink-0" alt="">
-        <div class="flex-grow">
-          <span class="text-[10px] uppercase font-bold tracking-wider text-primary-600 dark:text-primary-400 bg-green-100 dark:bg-green-900/30 px-2 py-0.5 rounded">${matchedTour.location}</span>
-          <h4 class="font-bold text-gray-800 dark:text-slate-100 mt-1 line-clamp-2">${matchedTour.name}</h4>
-          <p class="text-xs text-gray-500 dark:text-slate-400 mt-1"><i class="fa-solid fa-clock mr-1"></i>${matchedTour.duration}</p>
-          <div class="mt-2.5 flex justify-between items-center">
-            <span class="text-lg font-black text-primary-600 dark:text-primary-400">${formatPriceGlobal(matchedTour.price)}</span>
-            <a href="tour-detail.html?id=${matchedTour.id}" class="text-xs font-bold text-white bg-primary-600 hover:bg-primary-700 px-3.5 py-1.5 rounded-lg transition">Xem tour →</a>
+      let matched = tours[0];
+      if (quizAnswers.style === 'Núi') matched = tours[1] || tours[0];
+      else if (quizAnswers.style === 'Thành phố') matched = tours[3] || tours[2];
+      else if (quizAnswers.budget === 'low') matched = tours[8] || tours[0];
+
+      const card = document.getElementById('quiz-result-card');
+      card.innerHTML = `
+        <div class="flex items-center gap-4">
+          <img src="${matched.image}" class="w-20 h-20 rounded-2xl object-cover shrink-0">
+          <div>
+            <span class="text-[10px] uppercase font-bold text-emerald-600">${matched.duration} • ${matched.badge}</span>
+            <h4 class="text-base font-bold text-gray-900 dark:text-white line-clamp-1">${matched.name}</h4>
+            <p class="text-sm font-black text-rose-600 mt-1">${window.formatPriceGlobal(matched.price)}</p>
+            <a href="tour-detail.html?id=${matched.id}" class="text-xs font-bold text-emerald-600 hover:underline mt-1 inline-block">Xem chi tiết tour →</a>
           </div>
         </div>
       `;
-      
       document.getElementById('quiz-result').classList.remove('hidden');
     }
 
-    function copyQuizCoupon(btn) {
-      navigator.clipboard.writeText('WILPREMIUM10').then(() => {
-        btn.innerHTML = '<i class="fa-solid fa-check"></i> Đã sao chép';
-        btn.classList.remove('bg-primary-600');
-        btn.classList.add('bg-emerald-600');
-        setTimeout(() => {
-          btn.innerHTML = '<i class="fa-solid fa-copy"></i> Sao chép';
-          btn.classList.remove('bg-emerald-600');
-          btn.classList.add('bg-primary-600');
-        }, 2000);
-      });
-    }
-
     function resetQuiz() {
-      quizAnswers.style = '';
-      quizAnswers.budget = '';
-      quizAnswers.companion = '';
       document.getElementById('quiz-result').classList.add('hidden');
       document.getElementById('quiz-step-1').classList.remove('hidden');
     }
 
+    function copyQuizCoupon(btn) {
+      navigator.clipboard.writeText('WILPREMIUM10');
+      btn.textContent = 'Đã sao chép!';
+      setTimeout(() => btn.textContent = 'Sao chép mã', 2000);
+      if (typeof showToast === 'function') showToast('Đã sao chép mã WILPREMIUM10 (giảm 10%)!', 'success');
+    }
+
     window.onload = () => {
-      try {
-        initSearchableItems();
-        updateHero();
-        createIndicators();
-        renderDestinations();
-        renderFeaturedTours();
-        observeStats();
-        closeMobileMenuOnLink();
-        startAutoPlay();
-        initCountdown();
-        if (typeof AOS !== 'undefined') {
-          AOS.refresh();
-        }
-      } catch (err) {
-        console.error(err);
-        const div = document.createElement('div');
-        div.style.position = 'fixed';
-        div.style.top = '0';
-        div.style.left = '0';
-        div.style.width = '100%';
-        div.style.backgroundColor = '#ef4444';
-        div.style.color = '#ffffff';
-        div.style.padding = '15px';
-        div.style.zIndex = '99999';
-        div.style.fontSize = '14px';
-        div.style.fontFamily = 'monospace';
-        div.style.whiteSpace = 'pre-wrap';
-        div.textContent = 'Onload Error: ' + err.message + '\nStack: ' + err.stack;
-        document.body.appendChild(div);
+      updateHero();
+      renderFeaturedTours();
+      autoPlayInterval = setInterval(nextSlide, 5000);
+
+      const mobileBtn = document.getElementById('mobile-menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (mobileBtn && mobileMenu) {
+        mobileBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
       }
     };
-  </script>
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      if (typeof AOS !== 'undefined') {
-        AOS.init({ duration: 800, once: true });
-      }
+
+    window.addEventListener('currencyChange', () => {
+      renderFeaturedTours();
     });
   </script>
 </body>
