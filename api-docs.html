@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WILTravel API Documentation & Developer Portal</title>
+  <link rel="icon" href="images/favicon.png" type="image/png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              300: '#86efac',
+              400: '#4ade80',
+              500: '#08854e',
+              600: '#06693D',
+              700: '#044d2d',
+              800: '#033b22',
+              900: '#012113',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    code, pre { font-family: 'JetBrains Mono', monospace; }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen">
+
+  <!-- Navbar -->
+  <header class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-gray-200 dark:border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <a href="index.html" class="flex items-center gap-2">
+          <img src="images/logo-transparent.png" alt="WILTravel" class="h-9 w-auto dark:hidden">
+          <img src="images/logo-footer.png" alt="WILTravel" class="h-9 w-auto hidden dark:block">
+        </a>
+        <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-300/40">
+          API v2.2.0 • RESTful
+        </span>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-emerald-600 transition flex items-center gap-1.5">
+          <i class="fa-solid fa-arrow-left text-xs"></i> Về Website
+        </a>
+        <a href="https://github.com/albertphat481/WilTravel" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-gray-900 hover:bg-black text-white text-xs font-bold transition flex items-center gap-2">
+          <i class="fa-brands fa-github text-sm"></i> GitHub
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Header -->
+  <div class="bg-gradient-to-b from-emerald-500/10 via-emerald-500/5 to-transparent border-b border-gray-200/60 dark:border-white/5 py-10 px-4 sm:px-6">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight flex items-center gap-3">
+          <span>🚀 WILTravel API Explorer</span>
+        </h1>
+        <p class="mt-2 text-sm sm:text-base text-gray-600 dark:text-gray-400 max-w-2xl">
+          Hệ thống RESTful API chính thức của WILTravel phục vụ quản lý tour du lịch, khách sạn, thuê xe, visa, đơn hàng và tích hợp AI Tina. Có hỗ trợ test trực tiếp trên trình duyệt.
+        </p>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-3">
+        <div class="px-4 py-2.5 rounded-2xl bg-white dark:bg-slate-900 border border-gray-200 dark:border-white/10 shadow-sm">
+          <span class="text-xs text-gray-400 block font-semibold">Base URL:</span>
+          <code id="base-url-text" class="text-xs font-bold text-emerald-600 dark:text-emerald-400">window.location.origin</code>
+        </div>
+        <button onclick="pingHealth()" class="px-4 py-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-sm transition flex items-center gap-2">
+          <i class="fa-solid fa-heart-pulse"></i> Ping Server Health
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Container -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      
+      <!-- Left Sidebar: Endpoint Navigator -->
+      <aside class="lg:col-span-3">
+        <div class="sticky top-20 space-y-4">
+          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-white/10 p-4 shadow-sm">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-3 px-2">Danh Mục API</h3>
+            <nav class="space-y-1 text-xs font-semibold">
+              <a href="#cat-health" class="block px-3 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 transition">⚡ Hệ Thống & Info</a>
+              <a href="#cat-tours" class="block px-3 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 transition">🏖️ Tour Du Lịch</a>
+              <a href="#cat-hotels" class="block px-3 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 transition">🏨 Khách Sạn & Resort</a>
+              <a href="#cat-cars" class="block px-3 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 transition">🚗 Thuê Xe Du Lịch</a>
+              <a href="#cat-visas" class="block px-3 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 transition">🛂 Dịch Vụ Visa</a>
+              <a href="#cat-bookings" class="block px-3 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 transition">📦 Đơn Hàng & Tra Cứu</a>
+              <a href="#cat-coupons" class="block px-3 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 transition">🎟️ Mã Khuyến Mãi</a>
+              <a href="#cat-reviews" class="block px-3 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 transition">💬 Đánh Giá Khách Hàng</a>
+              <a href="#cat-contact" class="block px-3 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 transition">📩 Liên Hệ & Bản Tin</a>
+              <a href="#cat-auth" class="block px-3 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 transition">👤 Người Dùng & Auth</a>
+              <a href="#cat-ai" class="block px-3 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 transition">🤖 AI Chatbot Tina</a>
+            </nav>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Right Main Content: Interactive API Endpoints -->
+      <div class="lg:col-span-9 space-y-10" id="endpoints-container">
+
+        <!-- 1. Hệ Thống -->
+        <section id="cat-health" class="space-y-4">
+          <div class="flex items-center gap-2 border-b border-gray-200 dark:border-white/10 pb-2">
+            <span class="text-xl">⚡</span>
+            <h2 class="text-lg font-bold text-gray-900 dark:text-white">Hệ Thống & Sức Khỏe (Health & Info)</h2>
+          </div>
+
+          <!-- GET /api/health -->
+          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-white/10 p-5 shadow-sm space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <span class="px-2.5 py-1 rounded-lg text-xs font-black bg-blue-600 text-white">GET</span>
+                <code class="text-sm font-bold text-gray-800 dark:text-gray-200">/api/health</code>
+              </div>
+              <button onclick="runTest('GET', '/api/health', null, 'res-health')" class="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition flex items-center gap-1.5">
+                <i class="fa-solid fa-play text-[10px]"></i> Thử nghiệm
+              </button>
+            </div>
+            <p class="text-xs text-gray-500">Kiểm tra trạng thái server, uptime, phiên bản API.</p>
+            <div id="res-health" class="hidden"></div>
+          </div>
+
+          <!-- GET /api/info -->
+          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-white/10 p-5 shadow-sm space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <span class="px-2.5 py-1 rounded-lg text-xs font-black bg-blue-600 text-white">GET</span>
+                <code class="text-sm font-bold text-gray-800 dark:text-gray-200">/api/info</code>
+              </div>
+              <button onclick="runTest('GET', '/api/info', null, 'res-info')" class="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition flex items-center gap-1.5">
+                <i class="fa-solid fa-play text-[10px]"></i> Thử nghiệm
+              </button>
+            </div>
+            <p class="text-xs text-gray-500">Lấy hồ sơ pháp lý, mã số thuế (0311373910), địa chỉ và hotline chính thức của WILTravel.</p>
+            <div id="res-info" class="hidden"></div>
+          </div>
+        </section>
+
+        <!-- 2. Tour Du Lịch -->
+        <section id="cat-tours" class="space-y-4">
+          <div class="flex items-center gap-2 border-b border-gray-200 dark:border-white/10 pb-2">
+            <span class="text-xl">🏖️</span>
+            <h2 class="text-lg font-bold text-gray-900 dark:text-white">Tour Du Lịch (Tours API)</h2>
+          </div>
+
+          <!-- GET /api/tours -->
+          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-white/10 p-5 shadow-sm space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <span class="px-2.5 py-1 rounded-lg text-xs font-black bg-blue-600 text-white">GET</span>
+                <code class="text-sm font-bold text-gray-800 dark:text-gray-200">/api/tours</code>
+              </div>
+              <button onclick="runTest('GET', '/api/tours?limit=3', null, 'res-tours')" class="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition flex items-center gap-1.5">
+                <i class="fa-solid fa-play text-[10px]"></i> Thử nghiệm (?limit=3)
+              </button>
+            </div>
+            <p class="text-xs text-gray-500">
+              Lấy danh sách tour. Hỗ trợ tham số query: <code class="bg-gray-100 dark:bg-slate-800 px-1 py-0.5 rounded">search</code>, <code class="bg-gray-100 dark:bg-slate-800 px-1 py-0.5 rounded">category</code>, <code class="bg-gray-100 dark:bg-slate-800 px-1 py-0.5 rounded">departure</code>, <code class="bg-gray-100 dark:bg-slate-800 px-1 py-0.5 rounded">minPrice</code>, <code class="bg-gray-100 dark:bg-slate-800 px-1 py-0.5 rounded">sort</code> (price-asc, price-desc, rating, popular).
+            </p>
+            <div id="res-tours" class="hidden"></div>
+          </div>
+
+          <!-- GET /api/tours/:id -->
+          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-white/10 p-5 shadow-sm space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <span class="px-2.5 py-1 rounded-lg text-xs font-black bg-blue-600 text-white">GET</span>
+                <code class="text-sm font-bold text-gray-800 dark:text-gray-200">/api/tours/:id</code>
+              </div>
+              <div class="flex items-center gap-2">
+                <input type="text" id="inp-tour-id" value="1" class="w-16 px-2.5 py-1 text-xs border border-gray-300 dark:border-white/10 bg-transparent rounded-lg text-center font-bold">
+                <button onclick="runTest('GET', '/api/tours/' + document.getElementById('inp-tour-id').value, null, 'res-tour-id')" class="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition flex items-center gap-1.5">
+                  <i class="fa-solid fa-play text-[10px]"></i> Thử nghiệm
+                </button>
+              </div>
+            </div>
+            <p class="text-xs text-gray-500">Lấy chi tiết tour theo ID (hoặc mã tour như WLE-PQ-10) kèm lịch trình và đánh giá.</p>
+            <div id="res-tour-id" class="hidden"></div>
+          </div>
+        </section>
+
+        <!-- 3. Đơn Hàng & Tra Cứu -->
+        <section id="cat-bookings" class="space-y-4">
+          <div class="flex items-center gap-2 border-b border-gray-200 dark:border-white/10 pb-2">
+            <span class="text-xl">📦</span>
+            <h2 class="text-lg font-bold text-gray-900 dark:text-white">Đơn Hàng & Tra Cứu (Bookings & Tracking API)</h2>
+          </div>
+
+          <!-- GET /api/bookings/:code -->
+          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-white/10 p-5 shadow-sm space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <span class="px-2.5 py-1 rounded-lg text-xs font-black bg-blue-600 text-white">GET</span>
+                <code class="text-sm font-bold text-gray-800 dark:text-gray-200">/api/bookings/:code</code>
+              </div>
+              <div class="flex items-center gap-2">
+                <input type="text" id="inp-bk-code" value="WIL-BK-102938" class="w-40 px-2.5 py-1 text-xs border border-gray-300 dark:border-white/10 bg-transparent rounded-lg text-center font-bold">
+                <button onclick="runTest('GET', '/api/bookings/' + document.getElementById('inp-bk-code').value, null, 'res-bk-code')" class="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition flex items-center gap-1.5">
+                  <i class="fa-solid fa-play text-[10px]"></i> Tra Cứu
+                </button>
+              </div>
+            </div>
+            <p class="text-xs text-gray-500">Tra cứu đơn hàng trực tiếp bằng Mã đơn (WIL-BK-...) hoặc Số điện thoại người đặt.</p>
+            <div id="res-bk-code" class="hidden"></div>
+          </div>
+
+          <!-- POST /api/bookings -->
+          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-white/10 p-5 shadow-sm space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <span class="px-2.5 py-1 rounded-lg text-xs font-black bg-emerald-600 text-white">POST</span>
+                <code class="text-sm font-bold text-gray-800 dark:text-gray-200">/api/bookings</code>
+              </div>
+              <button onclick="runTest('POST', '/api/bookings', sampleBookingBody, 'res-bk-create')" class="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition flex items-center gap-1.5">
+                <i class="fa-solid fa-play text-[10px]"></i> Tạo Đơn Mẫu
+              </button>
+            </div>
+            <p class="text-xs text-gray-500">Đặt tour mới và nhận ngay Mã Đơn Hàng duy nhất (WIL-BK-XXXXXX) để lưu vào database.</p>
+            <div id="res-bk-create" class="hidden"></div>
+          </div>
+        </section>
+
+        <!-- 4. Khách Sạn, Thuê Xe, Visa -->
+        <section id="cat-hotels" class="space-y-4">
+          <div class="flex items-center gap-2 border-b border-gray-200 dark:border-white/10 pb-2">
+            <span class="text-xl">🏨</span>
+            <h2 class="text-lg font-bold text-gray-900 dark:text-white">Dịch Vụ Khách Sạn, Thuê Xe & Visa</h2>
+          </div>
+
+          <!-- GET /api/hotels -->
+          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-white/10 p-5 shadow-sm space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <span class="px-2.5 py-1 rounded-lg text-xs font-black bg-blue-600 text-white">GET</span>
+                <code class="text-sm font-bold text-gray-800 dark:text-gray-200">/api/hotels</code>
+              </div>
+              <button onclick="runTest('GET', '/api/hotels', null, 'res-hotels')" class="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition flex items-center gap-1.5">
+                <i class="fa-solid fa-play text-[10px]"></i> Thử nghiệm
+              </button>
+            </div>
+            <p class="text-xs text-gray-500">Danh sách khách sạn & resort phân hạng Standard, Superior, Deluxe, Luxury.</p>
+            <div id="res-hotels" class="hidden"></div>
+          </div>
+
+          <!-- GET /api/cars -->
+          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-white/10 p-5 shadow-sm space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <span class="px-2.5 py-1 rounded-lg text-xs font-black bg-blue-600 text-white">GET</span>
+                <code class="text-sm font-bold text-gray-800 dark:text-gray-200">/api/cars</code>
+              </div>
+              <button onclick="runTest('GET', '/api/cars', null, 'res-cars')" class="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition flex items-center gap-1.5">
+                <i class="fa-solid fa-play text-[10px]"></i> Thử nghiệm
+              </button>
+            </div>
+            <p class="text-xs text-gray-500">Dàn xe du lịch đời mới 4 - 45 chỗ & Limousine VIP cùng bảng giá tuyến đường phổ biến.</p>
+            <div id="res-cars" class="hidden"></div>
+          </div>
+
+          <!-- GET /api/visas -->
+          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-white/10 p-5 shadow-sm space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <span class="px-2.5 py-1 rounded-lg text-xs font-black bg-blue-600 text-white">GET</span>
+                <code class="text-sm font-bold text-gray-800 dark:text-gray-200">/api/visas</code>
+              </div>
+              <button onclick="runTest('GET', '/api/visas', null, 'res-visas')" class="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition flex items-center gap-1.5">
+                <i class="fa-solid fa-play text-[10px]"></i> Thử nghiệm
+              </button>
+            </div>
+            <p class="text-xs text-gray-500">Gói thủ tục visa các nước (Nhật, Hàn, Schengen, Mỹ, Úc, Trung Quốc) và tỷ lệ đậu.</p>
+            <div id="res-visas" class="hidden"></div>
+          </div>
+        </section>
+
+        <!-- 5. Mã Khuyến Mãi -->
+        <section id="cat-coupons" class="space-y-4">
+          <div class="flex items-center gap-2 border-b border-gray-200 dark:border-white/10 pb-2">
+            <span class="text-xl">🎟️</span>
+            <h2 class="text-lg font-bold text-gray-900 dark:text-white">Mã Khuyến Mãi (Coupons API)</h2>
+          </div>
+
+          <!-- POST /api/coupons/validate -->
+          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-white/10 p-5 shadow-sm space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <span class="px-2.5 py-1 rounded-lg text-xs font-black bg-emerald-600 text-white">POST</span>
+                <code class="text-sm font-bold text-gray-800 dark:text-gray-200">/api/coupons/validate</code>
+              </div>
+              <div class="flex items-center gap-2">
+                <input type="text" id="inp-coupon-code" value="WILWELCOME" class="w-32 px-2.5 py-1 text-xs border border-gray-300 dark:border-white/10 bg-transparent rounded-lg text-center font-bold">
+                <button onclick="runTest('POST', '/api/coupons/validate', { code: document.getElementById('inp-coupon-code').value, totalAmount: 4000000 }, 'res-coupon')" class="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition flex items-center gap-1.5">
+                  <i class="fa-solid fa-play text-[10px]"></i> Kiểm tra mã (Đơn 4tr)
+                </button>
+              </div>
+            </div>
+            <p class="text-xs text-gray-500">Kiểm tra tính hợp lệ và tự động tính tiền giảm cho mã khuyến mãi (Thử: WILWELCOME, HE2026, VIETNAM, VIPTOUR).</p>
+            <div id="res-coupon" class="hidden"></div>
+          </div>
+        </section>
+
+        <!-- 6. AI Chatbot Tina -->
+        <section id="cat-ai" class="space-y-4">
+          <div class="flex items-center gap-2 border-b border-gray-200 dark:border-white/10 pb-2">
+            <span class="text-xl">🤖</span>
+            <h2 class="text-lg font-bold text-gray-900 dark:text-white">Trợ Lý AI Tina (Chatbot API)</h2>
+          </div>
+
+          <!-- POST /api/chat -->
+          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-white/10 p-5 shadow-sm space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <span class="px-2.5 py-1 rounded-lg text-xs font-black bg-emerald-600 text-white">POST</span>
+                <code class="text-sm font-bold text-gray-800 dark:text-gray-200">/api/chat</code>
+              </div>
+              <div class="flex items-center gap-2">
+                <input type="text" id="inp-chat-msg" value="Tra cứu đơn hàng WIL-BK-102938" class="w-64 px-2.5 py-1 text-xs border border-gray-300 dark:border-white/10 bg-transparent rounded-lg font-medium">
+                <button onclick="runTest('POST', '/api/chat', { message: document.getElementById('inp-chat-msg').value }, 'res-chat')" class="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition flex items-center gap-1.5">
+                  <i class="fa-solid fa-play text-[10px]"></i> Gửi câu hỏi
+                </button>
+              </div>
+            </div>
+            <p class="text-xs text-gray-500">API trò chuyện thông minh với Tina, tự động tích hợp tra cứu mã đơn hàng, tour du lịch và chính sách bảo hiểm.</p>
+            <div id="res-chat" class="hidden"></div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="mt-16 border-t border-gray-200 dark:border-white/10 py-8 bg-white dark:bg-slate-900 text-center text-xs text-gray-500">
+    <p>© 2026 WILTravel - CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ DU LỊCH WILTRAVEL (MST: 0311373910)</p>
+    <p class="mt-1">Trụ sở: 72/10/6 Văn Chung, Phường 13, Quận Tân Bình, TP. Hồ Chí Minh • Hotline: 0905 025 737 - 0902 353 648</p>
+  </footer>
+
+  <script>
+    document.getElementById('base-url-text').textContent = window.location.origin;
+
+    const sampleBookingBody = {
+      serviceType: 'tour',
+      tourId: 1,
+      tourName: 'Du Lịch Phú Quốc - Vương Quốc Ngọc Trai & VinWonders',
+      tourCode: 'WLE-PQ-10',
+      quantity: 2,
+      totalPayment: 7780000,
+      paymentMethod: 'Chuyển khoản ngân hàng',
+      customer: {
+        firstName: 'Thành',
+        lastName: 'Lê',
+        phone: '0901234567',
+        email: 'lethanh@gmail.com',
+        address: 'Quận 3, TP.HCM'
+      },
+      notes: 'Yêu cầu phòng hướng biển tầng cao'
+    };
+
+    async function runTest(method, endpoint, body, containerId) {
+      const container = document.getElementById(containerId);
+      container.classList.remove('hidden');
+      container.innerHTML = `
+        <div class="p-3 bg-gray-50 dark:bg-slate-950 rounded-xl border border-gray-200 dark:border-white/5 text-xs text-gray-400 flex items-center gap-2">
+          <i class="fa-solid fa-circle-notch fa-spin text-emerald-600"></i> Đang gửi yêu cầu ${method} ${endpoint}...
+        </div>
+      `;
+
+      const startTime = performance.now();
+      try {
+        const options = {
+          method,
+          headers: { 'Content-Type': 'application/json' }
+        };
+        if (body) options.body = JSON.stringify(body);
+
+        const res = await fetch(endpoint, options);
+        const duration = Math.round(performance.now() - startTime);
+        const data = await res.json();
+
+        const statusColor = res.ok ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300' : 'bg-rose-100 text-rose-700';
+
+        container.innerHTML = `
+          <div class="space-y-2 mt-2">
+            <div class="flex items-center justify-between text-xs">
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded font-bold ${statusColor}">HTTP ${res.status} ${res.statusText}</span>
+                <span class="text-gray-400"><i class="fa-regular fa-clock mr-1"></i>${duration} ms</span>
+              </div>
+              <button onclick="document.getElementById('${containerId}').classList.add('hidden')" class="text-gray-400 hover:text-gray-600 dark:hover:text-white text-xs">
+                Đóng
+              </button>
+            </div>
+            <pre class="p-4 bg-slate-900 text-emerald-400 rounded-xl text-xs overflow-x-auto max-h-72 border border-slate-800 font-mono shadow-inner leading-relaxed"><code>${JSON.stringify(data, null, 2)}</code></pre>
+          </div>
+        `;
+      } catch (err) {
+        container.innerHTML = `
+          <div class="p-3 bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-300 rounded-xl text-xs border border-rose-200 dark:border-rose-800 flex items-center gap-2">
+            <i class="fa-solid fa-circle-exclamation"></i> Lỗi kết nối: ${err.message}
+          </div>
+        `;
+      }
+    }
+
+    function pingHealth() {
+      runTest('GET', '/api/health', null, 'res-health');
+      const elem = document.getElementById('cat-health');
+      if (elem) elem.scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>

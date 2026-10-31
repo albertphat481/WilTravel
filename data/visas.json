@@ -1,0 +1,120 @@
+[
+  {
+    "id": 1,
+    "country": "Nhật Bản",
+    "flag": "🇯🇵",
+    "type": "Du lịch tự túc / Tour",
+    "duration": "15 ngày - 3 tháng",
+    "processingTime": "7 - 10 ngày làm việc",
+    "fee": 1490000,
+    "passRate": "99%",
+    "docs": [
+      "Hộ chiếu gốc còn hạn trên 6 tháng",
+      "2 ảnh 4.5x4.5 nền trắng chuẩn Nhật",
+      "Chứng minh tài chính (Sổ tiết kiệm/Sao kê 3 tháng)",
+      "Chứng minh công việc (Hợp đồng/Đơn xin nghỉ phép)"
+    ],
+    "badge": "Bao Đậu 99%"
+  },
+  {
+    "id": 2,
+    "country": "Hàn Quốc",
+    "flag": "🇰🇷",
+    "type": "Du lịch (C-3-9) / Công tác",
+    "duration": "15 - 30 ngày (Single/Multi 5 năm)",
+    "processingTime": "8 - 12 ngày làm việc",
+    "fee": 1590000,
+    "passRate": "98%",
+    "docs": [
+      "Hộ chiếu gốc + Căn cước công dân",
+      "Ảnh 3.5x4.5 nền trắng chụp mới",
+      "Sao kê tài khoản ngân hàng",
+      "Bảo hiểm xã hội VssID / Hợp đồng lao động"
+    ],
+    "badge": "Hỗ Trợ Multi 5 Năm"
+  },
+  {
+    "id": 3,
+    "country": "Đài Loan",
+    "flag": "🇹🇼",
+    "type": "Visa Quan Hồng / E-visa",
+    "duration": "14 ngày",
+    "processingTime": "3 - 5 ngày làm việc",
+    "fee": 650000,
+    "passRate": "99.5%",
+    "docs": [
+      "Hộ chiếu còn hạn trên 6 tháng",
+      "Hình chụp trang thông tin hộ chiếu",
+      "Thông tin vé máy bay khứ hồi (WILTravel hỗ trợ)"
+    ],
+    "badge": "Lấy Nhanh 3 Ngày"
+  },
+  {
+    "id": 4,
+    "country": "Châu Âu (Khối Schengen)",
+    "flag": "🇪🇺",
+    "type": "Du lịch 27 nước Schengen (Pháp, Ý, Đức, Thụy Sĩ...)",
+    "duration": "Tối đa 90 ngày",
+    "processingTime": "15 - 20 ngày làm việc",
+    "fee": 4500000,
+    "passRate": "96%",
+    "docs": [
+      "Hộ chiếu gốc còn ít nhất 2 trang trống",
+      "Ảnh sinh trắc học 3.5x4.5",
+      "Sao kê tài khoản ngân hàng 6 tháng",
+      "Sổ đỏ/Giấy tờ sở hữu tài sản (nếu có)",
+      "Lịch trình tour chi tiết (WILTravel thiết lập)"
+    ],
+    "badge": "Tự Do 27 Nước"
+  },
+  {
+    "id": 5,
+    "country": "Hoa Kỳ (Mỹ - B1/B2)",
+    "flag": "🇺🇸",
+    "type": "Du lịch / Thăm thân / Công tác",
+    "duration": "1 năm (Nhiều lần)",
+    "processingTime": "Luyện phỏng vấn & Hẹn 5-10 ngày",
+    "fee": 6200000,
+    "passRate": "95%",
+    "docs": [
+      "Điền form DS-160 chuẩn xác",
+      "Hộ chiếu còn hạn trên 6 tháng",
+      "File ảnh 5x5 chuẩn Mỹ",
+      "Buổi luyện phỏng vấn 1-1 cùng chuyên gia visa WILTravel"
+    ],
+    "badge": "Luyện Phỏng Vấn 1-1"
+  },
+  {
+    "id": 6,
+    "country": "Úc (Australia - Subclass 600)",
+    "flag": "🇦🇺",
+    "type": "Visa du lịch điện tử (E-visa)",
+    "duration": "1 - 3 năm (Nhiều lần)",
+    "processingTime": "10 - 15 ngày làm việc",
+    "fee": 4200000,
+    "passRate": "97%",
+    "docs": [
+      "Hộ chiếu scan màu toàn bộ trang",
+      "Giấy tờ chứng minh công việc & tài chính",
+      "Căn cước công dân & giấy khai sinh"
+    ],
+    "badge": "Không Cần Phỏng Vấn"
+  },
+  {
+    "id": 7,
+    "country": "Trung Quốc",
+    "flag": "🇨🇳",
+    "type": "Du lịch L / Thương mại M",
+    "duration": "30 ngày (Single/Double)",
+    "processingTime": "5 - 7 ngày làm việc",
+    "fee": 2850000,
+    "passRate": "99%",
+    "docs": [
+      "Hộ chiếu gốc",
+      "Ảnh 3.3x4.8 phông trắng",
+      "Căn cước công dân",
+      "Hồ sơ công việc"
+    ],
+    "badge": "Lấy Visa Nhanh"
+  }
+]

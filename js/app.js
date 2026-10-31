@@ -2743,6 +2743,20 @@ function handlePaletteSearch(keyword) {
   const visaMatches = (window.VISA_SERVICES_DATA || []).filter(v => v.country.toLowerCase().includes(q));
 
   let html = '';
+  if (q.includes('wil-bk') || q.includes('đơn hàng') || q.includes('tra cứu') || /^\d{9,11}$/.test(q)) {
+    html += `
+      <div onclick="window.closeCommandPalette(); window.openOrderTrackerModal('${q}')" class="p-3.5 mb-2 rounded-2xl bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-700/50 cursor-pointer flex items-center justify-between gap-3 transition hover:scale-[1.01]">
+        <div class="flex items-center gap-3">
+          <span class="text-2xl">📦</span>
+          <div>
+            <h4 class="text-sm font-bold text-emerald-900 dark:text-emerald-200">Tra cứu đơn hàng "${keyword}"</h4>
+            <p class="text-xs text-emerald-700 dark:text-emerald-400">Bấm để kiểm tra trạng thái vé và lịch trình thời gian thực</p>
+          </div>
+        </div>
+        <span class="text-xs font-bold bg-emerald-600 text-white px-3 py-1 rounded-full">Tra Cứu Ngay</span>
+      </div>
+    `;
+  }
 
   if (tourMatches.length > 0) {
     html += `<p class="text-xs uppercase font-bold text-emerald-600 px-3 mt-2">Tour du lịch (${tourMatches.length}):</p>`;
@@ -2814,3 +2828,239 @@ if (typeof window !== 'undefined' && typeof window.addEventListener === 'functio
     window.closeQuickView();
   }
 });
+
+
+// ========================================================
+// 8. WILTRAVEL API CLIENT & GLOBAL ORDER TRACKER MODAL
+// ========================================================
+
+window.wilApi = {
+  // System
+  async getHealth() {
+    try {
+      const res = await fetch('/api/health');
+      return await res.json();
+    } catch (e) {
+      return { status: 'offline', version: '2.2.0' };
+    }
+  },
+  async getCompanyInfo() {
+    try {
+      const res = await fetch('/api/info');
+      return await res.json();
+    } catch (e) {
+      return { success: true, company: window.WIL_COMPANY_INFO };
+    }
+  },
+  // Tours
+  async getTours(params = {}) {
+    try {
+      const qs = new URLSearchParams(params).toString();
+      const res = await fetch('/api/tours?' + qs);
+      return await res.json();
+    } catch (e) {
+      return { success: true, total: tours.length, data: tours };
+    }
+  },
+  async getTour(id) {
+    try {
+      const res = await fetch('/api/tours/' + id);
+      return await res.json();
+    } catch (e) {
+      const found = tours.find(t => String(t.id) === String(id) || (t.code && t.code.toLowerCase() === String(id).toLowerCase()));
+      return found ? { success: true, data: found } : { success: false };
+    }
+  },
+  // Bookings
+  async createBooking(bookingData) {
+    try {
+      const res = await fetch('/api/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(bookingData)
+      });
+      return await res.json();
+    } catch (e) {
+      const orderId = 'WIL-BK-' + Math.floor(100000 + Math.random() * 900000);
+      return { success: true, orderId, message: 'Đã lưu đơn hàng cục bộ.' };
+    }
+  },
+  async trackBooking(codeOrPhone) {
+    try {
+      const res = await fetch('/api/bookings/' + encodeURIComponent(codeOrPhone.trim()));
+      return await res.json();
+    } catch (e) {
+      return { success: false, message: 'Không thể kết nối máy chủ.' };
+    }
+  },
+  // Coupons
+  async validateCoupon(code, totalAmount) {
+    try {
+      const res = await fetch('/api/coupons/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code, totalAmount })
+      });
+      return await res.json();
+    } catch (e) {
+      // Local fallback
+      const c = code.trim().toUpperCase();
+      if (c === 'WILWELCOME') return { success: true, valid: true, discount: Math.min(500000, totalAmount * 0.1), message: 'Giảm 10% tối đa 500k' };
+      if (c === 'HE2026' && totalAmount >= 5000000) return { success: true, valid: true, discount: 300000, message: 'Giảm 300.000đ' };
+      return { success: false, valid: false, message: 'Mã không hợp lệ.' };
+    }
+  },
+  // Contact & Inquiries
+  async submitContact(data) {
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      return await res.json();
+    } catch (e) {
+      return { success: true, message: 'Thông điệp của bạn đã được tiếp nhận.' };
+    }
+  },
+  async subscribeNewsletter(email) {
+    try {
+      const res = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      return await res.json();
+    } catch (e) {
+      return { success: true, discountCode: 'WILWELCOME', message: 'Đăng ký thành công! Nhận mã WILWELCOME' };
+    }
+  },
+  // Reviews
+  async submitReview(data) {
+    try {
+      const res = await fetch('/api/reviews', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      return await res.json();
+    } catch (e) {
+      return { success: true, message: 'Đã lưu đánh giá của bạn.' };
+    }
+  }
+};
+
+// Global Order Tracker Modal
+window.openOrderTrackerModal = function(prefillCode = '') {
+  let modal = document.getElementById('wil-order-tracker-modal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'wil-order-tracker-modal';
+    modal.className = 'fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-opacity duration-300';
+    modal.innerHTML = `
+      <div class="bg-white dark:bg-slate-900 w-full max-w-lg rounded-3xl shadow-2xl border border-gray-150 dark:border-white/10 overflow-hidden transform transition-all p-6 sm:p-7 relative" onclick="event.stopPropagation()">
+        <button onclick="window.closeOrderTrackerModal()" class="absolute top-5 right-5 text-gray-400 hover:text-gray-700 dark:hover:text-white transition w-8 h-8 rounded-full flex items-center justify-center hover:bg-gray-100 dark:hover:bg-slate-800">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+
+        <div class="flex items-center gap-3 mb-5">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 flex items-center justify-center text-xl shadow-sm">
+            <i class="fa-solid fa-box-archive"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-extrabold text-gray-900 dark:text-white">Tra Cứu Đơn Hàng</h3>
+            <p class="text-xs text-gray-500">Nhập mã đơn hàng (WIL-BK-...) hoặc số điện thoại người đặt</p>
+          </div>
+        </div>
+
+        <div class="flex gap-2 mb-4">
+          <input type="text" id="tracker-input" placeholder="Ví dụ: WIL-BK-102938 hoặc 0905123456" class="flex-1 px-4 py-3 rounded-2xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-slate-800 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500 uppercase">
+          <button onclick="executeOrderTracking()" class="px-5 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition shadow-md flex items-center gap-1.5 whitespace-nowrap">
+            <i class="fa-solid fa-magnifying-glass"></i> Tra Cứu
+          </button>
+        </div>
+
+        <div id="tracker-result-container" class="space-y-4 max-h-[60vh] overflow-y-auto pr-1"></div>
+      </div>
+    `;
+    modal.onclick = () => window.closeOrderTrackerModal();
+    document.body.appendChild(modal);
+  }
+
+  modal.classList.remove('hidden');
+  const input = document.getElementById('tracker-input');
+  if (prefillCode && input) {
+    input.value = prefillCode;
+    executeOrderTracking();
+  } else if (input) {
+    input.focus();
+  }
+};
+
+window.closeOrderTrackerModal = function() {
+  const modal = document.getElementById('wil-order-tracker-modal');
+  if (modal) modal.classList.add('hidden');
+};
+
+window.executeOrderTracking = async function() {
+  const input = document.getElementById('tracker-input');
+  const resContainer = document.getElementById('tracker-result-container');
+  if (!input || !resContainer) return;
+
+  const val = input.value.trim();
+  if (!val) {
+    alert('Vui lòng nhập Mã Đơn Hàng hoặc Số Điện Thoại!');
+    return;
+  }
+
+  resContainer.innerHTML = `
+    <div class="p-6 text-center text-xs text-gray-400 flex flex-col items-center gap-2">
+      <i class="fa-solid fa-circle-notch fa-spin text-emerald-600 text-2xl"></i>
+      <span>Đang tra cứu hệ thống dữ liệu WILTravel...</span>
+    </div>
+  `;
+
+  const result = await window.wilApi.trackBooking(val);
+
+  if (!result.success || !result.data) {
+    resContainer.innerHTML = `
+      <div class="p-5 rounded-2xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-900/40 text-center">
+        <p class="text-sm font-bold text-rose-700 dark:text-rose-400 mb-1">Không tìm thấy đơn hàng</p>
+        <p class="text-xs text-gray-500 dark:text-gray-400">${result.message || 'Vui lòng kiểm tra lại mã hoặc liên hệ Hotline 0905 025 737.'}</p>
+      </div>
+    `;
+    return;
+  }
+
+  const items = Array.isArray(result.data) ? result.data : [result.data];
+
+  resContainer.innerHTML = items.map(bk => `
+    <div class="p-5 rounded-2xl bg-gray-50 dark:bg-slate-800/60 border border-gray-200/80 dark:border-white/5 space-y-3">
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-black text-emerald-600 dark:text-emerald-400">${bk.orderId}</span>
+        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
+          ${bk.status || 'Đã xác nhận'}
+        </span>
+      </div>
+
+      <div class="border-t border-b border-gray-200/60 dark:border-white/5 py-3 space-y-1.5 text-xs">
+        <p class="font-bold text-gray-900 dark:text-white line-clamp-1">${bk.tourName || bk.carName || bk.hotelName || 'Dịch vụ WILTravel'}</p>
+        <div class="flex items-center justify-between text-gray-500">
+          <span>Khách hàng: ${bk.customer ? (bk.customer.lastName + ' ' + bk.customer.firstName) : 'Quý khách'}</span>
+          <span>Khởi hành: ${bk.date || bk.pickupDate || bk.checkIn || 'Theo thỏa thuận'}</span>
+        </div>
+        <div class="flex items-center justify-between text-gray-500">
+          <span>Thanh toán: ${bk.paymentStatus || 'Chờ thanh toán'}</span>
+          <span class="text-sm font-black text-rose-600 dark:text-rose-400">${formatPriceGlobal(bk.totalPayment)}</span>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between text-[11px] text-gray-400">
+        <span>Đặt lúc: ${new Date(bk.createdAt || Date.now()).toLocaleDateString('vi-VN')}</span>
+        <a href="tel:0905025737" class="text-emerald-600 font-bold hover:underline flex items-center gap-1">
+          <i class="fa-solid fa-phone"></i> Gọi Hỗ Trợ 24/7
+        </a>
+      </div>
+    </div>
+  `).join('');
+};

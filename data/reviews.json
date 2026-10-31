@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "tourId": 1,
+    "name": "Nguyễn Văn Minh",
+    "rating": 5,
+    "comment": "Chuyến đi Phú Quốc rất tuyệt vời! Hướng dẫn viên của WILTravel nhiệt tình, resort 4 sao sát biển đúng như cam kết. Gia đình tôi rất hài lòng!",
+    "createdAt": "2026-10-15T09:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "tourId": 1,
+    "name": "Lê Thị Thu Hà",
+    "rating": 5,
+    "comment": "Ăn uống ngon, buffet hải sản tươi rói. Cáp treo Hòn Thơm cảnh đẹp ngỡ ngàng. Sẽ tiếp tục đồng hành cùng WILTravel!",
+    "createdAt": "2026-10-20T11:20:00.000Z"
+  },
+  {
+    "id": 3,
+    "tourId": 2,
+    "name": "Trần Quang Hưng",
+    "rating": 5,
+    "comment": "Cung đường Hà Giang - Đồng Văn - Mã Pí Lèng quá hùng vĩ. Xe cabin êm ái, bác tài chạy cẩn thận. Rất ưng ý!",
+    "createdAt": "2026-10-22T16:45:00.000Z"
+  }
+]

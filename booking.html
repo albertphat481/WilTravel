@@ -509,6 +509,30 @@
         );
         
         if (index === 0) generatedCode = orderInfo.orderId;
+
+        // Sync with backend API database
+        try {
+          const matchedTour = tours.find(t => t.id === item.tourId) || {};
+          window.wilApi.createBooking({
+            serviceType: 'tour',
+            tourId: item.tourId,
+            tourName: matchedTour.name || 'Tour Du Lịch WILTravel',
+            tourCode: matchedTour.code || 'WLE-TOUR',
+            date: item.date,
+            quantity: item.quantity,
+            totalPayment: itemTotalPayment,
+            paymentMethod: checkoutData.paymentMethod || 'Chuyển khoản ngân hàng',
+            customer: checkoutData.personalInfo
+          }).then(res => {
+            if (res.success && res.orderId && index === 0) {
+              generatedCode = res.orderId;
+              const ordEl = document.getElementById('success-ord-id');
+              if (ordEl) ordEl.textContent = generatedCode;
+            }
+          });
+        } catch (e) {
+          console.warn('Backend booking sync error:', e);
+        }
       });
 
       // 2. Clear Shopping Cart (since items are purchased)

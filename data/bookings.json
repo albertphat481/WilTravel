@@ -1,0 +1,65 @@
+[
+  {
+    "orderId": "WIL-BK-927339",
+    "serviceType": "tour",
+    "tourId": 1,
+    "tourName": "Tour Test Phú Quốc",
+    "tourCode": "WLE-TOUR",
+    "date": "2026-10-31",
+    "quantity": 2,
+    "totalPayment": 7780000,
+    "status": "Đã xác nhận",
+    "paymentMethod": "Chuyển khoản ngân hàng",
+    "paymentStatus": "Chờ thanh toán",
+    "customer": {
+      "firstName": "Văn A",
+      "lastName": "Nguyễn",
+      "email": "vana@example.com",
+      "phone": "0901234567",
+      "address": ""
+    },
+    "notes": "",
+    "createdAt": "2026-10-31T05:17:28.923Z"
+  },
+  {
+    "orderId": "WIL-BK-102938",
+    "serviceType": "tour",
+    "tourId": 1,
+    "tourName": "Du Lịch Phú Quốc - Vương Quốc Ngọc Trai & VinWonders",
+    "tourCode": "WLE-PQ-10",
+    "date": "2026-11-15",
+    "quantity": 2,
+    "totalPayment": 7780000,
+    "status": "Đã xác nhận",
+    "paymentMethod": "Chuyển khoản ngân hàng",
+    "paymentStatus": "Đã thanh toán",
+    "customer": {
+      "firstName": "Thanh",
+      "lastName": "Trần",
+      "email": "tranthanh@gmail.com",
+      "phone": "0905123456",
+      "address": "Quận 1, TP. Hồ Chí Minh"
+    },
+    "createdAt": "2026-10-25T08:30:00.000Z"
+  },
+  {
+    "orderId": "WIL-BK-102939",
+    "serviceType": "car",
+    "carName": "Hyundai Solati 16 chỗ Limousine VIP",
+    "pickupDate": "2026-11-20",
+    "route": "TP.HCM - Vũng Tàu (2 ngày 1 đêm)",
+    "quantity": 1,
+    "totalPayment": 4200000,
+    "status": "Đang xử lý",
+    "paymentMethod": "Tiền mặt khi khởi hành",
+    "paymentStatus": "Chờ thanh toán",
+    "customer": {
+      "firstName": "Hoàng",
+      "lastName": "Lê",
+      "email": "lehoang@yahoo.com",
+      "phone": "0908888999",
+      "address": "Quận Tân Bình, TP.HCM"
+    },
+    "createdAt": "2026-10-28T14:15:00.000Z"
+  }
+]

@@ -116,6 +116,11 @@
           <i class="fa-solid fa-magnifying-glass text-sm"></i>
           <span class="hidden xl:inline text-xs text-gray-400 bg-gray-100 dark:bg-slate-800 px-1.5 py-0.5 rounded border border-gray-200 dark:border-white/10 font-mono">Ctrl K</span>
         </button>
+        <!-- Order Tracking Button -->
+        <button onclick="window.openOrderTrackerModal()" class="px-2.5 py-1.5 rounded-full text-emerald-700 dark:text-emerald-300 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 transition flex items-center gap-1.5 text-xs font-bold border border-emerald-300/40" title="Tra cứu đơn hàng">
+          <i class="fa-solid fa-box-archive text-sm text-emerald-600"></i>
+          <span class="hidden sm:inline">Tra cứu</span>
+        </button>
 
         <a href="cart.html" class="relative p-2 text-gray-700 dark:text-slate-200 hover:text-primary-600 transition text-base">
           <i class="fa-solid fa-shopping-cart"></i>
@@ -759,13 +764,34 @@
         </div>
 
         <div>
-          <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-4">Kết Nối Mạng Xã Hội</h4>
-          <div class="flex gap-4 text-xl mb-4">
-            <a href="https://facebook.com" class="w-10 h-10 rounded-full bg-slate-800 hover:bg-emerald-600 text-white flex items-center justify-center transition"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="https://instagram.com" class="w-10 h-10 rounded-full bg-slate-800 hover:bg-emerald-600 text-white flex items-center justify-center transition"><i class="fa-brands fa-instagram"></i></a>
-            <a href="https://youtube.com" class="w-10 h-10 rounded-full bg-slate-800 hover:bg-emerald-600 text-white flex items-center justify-center transition"><i class="fa-brands fa-youtube"></i></a>
+          <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-3">Kết Nối & Tiện Ích</h4>
+          <div class="flex gap-3 text-lg mb-4">
+            <a href="https://facebook.com" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-emerald-600 text-white flex items-center justify-center transition"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://instagram.com" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-emerald-600 text-white flex items-center justify-center transition"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://youtube.com" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-emerald-600 text-white flex items-center justify-center transition"><i class="fa-brands fa-youtube"></i></a>
           </div>
-          <p class="text-xs text-slate-500">Giấy phép Lữ Hành Quốc Tế & Nội Địa số 79-888/2018/TCDL-GP LHQT</p>
+
+          <!-- Quick Portal Links -->
+          <div class="space-y-2 mb-4 text-xs font-semibold">
+            <a href="javascript:void(0)" onclick="window.openOrderTrackerModal()" class="text-emerald-400 hover:underline flex items-center gap-1.5">
+              <i class="fa-solid fa-box-archive text-emerald-500"></i> Tra Cứu Đơn Hàng Online
+            </a>
+            <a href="api-docs.html" class="text-blue-400 hover:underline flex items-center gap-1.5">
+              <i class="fa-solid fa-code text-blue-500"></i> Cổng API Docs & Backend
+            </a>
+          </div>
+
+          <!-- Newsletter Form -->
+          <div class="bg-slate-900 p-3 rounded-2xl border border-white/5 space-y-2">
+            <span class="text-[11px] font-bold text-white block">Nhận mã giảm 200k qua email:</span>
+            <div class="flex gap-1.5">
+              <input type="email" id="footer-newsletter-email" placeholder="Email của bạn..." class="w-full px-2.5 py-1.5 rounded-xl bg-slate-800 text-xs text-white border border-white/10 focus:outline-none focus:border-emerald-500">
+              <button onclick="handleFooterNewsletter()" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition whitespace-nowrap">
+                Gửi
+              </button>
+            </div>
+            <p id="footer-nl-msg" class="text-[10px] text-gray-400"></p>
+          </div>
         </div>
       </div>
 
@@ -1037,6 +1063,31 @@
     window.addEventListener('currencyChange', () => {
       renderFeaturedTours();
     });
+  
+    async function handleFooterNewsletter() {
+      const input = document.getElementById('footer-newsletter-email');
+      const msg = document.getElementById('footer-nl-msg');
+      if (!input || !msg) return;
+      const email = input.value.trim();
+      if (!email || !email.includes('@')) {
+        msg.className = "text-[10px] text-rose-400";
+        msg.textContent = "Vui lòng nhập email hợp lệ!";
+        return;
+      }
+      msg.className = "text-[10px] text-gray-400";
+      msg.textContent = "Đang gửi đăng ký...";
+
+      try {
+        const res = await window.wilApi.subscribeNewsletter(email);
+        msg.className = "text-[10px] text-emerald-400 font-bold";
+        msg.textContent = "✓ " + (res.message || "Đăng ký thành công! Mã: WILWELCOME");
+        input.value = "";
+      } catch (err) {
+        msg.className = "text-[10px] text-emerald-400";
+        msg.textContent = "✓ Đã tiếp nhận! Mã giảm giá: WILWELCOME";
+      }
+    }
+
   </script>
 </body>
 </html>

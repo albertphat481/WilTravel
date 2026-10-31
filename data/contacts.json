@@ -1,0 +1,22 @@
+[
+  {
+    "id": 2,
+    "name": "Khách hàng Test",
+    "email": "",
+    "phone": "0909999888",
+    "service": "Tư vấn thông tin du lịch chung",
+    "message": "Cần tư vấn tour Phú Quốc cho 4 người",
+    "status": "Chưa xử lý",
+    "createdAt": "2026-10-31T05:17:28.948Z"
+  },
+  {
+    "id": 1,
+    "name": "Đoàn Thúy Vy",
+    "email": "thuyvy@example.com",
+    "phone": "0912345678",
+    "service": "Tour đoàn công ty 50 người đi Đà Nẵng",
+    "message": "Xin chào WILTravel, công ty mình dự kiến tổ chức teambuilding vào cuối tháng sau, vui lòng gửi báo giá chi tiết qua email giúp mình nhé.",
+    "status": "Đã phản hồi",
+    "createdAt": "2026-10-24T10:00:00.000Z"
+  }
+]

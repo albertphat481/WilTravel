@@ -1,0 +1,194 @@
+[
+  {
+    "id": 1,
+    "name": "Xe Du Lịch 4 Chỗ (Toyota Vios / Honda City / Mazda 3)",
+    "seats": 4,
+    "luggage": "2 vali lớn + 2 túi xách",
+    "image": "images/hero1.jpg",
+    "pricePerDay": 850000,
+    "routes": [
+      {
+        "route": "Đón / Tiễn Sân Bay Tân Sơn Nhất - Trung Tâm Q1, Q3",
+        "price": 300000
+      },
+      {
+        "route": "TP.HCM - Vũng Tàu (1 ngày / 2 chiều)",
+        "price": 1500000
+      },
+      {
+        "route": "TP.HCM - Phan Thiết / Mũi Né (2 ngày 1 đêm)",
+        "price": 2800000
+      },
+      {
+        "route": "TP.HCM - Đà Lạt (3 ngày 2 đêm)",
+        "price": 4200000
+      }
+    ],
+    "features": [
+      "Xe đời mới 2022-2024",
+      "Tài xế lịch sự, rành đường",
+      "Bảo hiểm hành khách đầy đủ",
+      "Nước suối & khăn lạnh miễn phí"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Xe Du Lịch 7 Chỗ (Toyota Innova / Fortuner / Mitsubishi Xpander)",
+    "seats": 7,
+    "luggage": "4 vali lớn + 3 túi xách",
+    "image": "images/hero2.jpg",
+    "pricePerDay": 1100000,
+    "routes": [
+      {
+        "route": "Đón / Tiễn Sân Bay Tân Sơn Nhất",
+        "price": 380000
+      },
+      {
+        "route": "TP.HCM - Vũng Tàu (1 ngày)",
+        "price": 1750000
+      },
+      {
+        "route": "TP.HCM - Hồ Tràm / Bình Châu (2 ngày 1 đêm)",
+        "price": 2900000
+      },
+      {
+        "route": "TP.HCM - Cần Thơ / Miền Tây (2 ngày 1 đêm)",
+        "price": 3200000
+      }
+    ],
+    "features": [
+      "Khoang hành lý rộng rãi",
+      "Nội thất da êm ái",
+      "Máy lạnh 2 dàn độc lập",
+      "Hỗ trợ ghế trẻ em"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Xe 16 Chỗ Cao Cấp (Ford Transit / Hyundai Solati)",
+    "seats": 16,
+    "luggage": "8-10 vali",
+    "image": "images/hero3.jpg",
+    "pricePerDay": 1650000,
+    "routes": [
+      {
+        "route": "Đón / Tiễn Sân Bay Tân Sơn Nhất",
+        "price": 700000
+      },
+      {
+        "route": "TP.HCM - Vũng Tàu (1 ngày)",
+        "price": 2400000
+      },
+      {
+        "route": "TP.HCM - Phan Thiết / Mũi Né (2 ngày 1 đêm)",
+        "price": 4300000
+      },
+      {
+        "route": "TP.HCM - Đà Lạt (3 ngày 2 đêm)",
+        "price": 6500000
+      }
+    ],
+    "features": [
+      "Trần cao đứng thẳng người",
+      "Ghế ngả góc rộng",
+      "Wifi 4G tốc độ cao",
+      "Phù hợp đoàn gia đình & công ty"
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Xe Limousine VIP 9 Chỗ (DCar President / Auto Kingdom)",
+    "seats": 9,
+    "luggage": "6 vali lớn",
+    "image": "images/hero4.jpg",
+    "pricePerDay": 2350000,
+    "routes": [
+      {
+        "route": "Đón / Tiễn Sân Bay VIP",
+        "price": 1200000
+      },
+      {
+        "route": "TP.HCM - Vũng Tàu VIP",
+        "price": 3200000
+      },
+      {
+        "route": "TP.HCM - Phan Thiết / Hồ Tràm 2N1Đ",
+        "price": 5800000
+      },
+      {
+        "route": "City Tour TP.HCM Tiếp Khách VIP (8 tiếng)",
+        "price": 2800000
+      }
+    ],
+    "features": [
+      "Ghế massage đa điểm hạng thương gia",
+      "Màn hình TV Smart + Âm thanh vòm",
+      "Cổng sạc Type-C từng ghế",
+      "Tủ lạnh mini trên xe"
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Xe Du Lịch 29 Chỗ (Thaco Town / Isuzu Samco)",
+    "seats": 29,
+    "luggage": "20 vali lớn hầm xe",
+    "image": "images/hero5.jpg",
+    "pricePerDay": 2500000,
+    "routes": [
+      {
+        "route": "Đón Tiễn Sân Bay / City Tour",
+        "price": 1800000
+      },
+      {
+        "route": "TP.HCM - Vũng Tàu 1 Ngày",
+        "price": 3500000
+      },
+      {
+        "route": "TP.HCM - Đà Lạt 3 Ngày 2 Đêm",
+        "price": 8500000
+      },
+      {
+        "route": "TP.HCM - Miền Tây 2 Ngày 1 Đêm",
+        "price": 6200000
+      }
+    ],
+    "features": [
+      "Hệ thống bầu hơi êm ái",
+      "Micro & âm thanh karaoke",
+      "Hầm hành lý siêu rộng",
+      "Tài xế chuyên tour du lịch"
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Xe Du Lịch 45 Chỗ (Hyundai Universe Prime)",
+    "seats": 45,
+    "luggage": "Toàn bộ hành lý đoàn lớn",
+    "image": "images/hero6.jpg",
+    "pricePerDay": 3600000,
+    "routes": [
+      {
+        "route": "City Tour / Teambuilding Công Ty",
+        "price": 2600000
+      },
+      {
+        "route": "TP.HCM - Phan Thiết 2N1Đ Teambuilding",
+        "price": 8900000
+      },
+      {
+        "route": "TP.HCM - Nha Trang 3N3Đ",
+        "price": 14500000
+      },
+      {
+        "route": "TP.HCM - Đà Lạt 3N3Đ",
+        "price": 13200000
+      }
+    ],
+    "features": [
+      "Đỉnh cao dòng xe du lịch cỡ lớn",
+      "Giảm xóc khí nén êm ái tuyệt đối",
+      "Đầy đủ màn hình TV, micro, đèn led sân khấu",
+      "Bảo dưỡng định kỳ an toàn tuyệt đối"
+    ]
+  }
+]

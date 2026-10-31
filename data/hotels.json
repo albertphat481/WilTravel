@@ -1,0 +1,161 @@
+[
+  {
+    "id": 1,
+    "name": "Vinpearl Resort & Spa Phú Quốc",
+    "category": "Luxury",
+    "city": "Phú Quốc",
+    "address": "Bãi Dài, Gành Dầu, Phú Quốc, Kiên Giang",
+    "stars": 5,
+    "price": 2450000,
+    "image": "images/tour-phuquoc.jpg",
+    "amenities": [
+      "Bãi biển riêng",
+      "Hồ bơi vô cực 5.000m²",
+      "Buffet sáng 5 sao",
+      "Spa & Gym",
+      "Đưa đón sân bay"
+    ],
+    "rating": 4.9,
+    "reviews": 320,
+    "badge": "5 Sao Đẳng Cấp"
+  },
+  {
+    "id": 2,
+    "name": "The Myst Đồng Khởi Sài Gòn",
+    "category": "Luxury",
+    "city": "Sài Gòn",
+    "address": "6-8 Hồ Huấn Nghiệp, Bến Nghé, Quận 1, TP.HCM",
+    "stars": 5,
+    "price": 2850000,
+    "image": "images/hero1.jpg",
+    "amenities": [
+      "Hồ bơi tầng thượng",
+      "View sông Sài Gòn",
+      "Trung tâm Quận 1",
+      "Trà chiều miễn phí",
+      "Bồn tắm lộ thiên"
+    ],
+    "rating": 4.8,
+    "reviews": 215,
+    "badge": "Kiến Trúc Độc Đáo"
+  },
+  {
+    "id": 3,
+    "name": "Centara Mirage Resort Mũi Né",
+    "category": "Deluxe",
+    "city": "Phan Thiết",
+    "address": "Huỳnh Thúc Kháng, Mũi Né, Phan Thiết, Bình Thuận",
+    "stars": 4,
+    "price": 1890000,
+    "image": "images/hero8.jpg",
+    "amenities": [
+      "Công viên nước trẻ em",
+      "Hồ bơi giật cấp",
+      "Biệt thự view biển",
+      "Sân bowling",
+      "Buffet hải sản"
+    ],
+    "rating": 4.7,
+    "reviews": 180,
+    "badge": "Gia Đình Yêu Thích"
+  },
+  {
+    "id": 4,
+    "name": "Colline Hotel Đà Lạt",
+    "category": "Deluxe",
+    "city": "Đà Lạt",
+    "address": "10 Phan Bội Châu, Phường 1, Đà Lạt (Cạnh Chợ Mới)",
+    "stars": 4,
+    "price": 1350000,
+    "image": "images/tour-dalat.jpg",
+    "amenities": [
+      "Cạnh chợ đêm Đà Lạt",
+      "Thiết kế chuẩn Châu Âu",
+      "Nhà hàng Á - Âu",
+      "Phòng gym & sauna",
+      "Buffet sáng"
+    ],
+    "rating": 4.8,
+    "reviews": 290,
+    "badge": "Check-in Hot"
+  },
+  {
+    "id": 5,
+    "name": "The Secret Côn Đảo Resort",
+    "category": "Luxury",
+    "city": "Côn Đảo",
+    "address": "Số 08 Tôn Đức Thắng, Côn Đảo, Bà Rịa - Vũng Tàu",
+    "stars": 5,
+    "price": 2650000,
+    "image": "images/hero7.jpg",
+    "amenities": [
+      "Hồ bơi tràn biển",
+      "Kiến trúc Pháp cổ kính",
+      "Nhà hàng ẩm thực",
+      "Tour viếng nghĩa trang Hàng Dương",
+      "Xe đưa đón"
+    ],
+    "rating": 4.9,
+    "reviews": 140,
+    "badge": "Nghỉ Dưỡng Linh Thiêng"
+  },
+  {
+    "id": 6,
+    "name": "Marina Bay Vũng Tàu Resort & Spa",
+    "category": "Superior",
+    "city": "Vũng Tàu",
+    "address": "115 Trần Phú, Phường 5, TP. Vũng Tàu",
+    "stars": 4,
+    "price": 1550000,
+    "image": "images/tour-nhatrang.jpg",
+    "amenities": [
+      "View hoàng hôn Bãi Dâu",
+      "Hồ bơi nước mặn",
+      "Phòng view biển 100%",
+      "Spa thảo dược",
+      "Buffet sáng"
+    ],
+    "rating": 4.6,
+    "reviews": 160,
+    "badge": "View Hoàng Hôn Đẹp Nhất"
+  },
+  {
+    "id": 7,
+    "name": "Havana Nha Trang Hotel",
+    "category": "Deluxe",
+    "city": "Nha Trang",
+    "address": "38 Trần Phú, Lộc Thọ, Nha Trang, Khánh Hòa",
+    "stars": 5,
+    "price": 1290000,
+    "image": "images/tour-nhatrang.jpg",
+    "amenities": [
+      "Đường hầm riêng ra biển",
+      "Skylight Rooftop Bar 360°",
+      "Hồ bơi vô cực",
+      "Bãi biển riêng Trần Phú",
+      "Buffet hải sản"
+    ],
+    "rating": 4.8,
+    "reviews": 410,
+    "badge": "Trung Tâm Sôi Động"
+  },
+  {
+    "id": 8,
+    "name": "Muong Thanh Grand Sài Gòn Hotel",
+    "category": "Standard",
+    "city": "Sài Gòn",
+    "address": "8A Mạc Đĩnh Chi, Bến Nghé, Quận 1, TP.HCM",
+    "stars": 4,
+    "price": 990000,
+    "image": "images/hero2.jpg",
+    "amenities": [
+      "Trung tâm Quận 1",
+      "Hồ bơi trong nhà",
+      "Buffet sáng đặc sản vùng miền",
+      "Phòng họp hội nghị MICE"
+    ],
+    "rating": 4.5,
+    "reviews": 185,
+    "badge": "Giá Tốt Công Tác"
+  }
+]
